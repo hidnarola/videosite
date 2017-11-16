@@ -93,7 +93,7 @@ defined('TRAVEL_MIN_PRICE_PER_KM') OR define('TRAVEL_MIN_PRICE_PER_KM', 0.04); /
 // ---------------------------------------------------------------------------------------------
 
 // defined('Asset_path') OR define('Asset_path', 'http://test.yourtoothfairy.com/');
-defined('Asset_path') OR define('Asset_path', 'http://vidblog.dev/');
+defined('Asset_path') OR define('Asset_path', 'http://localhost/videosite/');
 
 defined('GOOGLE_MAP_API') OR define('GOOGLE_MAP_API', 'AIzaSyBrAT6XIzO4FSwU1_iXBgvvOkAqqx8GRBw');
 

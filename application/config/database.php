@@ -81,7 +81,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
     'dsn' => '',
-    'hostname' => '192.168.1.201',
+    'hostname' => '192.168.1.202',
     'username' => 'videosite',
     'password' => 'SRxeFo456FeK8Sz',
     // 'password' => '',

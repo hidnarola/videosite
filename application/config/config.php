@@ -28,7 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 // $config['base_url'] = "http://test.yourtoothfairy.com";
 
-$config['base_url'] = "http://vidblog.dev/";
+$config['base_url'] = "http://localhost/videosite/";
 
 $config['site_name'] = 'Toothfairy';
 /*
