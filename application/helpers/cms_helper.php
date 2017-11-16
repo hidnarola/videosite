@@ -140,7 +140,7 @@
             'smtp_host' => 'smtp.gmail.com',
             'smtp_port' => 465,
             'smtp_user' => 'demo.narola@gmail.com',
-            'smtp_pass' => 'narola21',
+            'smtp_pass' => 'Narola21',
             'smtp_crypto' => 'ssl',
             'transport' => 'Smtp',
             'charset' => 'utf-8',
@@ -148,6 +148,8 @@
             'headerCharset' => 'iso-8859-1',
             'mailtype' => 'html'
         );
+
+  
 
         return $configs;
     }
