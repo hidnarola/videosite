@@ -1,10 +1,13 @@
 <?php
-    $role_id = $this->session->userdata['admin']['role_id'];
-    if($this->session->userdata['admin']['avatar'] != ''){
-        $image = (string)base_url('uploads/avatars/'.$this->session->userdata['admin']['avatar']);  
-    } else{
-        $image = DEFAULT_IMAGE_PATH . "user/user-img.jpg";  
-    }      
+$role_id = $this->session->userdata['admin']['role_id'];
+if ($this->session->userdata['admin']['avatar'] != '')
+{
+    $image = (string) base_url('uploads/avatars/' . $this->session->userdata['admin']['avatar']);
+}
+else
+{
+    $image = DEFAULT_IMAGE_PATH . "user/user-img.jpg";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">        
@@ -13,7 +16,7 @@
         <!-- Main navbar -->
         <div class="navbar navbar-inverse">
             <div class="navbar-header">
-                <a class="navbar-brand" href="<?=base_url('admin/dashboard')?>"><img src="<?=DEFAULT_ADMIN_IMAGE_PATH?>logo_admin.png" alt=""></a>
+                <a class="navbar-brand" href="<?= base_url('admin/dashboard') ?>"><img src="<?= DEFAULT_ADMIN_IMAGE_PATH ?>logo_admin.png" alt=""></a>
 
                 <ul class="nav navbar-nav visible-xs-block">
                     <!-- <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li> -->
@@ -43,7 +46,7 @@
             </div>
         </div>
         <!-- /main navbar -->
-        
+
         <!-- Page container -->
         <div class="page-container">
             <!-- Page content -->
@@ -66,26 +69,46 @@
                                             <span>Dashboard</span>
                                         </a>
                                     </li>
+                                    <!-- Categories Menu -->
+
+                                    <li class="<?php echo (in_array($controller, ['categories', 'subcategories',])) ? 'active' : ''; ?>">
+                                        <a href="#" class="has-ul"><i class="icon-server"></i> <span>Categories</span></a>
+                                        <ul style="">
+                                            <li class="<?php echo (in_array($controller, ['categories'])) ? 'active' : ''; ?>">
+                                                <a href="<?php echo base_url() . 'admin/categories'; ?>">
+                                                    <i class="icon-arrow-right32"></i>
+                                                    Categories
+                                                </a>
+                                            </li>
+                                            <li class="<?php echo (in_array($controller, ['sub_categories'])) ? 'active' : ''; ?>">
+                                                <a href="<?php echo base_url() . 'admin/sub_categories'; ?>">
+                                                    <i class="icon-arrow-right32"></i>
+                                                    Sub Categories
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
 
                                     <!-- USERS Menu -->
-                                    
-                                    <li class="<?php echo (in_array($controller,['doctor','patient','users'])) ? 'active' : ''; ?>">
+
+                                    <li class="<?php echo (in_array($controller, ['doctor', 'patient', 'users'])) ? 'active' : ''; ?>">
                                         <a href="#" class="has-ul"><i class="icon-users4"></i> <span>Users</span></a>
                                         <ul style="">
-                                            <li class="<?php echo (in_array($controller,['patient'])) ? 'active' : ''; ?>">
-                                                <a href="<?php echo base_url().'admin/patient'; ?>">
+                                            <li class="<?php echo (in_array($controller, ['patient'])) ? 'active' : ''; ?>">
+                                                <a href="<?php echo base_url() . 'admin/patient'; ?>">
                                                     <i class="icon-arrow-right32"></i>
                                                     Patients
                                                 </a>
                                             </li>
-                                            <li class="<?php echo (in_array($controller,['doctor'])) ? 'active' : ''; ?>">
-                                                <a href="<?php echo base_url().'admin/doctor'; ?>">
+                                            <li class="<?php echo (in_array($controller, ['doctor'])) ? 'active' : ''; ?>">
+                                                <a href="<?php echo base_url() . 'admin/doctor'; ?>">
                                                     <i class="icon-arrow-right32"></i>
                                                     Doctors
                                                 </a>
                                             </li>
-                                            <li class="<?php echo (in_array($controller,['users'])) ? 'active' : ''; ?>">
-                                                <a href="<?php echo base_url().'admin/users'; ?>">
+                                            <li class="<?php echo (in_array($controller, ['users'])) ? 'active' : ''; ?>">
+                                                <a href="<?php echo base_url() . 'admin/users'; ?>">
                                                     <i class="icon-arrow-right32"></i>
                                                     Staff
                                                 </a>
@@ -106,9 +129,9 @@
                                             <span>Contact Inquiry</span>
                                         </a>
                                     </li>                                    
-                                    
-                                    
-                                    <li class="<?php echo (in_array($controller,['testimonial','blogs','cms'])) ? 'active' : ''; ?>">
+
+
+                                    <li class="<?php echo (in_array($controller, ['testimonial', 'blogs', 'cms'])) ? 'active' : ''; ?>">
                                         <a href="#" class="has-ul"><i class="icon-command"></i> <span>Front Side Setting</span></a>
                                         <ul>
                                             <li class="<?php echo ($controller == 'blogs') ? 'active' : ''; ?>">
@@ -125,7 +148,7 @@
                                             </li>                                              
                                         </ul>
                                     </li>                                    
-                                    
+
                                     <!-- Site Setting Menu -->                                    
                                     <li class="<?php echo ($controller == 'settings') ? 'active' : ''; ?>">
                                         <a href="<?php echo base_url() . 'admin/settings'; ?>">

@@ -1,3 +1,6 @@
 .form-control:focus {
     border-color: #26A69A !important;
 }
+.dataTable {
+    width: 100% !important;
+}
