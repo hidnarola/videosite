@@ -12,11 +12,8 @@ class Users_model extends CI_Model {
     
         $this->db->where($data);
 
-        if(!empty($where_in)){
-            $this->db->where_in('role_id',$where_in);
-        }
-       // $this->db->where('(is_blocked != 1 AND is_deleted != 1)');
-        $this->db->where('(is_deleted != 1)');
+        if(!empty($where_in)){ $this->db->where_in('role_id',$where_in); }
+       
         if ($is_total_rows == true) {
             $res_data = $this->db->get('users')->num_rows();
         } else {
@@ -30,7 +27,7 @@ class Users_model extends CI_Model {
     }
 
     /* v! Insert data into users table */
-
+    
     public function insert_user_data($data) {
         $this->db->insert('users', $data);
         $last_id = $this->db->insert_id();
@@ -61,12 +58,9 @@ class Users_model extends CI_Model {
     public function CheckActivationCode($code){
         $this->db->where('activation_code',$code);
         $query = $this->db->get('users');   
-        if ($query->num_rows() > 0)
-        {   
+        if ($query->num_rows() > 0){   
             return true;
-        }
-        else
-        { 
+        } else {
             return false;
         }
     }
@@ -75,77 +69,6 @@ class Users_model extends CI_Model {
         $res = $this->db->get_where('users',['email_id'=>$username])->num_rows();
         return $res;
     }
-
-    // ------------------------------------------------------------------------
-    // Patient Section
-    // ------------------------------------------------------------------------
-    
-    public function get_all_patients(){
-        $this->db->select('id,id AS test_id,fname,lname,email_id,DATE_FORMAT(last_login,"%d %b %Y <br> %l:%i %p") AS last_login,DATE_FORMAT(created_at,"%d %b %Y <br> %l:%i %p") AS created_at,is_blocked', false);
-
-        $this->db->where('role_id', 5); // Role id - 5 recognise as patient Id
-        $this->db->where('is_deleted !=', 1);
-
-        $keyword = $this->input->get('search');
-        $keyword = str_replace('"', '', $keyword);
-        
-        if (!empty($keyword['value'])) {
-            $this->db->having('fname LIKE "%' . $keyword['value'] . '%" OR lname LIKE "%' . $keyword['value'] . '%" OR email_id LIKE "%' . $keyword['value'] . '%"', NULL);
-        }
-
-        $this->db->limit($this->input->get('length'), $this->input->get('start'));
-        $res_data = $this->db->get('users')->result_array();
-        return $res_data;
-    }
-
-    public function get_patients_count(){
-        $this->db->where('role_id', 5); // Role id - 5 recognise as patient Id
-        $this->db->where('is_deleted !=', 1);
-
-        $keyword = $this->input->get('search');
-        $keyword = str_replace('"', '', $keyword);
-        
-        if (!empty($keyword['value'])) {
-            $this->db->having('fname LIKE "%' . $keyword['value'] . '%" OR lname LIKE "%' . $keyword['value'] . '%" OR email_id LIKE "%' . $keyword['value'] . '%"', NULL);
-        }
-        $res_data = $this->db->get('users')->num_rows();
-        return $res_data;
-    }
-
-    // ------------------------------------------------------------------------
-    // Doctor Section
-    // ------------------------------------------------------------------------
-    public function get_all_doctors(){
-        $this->db->select('id,id AS test_id,fname,lname,email_id,DATE_FORMAT(last_login,"%d %b %Y <br> %l:%i %p") AS last_login,DATE_FORMAT(created_at,"%d %b %Y <br> %l:%i %p") AS created_at,is_blocked', false);
-
-        $this->db->where('role_id', 4); // Role id - 5 recognise as patient Id
-        $this->db->where('is_deleted !=', 1);
-
-        $keyword = $this->input->get('search');
-        $keyword = str_replace('"', '', $keyword);
-        
-        if (!empty($keyword['value'])) {
-            $this->db->having('fname LIKE "%' . $keyword['value'] . '%" OR lname LIKE "%' . $keyword['value'] . '%" OR email_id LIKE "%' . $keyword['value'] . '%"', NULL);
-        }
-
-        $this->db->limit($this->input->get('length'), $this->input->get('start'));
-        $res_data = $this->db->get('users')->result_array();
-        return $res_data;
-    }
-
-    public function get_doctors_count(){
-        $this->db->where('role_id', 4); // Role id - 5 recognise as patient Id
-        $this->db->where('is_deleted !=', 1);
-
-        $keyword = $this->input->get('search');
-        $keyword = str_replace('"', '', $keyword);
-        
-        if (!empty($keyword['value'])) {
-            $this->db->having('fname LIKE "%' . $keyword['value'] . '%" OR lname LIKE "%' . $keyword['value'] . '%" OR email_id LIKE "%' . $keyword['value'] . '%"', NULL);
-        }
-        $res_data = $this->db->get('users')->num_rows();
-        return $res_data;
-    }    
 
 }
 
