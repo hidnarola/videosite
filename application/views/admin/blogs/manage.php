@@ -1,6 +1,7 @@
-<script type="text/javascript" src="<?=DEFAULT_ADMIN_JS_PATH?>plugins/editors/summernote/summernote.min.js"></script>
-<script type="text/javascript" src="<?=DEFAULT_ADMIN_JS_PATH?>pages/editor_summernote.js"></script>
-<script type="text/javascript" src="<?=DEFAULT_ADMIN_JS_PATH?>pages/form_inputs.js"></script>
+<script type="text/javascript" src="<?= DEFAULT_ADMIN_JS_PATH ?>plugins/editors/summernote/summernote.min.js"></script>
+<script type="text/javascript" src="<?= DEFAULT_ADMIN_JS_PATH ?>pages/editor_summernote.js"></script>
+<script type="text/javascript" src="<?= DEFAULT_ADMIN_JS_PATH ?>pages/form_inputs.js"></script>
+<script type="text/javascript" src="<?php echo DEFAULT_ADMIN_JS_PATH . 'plugins/uploaders/fileinput.min.js' ?>"></script>
 
 <div class="page-header page-header-default">
     <div class="page-header-content">
@@ -32,17 +33,37 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Blog Image:</label>
                             <div class="col-lg-9">
-                                <input type="file" id="img_path" name="img_path[]" multiple="multiple" class="file-styled">
+                                <input type="file" class="file-input" name="img_path[]" multiple="multiple">
                                 <input type="hidden" value="<?= isset($record['img_path']) ? $record['img_path'] : '' ?>" name="Himg_path" id="Himg_path">
                                 <span class="help-block">Please upload only image file With .jpg, .jpeg, .png, .gif extension (Size : 1140px * 475px)</span>
                             </div>
-                        </div>    
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-3">&nbsp;</label>
+                            <div class="col-lg-6">
+
+                                <?php
+                                if (isset($record['img_path']) && !empty($record['img_path']))
+                                {
+                                    ?>
+                                    <div class="thumb">
+                                        <div class="thumb-inner">
+                                            <img src="<?php echo DEFAULT_BLOG_IMAGE_PATH . $record['img_path']; ?>" alt="">
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Status:</label>
                             <div class="col-lg-3">
                                 <label class="radio-inline">
                                     <input type="radio" class="styled" name="is_blocked" value="0" checked <?php
-                                    if (isset($record['is_blocked']) && $record['is_blocked'] == '0') {
+                                    if (isset($record['is_blocked']) && $record['is_blocked'] == '0')
+                                    {
                                         echo 'checked';
                                     }
                                     ?>>
@@ -50,7 +71,8 @@
                                 </label>
                                 <label class="radio-inline">
                                     <input type="radio" class="styled" name="is_blocked" value="1" <?php
-                                    if (isset($record['is_blocked']) && $record['is_blocked'] == '1') {
+                                    if (isset($record['is_blocked']) && $record['is_blocked'] == '1')
+                                    {
                                         echo 'checked';
                                     }
                                     ?>>
@@ -61,7 +83,7 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Blog Description:</label>
                             <div class="col-lg-12">
-                                <textarea name="blog_description" id="blog_description" placeholder="Enter blog Description" class="summernote form-control"><?php echo (isset($record['blog_description'])) ? $record['blog_description'] : set_value('blog_description'); ?></textarea>
+                                <textarea name="blog_description" id="blog_description" placeholder="Enter blog Description" class="summernote form-control"><?php echo (isset($record['blog_description'])) ? htmlspecialchars_decode($record['blog_description']) : set_value('blog_description'); ?></textarea>
                             </div>
                         </div>
                         <div class="text-right">
@@ -73,102 +95,110 @@
         </div>
     </div>
 </div>
- <script type="text/javascript" src="<?php echo DEFAULT_ADMIN_JS_PATH . "plugins/forms/validation/additional_methods.min.js"; ?>"></script>
+<script type="text/javascript" src="<?php echo DEFAULT_ADMIN_JS_PATH . "plugins/forms/validation/additional_methods.min.js"; ?>"></script>
 
 <script type="text/javascript">
     $(".styled, .multiselect-container input").uniform({
         radioClass: 'choice'
     });
-
+    $('.file-input').fileinput({
+        browseLabel: 'Browse',
+        browseIcon: '<i class="icon-file-plus"></i>',
+        uploadIcon: '<i class="icon-file-upload2"></i>',
+        removeIcon: '<i class="icon-cross3"></i>',
+        layoutTemplates: {
+            icon: '<i class="icon-file-check"></i>'
+        },
+        initialCaption: "No file selected"
+    });
+    $('.fileinput-upload-button').hide();
 // For create a blog Slug based on blog title
-$("#blog_title").blur(function () {
-    var Text = $(this).val();
-    Text = Text.toLowerCase();
-    Text = Text.replace(/[^a-zA-Z0-9]+/g, '-');
-    $("#blog_slug").val(Text);
-});
+    $("#blog_title").blur(function () {
+        var Text = $(this).val();
+        Text = Text.toLowerCase();
+        Text = Text.replace(/[^a-zA-Z0-9]+/g, '-');
+        $("#blog_slug").val(Text);
+    });
 
 // For count file when select multiple image
-$('#img_path').change(function(){
-    var files = $(this)[0].files;
-    var file_text= files.length+" files selected";
-    $(".filename").addClass("customfilename");
-    $(".countfile").remove();
-    $('<span class="filename countfile"></span>').insertAfter('.filename');
-    $('.customfilename').hide();
-    $('.countfile').html(file_text);
-});
+    $('#img_path').change(function () {
+        var files = $(this)[0].files;
+        var file_text = files.length + " files selected";
+        $(".filename").addClass("customfilename");
+        $(".countfile").remove();
+        $('<span class="filename countfile"></span>').insertAfter('.filename');
+        $('.customfilename').hide();
+        $('.countfile').html(file_text);
+    });
 
 //---------------------- Validation -------------------
-$("#frmblog").validate({
-    errorClass: 'validation-error-label',
-    successClass: 'validation-valid-label',
-    highlight: function(element, errorClass) {
-        $(element).removeClass(errorClass);
-    },
-    unhighlight: function(element, errorClass) {
-        $(element).removeClass(errorClass);
-    },
-    validClass: "validation-valid-label",
-    success: function(label) {
-        label.addClass("validation-valid-label").text("Success.")
-    },
-    ignore:[],
-    rules: {
-        blog_title: {
-            required: true,
-            remote: {
-                url: "<?php echo base_url('admin/blogs/check_blog_title_exists/' . (isset($record['id']) ? $record['id'] : '0')); ?>",
-                type: "post",
-                data: {
-                    blog_title: function () {
-                        return $("#blog_title").val();
+    $("#frmblog").validate({
+        errorClass: 'validation-error-label',
+        successClass: 'validation-valid-label',
+        highlight: function (element, errorClass) {
+            $(element).removeClass(errorClass);
+        },
+        unhighlight: function (element, errorClass) {
+            $(element).removeClass(errorClass);
+        },
+        validClass: "validation-valid-label",
+        success: function (label) {
+            label.addClass("validation-valid-label").text("Success.")
+        },
+        ignore: [],
+        rules: {
+            blog_title: {
+                required: true,
+                remote: {
+                    url: "<?php echo base_url('admin/blogs/check_blog_title_exists/' . (isset($record['id']) ? $record['id'] : '0')); ?>",
+                    type: "post",
+                    data: {
+                        blog_title: function () {
+                            return $("#blog_title").val();
+                        }
                     }
                 }
+            },
+            blog_description: {
+                required: true
+            }
+
+        },
+        errorPlacement: function (error, element) {
+            if (element[0]['id'] == "blog_description") {
+                error.insertAfter(".note-editor");
+            } else if (element[0]['id'] == "img_path") {
+                error.insertAfter("#uniform-img_path");
+            } else {
+                error.insertAfter(element)
             }
         },
-        blog_description: {
-            required: true
-        }
+        messages: {
+            blog_title: {
+                required: "Please provide a Title",
+                remote: "Title is already exist, please choose diffrent Title"
+            },
+            blog_description: {
+                required: "Please provide a Description"
+            }
 
-    },
-    errorPlacement: function (error, element) {
-        if (element[0]['id'] == "blog_description") {
-            error.insertAfter(".note-editor");
-        } 
-        else if(element[0]['id'] == "img_path"){
-             error.insertAfter("#uniform-img_path");
         }
-        else {
-            error.insertAfter(element)
-        }
-    },
-    messages: {
-        blog_title: {
-            required: "Please provide a Title",
-            remote: "Title is already exist, please choose diffrent Title"
-        },
-        blog_description: {
-            required: "Please provide a Description"
-        }
-
-    }
-});
+    });
 
     // Custom  rule add for multiple image uplaod ----------
-    $("input#img_path").each(function(){        
-        $(this).rules("add", {            
-            required:true,            
+    $("input#img_path").each(function () {
+        $(this).rules("add", {
+            required: true,
             extension: "jpg|jpeg|png|gif",
             messages: {
-                    required: "Please Select Image",            
-                    extension: "Please Select Only jpg, jpeg, png, gif file type"     
-                }       
-        });                      
+                required: "Please Select Image",
+                extension: "Please Select Only jpg, jpeg, png, gif file type"
+            }
+        });
     });
 
     //----- Remove required validation for edit time
-    if($("#Himg_path").val() != ''){
+    if ($("#Himg_path").val() != '') {
         $("input#img_path").rules("remove", "required");
     }
 

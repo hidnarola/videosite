@@ -72,7 +72,7 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Page Description:</label>
                             <div class="col-lg-12">
-                                <textarea name="description" id="description" placeholder="Enter Page Description" class="summernote form-control"><?php echo (isset($record['description'])) ? $record['description'] : set_value('description'); ?></textarea>
+                                <textarea name="description" id="description" placeholder="Enter Page Description" class="summernote form-control"><?php echo (isset($record['description'])) ? htmlspecialchars_decode($record['description']) : set_value('description'); ?></textarea>
                             </div>
                         </div>
                         <div class="form-group">

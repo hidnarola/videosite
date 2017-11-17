@@ -113,7 +113,21 @@ class Admin_category_model extends CI_Model
     {
         $this->db->from('categories');
         $this->db->where('category_name', $Name);
-        $this->db->where('id !=' . $CategroyId);
+        $this->db->where('id !=' . $CategoryId);
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
+    /**
+     * @uses : This function is used to check blog title exist or not
+     * @param : @Title, @blog_id  
+     * @author : DHK
+     */
+    public function CheckSubExist($Name, $CategoryId = 0)
+    {
+        $this->db->from('sub_categories');
+        $this->db->where('category_name', $Name);
+        $this->db->where('id !=' . $CategoryId);
         $query = $this->db->get();
         return $query->num_rows();
     }
@@ -168,6 +182,14 @@ class Admin_category_model extends CI_Model
         $this->db->like('category_name', $keyword);
         $this->db->where('categories.is_deleted', '0');
         return $this->db->get('categories')->result_array();
+    }
+
+    public function get_category_by_id($id)
+    {
+        $this->db->select('id,category_name');
+        $this->db->where('id', $id);
+        return $this->db->get('categories')->result_array();
+        qry();
     }
 
 }

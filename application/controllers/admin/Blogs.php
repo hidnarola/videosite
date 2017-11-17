@@ -122,7 +122,7 @@ class Blogs extends CI_Controller {
             $update_array = [
                 'blog_title'        => $this->input->post('blog_title'),
                 'blog_slug'         => $this->input->post('blog_slug'),
-                'blog_description'  => $this->input->post('blog_description'),
+                'blog_description'  => htmlspecialchars($this->input->post('blog_description')),
                 'img_path'          => $img_path,
                 'is_blocked'        => $this->input->post('is_blocked'),
             ];
@@ -181,7 +181,7 @@ class Blogs extends CI_Controller {
             $insert_array = [
                 'blog_title'        => $this->input->post('blog_title'),
                 'blog_slug'         => $this->input->post('blog_slug'),
-                'blog_description'  => $this->input->post('blog_description'),
+                'blog_description'  => htmlspecialchars($this->input->post('blog_description')),
                 'img_path'          => $img_path,
                 'created_by'        => $this->session->userdata['admin']['id'],
                 'is_blocked'        => $this->input->post('is_blocked'),

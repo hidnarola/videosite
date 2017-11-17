@@ -111,3 +111,4 @@ defined('DEFAULT_ADMIN_CKEDITOR_PATH') OR define('DEFAULT_ADMIN_CKEDITOR_PATH', 
 defined('DEFAULT_MOBILE_IMAGE_PATH') OR define('DEFAULT_MOBILE_IMAGE_PATH', Asset_path . 'public/mobile/img/'); // highest automatically-assigned error code
 defined('DEFAULT_MOBILE_JS_PATH') OR define('DEFAULT_MOBILE_JS_PATH', Asset_path . 'public/mobile/js/'); // highest automatically-assigned error code
 defined('DEFAULT_MOBILE_CSS_PATH') OR define('DEFAULT_MOBILE_CSS_PATH', Asset_path . 'public/mobile/css/'); // highest automatically-assigned error code
+defined('DEFAULT_BLOG_IMAGE_PATH') OR define('DEFAULT_BLOG_IMAGE_PATH', Asset_path . 'uploads/blogs/'); // highest automatically-assigned error code

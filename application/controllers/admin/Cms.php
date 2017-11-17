@@ -94,8 +94,8 @@ class Cms extends CI_Controller {
                 'seo_title'      => $this->input->post('seo_title'),
                 'seo_keyword'    => $this->input->post('seo_keyword'),
                 'seo_description'=> $this->input->post('seo_description'),
-                'description'    => $this->input->post('description'),
-                'css_style'      => $this->input->post('css_style'),
+                'description'    => htmlspecialchars($this->input->post('description')),
+                'css_style'      => htmlspecialchars($this->input->post('css_style')),
                 'is_blocked'      => $this->input->post('is_blocked'),
             ];
 
@@ -131,8 +131,8 @@ class Cms extends CI_Controller {
             'seo_title'      => $this->input->post('seo_title'),
             'seo_keyword'    => $this->input->post('seo_keyword'),
             'seo_description'=> $this->input->post('seo_description'),
-            'description'    => $this->input->post('description'),
-            'css_style'      => $this->input->post('css_style'),
+            'description'    => htmlspecialchars($this->input->post('description')),
+            'css_style'      => htmlspecialchars($this->input->post('css_style')),
             'created_at'     => date("Y-m-d H:i:s a"),
             'is_blocked'      => $this->input->post('is_blocked'),
             ];

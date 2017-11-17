@@ -1,8 +1,8 @@
-<script type="text/javascript" src="<?=DEFAULT_ADMIN_JS_PATH?>plugins/forms/tags/tokenfield.min.js"></script>
+<script type="text/javascript" src="<?= DEFAULT_ADMIN_JS_PATH ?>plugins/forms/tags/tokenfield.min.js"></script>
 <style>
-.setting-heading{
-    margin: 0px;
-}
+    .setting-heading{
+        margin: 0px;
+    }
 </style>
 <div class="page-header page-header-default">
     <div class="page-header-content">
@@ -30,15 +30,39 @@
                                 <input type="text" name="category_name" id="category_name" placeholder="Enter Category Name" class="form-control" value="<?php echo (isset($record['category_name'])) ? $record['category_name'] : set_value('category_name'); ?>">
                             </div>
                         </div>
-                        
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Status:</label>
+                            <div class="col-lg-3">
+                                <label class="radio-inline">
+                                    <input type="radio" class="styled" name="is_blocked" value="0" checked <?php
+                                    if (isset($record['is_blocked']) && $record['is_blocked'] == '0')
+                                    {
+                                        echo 'checked';
+                                    }
+                                    ?>>
+                                    Unblock
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" class="styled" name="is_blocked" value="1" <?php
+                                    if (isset($record['is_blocked']) && $record['is_blocked'] == '1')
+                                    {
+                                        echo 'checked';
+                                    }
+                                    ?>>
+                                    Block
+                                </label>
+                            </div>
+                        </div>
+
                         <div class="text-right">
-                        <button class="btn btn-success" type="submit">Save <i class="icon-arrow-right14 position-right"></i></button>
+                            <button class="btn btn-success" type="submit">Save <i class="icon-arrow-right14 position-right"></i></button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 </div>
 <script>
     $(".styled, .multiselect-container input").uniform({
@@ -49,14 +73,14 @@
     $("#frm_cat").validate({
         errorClass: 'validation-error-label',
         successClass: 'validation-valid-label',
-        highlight: function(element, errorClass) {
+        highlight: function (element, errorClass) {
             $(element).removeClass(errorClass);
         },
-        unhighlight: function(element, errorClass) {
+        unhighlight: function (element, errorClass) {
             $(element).removeClass(errorClass);
         },
         validClass: "validation-valid-label",
-        success: function(label) {
+        success: function (label) {
             label.addClass("validation-valid-label").text("Success.")
         },
         rules: {
@@ -82,8 +106,8 @@
         }
     });
 
-    $(function(){
-         // Add class on init
+    $(function () {
+        // Add class on init
         $('.tokenfield-teal').on('tokenfield:initialize', function (e) {
             $(this).parent().find('.token').addClass('bg-teal')
         });

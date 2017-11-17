@@ -20,8 +20,8 @@
 <!-- Content area -->
 <div class="content">
     <?php
-        $message = $this->session->flashdata('message');
-        echo my_flash($message);
+    $message = $this->session->flashdata('message');
+    echo my_flash($message);
     ?>
     <!-- content area -->    
     <div class="panel panel-flat">
@@ -57,11 +57,14 @@
             dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
             order: [[0, "asc"]],
             ordering: false,
-            ajax: '<?php echo base_url()."admin/categories/list_category"; ?>',
+            ajax: '<?php echo base_url() . "admin/categories/list_category"; ?>',
             columns: [
                 {
                     data: "test_id",
-                    visible: true
+                    visible: true,
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    },
                 },
                 {
                     sortable: false,
@@ -81,10 +84,10 @@
                     width: 200,
                     render: function (data, type, full, meta) {
                         var action = '';
-                        var id= encodeURIComponent(btoa(full.id));
-                        
-                        action += '<a href="<?php echo base_url(); ?>admin/categories/edit/' + id + '" class="btn border-primary text-primary-600 btn-flat btn-icon btn-rounded btn-sm" title="Edit"><i class="icon-pencil3"></i></a>';
+                        var id = encodeURIComponent(btoa(full.id));
+
                         if (full.is_blocked == 0) {
+                            action += '<a href="<?php echo base_url(); ?>admin/categories/edit/' + id + '" class="btn border-primary text-primary-600 btn-flat btn-icon btn-rounded btn-sm" title="Edit"><i class="icon-pencil3"></i></a>';
                             action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/categories/block/' + id + '" class="btn border-warning text-warning-600 btn-flat btn-icon btn-rounded"  title="Block"><i class="icon-blocked"></i></a>';
                         } else if (full.is_blocked == 1) {
                             action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/categories/activate/' + id + '" class="btn border-success text-success-600 btn-flat btn-icon btn-rounded"  title="Unblock"><i class="icon-checkmark-circle"></i></a>';
@@ -101,14 +104,14 @@
             width: 'auto'
         });
     });
-    
-    $(document).on( "click",".btn_delete", function(e) {    
+
+    $(document).on("click", ".btn_delete", function (e) {
         e.preventDefault();
         var lHref = $(this).attr('href');
-        bootbox.confirm('Are you sure ?',function(res){
+        bootbox.confirm('Are you sure ?', function (res) {
             if (res) {
-                window.location.href = lHref; 
-            }     
+                window.location.href = lHref;
+            }
         });
     });
 

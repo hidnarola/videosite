@@ -85,6 +85,7 @@ class Sub_categories extends CI_Controller
             $check_category = $this->Admin_category_model->get_result('sub_categories', $where);
             if ($check_category)
             {
+                $data['cat'] = $this->Admin_category_model->get_category_by_id($category_id);
                 $data['record'] = $check_category[0];
                 $data['title'] = 'Admin edit sub-category';
                 $data['heading'] = 'Edit sub-category';
@@ -105,8 +106,9 @@ class Sub_categories extends CI_Controller
             else
             {
                 $update_array = [
-                    'main_cate_id' => $this->input->post('category_id'),
+                    'main_cat_id' => $this->input->post('hid'),
                     'category_name' => $this->input->post('category_name'),
+                    'is_blocked' => $this->input->post('is_blocked'),
                 ];
 
                 $result = $this->Admin_category_model->update_record('sub_categories', $where, $update_array);
@@ -134,6 +136,7 @@ class Sub_categories extends CI_Controller
     {
         $data['title'] = 'Admin add sub-category';
         $data['heading'] = 'Add sub-category';
+        $data['cat'] = $this->Admin_category_model->get_result('categories', ['is_deleted' => '0']);
         if ($this->input->post())
         {
             $this->form_validation->set_rules('category_name', 'Category Name', 'trim|required');
@@ -146,9 +149,10 @@ class Sub_categories extends CI_Controller
             else
             {
                 $insert_array = [
-                    'main_categroy_id' => $this->input->post('hid'),
+                    'main_cat_id' => $this->input->post('hid'),
                     'category_name' => $this->input->post('category_name'),
                     'created_at' => date("Y-m-d H:i:s a"),
+                    'is_blocked' => $this->input->post('is_blocked'),
                 ];
                 $result = $this->Admin_category_model->insert_record('sub_categories', $insert_array);
                 if ($result)
@@ -169,25 +173,25 @@ class Sub_categories extends CI_Controller
     public function block($id)
     {
         $id = decode($id);
-        $this->Admin_category_model->update_record('categories', ['id' => $id], ['is_blocked' => '1']);
+        $this->Admin_category_model->update_record('sub_categories', ['id' => $id], ['is_blocked' => '1']);
         $this->session->set_flashdata('message', ['message' => 'Category Successfully blocked.', 'class' => 'success']);
-        redirect('admin/categories');
+        redirect('admin/sub_categories');
     }
 
     public function activate($id)
     {
         $id = decode($id);
-        $this->Admin_category_model->update_record('categories', ['id' => $id], ['is_blocked' => '0']);
+        $this->Admin_category_model->update_record('sub_categories', ['id' => $id], ['is_blocked' => '0']);
         $this->session->set_flashdata('message', ['message' => 'Category Successfully activated.', 'class' => 'success']);
-        redirect('admin/categories');
+        redirect('admin/sub_categories');
     }
 
     public function delete($id)
     {
         $id = decode($id);
-        $this->Admin_category_model->update_record('categories', ['id' => $id], ['is_deleted' => '1']);
+        $this->Admin_category_model->update_record('sub_categories', ['id' => $id], ['is_deleted' => '1']);
         $this->session->set_flashdata('message', ['message' => 'Category Successfully deleted.', 'class' => 'success']);
-        redirect('admin/categories');
+        redirect('admin/sub_categories');
     }
 
     /**
@@ -197,7 +201,7 @@ class Sub_categories extends CI_Controller
     {
         if (array_key_exists('category_name', $_POST))
         {
-            if ($this->Admin_category_model->CheckExist($this->input->post('category_name'), $id) > 0)
+            if ($this->Admin_category_model->CheckSubExist($this->input->post('category_name'), $id) > 0)
                 echo json_encode(FALSE);
             else
                 echo json_encode(TRUE);
