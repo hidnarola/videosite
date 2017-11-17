@@ -18,13 +18,9 @@ class Registration extends CI_Controller {
             $data['subview']='front/login_front';
             $this->load->view('front/layouts/layout_main',$data);
         }else{
-
             echo "success";
-
         }
     }
-
-
 
     public function user(){
 
@@ -85,6 +81,23 @@ class Registration extends CI_Controller {
         }else{
             $email_id = $this->input->post('email_id');
             $res = $this->Users_model->get_data(['email_id'=>$email_id],true);
+            $random_no = random_string('alnum',5);
+
+            $this->Users_model->update_user_data($res['id'],['activation_code'=>$random_no]);
+
+            $html_content = '<h1> Hello World </h1> <a href="'.base_url().'registration/verify_email/'.$random_no.'"> Click Here </a>';
+
+            $email_config = mail_config();
+            $this->email->initialize($email_config);
+            $subject='Reset Password';
+            $this->email->from('test@mail.com')
+                        ->to('vpa@narola.email')
+                        ->subject($subject)
+                        ->message($html_content);
+            $this->email->send();
+
+            $this->session->set_flashdata('success','User has been inserted successfully.');
+            redirect('registration/user');
             echo "Success";
         }
     }
@@ -95,6 +108,14 @@ class Registration extends CI_Controller {
 
     public function verify_email($code){
         
+        $res = $this->Users_model->get_data(['activation_code'=>$code],true);
+        if(!empty($res)){
+            $this->Users_model->update_user_data($res['id'],['is_verified'=>'1','activation_code'=>'']);
+            redirect('registration/login');
+        }else{
+            $this->session->set_flashdata('error','Verification code is Invalid.');
+            // redirect here
+        }
     }
 
     /*=============================================================
