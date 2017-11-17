@@ -88,7 +88,7 @@
                                 }
                                 else
                                 {
-                                    echo DEFAULT_IMAGE_PATH . 'user/user-img.jpg';
+                                    echo DEFAULT_ADMIN_IMAGE_PATH . 'placeholder.jpg';
                                 }
                                 ?>" style="height:100px;width:100px;"/>
                             </div>

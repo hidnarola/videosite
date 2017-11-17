@@ -29,7 +29,7 @@
     <!-- content area -->    
     <div class="panel panel-flat">
         <div class="panel-heading text-right">
-            <a href="<?php echo site_url('admin/users/add'); ?>" class="btn btn-success btn-labeled"><b><i class="icon-checkmark-circle"></i></b> Add new user</a>
+            <a href="<?php echo site_url('admin/users/add'); ?>" class="btn btn-success btn-labeled"><b><i class="icon-user-plus"></i></b> Add new user</a>
         </div>
         <table class="table datatable-basic">
             <thead>
@@ -54,6 +54,7 @@
             serverSide: true,
             language: {
                 search: '<span>Filter:</span> _INPUT_',
+                searchPlaceholder: "First Name,Last Name,Email,...",
                 lengthMenu: '<span>Show:</span> _MENU_',
                 paginate: {'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;'}
             },

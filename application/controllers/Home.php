@@ -11,7 +11,6 @@ class Home extends CI_Controller {
 
 	public function index(){
 		$data['subview']="front/home";
-//		$data['all_testimonials'] = $this->Testimonial_model->fetch_testimonial();		
 		$this->load->view('front/layouts/layout_main',$data);
 	}
 	 

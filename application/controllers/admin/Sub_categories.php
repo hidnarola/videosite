@@ -98,6 +98,8 @@ class Sub_categories extends CI_Controller
         if ($this->input->post())
         {
             $this->form_validation->set_rules('category_name', 'Category Name', 'trim|required');
+            $this->form_validation->set_rules('field_keywords', 'Main Category', 'trim|required');
+
             if ($this->form_validation->run() == FALSE)
             {
                 $data['subview'] = 'admin/categories/manage_sub';
@@ -140,7 +142,8 @@ class Sub_categories extends CI_Controller
         if ($this->input->post())
         {
             $this->form_validation->set_rules('category_name', 'Category Name', 'trim|required');
-            $this->form_validation->set_rules('hid', 'Main Category', 'trim|required');
+//            $this->form_validation->set_rules('hid', 'Main Category', 'trim|required');
+            $this->form_validation->set_rules('field_keywords', 'Main Category', 'trim|required');
             if ($this->form_validation->run() == FALSE)
             {
                 $data['subview'] = 'admin/categories/manage_sub';

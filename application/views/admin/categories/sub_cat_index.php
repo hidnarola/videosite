@@ -52,6 +52,7 @@
             serverSide: true,
             language: {
                 search: '<span>Filter:</span> _INPUT_',
+                searchPlaceholder: "Main Category,Category Name,...",
                 lengthMenu: '<span>Show:</span> _MENU_',
                 paginate: {'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;'}
             },

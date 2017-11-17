@@ -50,6 +50,7 @@
             serverSide: true,
             language: {
                 search: '<span>Filter:</span> _INPUT_',
+                searchPlaceholder: "CMS Page Title,SEO Title,...",
                 lengthMenu: '<span>Show:</span> _MENU_',
                 paginate: {'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;'}
             },

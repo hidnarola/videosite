@@ -147,7 +147,7 @@ class Admin_category_model extends CI_Model
 
         if (!empty($keyword['value']))
         {
-            $this->db->having('s.category_name LIKE "%' . $keyword['value'] . '%"', NULL);
+            $this->db->having('s.category_name LIKE "%' . $keyword['value'] . '%" OR c.category_name LIKE "%' . $keyword['value'] . '%"', NULL);
         }
 
         $this->db->limit($this->input->get('length'), $this->input->get('start'));
@@ -170,7 +170,7 @@ class Admin_category_model extends CI_Model
 
         if (!empty($keyword['value']))
         {
-            $this->db->having('s.category_name LIKE "%' . $keyword['value'] . '%"', NULL);
+            $this->db->having('s.category_name LIKE "%' . $keyword['value'] . '%" OR c.category_name LIKE "%' . $keyword['value'] . '%"', NULL);
         }
         $res_data = $this->db->get('sub_categories s')->num_rows();
         return $res_data;

@@ -45,7 +45,7 @@
                                 else
                                 {
                                     ?>
-                                    <input type="search" autocomplete="off" class="form-control" name="field-keywords" placeholder="Type your search terms..." id="twotabsearchtextbox1" value="<?php echo (isset($cats['category_name'])) ? $cats['category_name'] : set_value('field-keywords'); ?>"></div><?php } ?>
+                                    <input type="search" autocomplete="off" class="form-control" name="field_keywords" placeholder="Type your search terms..." id="twotabsearchtextbox1" value="<?php echo (isset($cats['category_name'])) ? $cats['category_name'] : set_value('field-keywords'); ?>"></div><?php } ?>
                             <!--</form>-->
                         </div>
                     </div>
@@ -134,6 +134,7 @@
             label.addClass("validation-valid-label").text("Success.")
         },
         rules: {
+            field_keywords: {required: true},
             category_name: {
                 required: true,
                 remote: {
@@ -149,6 +150,7 @@
 
         },
         messages: {
+            field_keywords: {required: "Please Select Category First."},
             category_name: {
                 required: "Please provide a Category Name",
                 remote: "Category Name is already exist, please choose diffrent Name"
