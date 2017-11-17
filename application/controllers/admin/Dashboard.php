@@ -35,8 +35,6 @@ class Dashboard extends CI_Controller {
 
         $session_data = $this->session->userdata('admin');
         $data['user_data'] = $this->Users_model->check_if_user_exist(['id' => $session_data['id']], false, true,['1','2','3']);
-        $data['country_list']=$this->Country_model->get_result('country');
-        $data['state_list']=$this->Country_model->get_result('states',['country_id'=>'231']);        
         if (empty($data['user_data'])) {
             redirect('admin/login');
         }                
@@ -58,18 +56,9 @@ class Dashboard extends CI_Controller {
                     'fname' => $this->input->post('fname'),
                     'lname' => $this->input->post('lname'),
                     'email_id' => $this->input->post('email_id'),
-                    'address' => $this->input->post('address'),
-                    'street'=>$this->input->post('street'),
-                    'city' => $this->input->post('city'),
-                    'state_id' => $this->input->post('state_id'),
-                    'country_id' => '231',
-                    'zipcode' => $this->input->post('zipcode'),
-                    'gender' => $this->input->post('gender'),
-                    'phone' => $this->input->post('phone'),
+                    'username' => $this->input->post('username'),
                     'avatar'  => $avtar['msg'],  
                     'birth_date' => $this->input->post('birth_date'),
-                    'longitude' => $this->input->post('longitude'),
-                    'latitude' => $this->input->post('latitude'),
                 );
 
                 $user_id = $session_data['id']; 

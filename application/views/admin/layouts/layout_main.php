@@ -95,7 +95,7 @@ else
                                     <li class="<?php echo (in_array($controller, ['doctor', 'patient', 'users'])) ? 'active' : ''; ?>">
                                         <a href="#" class="has-ul"><i class="icon-users4"></i> <span>Users</span></a>
                                         <ul style="">
-                                            <li class="<?php echo (in_array($controller, ['patient'])) ? 'active' : ''; ?>">
+<!--                                            <li class="<?php echo (in_array($controller, ['patient'])) ? 'active' : ''; ?>">
                                                 <a href="<?php echo base_url() . 'admin/patient'; ?>">
                                                     <i class="icon-arrow-right32"></i>
                                                     Patients
@@ -106,7 +106,7 @@ else
                                                     <i class="icon-arrow-right32"></i>
                                                     Doctors
                                                 </a>
-                                            </li>
+                                            </li>-->
                                             <li class="<?php echo (in_array($controller, ['users'])) ? 'active' : ''; ?>">
                                                 <a href="<?php echo base_url() . 'admin/users'; ?>">
                                                     <i class="icon-arrow-right32"></i>
@@ -116,19 +116,19 @@ else
                                         </ul>
                                     </li>
 
-                                    <li class="<?php echo ($controller == 'email_template') ? 'active' : ''; ?>">
+<!--                                    <li class="<?php echo ($controller == 'email_template') ? 'active' : ''; ?>">
                                         <a href="<?php echo base_url() . 'admin/email_template'; ?>">
                                             <i class="icon-envelop"></i>
                                             <span>Email Template</span>
                                         </a>
-                                    </li>
+                                    </li>-->
 
-                                    <li class="<?php echo ($controller == 'contact_inquiry') ? 'active' : ''; ?>">
+<!--                                    <li class="<?php echo ($controller == 'contact_inquiry') ? 'active' : ''; ?>">
                                         <a href="<?php echo base_url() . 'admin/contact_inquiry'; ?>">
                                             <i class="icon-phone-plus2"></i>
                                             <span>Contact Inquiry</span>
                                         </a>
-                                    </li>                                    
+                                    </li>                                    -->
 
 
                                     <li class="<?php echo (in_array($controller, ['testimonial', 'blogs', 'cms'])) ? 'active' : ''; ?>">

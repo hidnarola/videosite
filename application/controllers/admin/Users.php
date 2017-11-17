@@ -6,7 +6,7 @@ class Users extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model(['admin/Admin_users_model', 'Users_model','Country_model']);
+        $this->load->model(['admin/Admin_users_model', 'Users_model']);
         check_admin_login();
     }
 
@@ -60,8 +60,7 @@ class Users extends CI_Controller {
 
     public function add() {
         $data['heading'] = 'Add User';
-        $data['country_list']=$this->Country_model->get_result('country');
-        $data['state_list']=$this->Country_model->get_result('states',['country_id'=>'231']);
+        
         if ($this->input->post()) {
 
             $avtar['msg']='';
@@ -80,18 +79,9 @@ class Users extends CI_Controller {
                     'fname' => $this->input->post('fname'),
                     'lname' => $this->input->post('lname'),
                     'email_id' => $this->input->post('email_id'),
-                    'address' => $this->input->post('address'),
-                    'street'=>$this->input->post('street'),
-                    'city' => $this->input->post('city'),
-                    'state_id' => $this->input->post('state_id'),
-                    'country_id' => '231',
-                    'zipcode' => $this->input->post('zipcode'),
-                    'gender' => $this->input->post('gender'),
-                    'phone' => $this->input->post('phone'),
+                    'username' => $this->input->post('username'),
                     'avatar'  => $avtar['msg'], 
                     'birth_date' => $this->input->post('birth_date'),
-                    'longitude' => $this->input->post('longitude'),
-                    'latitude' => $this->input->post('latitude'),
                     'activation_code'  => $rand,
                     'is_verified' => '1', // 1 Means Account is not Verified
                     'created_at'=>date('Y-m-d H:i:s')
@@ -137,8 +127,6 @@ class Users extends CI_Controller {
         $user_id=decode($id);
         $data['heading'] = 'Edit User';
         $data['user_data'] = $this->Users_model->get_data(['id' => $user_id],true);
-        $data['country_list']=$this->Country_model->get_result('country');
-        $data['state_list']=$this->Country_model->get_result('states',['country_id'=>'231']);
 
         if ($this->input->post()) {
             $avtar['msg']='';
@@ -162,18 +150,8 @@ class Users extends CI_Controller {
                         'fname' => $this->input->post('fname'),
                         'lname' => $this->input->post('lname'),
                         'email_id' => $this->input->post('email_id'),
-                        'address' => $this->input->post('address'),
-                        'street'=>$this->input->post('street'),
-                        'city' => $this->input->post('city'),
-                        'state_id' => $this->input->post('state_id'),
-                        'country_id' => '231',
-                        'zipcode' => $this->input->post('zipcode'),
-                        'gender' => $this->input->post('gender'),
-                        'phone' => $this->input->post('phone'),
                         'avatar'  => $avtar['msg'],
                         'birth_date' => $this->input->post('birth_date'),
-                        'longitude' => $this->input->post('longitude'),
-                        'latitude' => $this->input->post('latitude'),
                     );
 
             $res=$this->Users_model->update_user_data($user_id,$upd_data);

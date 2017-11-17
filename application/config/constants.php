@@ -112,3 +112,4 @@ defined('DEFAULT_MOBILE_IMAGE_PATH') OR define('DEFAULT_MOBILE_IMAGE_PATH', Asse
 defined('DEFAULT_MOBILE_JS_PATH') OR define('DEFAULT_MOBILE_JS_PATH', Asset_path . 'public/mobile/js/'); // highest automatically-assigned error code
 defined('DEFAULT_MOBILE_CSS_PATH') OR define('DEFAULT_MOBILE_CSS_PATH', Asset_path . 'public/mobile/css/'); // highest automatically-assigned error code
 defined('DEFAULT_BLOG_IMAGE_PATH') OR define('DEFAULT_BLOG_IMAGE_PATH', Asset_path . 'uploads/blogs/'); // highest automatically-assigned error code
+defined('DEFAULT_USER_IMAGE_PATH') OR define('DEFAULT_USER_IMAGE_PATH', Asset_path . 'uploads/avatars/'); // highest automatically-assigned error code

@@ -5,7 +5,7 @@ class Doctor extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model(array('Users_model','Country_model'));
+		$this->load->model(array('Users_model'));
         check_admin_login();
 	}
 
@@ -15,8 +15,6 @@ class Doctor extends CI_Controller {
 	}
 
 	public function add(){
-		$data['country_list']=$this->Country_model->get_result('country');
-        $data['state_list']=$this->Country_model->get_result('states',['country_id'=>'231']);        
 		
         if($_POST){
 			$rand=random_string('alnum',5);
@@ -74,8 +72,6 @@ class Doctor extends CI_Controller {
     public function edit($id){
         
         $id = decode($id);
-        $data['country_list']=$this->Country_model->get_result('country');
-        $data['state_list']=$this->Country_model->get_result('states',['country_id'=>'231']);
         $data['doctor_data'] = $this->Users_model->get_data(['id'=>$id],true);        
         // pr($data['doctor_data'],1);
         if($_POST){

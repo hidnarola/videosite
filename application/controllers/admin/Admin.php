@@ -89,7 +89,7 @@ class Admin extends CI_Controller {
         }else{
             $password = $this->input->post('password');
             $encode_password = $this->encrypt->encode($password);
-            $this->Users_model->update_user_data($res['id'],['password'=>$encode_password,'is_verified'=>'0','activation_code'=>'']);
+            $this->Users_model->update_user_data($res['id'],['password'=>$encode_password,'is_verified'=>'1','activation_code'=>'']);
             $this->session->set_flashdata('message', ['message' => 'Password has been successfully set.Try email and password to login.', 'class' => 'alert alert-success']);
             redirect('admin/login');
         }
@@ -105,17 +105,20 @@ class Admin extends CI_Controller {
             $user_data=$this->Users_model->check_if_user_exist(['email_id' => $this->input->post('email_id')], false, true,['1','2','3']);
             if($user_data){
 
-                $rand=random_string('alnum',5);
-                $this->db->set('activation_code', $rand);
+                $random_no=random_string('alnum',5);
+                $this->db->set('activation_code', $random_no);
                 $this->db->where('id',$user_data['id']);
                 $this->db->update('users');
 
                 //------ For Email Template -----------
                 /* Param 1 : 'Email Template Slug' , Param 2 : 'HTML Template File Name' */
-                $html_content=mailer('forgot_password','AccountActivation'); 
-                $username= $user_data['fname']." ".$user_data['lname'];
-                $html_content = str_replace("@USERNAME@",$username,$html_content);
-                $html_content = str_replace("@FORGOTLINK@",base_url('admin/set_password/'.$rand),$html_content);
+//                $html_content=mailer('forgot_password','AccountActivation'); 
+//                $username= $user_data['fname']." ".$user_data['lname'];
+//                $html_content = str_replace("@USERNAME@",$username,$html_content);
+//                $html_content = str_replace("@FORGOTLINK@",base_url('admin/set_password/'.$rand),$html_content);
+                
+                $html_content = '<h1> Hello World </h1> <a href="'.base_url().'admin/set_password/'.$random_no.'"> Click Here </a>';
+                
                 //--------------------------------------
 
                 $email_config = mail_config();

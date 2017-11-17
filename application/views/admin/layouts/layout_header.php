@@ -17,7 +17,7 @@
     <!-- /global stylesheets -->
 
     <link rel="stylesheet" href="">
-    <link href="<?= DEFAULT_CSS_PATH ?>tooth.css" rel="stylesheet" type="text/css" />
+    <!--<link href="<?= DEFAULT_CSS_PATH ?>tooth.css" rel="stylesheet" type="text/css" />-->
 
 
     <style type="text/css">

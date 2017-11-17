@@ -5,13 +5,13 @@ class Home extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model(['Testimonial_model','Notification_model','Users_model','Reminders_model','Rfp_model']);
+		$this->load->model(['Users_model']);
 		$this->load->helper('paypal_helper');
 	}
 
 	public function index(){
 		$data['subview']="front/home";
-		$data['all_testimonials'] = $this->Testimonial_model->fetch_testimonial();		
+//		$data['all_testimonials'] = $this->Testimonial_model->fetch_testimonial();		
 		$this->load->view('front/layouts/layout_main',$data);
 	}
 	 
