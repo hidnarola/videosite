@@ -34,6 +34,7 @@
                 <tr>
                     <th>Blog ID.</th>
                     <th>Blog Title</th>                     
+                    <th>Username</th>                     
                     <th>Created Date</th>                        
                     <th width="100px">Action</th>
                 </tr>
@@ -68,6 +69,11 @@
                 {
                     sortable: false,
                     data: "blog_title",
+                    visible: true
+                },
+                {
+                    sortable: false,
+                    data: "username",
                     visible: true
                 },
                 {

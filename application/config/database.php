@@ -71,33 +71,87 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   | The $query_builder variables lets you determine whether or not to load
   | the query builder class.
 
-    dbname - dentall
-    host - http://35.184.249.74
-    uanme - tootusernew
-    pass - tootuserpassword
+  dbname - dentall
+  host - http://35.184.249.74
+  uanme - tootusernew
+  pass - tootuserpassword
  */
+
 $active_group = 'default';
 $query_builder = TRUE;
 
-$db['default'] = array(
-    'dsn' => '',
-    'hostname' => '192.168.1.202',
-    'username' => 'videosite',
-    'password' => 'SRxeFo456FeK8Sz',
-    // 'password' => '',
-    'database' => 'videosite',
-    'dbdriver' => 'mysqli',
-    'dbprefix' => '',
-    'pconnect' => FALSE,
-    'db_debug' => (ENVIRONMENT !== 'production'),
-    'cache_on' => FALSE,
-    'cachedir' => '',
-    'char_set' => 'utf8',
-    'dbcollat' => 'utf8_general_ci',
-    'swap_pre' => '',
-    'encrypt' => FALSE,
-    'compress' => FALSE,
-    'stricton' => FALSE,
-    'failover' => array(),
-    'save_queries' => TRUE
-);
+$servername = $_SERVER['SERVER_NAME'];
+if ($servername == 'clientapp.narola.online' || $servername == '192.168.1.202')
+{
+    $db['default'] = array(
+        'dsn' => '',
+        'hostname' => '192.168.1.202',
+        'username' => 'videosite',
+        'password' => 'SRxeFo456FeK8Sz',
+        // 'password' => '',
+        'database' => 'videosite',
+        'dbdriver' => 'mysqli',
+        'dbprefix' => '',
+        'pconnect' => FALSE,
+        'db_debug' => (ENVIRONMENT !== 'production'),
+        'cache_on' => FALSE,
+        'cachedir' => '',
+        'char_set' => 'utf8',
+        'dbcollat' => 'utf8_general_ci',
+        'swap_pre' => '',
+        'encrypt' => FALSE,
+        'compress' => FALSE,
+        'stricton' => FALSE,
+        'failover' => array(),
+        'save_queries' => TRUE
+    );
+}
+else if ($servername == 'http://localhost/videosite/')
+{
+    $db['default'] = array(
+        'dsn' => '',
+        'hostname' => 'localhost',
+        'username' => 'root',
+        'password' => '',
+        'database' => 'videosite',
+        'dbdriver' => 'mysqli',
+        'dbprefix' => '',
+        'pconnect' => FALSE,
+        'db_debug' => (ENVIRONMENT !== 'production'),
+        'cache_on' => FALSE,
+        'cachedir' => '',
+        'char_set' => 'utf8',
+        'dbcollat' => 'utf8_general_ci',
+        'swap_pre' => '',
+        'encrypt' => FALSE,
+        'compress' => FALSE,
+        'stricton' => FALSE,
+        'failover' => array(),
+        'save_queries' => TRUE
+    );
+}
+else
+{
+
+    $db['default'] = array(
+        'dsn' => '',
+        'hostname' => 'localhost',
+        'username' => 'root',
+        'password' => '',
+        'database' => 'videosite',
+        'dbdriver' => 'mysqli',
+        'dbprefix' => '',
+        'pconnect' => FALSE,
+        'db_debug' => (ENVIRONMENT !== 'production'),
+        'cache_on' => FALSE,
+        'cachedir' => '',
+        'char_set' => 'utf8',
+        'dbcollat' => 'utf8_general_ci',
+        'swap_pre' => '',
+        'encrypt' => FALSE,
+        'compress' => FALSE,
+        'stricton' => FALSE,
+        'failover' => array(),
+        'save_queries' => TRUE
+    );
+}

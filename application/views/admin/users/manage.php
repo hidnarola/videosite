@@ -96,7 +96,7 @@
                                 {
                                     echo DEFAULT_ADMIN_IMAGE_PATH . 'placeholder.jpg';
                                 }
-                        ?>" style="height:100px;width:100px;"/>
+                                ?>" style="height:100px;width:100px;"/>
                             </div>
                         </div>
                         <div class="text-right">
@@ -111,49 +111,49 @@
 
 <script src="<?php echo DEFAULT_ADMIN_JS_PATH ?>plugins/forms/validation/additional_methods.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-                $('.file-input').fileinput({
-                    browseLabel: 'Browse',
-                    browseIcon: '<i class="icon-file-plus"></i>',
-                    uploadIcon: '<i class="icon-file-upload2"></i>',
-                    removeIcon: '<i class="icon-cross3"></i>',
-                    layoutTemplates: {
-                        icon: '<i class="icon-file-check"></i>'
-                    },
-                    initialCaption: "No file selected"
-                });
-                 $('.fileinput-upload-button').hide();
-                function readURL(input) {
-                    if (input.files && input.files[0]) {
-                        var reader = new FileReader();
-                        reader.onload = function (e) {
-                            $('#img-preview').attr('src', e.target.result);
-                        }
-                        reader.readAsDataURL(input.files[0]);
-                    }
-                }
+    $('.file-input').fileinput({
+        browseLabel: 'Browse',
+        browseIcon: '<i class="icon-file-plus"></i>',
+        uploadIcon: '<i class="icon-file-upload2"></i>',
+        removeIcon: '<i class="icon-cross3"></i>',
+        layoutTemplates: {
+            icon: '<i class="icon-file-check"></i>'
+        },
+        initialCaption: "No file selected"
+    });
+    $('.fileinput-upload-button').hide();
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#img-preview').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
 
-                $("input[name='avatar']").change(function () {
-                    readURL(this);
-                });
+    $("input[name='avatar']").change(function () {
+        readURL(this);
+    });
 
-                $(function () {
-                    // v! Simple Select and Live search select box
+    $(function () {
+        // v! Simple Select and Live search select box
 
-                    $('.select2').select2();
+        $('.select2').select2();
 
-                    // Fixed width. Single select
-                    $('.select').select2({
-                        minimumResultsForSearch: Infinity,
-                        width: 250
-                    });
+        // Fixed width. Single select
+        $('.select').select2({
+            minimumResultsForSearch: Infinity,
+            width: 250
+        });
 
-                    $("#anytime-date").AnyTime_picker({
-                        format: "%Y-%m-%d",
-                        firstDOW: 1
-                    });
+        $("#anytime-date").AnyTime_picker({
+            format: "%Y-%m-%d",
+            firstDOW: 1
+        });
 
 
-                });
+    });
 
 
 //                function check_zipcode() {
@@ -194,68 +194,70 @@
 //                    }
 //                }
 
-                // fname ,lname
-                // city country_id zipcode gender
-                //---------------------- Validation -------------------
-                $("#frmsubadmin").validate({
-                    errorClass: 'validation-error-label',
-                    successClass: 'validation-valid-label',
-                    highlight: function (element, errorClass) {
-                        $(element).removeClass(errorClass);
-                    },
-                    unhighlight: function (element, errorClass) {
-                        $(element).removeClass(errorClass);
-                    },
-                    validClass: "validation-valid-label",
-                    errorPlacement: function (error, element) {
-                        if (element[0]['id'] == "avatar") {
-                            error.insertAfter('.uploader');  // select2
-                        } else {
-                            error.insertAfter(element)
-                        }
-                    },
-                    ignore: [],
-                    rules: {
-                        role_id: {required: true},
-                        fname: {required: true},
-                        lname: {required: true},
-                        email_id: {
-                            required: true,
-                            remote: {
-                                url: "<?php echo base_url() . 'admin/users/check_unique'; ?>",
-                                type: "POST",
-                                data: {email_id: function () {
-                                        return $("#email_id").val();
-                                    }, old_email_id: function () {
-                                        return '<?php echo isset($user_data["email_id"]) ? $user_data["email_id"] : ''; ?>';
-                                    }}
-                            }
-                        },
-                        //address:{required: true },
+    // fname ,lname
+    // city country_id zipcode gender
+    //---------------------- Validation -------------------
+    $("#frmsubadmin").validate({
+        errorClass: 'validation-error-label',
+        successClass: 'validation-valid-label',
+        highlight: function (element, errorClass) {
+            $(element).removeClass(errorClass);
+        },
+        unhighlight: function (element, errorClass) {
+            $(element).removeClass(errorClass);
+        },
+        validClass: "validation-valid-label",
+        errorPlacement: function (error, element) {
+            if (element[0]['id'] == "avatar") {
+                error.insertAfter('.uploader');  // select2
+            } else {
+                error.insertAfter(element)
+            }
+        },
+        ignore: [],
+        rules: {
+            role_id: {required: true},
+            fname: {required: true},
+            lname: {required: true},
+            username: {required: true},
+            email_id: {
+                required: true,
+                remote: {
+                    url: "<?php echo base_url() . 'admin/users/check_unique'; ?>",
+                    type: "POST",
+                    data: {email_id: function () {
+                            return $("#email_id").val();
+                        }, old_email_id: function () {
+                            return '<?php echo isset($user_data["email_id"]) ? $user_data["email_id"] : ''; ?>';
+                        }}
+                }
+            },
+            //address:{required: true },
 
-                        birth_date: {required: true},
-                        avatar: {
-                            extension: "jpg|jpeg|png|gif"
-                        }
-                    },
-                    messages: {
-                        role_id: {required: 'Please Select a User Role'},
-                        fname: {required: 'Please provide a First Name'},
-                        lname: {required: 'Please provide a Last Name'},
-                        email_id: {
-                            required: 'Please provide a Email Address',
-                            remote: "( Each email address may be used only for one profile.) This Email is already in use, please, use a different address or <a href='<?php echo base_url() . 'contact_us'; ?>'> Contact Us </a>"
-                        },
-                        //address:{required: 'Please provide a Address' },
+            birth_date: {required: true},
+            avatar: {
+                extension: "jpg|jpeg|png|gif"
+            }
+        },
+        messages: {
+            role_id: {required: 'Please Select a User Role'},
+            fname: {required: 'Please provide a First Name'},
+            lname: {required: 'Please provide a Last Name'},
+            username:{required: 'Please provide a Username'},
+            email_id: {
+                required: 'Please provide a Email Address',
+                remote: "( Each email address may be used only for one profile.) This Email is already in use, please, use a different address or <a href='<?php echo base_url() . 'contact_us'; ?>'> Contact Us </a>"
+            },
+            //address:{required: 'Please provide a Address' },
 
-                        birth_date: {required: 'Please Provide a Birthdate'},
-                        avatar: {
-                            extension: "Please Provide Valid Avatar <br/>(Allow .jpg,.jpeg,.png,.gif File)"
-                        }
-                    }
-                });
+            birth_date: {required: 'Please Provide a Birthdate'},
+            avatar: {
+                extension: "Please Provide Valid Avatar <br/>(Allow .jpg,.jpeg,.png,.gif File)"
+            }
+        }
+    });
 
-                $("#role_id").val("<?php echo isset($user_data['role_id']) ? $user_data['role_id'] : ''; ?>");
+    $("#role_id").val("<?php echo isset($user_data['role_id']) ? $user_data['role_id'] : ''; ?>");
 
 
 </script>

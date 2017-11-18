@@ -13,8 +13,9 @@ class Blogs_model extends CI_Model {
      */
     public function get_all_blogs() {        
         
-        $this->db->select('id,blog_title,DATE_FORMAT(created_at,"%d %b %Y <br> %l:%i %p") AS created_date,is_blocked', false);
-        $this->db->where('is_deleted !=', 1);
+        $this->db->select('b.id,user_id,blog_title,u.id as userid,u.username,DATE_FORMAT(b.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,b.is_blocked', false);
+        $this->db->join('users u','u.id = b.user_id');
+        $this->db->where('b.is_deleted !=', 1);
         
         $keyword = $this->input->get('search');
         $keyword = str_replace('"', '', $keyword);
@@ -24,7 +25,9 @@ class Blogs_model extends CI_Model {
         }
 
         $this->db->limit($this->input->get('length'), $this->input->get('start'));
-        $res_data = $this->db->get('blog')->result_array();
+        $res_data = $this->db->get('blog b')->result_array();
+//        qry();
+//        pr($res_data,1);
         return $res_data;
     }
 
@@ -35,7 +38,8 @@ class Blogs_model extends CI_Model {
      */
     public function get_blogs_count() {
        
-        $this->db->where('is_deleted !=', 1);
+        $this->db->join('users u','u.id = b.user_id');
+        $this->db->where('b.is_deleted !=', 1);
         
         $keyword = $this->input->get('search');
         $keyword = str_replace('"', '', $keyword);
@@ -44,7 +48,7 @@ class Blogs_model extends CI_Model {
             $this->db->having('blog_title LIKE "%' . $keyword['value'] . '%"', NULL);
         }
         
-        $res_data = $this->db->get('blog')->num_rows();
+        $res_data = $this->db->get('blog b')->num_rows();
         return $res_data;
     }
 
