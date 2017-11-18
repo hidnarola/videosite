@@ -27,6 +27,7 @@ class Users extends CI_Controller
     public function list_user()
     {
         $final['recordsTotal'] = $this->Admin_users_model->get_users_count();
+
         $final['redraw'] = 1;
         // $final['recordsFiltered'] = $this->admin_users_model->get_users_result(TBL_USER,$select,'count');
         $final['recordsFiltered'] = $final['recordsTotal'];
@@ -233,8 +234,7 @@ class Users extends CI_Controller
     public function view_blog($id = null)
     {
         $data['id'] = decode($id);
-//        $data['blog'] = $this->Admin_users_model->get_blogs_by_user_id($user_id);
-//        pr($data['blog'],1);
+//        $data['count'] = $this->Admin_users_model->get_blogs_by_user_count($id);
         $data['subview'] = 'admin/users/blog_index';
         $this->load->view('admin/layouts/layout_main', $data);
     }

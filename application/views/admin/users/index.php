@@ -1,4 +1,4 @@
-<!--<script type="text/javascript" src="<?php // echo DEFAULT_ADMIN_JS_PATH . "pages/datatables_data_sources.js";              ?>"></script>-->
+<!--<script type="text/javascript" src="<?php // echo DEFAULT_ADMIN_JS_PATH . "pages/datatables_data_sources.js";               ?>"></script>-->
 <script type="text/javascript" src="<?php echo DEFAULT_ADMIN_JS_PATH . "plugins/tables/datatables/datatables.min.js"; ?>"></script>
 <script type="text/javascript" src="<?php echo DEFAULT_ADMIN_JS_PATH . "plugins/forms/selects/select2.min.js"; ?>"></script>
 <!-- Page header -->
@@ -21,9 +21,9 @@
 <!-- Content area -->
 <div class="content">
 
-     <?php
-        $message = $this->session->flashdata('message');
-        echo my_flash($message);
+    <?php
+    $message = $this->session->flashdata('message');
+    echo my_flash($message);
     ?>
 
     <!-- content area -->    
@@ -39,14 +39,16 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email</th> 
+                    <th>No. Of Blogs</th> 
                     <th>Last Login</th>                       
                     <th>Created Date</th>                        
-                    <th width="100px">Action</th>
+                    <th>Action</th>
                 </tr>
             </thead>
         </table>
     </div>    
 </div>
+<?php // echo $count; die;?>
 <script>
     $(function () {
         $('.datatable-basic').dataTable({
@@ -70,7 +72,7 @@
                         return meta.row + meta.settings._iDisplayStart + 1;
                     },
                 },
-                 {
+                {
                     sortable: false,
                     data: "role_name",
                     visible: true
@@ -92,18 +94,22 @@
                 },
                 {
                     sortable: false,
+                    data: "total",
+                    visible: true
+                },
+                {
+                    sortable: false,
                     data: "last_login",
                     visible: true,
                     render: function (data, type, full, meta) {
-                        var login_date='';
-                        if(data){
+                        var login_date = '';
+                        if (data) {
                             login_date = data;
-                        }
-                        else{
+                        } else {
                             login_date = '-';
                         }
                         return login_date;
-                    },    
+                    },
                 },
                 {
                     sortable: false,
@@ -118,9 +124,9 @@
                     width: 200,
                     render: function (data, type, full, meta) {
                         var action = '';
-                        var id= encodeURIComponent(btoa(full.id));
+                        var id = encodeURIComponent(btoa(full.id));
                         if (full.is_blocked == '0') {
-                            action += '<a href="<?php echo base_url(); ?>admin/users/view_blog/' + id + '" class="btn border-success text-success-600 btn-flat btn-icon btn-rounded btn-sm" title="View"><i class="icon-eye4"></i></a>';
+                            action += '<a href="<?php echo base_url(); ?>admin/users/view_blog/' + id + '" class="btn border-success text-success-600 btn-flat btn-icon btn-rounded btn-sm" title="View"><i class="icon-eye4"></i></a>&nbsp;&nbsp;';
                             action += '<a href="<?php echo base_url(); ?>admin/users/edit/' + id + '" class="btn border-primary text-primary-600 btn-flat btn-icon btn-rounded btn-sm" title="Edit"><i class="icon-pencil3"></i></a>';
                             action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/users/action/block/' + id + '" class="btn border-warning text-warning-600 btn-flat btn-icon btn-rounded"  title="Block"><i class="icon-blocked"></i></a>'
                             action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/users/action/delete/' + id + '" class="btn border-danger text-danger-600 btn-flat btn-icon btn-rounded" title="Delete"><i class="icon-cross2"></i></a>'

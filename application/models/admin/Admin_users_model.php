@@ -16,10 +16,14 @@ class Admin_users_model extends CI_Model
     public function get_all_users()
     {
 
-        $this->db->select('u.id,u.id AS test_id,r.role_name,fname,lname,email_id,DATE_FORMAT(last_login,"%d %b %Y <br> %l:%i %p") AS last_login,DATE_FORMAT(created_at,"%d %b %Y <br> %l:%i %p") AS created_at,is_blocked', false);
+        $this->db->select('u.id,u.id AS test_id,r.role_name,fname,lname,email_id,
+                            DATE_FORMAT(last_login,"%d %b %Y <br> %l:%i %p") AS last_login,DATE_FORMAT(u.created_at,"%d %b %Y <br> %l:%i %p") AS created_at,
+                            u.is_blocked,COUNT(blg.user_id) as total', false);
         $this->db->join('role r', 'u.role_id = r.id');
+        $this->db->join('blog blg', 'u.id = blg.user_id','left');
         $this->db->where_in('role_id', [2, 3]);
-        $this->db->where('is_deleted !=', 1);
+        $this->db->where('u.is_deleted !=', 1);
+        $this->db->group_by('u.id'); 
 
         $keyword = $this->input->get('search');
         $keyword = str_replace('"', '', $keyword);
@@ -41,10 +45,17 @@ class Admin_users_model extends CI_Model
      */
     public function get_users_count()
     {
-
+    $this->db->select('u.id,u.id AS test_id,r.role_name,fname,lname,email_id,
+                            DATE_FORMAT(last_login,"%d %b %Y <br> %l:%i %p") AS last_login,DATE_FORMAT(u.created_at,"%d %b %Y <br> %l:%i %p") AS created_at,
+                            u.is_blocked,COUNT(blg.user_id) as total', false);
         $this->db->join('role r', 'u.role_id = r.id');
+        $this->db->join('blog blg', 'u.id = blg.user_id','left');
         $this->db->where_in('role_id', [2, 3]);
-        $this->db->where('is_deleted !=', 1);
+        $this->db->where('u.is_deleted !=', 1);
+        $this->db->group_by('u.id');
+//        $this->db->join('role r', 'u.role_id = r.id');
+//        $this->db->where_in('role_id', [2, 3]);
+//        $this->db->where('is_deleted !=', 1);
 
         $keyword = $this->input->get('search');
         $keyword = str_replace('"', '', $keyword);
@@ -128,6 +139,7 @@ class Admin_users_model extends CI_Model
         }
         
         $res_data = $this->db->get('blog b')->num_rows();
+//        pr($res_data,1);    
         return $res_data;
     }
 
