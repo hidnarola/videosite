@@ -4,6 +4,11 @@ $server_name = $_SERVER['SERVER_NAME'];
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+
+
+define('FFMPEG_PATH', 'C:\wamp64\www\ffmpeg\bin\ffmpeg.exe');
+
+
 /*
   |--------------------------------------------------------------------------
   | Display Debug backtrace

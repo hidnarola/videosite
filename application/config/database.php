@@ -81,6 +81,7 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $servername = $_SERVER['SERVER_NAME'];
+
 if ($servername == 'clientapp.narola.online' || $servername == '192.168.1.202')
 {
     $db['default'] = array(
@@ -107,7 +108,7 @@ if ($servername == 'clientapp.narola.online' || $servername == '192.168.1.202')
     );
 }
 else if ($servername == 'http://localhost/videosite/')
-{
+{  
     $db['default'] = array(
         'dsn' => '',
         'hostname' => 'localhost',
@@ -135,9 +136,9 @@ else
 
     $db['default'] = array(
         'dsn' => '',
-        'hostname' => 'localhost',
-        'username' => 'root',
-        'password' => '',
+        'hostname' => '192.168.1.202',
+        'username' => 'videosite',
+        'password' => 'SRxeFo456FeK8Sz',
         'database' => 'videosite',
         'dbdriver' => 'mysqli',
         'dbprefix' => '',
