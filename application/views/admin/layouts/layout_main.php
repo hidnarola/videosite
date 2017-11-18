@@ -134,12 +134,12 @@ else
                                     <li class="<?php echo (in_array($controller, ['testimonial', 'blogs', 'cms'])) ? 'active' : ''; ?>">
                                         <a href="#" class="has-ul"><i class="icon-command"></i> <span>Front Side Setting</span></a>
                                         <ul>
-                                            <li class="<?php echo ($controller == 'blogs') ? 'active' : ''; ?>">
+<!--                                            <li class="<?php echo ($controller == 'blogs') ? 'active' : ''; ?>">
                                                 <a href="<?php echo base_url() . 'admin/blogs'; ?>">
                                                     <i class="icon-blogger"></i>
                                                     <span>Blogs</span>
                                                 </a>
-                                            </li>  
+                                            </li>  -->
                                             <li class="<?php echo ($controller == 'cms') ? 'active' : ''; ?>">
                                                 <a href="<?php echo base_url() . 'admin/cms'; ?>">
                                                     <i class="icon-stack3"></i>

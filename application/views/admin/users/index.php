@@ -120,6 +120,7 @@
                         var action = '';
                         var id= encodeURIComponent(btoa(full.id));
                         if (full.is_blocked == '0') {
+                            action += '<a href="<?php echo base_url(); ?>admin/users/view_blog/' + id + '" class="btn border-success text-success-600 btn-flat btn-icon btn-rounded btn-sm" title="View"><i class="icon-eye4"></i></a>';
                             action += '<a href="<?php echo base_url(); ?>admin/users/edit/' + id + '" class="btn border-primary text-primary-600 btn-flat btn-icon btn-rounded btn-sm" title="Edit"><i class="icon-pencil3"></i></a>';
                             action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/users/action/block/' + id + '" class="btn border-warning text-warning-600 btn-flat btn-icon btn-rounded"  title="Block"><i class="icon-blocked"></i></a>'
                             action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/users/action/delete/' + id + '" class="btn border-danger text-danger-600 btn-flat btn-icon btn-rounded" title="Delete"><i class="icon-cross2"></i></a>'

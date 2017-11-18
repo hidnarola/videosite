@@ -26,8 +26,6 @@ class Blogs_model extends CI_Model {
 
         $this->db->limit($this->input->get('length'), $this->input->get('start'));
         $res_data = $this->db->get('blog b')->result_array();
-//        qry();
-//        pr($res_data,1);
         return $res_data;
     }
 
