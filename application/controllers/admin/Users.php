@@ -234,6 +234,8 @@ class Users extends CI_Controller
     public function view_post($id = null)
     {
         $data['id'] = $id;
+        $user_id = decode($id);
+        $data['post'] = $this->Admin_users_model->get_user_by_id($user_id);
         $data['subview'] = 'admin/users/post_index';
         $this->load->view('admin/layouts/layout_main', $data);
     }

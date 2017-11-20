@@ -112,6 +112,7 @@ class Sub_categories extends CI_Controller
                     'category_name' => $this->input->post('category_name'),
                     'is_blocked' => $this->input->post('is_blocked'),
                 ];
+                pr($update_array,1);
 
                 $result = $this->Admin_category_model->update_record('sub_categories', $where, $update_array);
                 if ($result)
@@ -157,6 +158,7 @@ class Sub_categories extends CI_Controller
                     'created_at' => date("Y-m-d H:i:s a"),
                     'is_blocked' => $this->input->post('is_blocked'),
                 ];
+//                pr($insert_array);die;
                 $result = $this->Admin_category_model->insert_record('sub_categories', $insert_array);
                 if ($result)
                 {

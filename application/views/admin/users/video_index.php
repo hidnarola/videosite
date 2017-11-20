@@ -10,7 +10,8 @@
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li><a href="<?php echo base_url() . "admin/dashboard" ?>"><i class="icon-home2 position-left"></i> Admin</a></li>
-            <li>User Video</li>
+            <li><a href="<?php echo base_url() . "admin/users" ?>"><i class="icon-users4 position-left"></i>Sub Users</a></li>
+            <li>User's Video</li>
         </ul>
     </div>
 </div>
@@ -26,9 +27,9 @@
     <!-- content area -->
 
     <div class="panel panel-flat">
-<!--        <div class="panel-heading text-right">
-            <a href="<?php echo site_url('admin/videos/add'); ?>" class="btn btn-success btn-labeled"><b><i class=" icon-plus-circle2"></i></b> Add New Video</a>
-        </div>-->
+        <!--        <div class="panel-heading text-right">
+                    <a href="<?php echo site_url('admin/videos/add'); ?>" class="btn btn-success btn-labeled"><b><i class=" icon-plus-circle2"></i></b> Add New Video</a>
+                </div>-->
         <table class="table datatable-basic">
             <thead>
                 <tr>
