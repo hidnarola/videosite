@@ -64,6 +64,11 @@
         return $CI->session->userdata('loggedin');
     }
 
+    function is_client_loggedin() {
+        $CI = & get_instance();
+        return $CI->session->userdata('client');
+    }
+
     // v! Custom Flash message to dispay flash message dynamically
     // For use this func you need to set flash message in an array
     // class 'danger' can be replace with success or primary
@@ -148,9 +153,7 @@
             'headerCharset' => 'iso-8859-1',
             'mailtype' => 'html'
         );
-
-  
-
+        
         return $configs;
     }
 
@@ -272,29 +275,7 @@
         }else{
             return $res;
         }
-        
-    }
-
-
-    /* For Email Template (DHK)
-    /* Param 1 :  $template_name => Field name 'slug_title'
-    /* Param 2 :  $template_file => HTML Template File Name
-    */
-    function mailer($template_name,$template_file){
-
-        $filename = base_url('public/email_templates/'.$template_file.'.html');
-        $tpl = file_get_contents($filename, true);
-        $content=fetch_email_content($template_name);
-        $tpl = str_replace("@BODY@",$content,$tpl);
-        $tpl = str_replace("@TPLURL@",base_url('public/email_templates/images'),$tpl);
-        $tpl = str_replace("@BASEURL@",base_url(),$tpl);
-        $tpl = str_replace("@FB@",config('facebook_link'),$tpl);
-        $tpl = str_replace("@TWITTER@",config('twitter_link'),$tpl);
-        $tpl = str_replace("@GPLUS@",config('gplus_link'),$tpl);
-        $tpl = str_replace("@YOUTUBE@",config('youtube_link'),$tpl);
-        $tpl = str_replace("@AEMAIL@",config('contact_email'),$tpl);
-        return $tpl;
-    }
+    }   
 
     function check_admin_login(){
         $CI =& get_instance();
@@ -315,41 +296,6 @@
         }
     }
 
-    function get_notifications($limit="3",$offset="0"){
-        $CI =& get_instance();
-        $CI->load->model('Notification_model');
-        $userdata = $CI->session->userdata('client');
-        if(!empty($userdata)){
-            $u_id = $userdata['id'];
-            $all_notifications = $CI->Notification_model->get_all_notifications($u_id,$limit,$offset);
-            return $all_notifications;
-        }else{
-            return false;
-        }
-    }
-
-    function get_total_noti_count(){
-        $CI =& get_instance();
-        $CI->load->model('Notification_model');
-        $userdata = $CI->session->userdata('client');
-        if(!empty($userdata)){
-            $u_id = $userdata['id'];
-            $all_notifications = $CI->Notification_model->get_all_notifications_count($u_id);
-            return $all_notifications;
-        }else{
-            return false;
-        }
-    }
-
-    function get_notifications_unread_count(){
-        $CI =& get_instance();
-        $CI->load->model('Notification_model');
-        $userdata = $CI->session->userdata('client');
-        $u_id = $userdata['id'];
-        $all_notifications = $CI->Notification_model->get_unread_cnt($u_id);
-        return $all_notifications;
-    }
-
     function get_no_of_days($start_date){
         
         $current_date = date('Y-m-d');        
@@ -360,27 +306,6 @@
         $numberDays = $timeDiff/86400;  // 86400 seconds in one day
         // and you might want to convert to integer
         return $numberDays = intval($numberDays);
-    }    
-
-    function rfp_status_label($rfp_status){
-        if($rfp_status == 0) {
-            $status ='<span class="label label-default">Quote Request Draft</span>';
-        }elseif($rfp_status == 1) {
-             $status ='<span class="label label-primary">Quote Request Pending</span>';
-        }elseif($rfp_status == 2) {
-             $status ='<span class="label label-danger">Patient Review</span>';
-        }elseif($rfp_status == 3) {
-             $status ='<span class="label label-info">Quote Request Received</span>';
-        }elseif($rfp_status == 4) {
-             $status ='<span class="label label-warning">Doctor Confirmation Pending</span>';
-        }elseif($rfp_status == 5) {
-             $status ='<span class="label label-primary">Appointment Pending</span>';
-        }elseif($rfp_status == 6) {
-            $status ='<span class="label label-dark-blue">Service in Progress</span>';         
-        }elseif($rfp_status == 7) {
-            $status ='<span class="label label-success">Closed</span>';         
-        } 
-        return $status;
     }
 
     function detect_device(){

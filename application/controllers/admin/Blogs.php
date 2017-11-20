@@ -16,9 +16,7 @@ class Blogs extends CI_Controller
     /**
      * Function load view of blog list.
      */
-    public function index()
-    {
-
+    public function index() {
         $data['subview'] = 'admin/blogs/index';
         $this->load->view('admin/layouts/layout_main', $data);
     }

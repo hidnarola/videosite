@@ -20,10 +20,9 @@ class Videos extends CI_Controller {
 		
 		if($_POST){
 
-
 			$config['upload_path'] = $path;
 			$config['allowed_types'] = '*';
-			$config['max_size']  = '100000000';			
+			$config['max_size']  = '100000000';
 			$config['encrypt_name'] = true;
 
 			$this->load->library('upload', $config);

@@ -7,6 +7,10 @@ class Registration extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model(array('Users_model'));
+        // pr(is_client_loggedin());
+        if(!empty(is_client_loggedin())){
+            redirect('dashboard');
+        }
     }
 
     public function login(){
@@ -18,7 +22,14 @@ class Registration extends CI_Controller {
             $data['subview']='front/login_front';
             $this->load->view('front/layouts/layout_main',$data);
         }else{
-            echo "success";
+            
+            $email_id = $this->input->post('email_id');
+            $user_data = $this->Users_model->get_data(['email_id'=>$email_id],true);
+
+            $this->session->set_userdata(['client' => $user_data]); // Start Loggedin User Session
+            $this->session->set_flashdata('success','Login Successfull');
+            $this->Users_model->update_user_data($user_data['id'], ['last_login' => date('Y-m-d H:i:s')]); // update last login time
+            redirect('dashboard');
         }
     }
 
@@ -66,7 +77,7 @@ class Registration extends CI_Controller {
             $this->email->send();
 
             $this->session->set_flashdata('success','User has been inserted successfully.');
-            redirect('registration/user');
+            redirect('registration/login');
         } 
     }
 
