@@ -153,6 +153,20 @@ class Categories extends CI_Controller
         $this->load->view('admin/layouts/layout_main', $data);
     }
 
+    /**
+     * Check For CAtegory Name Already Exist or Not
+     * */
+    public function check_category_name_exists($id = 0)
+    {
+        if (array_key_exists('category_name', $_POST))
+        {
+            if ($this->Admin_category_model->CheckSubExist($this->input->post('category_name'), $id) > 0)
+                echo json_encode(FALSE);
+            else
+                echo json_encode(TRUE);
+        }
+    }
+
     public function block($id)
     {
         $id = decode($id);

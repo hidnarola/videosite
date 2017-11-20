@@ -1,6 +1,6 @@
 <?php
 
-class Admin_video_model extends CI_Model
+class Admin_gallery_model extends CI_Model
 {
 
     function __construct()
@@ -13,12 +13,12 @@ class Admin_video_model extends CI_Model
      * @param : @table 
      * @author : HPA
      */
-    public function get_all_videos()
+    public function get_all_gallery()
     {
 
-        $this->db->select('v.id,user_id,title,u.id as userid,u.username,DATE_FORMAT(v.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,v.is_blocked', false);
-        $this->db->join('users u', 'u.id = v.user_id', 'left');
-        $this->db->where('v.is_deleted !=', 1);
+        $this->db->select('g.id,user_id,title,u.id as userid,u.username,DATE_FORMAT(g.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,g.is_blocked', false);
+        $this->db->join('users u', 'u.id = g.user_id', 'left');
+        $this->db->where('g.is_deleted !=', 1);
 
         $keyword = $this->input->get('search');
         $keyword = str_replace('"', '', $keyword);
@@ -29,7 +29,7 @@ class Admin_video_model extends CI_Model
         }
 
         $this->db->limit($this->input->get('length'), $this->input->get('start'));
-        $res_data = $this->db->get('video v')->result_array();
+        $res_data = $this->db->get('gallery g')->result_array();
         return $res_data;
     }
 
@@ -40,8 +40,8 @@ class Admin_video_model extends CI_Model
      */
     public function get_videos_count()
     {
-        $this->db->join('users u', 'u.id = v.user_id', 'left');
-        $this->db->where('v.is_deleted !=', 1);
+        $this->db->join('users u', 'u.id = g.user_id', 'left');
+        $this->db->where('g.is_deleted !=', 1);
 
         $keyword = $this->input->get('search');
         $keyword = str_replace('"', '', $keyword);
@@ -51,7 +51,7 @@ class Admin_video_model extends CI_Model
             $this->db->having('title LIKE "%' . $keyword['value'] . '%"', NULL);
         }
 
-        $res_data = $this->db->get('video v')->num_rows();
+        $res_data = $this->db->get('gallery g')->num_rows();
         return $res_data;
     }
 
@@ -76,9 +76,9 @@ class Admin_video_model extends CI_Model
      * @param : @table, @blog_array = array of update  
      * @author : HPA
      */
-    public function insert_record($table, $blog_array)
+    public function insert_record($table, $video_array)
     {
-        if ($this->db->insert($table, $blog_array))
+        if ($this->db->insert($table, $video_array))
         {
             return 1;
         }
@@ -106,12 +106,12 @@ class Admin_video_model extends CI_Model
         }
     }
 
-    public function get_all_video_by_user($id)
+    public function get_all_gallery_by_user($id)
     {
-        $this->db->select('v.id,user_id,title,u.id as userid,u.username,DATE_FORMAT(v.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,v.is_blocked', false);
-        $this->db->join('users u', 'u.id = v.user_id');
-        $this->db->where('v.is_deleted !=', 1);
-        $this->db->where('v.user_id', $id);
+        $this->db->select('g.id,user_id,title,u.id as userid,u.username,DATE_FORMAT(g.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,g.is_blocked', false);
+        $this->db->join('users u', 'u.id = g.user_id');
+        $this->db->where('g.is_deleted !=', 1);
+        $this->db->where('g.user_id', $id);
 
         $keyword = $this->input->get('search');
         $keyword = str_replace('"', '', $keyword);
@@ -123,15 +123,15 @@ class Admin_video_model extends CI_Model
 
         $this->db->limit($this->input->get('length'), $this->input->get('start'));
 
-        $res_data = $this->db->get('video v')->result_array();
+        $res_data = $this->db->get('gallery g')->result_array();
         return $res_data;
     }
 
-    public function get_video_by_user_count($id)
+    public function get_gallery_by_user_count($id)
     {
-        $this->db->join('users u', 'u.id = v.user_id');
-        $this->db->where('v.is_deleted !=', 1);
-        $this->db->where('v.user_id', $id);
+        $this->db->join('users u', 'u.id = g.user_id');
+        $this->db->where('g.is_deleted !=', 1);
+        $this->db->where('g.user_id', $id);
 
         $keyword = $this->input->get('search');
         $keyword = str_replace('"', '', $keyword);
@@ -141,18 +141,18 @@ class Admin_video_model extends CI_Model
             $this->db->having('title LIKE "%' . $keyword['value'] . '%"', NULL);
         }
 
-        $res_data = $this->db->get('video v')->num_rows();
+        $res_data = $this->db->get('gallery g')->num_rows();
 //        pr($res_data,1);    
         return $res_data;
     }
 
-    public function get_videos_by_user_id($id = null)
+    public function get_gallery_by_user_id($id = null)
     {
-        $this->db->select('v.id,user_id,title,u.id as userid,u.username,DATE_FORMAT(v.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,v.is_blocked');
-        $this->db->join('users u', 'u.id = v.user_id');
-        $this->db->where('v.is_deleted !=', 1);
+        $this->db->select('g.id,user_id,title,u.id as userid,u.username,DATE_FORMAT(v.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,g.is_blocked');
+        $this->db->join('users u', 'u.id = g.user_id');
+        $this->db->where('g.is_deleted !=', 1);
         $this->db->where('user_id', $id);
-        $user_blog = $this->db->get('video v')->result_array();
+        $user_blog = $this->db->get('gallery g')->result_array();
         return $user_blog;
     }
 
@@ -161,11 +161,11 @@ class Admin_video_model extends CI_Model
      * @param : @Title, @blog_id  
      * @author : DHK
      */
-    public function CheckExist($Title, $VideoId = 0)
+    public function CheckExist($Title, $GalleryId = 0)
     {
-        $this->db->from('video');
+        $this->db->from('gallery');
         $this->db->where('title', $Title);
-        $this->db->where('id !=' . $VideoId);
+        $this->db->where('id !=' . $GalleryId);
         $query = $this->db->get();
         return $query->num_rows();
     }

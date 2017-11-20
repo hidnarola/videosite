@@ -71,7 +71,12 @@ else
                                     </li>
                                     <!-- Categories Menu -->
 
-                                    <li class="<?php echo (in_array($controller, ['categories', 'subcategories',])) ? 'active' : ''; ?>">
+                                    <li class="<?php echo ($controller == 'categories') ? 'active' : ''; ?>">
+                                        <a href="<?php echo base_url() . 'admin/categories'; ?>">
+                                            <i class="icon-server"></i>
+                                            <span>Categories</span></a>
+                                    </li>
+<!--                                    <li class="<?php echo (in_array($controller, ['categories', 'subcategories',])) ? 'active' : ''; ?>">
                                         <a href="#" class="has-ul"><i class="icon-server"></i> <span>Categories</span></a>
                                         <ul style="">
                                             <li class="<?php echo (in_array($controller, ['categories'])) ? 'active' : ''; ?>">
@@ -87,7 +92,7 @@ else
                                                 </a>
                                             </li>
                                         </ul>
-                                    </li>
+                                    </li>-->
 
 
                                     <!-- USERS Menu -->

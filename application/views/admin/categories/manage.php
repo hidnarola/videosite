@@ -90,7 +90,7 @@
                     url: "<?php echo base_url('admin/categories/check_category_name_exists/' . (isset($record['id']) ? $record['id'] : '0')); ?>",
                     type: "post",
                     data: {
-                        title: function () {
+                        category_name: function () {
                             return $("#category_name").val();
                         }
                     }

@@ -4,13 +4,13 @@
 <div class="page-header page-header-default">
     <div class="page-header-content">
         <div class="page-title">
-            <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Admin</span> - User Video List</h4>
+            <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Admin</span> - User Gallery List</h4>
         </div>
     </div>
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li><a href="<?php echo base_url() . "admin/dashboard" ?>"><i class="icon-home2 position-left"></i> Admin</a></li>
-            <li>User Video</li>
+            <li>User Gallery</li>
         </ul>
     </div>
 </div>
@@ -32,8 +32,8 @@
         <table class="table datatable-basic">
             <thead>
                 <tr>
-                    <th>Video ID.</th>
-                    <th>Video Title</th>                     
+                    <th>Gallery ID.</th>
+                    <th>Gallery Title</th>                     
                     <th>Username</th>                     
                     <th>Created Date</th>                        
                     <th width="100px">Action</th>
@@ -57,7 +57,7 @@
             dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
             order: [[0, "asc"]],
             ordering: false,
-            ajax: '<?php echo base_url(); ?>admin/users/list_video/<?php echo $id ?>',
+            ajax: '<?php echo base_url(); ?>admin/users/list_gallery/<?php echo $id ?>',
                         columns: [
                             {
                                 data: "id",
@@ -92,11 +92,11 @@
                                     var id = encodeURIComponent(btoa(full.id));
                                     if (full.is_blocked == '0') {
 //                                        action += '<a href="<?php echo base_url(); ?>admin/videos/edit/' + id + '" class="btn border-primary text-primary-600 btn-flat btn-icon btn-rounded btn-sm" title="Edit"><i class="icon-pencil3"></i></a>';
-                                        action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/videos/action/block/' + id + '" class="btn border-warning text-warning-600 btn-flat btn-icon btn-rounded"  title="Block"><i class="icon-blocked"></i></a>'
-                                        action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/videos/action/delete/' + id + '" class="btn border-danger text-danger-600 btn-flat btn-icon btn-rounded btn_delete" title="Delete"><i class="icon-cross2"></i></a>'
+                                        action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/gallery/action/block/' + id + '" class="btn border-warning text-warning-600 btn-flat btn-icon btn-rounded"  title="Block"><i class="icon-blocked"></i></a>'
+                                        action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/gallery/action/delete/' + id + '" class="btn border-danger text-danger-600 btn-flat btn-icon btn-rounded btn_delete" title="Delete"><i class="icon-cross2"></i></a>'
                                     } else if (full.is_blocked == 1) {
-                                        action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/videos/action/activate/' + id + '" class="btn border-success text-success-600 btn-flat btn-icon btn-rounded"  title="Unblock"><i class="icon-checkmark-circle"></i></a>'
-                                        action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/videos/action/delete/' + id + '" class="btn border-danger text-danger-600 btn-flat btn-icon btn-rounded btn_delete" title="Delete"><i class="icon-cross2"></i></a>'
+                                        action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/gallery/action/activate/' + id + '" class="btn border-success text-success-600 btn-flat btn-icon btn-rounded"  title="Unblock"><i class="icon-checkmark-circle"></i></a>'
+                                        action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/gallery/action/delete/' + id + '" class="btn border-danger text-danger-600 btn-flat btn-icon btn-rounded btn_delete" title="Delete"><i class="icon-cross2"></i></a>'
                                     }
                                     return action;
                                 }

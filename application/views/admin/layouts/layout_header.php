@@ -2,7 +2,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dental Project</title>
+    <title>Videosite</title>
 
     <link rel="shortcut icon" type="image/ico" href="<?= DEFAULT_IMAGE_PATH ?>favicon.png"/>
     <!-- Global stylesheets -->
