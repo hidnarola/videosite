@@ -116,6 +116,12 @@ else
                                         </ul>
                                     </li>
 
+<!--                                    <li class="<?php echo ($controller == 'videos') ? 'active' : ''; ?>">
+                                        <a href="<?php echo base_url() . 'admin/videos'; ?>">
+                                            <i class="icon-video-camera"></i>
+                                            <span>Videos</span>
+                                        </a>
+                                    </li>-->
 <!--                                    <li class="<?php echo ($controller == 'email_template') ? 'active' : ''; ?>">
                                         <a href="<?php echo base_url() . 'admin/email_template'; ?>">
                                             <i class="icon-envelop"></i>

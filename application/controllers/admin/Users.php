@@ -8,7 +8,7 @@ class Users extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model(['admin/Admin_users_model', 'Users_model']);
+        $this->load->model(['admin/Admin_users_model','admin/Admin_video_model', 'Users_model']);
         check_admin_login();
     }
 
@@ -234,7 +234,6 @@ class Users extends CI_Controller
     public function view_blog($id = null)
     {
         $data['id'] = decode($id);
-//        $data['count'] = $this->Admin_users_model->get_blogs_by_user_count($id);
         $data['subview'] = 'admin/users/blog_index';
         $this->load->view('admin/layouts/layout_main', $data);
     }
@@ -248,6 +247,25 @@ class Users extends CI_Controller
         $final['redraw'] = 1;
         $final['recordsFiltered'] = $final['recordsTotal'];
         $final['data'] = $this->Admin_users_model->get_all_blogs_by_user($id);
+        echo json_encode($final);
+    }
+
+    public function view_video($id = null)
+    {
+        $data['id'] = decode($id);
+        $data['subview'] = 'admin/users/video_index';
+        $this->load->view('admin/layouts/layout_main', $data);
+    }
+
+    /**
+     * Function is used to get result based on datatable in blog list page
+     */
+    public function list_video($id = null)
+    {
+        $final['recordsTotal'] = $this->Admin_video_model->get_video_by_user_count($id);
+        $final['redraw'] = 1;
+        $final['recordsFiltered'] = $final['recordsTotal'];
+        $final['data'] = $this->Admin_video_model->get_all_video_by_user($id);
         echo json_encode($final);
     }
 
