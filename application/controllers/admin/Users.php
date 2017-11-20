@@ -231,6 +231,13 @@ class Users extends CI_Controller
         }
     }
 
+    public function view_post($id = null)
+    {
+        $data['id'] = $id;
+        $data['subview'] = 'admin/users/post_index';
+        $this->load->view('admin/layouts/layout_main', $data);
+    }
+
     public function view_blog($id = null)
     {
         $data['id'] = decode($id);
