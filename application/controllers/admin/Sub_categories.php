@@ -86,7 +86,8 @@ class Sub_categories extends CI_Controller
             if ($check_category)
             {
 //                $data['cat'] = $this->Admin_category_model->get_category_by_id($category_id);
-                $data['cat'] = $this->Admin_category_model->get_category_by_id($check_category[0]['main_cat_id']);
+                $data['sel_cat'] = $this->Admin_category_model->get_category_by_id($check_category[0]['main_cat_id']);
+                $data['cat'] = $this->Admin_category_model->get_result('categories', ['is_deleted' => '0']);
                 $data['record'] = $check_category[0];
                 $data['title'] = 'Admin edit sub category';
                 $data['heading'] = 'Edit sub category';
