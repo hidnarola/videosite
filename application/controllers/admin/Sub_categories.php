@@ -85,8 +85,6 @@ class Sub_categories extends CI_Controller
             $check_category = $this->Admin_category_model->get_result('sub_categories', $where);
             if ($check_category)
             {
-//                $data['cat'] = $this->Admin_category_model->get_category_by_id($category_id);
-                $data['sel_cat'] = $this->Admin_category_model->get_category_by_id($check_category[0]['main_cat_id']);
                 $data['cat'] = $this->Admin_category_model->get_result('categories', ['is_deleted' => '0']);
                 $data['record'] = $check_category[0];
                 $data['title'] = 'Admin edit sub category';
@@ -100,11 +98,11 @@ class Sub_categories extends CI_Controller
         if ($this->input->post())
         {
             $update_array = [
-                'main_cat_id' => $this->input->post('hid'),
+                'main_cat_id' => $this->input->post('category'),
                 'category_name' => $this->input->post('category_name'),
                 'is_blocked' => $this->input->post('is_blocked'),
             ];
-//            pr($update_array, 1);
+            pr($update_array, 1);
             $result = $this->Admin_category_model->update_record('sub_categories', $where, $update_array);
             if ($result)
             {
@@ -127,36 +125,27 @@ class Sub_categories extends CI_Controller
      * */
     public function add()
     {
-        $data['title'] = 'Admin add sub-category';
-        $data['heading'] = 'Add sub-category';
+        $data['title'] = 'Admin add sub category';
+        $data['heading'] = 'Add sub category';
         $data['cat'] = $this->Admin_category_model->get_result('categories', ['is_deleted' => '0']);
         if ($this->input->post())
         {
             $this->form_validation->set_rules('category_name', 'Category Name', 'trim|required');
             $this->form_validation->set_rules('field_keywords', 'Main Category', 'trim|required');
-            if ($this->form_validation->run() == FALSE)
+            $insert_array = [
+                'main_cat_id' => $this->input->post('category'),
+                'category_name' => $this->input->post('category_name'),
+                'created_at' => date("Y-m-d H:i:s a"),
+                'is_blocked' => $this->input->post('is_blocked'),
+            ];
+            $result = $this->Admin_category_model->insert_record('sub_categories', $insert_array);
+            if ($result)
             {
-                $data['subview'] = 'admin/categories/manage_sub';
-                $this->load->view('admin/layouts/layout_main', $data);
+                $this->session->set_flashdata('message', ['message' => 'Sub Category successfully Inserted!' . $msg, 'class' => 'success']);
             }
             else
             {
-                $insert_array = [
-                    'main_cat_id' => $this->input->post('hid'),
-                    'category_name' => $this->input->post('category_name'),
-                    'created_at' => date("Y-m-d H:i:s a"),
-                    'is_blocked' => $this->input->post('is_blocked'),
-                ];
-//                pr($insert_array);die;
-                $result = $this->Admin_category_model->insert_record('sub_categories', $insert_array);
-                if ($result)
-                {
-                    $this->session->set_flashdata('message', ['message' => 'Category successfully Inserted!' . $msg, 'class' => 'success']);
-                }
-                else
-                {
-                    $this->session->set_flashdata('message', ['message' => 'Error Into Insert Category!', 'class' => 'danger']);
-                }
+                $this->session->set_flashdata('message', ['message' => 'Error Into Insert Sub Category!', 'class' => 'danger']);
             }
             redirect('admin/sub_categories');
         }

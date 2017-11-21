@@ -127,12 +127,9 @@ class Categories extends CI_Controller
         $data['title'] = 'Admin add category';
         $data['heading'] = 'Add category';
 
-        $this->form_validation->set_rules('', '');
-
-
-
         if ($this->input->post())
         {
+            $this->form_validation->set_rules('category_name', 'Category Name', 'trim|required');
             $insert_array = [
                 'category_name' => $this->input->post('category_name'),
                 'created_at' => date("Y-m-d H:i:s a"),

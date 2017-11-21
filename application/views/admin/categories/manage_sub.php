@@ -1,6 +1,12 @@
 <script type="text/javascript" src="<?= DEFAULT_ADMIN_JS_PATH ?>plugins/forms/tags/tokenfield.min.js"></script>
 <script type="text/javascript" src="<?php echo DEFAULT_ADMIN_JS_PATH ?>plugins/forms/selects/select2.min.js"></script>
-<?php // echo "here";die;?>
+<script type="text/javascript" src="<?php echo DEFAULT_ADMIN_JS_PATH ?>pages/form_select2.js"></script>
+<?php
+//echo"cat";
+//pr($cat);
+//echo "record";
+//pr($record);die;
+?>
 <style>
     .setting-heading{
         margin: 0px;
@@ -29,39 +35,21 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Search Category </label>
                             <div class="col-lg-9">
-                                <select class="select-search">
+                                <select class="select-search" data-placeholder="Select a Category"  name="category" id="category">
                                     <?php
                                     foreach ($cat as $key => $cats)
                                     {
-                                        ?>
-                                        <option value="<?php echo $cats['id'] ?>"><?php echo $cats['category_name'] ?></option>
-                                    <?php } ?>
+                                        $select = '';
+                                        if ($cats['id'] == $record['main_cat_id'])
+                                        {
+                                            $select = 'selected';
+                                            echo '<option value="' . $cats['id'] . '" ' . set_select('category', $cats['id'], False) . 'selected = ' . $select . '>' . $cats['category_name'] . '</option>';
+                                        }
+                                    }
+                                    ?>
                                 </select>
-                                <input type="hidden" name="hid" value="<?php echo $cats['id'] ?>">
                             </div>
                         </div>
-                        <!--                        <div class="form-group">
-                                                    <div class="search-overlay-menu">
-                                                        <label class="col-lg-3 control-label">Search Category </label>
-                                                        <div class="col-lg-9">
-                                                            <span class="search-overlay-close"><i class="icon_set_1_icon-77"></i></span>
-                        <?php
-                        if ($this->uri->segment(3) == 'edit')
-                        {
-                            foreach ($cat as $key => $cats)
-                            {
-                                ?>
-                                                                                            <input type="search" autocomplete="off" class="form-control" name="field-keywords" placeholder="Type your search terms..." id="twotabsearchtextbox1" value="<?php echo (isset($cats['category_name'])) ? $cats['category_name'] : set_value('field-keywords'); ?>"></div>
-                                <?php
-                            }
-                        }
-                        else
-                        {
-                            ?>
-                                                                        <input type="search" autocomplete="off" class="form-control" name="field_keywords" placeholder="Type your search terms..." id="twotabsearchtextbox1" value="<?php echo (isset($cats['category_name'])) ? $cats['category_name'] : set_value('field-keywords'); ?>"></div><?php } ?>
-                                                </div>-->
-                        <!--</div>-->
-
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Category Name:</label>
                             <div class="col-lg-9">
