@@ -65,6 +65,17 @@ class Registration extends CI_Controller {
 
             $ins_id = $this->Users_model->insert_user_data($ins_data);
 
+            $channel_name = $username.' '.random_string('alnum',10);
+            $channel_slug = slugify($channel_name);
+
+            $ins_channel = [
+                                'user_id'=>$ins_id,
+                                'channel_name'=>$channel_name,
+                                'channel_slug'=>$channel_slug,
+                                'created_at'=>date('Y-m-d H:i:s')
+                            ];
+            $this->Cms_model->insert_record('user_channels',$ins_channel);
+
             $html_content = '<h1> Hello World </h1> <a href="'.base_url().'registration/verify_email/'.$random_no.'"> Click Here </a>';
 
             $email_config = mail_config();
