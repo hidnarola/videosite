@@ -96,17 +96,17 @@
                 },
                 {
                     sortable: false,
-                    data: "total",
+                    data: "blog",
                     visible: true
                 },
                 {
                     sortable: false,
-                    data: "total1",
+                    data: "video",
                     visible: true
                 },
                 {
                     sortable: false,
-                    data: "total2",
+                    data: "gallery",
                     visible: true
                 },
                 {

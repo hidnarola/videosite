@@ -85,10 +85,11 @@ class Sub_categories extends CI_Controller
             $check_category = $this->Admin_category_model->get_result('sub_categories', $where);
             if ($check_category)
             {
-                $data['cat'] = $this->Admin_category_model->get_category_by_id($category_id);
+//                $data['cat'] = $this->Admin_category_model->get_category_by_id($category_id);
+                $data['cat'] = $this->Admin_category_model->get_category_by_id($check_category[0]['main_cat_id']);
                 $data['record'] = $check_category[0];
-                $data['title'] = 'Admin edit sub-category';
-                $data['heading'] = 'Edit sub-category';
+                $data['title'] = 'Admin edit sub category';
+                $data['heading'] = 'Edit sub category';
             }
             else
             {
@@ -97,34 +98,22 @@ class Sub_categories extends CI_Controller
         }
         if ($this->input->post())
         {
-            $this->form_validation->set_rules('category_name', 'Category Name', 'trim|required');
-            $this->form_validation->set_rules('field_keywords', 'Main Category', 'trim|required');
-
-            if ($this->form_validation->run() == FALSE)
+            $update_array = [
+                'main_cat_id' => $this->input->post('hid'),
+                'category_name' => $this->input->post('category_name'),
+                'is_blocked' => $this->input->post('is_blocked'),
+            ];
+//            pr($update_array, 1);
+            $result = $this->Admin_category_model->update_record('sub_categories', $where, $update_array);
+            if ($result)
             {
-                $data['subview'] = 'admin/categories/manage_sub';
-                $this->load->view('admin/layouts/layout_main', $data);
+                $msg = '';
+                $this->session->set_flashdata('message', ['message' => 'Category successfully updated!' . $msg, 'class' => 'success']);
             }
             else
             {
-                $update_array = [
-                    'main_cat_id' => $this->input->post('hid'),
-                    'category_name' => $this->input->post('category_name'),
-                    'is_blocked' => $this->input->post('is_blocked'),
-                ];
-                pr($update_array,1);
 
-                $result = $this->Admin_category_model->update_record('sub_categories', $where, $update_array);
-                if ($result)
-                {
-                    $msg = '';
-                    $this->session->set_flashdata('message', ['message' => 'Category successfully updated!' . $msg, 'class' => 'success']);
-                }
-                else
-                {
-
-                    $this->session->set_flashdata('message', ['message' => 'Error Into Update Category!', 'class' => 'danger']);
-                }
+                $this->session->set_flashdata('message', ['message' => 'Error Into Update Category!', 'class' => 'danger']);
             }
             redirect('admin/sub_categories');
         }
@@ -143,7 +132,6 @@ class Sub_categories extends CI_Controller
         if ($this->input->post())
         {
             $this->form_validation->set_rules('category_name', 'Category Name', 'trim|required');
-//            $this->form_validation->set_rules('hid', 'Main Category', 'trim|required');
             $this->form_validation->set_rules('field_keywords', 'Main Category', 'trim|required');
             if ($this->form_validation->run() == FALSE)
             {

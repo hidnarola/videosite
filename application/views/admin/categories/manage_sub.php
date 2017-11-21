@@ -1,6 +1,6 @@
 <script type="text/javascript" src="<?= DEFAULT_ADMIN_JS_PATH ?>plugins/forms/tags/tokenfield.min.js"></script>
 <script type="text/javascript" src="<?php echo DEFAULT_ADMIN_JS_PATH ?>plugins/forms/selects/select2.min.js"></script>
-
+<?php // echo "here";die;?>
 <style>
     .setting-heading{
         margin: 0px;
@@ -27,69 +27,80 @@
                 <div class="panel panel-flat">
                     <div class="panel-body">
                         <div class="form-group">
-                            <div class="search-overlay-menu">
-                                <label class="col-lg-3 control-label">Search Category </label>
-                                <div class="col-lg-9">
-                                    <span class="search-overlay-close"><i class="icon_set_1_icon-77"></i></span>
-                                    <!--<form role="search" id="searchform" method="get">-->
+                            <label class="col-lg-3 control-label">Search Category </label>
+                            <div class="col-lg-9">
+                                <select class="select-search">
                                     <?php
-                                    if ($this->uri->segment(3) == 'edit')
+                                    foreach ($cat as $key => $cats)
                                     {
-                                        foreach ($cat as $key => $cats)
-                                        {
-                                            ?>
-                                            <input type="search" autocomplete="off" class="form-control" name="field-keywords" placeholder="Type your search terms..." id="twotabsearchtextbox1" value="<?php echo (isset($cats['category_name'])) ? $cats['category_name'] : set_value('field-keywords'); ?>"></div>
-                                        <?php
+                                        ?>
+                                        <option value="<?php echo $cats['id'] ?>"><?php echo $cats['category_name'] ?></option>
+                                    <?php } ?>
+                                </select>
+                                <input type="hidden" name="hid" value="<?php echo $cats['id'] ?>">
+                            </div>
+                        </div>
+                        <!--                        <div class="form-group">
+                                                    <div class="search-overlay-menu">
+                                                        <label class="col-lg-3 control-label">Search Category </label>
+                                                        <div class="col-lg-9">
+                                                            <span class="search-overlay-close"><i class="icon_set_1_icon-77"></i></span>
+                        <?php
+                        if ($this->uri->segment(3) == 'edit')
+                        {
+                            foreach ($cat as $key => $cats)
+                            {
+                                ?>
+                                                                                            <input type="search" autocomplete="off" class="form-control" name="field-keywords" placeholder="Type your search terms..." id="twotabsearchtextbox1" value="<?php echo (isset($cats['category_name'])) ? $cats['category_name'] : set_value('field-keywords'); ?>"></div>
+                                <?php
+                            }
+                        }
+                        else
+                        {
+                            ?>
+                                                                        <input type="search" autocomplete="off" class="form-control" name="field_keywords" placeholder="Type your search terms..." id="twotabsearchtextbox1" value="<?php echo (isset($cats['category_name'])) ? $cats['category_name'] : set_value('field-keywords'); ?>"></div><?php } ?>
+                                                </div>-->
+                        <!--</div>-->
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Category Name:</label>
+                            <div class="col-lg-9">
+                                <input type="text" name="category_name" id="category_name" placeholder="Enter Category Name" class="form-control" value="<?php echo (isset($record['category_name'])) ? $record['category_name'] : set_value('category_name'); ?>">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Status:</label>
+                            <div class="col-lg-3">
+                                <label class="radio-inline">
+                                    <input type="radio" class="styled" name="is_blocked" value="0" checked <?php
+                                    if (isset($record['is_blocked']) && $record['is_blocked'] == '0')
+                                    {
+                                        echo 'checked';
                                     }
-                                }
-                                else
-                                {
-                                    ?>
-                                    <input type="search" autocomplete="off" class="form-control" name="field_keywords" placeholder="Type your search terms..." id="twotabsearchtextbox1" value="<?php echo (isset($cats['category_name'])) ? $cats['category_name'] : set_value('field-keywords'); ?>"></div><?php } ?>
-                            <!--</form>-->
+                                    ?>>
+                                    Unblock
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" class="styled" name="is_blocked" value="1" <?php
+                                    if (isset($record['is_blocked']) && $record['is_blocked'] == '1')
+                                    {
+                                        echo 'checked';
+                                    }
+                                    ?>>
+                                    Block
+                                </label>
+                            </div>
                         </div>
-                    </div>
 
-                    <input type="hidden" name="hid">
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Category Name:</label>
-                        <div class="col-lg-9">
-                            <input type="text" name="category_name" id="category_name" placeholder="Enter Category Name" class="form-control" value="<?php echo (isset($record['category_name'])) ? $record['category_name'] : set_value('category_name'); ?>">
+                        <div class="text-right">
+                            <button class="btn btn-success" type="submit">Save <i class="icon-arrow-right14 position-right"></i></button>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">Status:</label>
-                        <div class="col-lg-3">
-                            <label class="radio-inline">
-                                <input type="radio" class="styled" name="is_blocked" value="0" checked <?php
-                                if (isset($record['is_blocked']) && $record['is_blocked'] == '0')
-                                {
-                                    echo 'checked';
-                                }
-                                ?>>
-                                Unblock
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" class="styled" name="is_blocked" value="1" <?php
-                                if (isset($record['is_blocked']) && $record['is_blocked'] == '1')
-                                {
-                                    echo 'checked';
-                                }
-                                ?>>
-                                Block
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="text-right">
-                        <button class="btn btn-success" type="submit">Save <i class="icon-arrow-right14 position-right"></i></button>
                     </div>
                 </div>
+            </form>
         </div>
-        </form>
     </div>
-</div>
 </div>
 <script>
     $('document').ready(function () {
