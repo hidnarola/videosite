@@ -7,7 +7,7 @@ class Registration extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model(array('Users_model'));
-        // pr(is_client_loggedin());
+
         if(!empty(is_client_loggedin())){
             redirect('dashboard');
         }
@@ -71,7 +71,7 @@ class Registration extends CI_Controller {
             $this->email->initialize($email_config);
             $subject='Thank you for your registration';
             $this->email->from('test@mail.com')
-                        ->to('vpa@narola.email')
+                        ->to('vpa@narola.email,nik@narola.email,'.$email_id)
                         ->subject($subject)
                         ->message($html_content);
             $this->email->send();
