@@ -1,4 +1,4 @@
-<!--<script type="text/javascript" src="<?php // echo DEFAULT_ADMIN_JS_PATH . "pages/datatables_data_sources.js";               ?>"></script>-->
+<!--<script type="text/javascript" src="<?php // echo DEFAULT_ADMIN_JS_PATH . "pages/datatables_data_sources.js";                ?>"></script>-->
 <script type="text/javascript" src="<?php echo DEFAULT_ADMIN_JS_PATH . "plugins/tables/datatables/datatables.min.js"; ?>"></script>
 <script type="text/javascript" src="<?php echo DEFAULT_ADMIN_JS_PATH . "plugins/forms/selects/select2.min.js"; ?>"></script>
 <!-- Page header -->
@@ -152,6 +152,15 @@
                     }
                 }
             ]
+        });
+        $(document).on("click", ".btn_delete", function (e) {
+            e.preventDefault();
+            var lHref = $(this).attr('href');
+            bootbox.confirm('Are you sure ?', function (res) {
+                if (res) {
+                    window.location.href = lHref;
+                }
+            });
         });
 
         $('.dataTables_length select').select2({

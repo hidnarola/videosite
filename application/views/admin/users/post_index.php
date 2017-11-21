@@ -44,7 +44,7 @@
                     <th><a href="<?php echo base_url() . 'admin/users/view_video/' . $id; ?>" class="btn border-warning text-warning-600 btn-flat btn-icon btn-rounded btn-sm" title="View Videos"><i class="icon-video-camera"></i></a></th>
                 </tr>
                 <tr>
-                    <th><?php echo $post[0]['username'] . '\'s'; ?> Blog (<?php echo $post[0]['blog']; ?>)</th>
+                    <th><?php echo $post[0]['username'] . '\'s'; ?> Blogs (<?php echo $post[0]['blog']; ?>)</th>
                     <th><a href="<?php echo base_url() . 'admin/users/view_blog/' . $id; ?>" class="btn border-success text-success-600 btn-flat btn-icon btn-rounded btn-sm" title="View Blogs"><i class="icon-blog"></i></a></th>
                 </tr>
                 <tr>

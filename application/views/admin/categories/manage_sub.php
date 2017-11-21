@@ -1,12 +1,6 @@
 <script type="text/javascript" src="<?= DEFAULT_ADMIN_JS_PATH ?>plugins/forms/tags/tokenfield.min.js"></script>
 <script type="text/javascript" src="<?php echo DEFAULT_ADMIN_JS_PATH ?>plugins/forms/selects/select2.min.js"></script>
 <script type="text/javascript" src="<?php echo DEFAULT_ADMIN_JS_PATH ?>pages/form_select2.js"></script>
-<?php
-//echo"cat";
-//pr($cat);
-//echo "record";
-//pr($record);die;
-?>
 <style>
     .setting-heading{
         margin: 0px;
@@ -35,19 +29,22 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Search Category </label>
                             <div class="col-lg-9">
-                                <select class="select-search" data-placeholder="Select a Category"  name="category" id="category">
-                                    <?php
-                                    foreach ($cat as $key => $cats)
-                                    {
-                                        $select = '';
-                                        if ($cats['id'] == $record['main_cat_id'])
-                                        {
-                                            $select = 'selected';
-                                            echo '<option value="' . $cats['id'] . '" ' . set_select('category', $cats['id'], False) . 'selected = ' . $select . '>' . $cats['category_name'] . '</option>';
-                                        }
-                                    }
-                                    ?>
-                                </select>
+                                <?php if ($this->uri->segment(3) == 'edit'){ ?>
+                                    <select class="select-search" data-placeholder="Select a Category"  name="category" id="category">
+                                        <option value="">Select Category</option> 
+                                                <?php foreach ($cat as $key => $cats){ ?> 
+                                            <option value="<?php echo $cats['id']; ?>" <?php if ($cats['id'] == $record['main_cat_id']){echo "selected";} ?>>
+                                            <?php echo $cats['category_name']; ?></option>
+                                        <?php } ?> 
+                                    </select> 
+                                    <?php } else{ ?>
+                                    <select class="select-search" data-placeholder="Select a Category"  name="category" id="category">
+                                        <option value="">Select Category</option> 
+                                    <?php foreach ($cat as $key => $cats){?> 
+                                        <option value="<?php echo $cats['id']; ?>"><?php echo $cats['category_name']; ?></option>
+                                     <?php } ?> 
+                                    </select> 
+                                <?php } ?>
                             </div>
                         </div>
                         <div class="form-group">
@@ -75,7 +72,7 @@
                                     {
                                         echo 'checked';
                                     }
-                                    ?>>
+?>>
                                     Block
                                 </label>
                             </div>

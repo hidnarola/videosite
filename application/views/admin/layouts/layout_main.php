@@ -16,11 +16,11 @@ else
         <!-- Main navbar -->
         <div class="navbar navbar-inverse">
             <div class="navbar-header">
-<!--                .navbar-brand > img {
-                margin-top: -1px;
-                height: 33px;
-                width: 100px;
-                }-->
+                <!--                .navbar-brand > img {
+                                margin-top: -1px;
+                                height: 33px;
+                                width: 100px;
+                                }-->
                 <a class="navbar-brand" href="<?= base_url('admin/dashboard') ?>"><img style="margin-top: -1px;height: 33px;width: 100px;" src="<?= DEFAULT_ADMIN_IMAGE_PATH ?>logo_admin.jpg" alt=""></a>
 
                 <ul class="nav navbar-nav visible-xs-block">
@@ -76,7 +76,7 @@ else
                                     </li>
                                     <!-- Categories Menu -->
 
-                                    
+
                                     <li class="<?php echo (in_array($controller, ['categories', 'subcategories',])) ? 'active' : ''; ?>">
                                         <a href="#" class="has-ul"><i class="icon-server"></i> <span>Categories</span></a>
                                         <ul style="">
@@ -98,7 +98,7 @@ else
 
                                     <!-- USERS Menu -->
 
-                                    <li class="<?php echo ($controller == 'user') ? 'active' : ''; ?>">
+                                    <li class="<?php echo ($controller == 'users') ? 'active' : ''; ?>">
                                         <a href="<?php echo base_url() . 'admin/users'; ?>">
                                             <i class="icon-users4"></i>
                                             <span>Users</span></a>
