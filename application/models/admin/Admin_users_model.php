@@ -114,10 +114,12 @@ class Admin_users_model extends CI_Model
 
     public function get_all_blogs_by_user($id)
     {
-        $this->db->select('b.id,user_id,blog_title,u.id as userid,u.username,DATE_FORMAT(b.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,b.is_blocked', false);
-        $this->db->join('users u', 'u.id = b.user_id');
+        $this->db->select('b.id,post_id,blog_title,u.id as userid,u.username,DATE_FORMAT(b.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,b.is_blocked', false);
+        $this->db->join('user_post up', 'up.id = b.post_id', 'left');
+        $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
+        $this->db->join('users u', 'u.id = c.user_id', 'left');
         $this->db->where('b.is_deleted !=', 1);
-        $this->db->where('b.user_id', $id);
+        $this->db->where('c.user_id', $id);
 
         $keyword = $this->input->get('search');
         $keyword = str_replace('"', '', $keyword);
@@ -136,9 +138,11 @@ class Admin_users_model extends CI_Model
 
     public function get_blogs_by_user_count($id)
     {
-        $this->db->join('users u', 'u.id = b.user_id');
+        $this->db->join('user_post up', 'up.id = b.post_id', 'left');
+        $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
+        $this->db->join('users u', 'u.id = c.user_id', 'left');
         $this->db->where('b.is_deleted !=', 1);
-        $this->db->where('b.user_id', $id);
+        $this->db->where('c.user_id', $id);
 
         $keyword = $this->input->get('search');
         $keyword = str_replace('"', '', $keyword);
@@ -165,13 +169,16 @@ class Admin_users_model extends CI_Model
 
     public function get_user_by_id($id)
     {
-        $this->db->select('u.id,u.id AS test_id,r.role_name,fname,lname,email_id,
+
+        $this->db->select('u.id,u.id AS test_id,r.role_name,fname,lname,email_id,username,
                             DATE_FORMAT(last_login,"%d %b %Y <br> %l:%i %p") AS last_login,DATE_FORMAT(u.created_at,"%d %b %Y <br> %l:%i %p") AS created_at,
                             u.is_blocked,COUNT(DISTINCT blg.id) as blog,COUNT(DISTINCT v.id) as video,COUNT(DISTINCT g.id) as gallery');
         $this->db->join('role r', 'u.role_id = r.id');
-        $this->db->join('blog blg', 'u.id = blg.user_id', 'left');
-        $this->db->join('video v', 'u.id = v.user_id', 'left');
-        $this->db->join('gallery g', 'u.id = g.user_id', 'left');
+        $this->db->join('user_channels c', 'u.id = c.user_id', 'left');
+        $this->db->join('user_post up', 'up.channel_id = c.id', 'left');
+        $this->db->join('blog blg', 'up.id = blg.post_id', 'left');
+        $this->db->join('video v', 'up.id = v.post_id', 'left');
+        $this->db->join('gallery g', 'up.id = g.post_id', 'left');
         $this->db->where_in('role_id', [2, 3]);
         $this->db->where('u.is_deleted !=', 1);
         $this->db->where('u.id', $id);

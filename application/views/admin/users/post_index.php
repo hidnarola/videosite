@@ -1,4 +1,4 @@
-<!--<script type="text/javascript" src="<?php // echo DEFAULT_ADMIN_JS_PATH . "pages/datatables_data_sources.js";                        ?>"></script>-->
+<!--<script type="text/javascript" src="<?php // echo DEFAULT_ADMIN_JS_PATH . "pages/datatables_data_sources.js";                           ?>"></script>-->
 <script type="text/javascript" src="<?php echo DEFAULT_ADMIN_JS_PATH . "plugins/tables/datatables/datatables.min.js"; ?>"></script>
 <script type="text/javascript" src="<?php echo DEFAULT_ADMIN_JS_PATH . "plugins/forms/selects/select2.min.js"; ?>"></script>
 <!-- Page header -->
@@ -40,15 +40,15 @@
                     <th><?php echo array_sum([$post[0]['blog'], $post[0]['video'], $post[0]['gallery']]); ?></th>
                 </tr>
                 <tr>
-                    <th>User's Videos (<?php echo $post[0]['video']; ?>)</th>
+                    <th><?php echo $post[0]['username'] . '\'s'; ?> Videos (<?php echo $post[0]['video']; ?>)</th>
                     <th><a href="<?php echo base_url() . 'admin/users/view_video/' . $id; ?>" class="btn border-warning text-warning-600 btn-flat btn-icon btn-rounded btn-sm" title="View Videos"><i class="icon-video-camera"></i></a></th>
                 </tr>
                 <tr>
-                    <th>User's Blog (<?php echo $post[0]['blog']; ?>)</th>
+                    <th><?php echo $post[0]['username'] . '\'s'; ?> Blog (<?php echo $post[0]['blog']; ?>)</th>
                     <th><a href="<?php echo base_url() . 'admin/users/view_blog/' . $id; ?>" class="btn border-success text-success-600 btn-flat btn-icon btn-rounded btn-sm" title="View Blogs"><i class="icon-blog"></i></a></th>
                 </tr>
                 <tr>
-                    <th>User's Galleries (<?php echo $post[0]['gallery']; ?>)</th>
+                    <th><?php echo $post[0]['username'] . '\'s'; ?> Galleries (<?php echo $post[0]['gallery']; ?>)</th>
                     <th><a href="<?php echo base_url() . 'admin/users/view_gallery/' . $id; ?>" class="btn border-primary text-primary-600 btn-flat btn-icon btn-rounded btn-sm" title="View Gallery"><i class="icon-images2"></i></a></th>
                 </tr>
             </thead>
