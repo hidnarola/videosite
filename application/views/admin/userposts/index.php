@@ -39,15 +39,15 @@
                     <th><?php // echo array_sum([$post[0]['blog'], $post[0]['video'], $post[0]['gallery']]);        ?></th>
                 </tr>-->
                 <tr>
-                    <th>Videos (<?php echo $res_gallery; ?>) </th>
+                    <th>Videos (<?php echo $res_video; ?>) </th>
                     <th><a href="<?php echo base_url() . 'admin/userpost/view_video'; ?>" class="btn border-warning text-warning-600 btn-flat btn-icon btn-rounded btn-sm" title="View Videos"><i class="icon-video-camera"></i></a></th>
                 </tr>
                 <tr>
-                    <th>Blogs  (<?php echo $res_video; ?>)</th>
+                    <th>Blogs  (<?php echo $res_blog; ?>)</th>
                     <th><a href="<?php echo base_url() . 'admin/userpost/view_blog/'; ?>" class="btn border-success text-success-600 btn-flat btn-icon btn-rounded btn-sm" title="View Blogs"><i class="icon-blog"></i></a></th>
                 </tr>
                 <tr>
-                    <th>Galleries (<?php echo $res_blog; ?>) </th>
+                    <th>Galleries (<?php echo $res_gallery; ?>) </th>
                     <th><a href="<?php echo base_url() . 'admin/userpost/view_gallery'; ?>" class="btn border-primary text-primary-600 btn-flat btn-icon btn-rounded btn-sm" title="View Gallery"><i class="icon-images2"></i></a></th>
                 </tr>
             </thead>
