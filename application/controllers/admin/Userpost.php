@@ -15,9 +15,12 @@ class UserPost extends CI_Controller
     /**
      * Function load view of users list.(HPA)
      */
-    public function index($id)
+    public function index()
     {
-        $data['all_posts'] = $this->Post_model->get_all_posts($id);
+        // $data['all_posts'] = $this->Post_model->get_all_posts($id);
+        $data['res_gallery'] = $this->db->get_where('user_post',['post_type'=>'gallery','is_deleted'=>'0'])->num_rows();
+        $data['res_video'] = $this->db->get_where('user_post',['post_type'=>'video','is_deleted'=>'0'])->num_rows();
+        $data['res_blog'] = $this->db->get_where('user_post',['post_type'=>'blog','is_deleted'=>'0'])->num_rows();
         $data['subview'] = 'admin/userposts/index';
         $this->load->view('admin/layouts/layout_main', $data);
     }

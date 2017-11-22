@@ -10,23 +10,26 @@
 					<div class="clearfix">
 						
 						<div class="form-group">
+							<?php $post_uname = ($_POST) ? set_value('username'):$user_data['username'];?>
 							<input type="text" name="username" class="form-control" placeholder="Username " 
-								   value="<?php echo set_value('username'); ?>" >
+								   value="<?php echo $post_uname; ?>" >
 						</div>
 
 						<div class="form-group">
 							<input type="text" name="email_id" class="form-control" placeholder="Email *" disabled
-								   value="<?php echo set_value('email_id'); ?>" >
+								   value="<?php echo $user_data['email_id']; ?>" >
 						</div>
 
 						<div class="form-group">
+							<?php $post_fname = ($_POST) ? set_value('fname'):$user_data['fname'];?>
 							<input type="text" name="fname" class="form-control" placeholder="First Name " 
-								   value="<?php echo set_value('fname'); ?>" >
+								   value="<?php echo $post_fname; ?>" >
 						</div>
 
 						<div class="form-group">
+							<?php $post_lname = ($_POST) ? set_value('lname'):$user_data['lname'];?>
 							<input type="text" name="lname" class="form-control" placeholder="Last Name " 
-								   value="<?php echo set_value('lname'); ?>" >
+								   value="<?php echo $post_lname; ?>" >
 						</div>
 
 						<div class="form-group">

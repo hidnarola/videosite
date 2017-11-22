@@ -236,6 +236,8 @@ class Users extends CI_Controller
         $data['id'] = $id;
         $user_id = decode($id);
         $data['post'] = $this->Admin_users_model->get_user_by_id($user_id);
+        // qry();
+        // pr($data['post'],1);
         $data['subview'] = 'admin/users/post_index';
         $this->load->view('admin/layouts/layout_main', $data);
     }

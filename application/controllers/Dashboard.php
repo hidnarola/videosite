@@ -18,7 +18,7 @@ class Dashboard extends CI_Controller {
 		
 		$client_data = $this->session->userdata('client');
 		$data['user_data'] = $this->Users_model->get_data(['id'=>$client_data['id']],true);
-		
+
 		$this->form_validation->set_rules('username', 'Username', 'trim|required|callback_username_check',
                                           ['username_check'=>'Username should be unique.']);
 		$this->form_validation->set_rules('fname', 'fname', 'trim');
@@ -29,6 +29,19 @@ class Dashboard extends CI_Controller {
             $this->load->view('front/layouts/layout_main',$data);
         }else{
 
+        	$username = $this->input->post('username');
+			$fname = $this->input->post('fname');
+			$lname = $this->input->post('lname');
+
+			$upd_arr = [
+							'fname'=>$fname,
+							'lname'=>$lname,
+							'username'=>$username,
+							'avatar'=>''
+						];
+			$this->Users_model->update_user_data($client_data['id'],$upd_arr);
+			$this->session->set_flashdata('success','Record has been updated successfully.');
+			redirect('dashboard');
         }
 	}
 
@@ -74,6 +87,23 @@ class Dashboard extends CI_Controller {
 		}else{
 			return false;
 		}		
+	}
+
+	public function username_check($username){
+		
+		$client_data = $this->session->userdata('client');
+		$user_data = $this->Users_model->get_data(['id'=>$client_data['id']],true);
+
+		if($user_data['username'] != $username){
+			$res = $this->Users_model->get_data(['username'=>$username,'is_blocked'=>'0','is_deleted'=>'0']);
+	        if(count($res) == 0){
+	            return true;
+	        }else{
+	            return false;
+	        }
+		}else{
+			return true;
+		}
 	}
 
 	/*=====  End of Form validation callback functions comment block  ======*/
