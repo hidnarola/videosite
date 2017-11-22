@@ -137,9 +137,40 @@ class Post_model extends CI_Model
         $this->db->join('users u', 'u.id = c.user_id', 'left');
         $this->db->where('b.is_deleted !=', 1);
         $this->db->where('b.post_id', $blog_post_id);
+        $keyword = $this->input->get('search');
+        $keyword = str_replace('"', '', $keyword);
+
+        if (!empty($keyword['value']))
+        {
+            $this->db->having('title LIKE "%' . $keyword['value'] . '%"', NULL);
+        }
+        $this->db->limit($this->input->get('length'), $this->input->get('start'));
         $blogs = $this->db->get('blog b')->result_array();
-        qry();
-        pr($blogs, 1);
+        return $blogs;
+    }
+
+    public function get_blogs_by_post_count($blog_post_id)
+    {
+//        $this->db->select('b.id,post_id,blog_title,blog_description,img_path,u.id as user_id, u.username,c.id as channelid, c.user_id as channeluserid,c.channel_name, up.id as userpostid,up.channel_id as userpostchannelid,up.post_type');
+//        $this->db->join('user_post up', 'up.id = b.post_id', 'left');
+//        $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
+//        $this->db->join('users u', 'u.id = c.user_id', 'left');
+//        $this->db->where('b.post_id = ', $blog_post_id);
+//        $this->db->where('b.is_deleted !=', '1');
+        $this->db->select('b.id,post_id,blog_title,blog_description,img_path,u.id as user_id, u.username,c.id as channelid, c.user_id as channeluserid,c.channel_name, up.id as userpostid,up.channel_id as userpostchannelid,up.post_type');
+        $this->db->join('user_post up', 'up.id = b.post_id', 'left');
+        $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
+        $this->db->join('users u', 'u.id = c.user_id', 'left');
+        $this->db->where('b.is_deleted !=', 1);
+        $this->db->where('b.post_id', $blog_post_id);
+        $keyword = $this->input->get('search');
+        $keyword = str_replace('"', '', $keyword);
+
+        if (!empty($keyword['value']))
+        {
+            $this->db->having('title LIKE "%' . $keyword['value'] . '%"', NULL);
+        }
+        $blogs = $this->db->get('blog b')->result_array();
         return $blogs;
     }
 
@@ -176,7 +207,7 @@ class Post_model extends CI_Model
         return $video;
     }
 
-    public function get_all_posts()
+    public function get_all_posts($id)
     {
         $this->db->select('COUNT(DISTINCT b.id) as blog,COUNT(DISTINCT v.id) as video,COUNT(DISTINCT g.id) as gallery');
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
@@ -185,7 +216,7 @@ class Post_model extends CI_Model
         $this->db->join('video v', 'v.post_id = up.id', 'left');
         $this->db->join('gallery g', 'g.post_id = up.id', 'left');
 //        $this->db->group_by('up.id');
-//        $this->db->where('up.id = ', $user_post_id);
+        $this->db->where('up.id = ', $id);
         $posts = $this->db->get('user_post up')->row_array();
         return $posts;
     }

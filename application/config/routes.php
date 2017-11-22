@@ -66,6 +66,8 @@ $route['admin/logout'] = "admin/dashboard/log_out";
 $route['admin/edit_profile'] = "admin/dashboard/edit";
 $route['admin/change_password'] = "admin/dashboard/change_password";
 
+//$route['admin/userpost/(:any)'] = 'admin/userpost/index/$1';
+
 $route['admin/(:any)'] = "admin/$1";
 $route['admin/(:any)/(:any)'] = "admin/$1/$2";
 $route['admin/(:any)/(:any)/(:any)'] = "admin/$1/$2/$3";

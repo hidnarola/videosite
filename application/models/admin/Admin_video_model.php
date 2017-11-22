@@ -21,6 +21,7 @@ class Admin_video_model extends CI_Model
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
         $this->db->where('v.is_deleted !=', 1);
+        $this->db->where('up.is_deleted !=', 1);
 
         $keyword = $this->input->get('search');
         $keyword = str_replace('"', '', $keyword);
@@ -46,6 +47,7 @@ class Admin_video_model extends CI_Model
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
         $this->db->where('v.is_deleted !=', 1);
+        $this->db->where('up.is_deleted !=', 1);
 
         $keyword = $this->input->get('search');
         $keyword = str_replace('"', '', $keyword);

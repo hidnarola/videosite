@@ -58,7 +58,7 @@
             dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
             order: [[0, "asc"]],
             ordering: false,
-            ajax: '<?php echo base_url(); ?>admin/userpost/list_gallery',
+            ajax: '<?php echo base_url(); ?>admin/userpost/list_gallery/<?php echo $id; ?>',
             columns: [
                 {
                     data: "id",

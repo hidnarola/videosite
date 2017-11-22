@@ -1,4 +1,4 @@
-<!--<script type="text/javascript" src="<?php // echo DEFAULT_ADMIN_JS_PATH . "pages/datatables_data_sources.js";                                 ?>"></script>-->
+<!--<script type="text/javascript" src="<?php // echo DEFAULT_ADMIN_JS_PATH . "pages/datatables_data_sources.js";                                  ?>"></script>-->
 <script type="text/javascript" src="<?php echo DEFAULT_ADMIN_JS_PATH . "plugins/tables/datatables/datatables.min.js"; ?>"></script>
 <script type="text/javascript" src="<?php echo DEFAULT_ADMIN_JS_PATH . "plugins/forms/selects/select2.min.js"; ?>"></script>
 <!-- Page header -->
@@ -36,7 +36,7 @@
             <thead>
 <!--                <tr>
                     <th>Total Posts</th>
-                    <th><?php // echo array_sum([$post[0]['blog'], $post[0]['video'], $post[0]['gallery']]);       ?></th>
+                    <th><?php // echo array_sum([$post[0]['blog'], $post[0]['video'], $post[0]['gallery']]);        ?></th>
                 </tr>-->
                 <tr>
                     <th>Videos (<?php echo $all_posts['video']; ?>)</th>
@@ -44,7 +44,7 @@
                 </tr>
                 <tr>
                     <th>Blogs (<?php echo $all_posts['blog']; ?>)</th>
-                    <th><a href="<?php echo base_url() . 'admin/userpost/view_blog'; ?>" class="btn border-success text-success-600 btn-flat btn-icon btn-rounded btn-sm" title="View Blogs"><i class="icon-blog"></i></a></th>
+                    <th><a href="<?php echo base_url() . 'admin/userpost/view_blog/'; ?>" class="btn border-success text-success-600 btn-flat btn-icon btn-rounded btn-sm" title="View Blogs"><i class="icon-blog"></i></a></th>
                 </tr>
                 <tr>
                     <th>Galleries (<?php echo $all_posts['gallery']; ?>)</th>

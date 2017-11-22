@@ -44,6 +44,7 @@ class User_post extends CI_Controller
             ];
 
             $last_post_id = $this->Post_model->insert_record('user_post', $ins_post);
+//            pr($last_post_id);die;
 
             $insert_array = [
                 'post_id' => $last_post_id,
