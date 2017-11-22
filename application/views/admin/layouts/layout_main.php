@@ -126,19 +126,31 @@ else
                                             </li>                                            
                                         </ul>
                                     </li>-->
+                                    <!--Users' Post-->
+                                    <li class="<?php echo ($controller == 'userpost') ? 'active' : ''; ?>">
+                                        <a href="<?php echo base_url() . "admin/userpost" ?>">
+                                            <i class="icon-books"></i> 
+                                            <span>Users' Post</span>
+                                        </a>
+                                    </li>
+                                    <!--/Users' Post-->
+
+
+
+
 
 <!--                                    <li class="<?php echo ($controller == 'videos') ? 'active' : ''; ?>">
-                                        <a href="<?php echo base_url() . 'admin/videos'; ?>">
-                                            <i class="icon-video-camera"></i>
-                                            <span>Videos</span>
-                                        </a>
-                                    </li>-->
+    <a href="<?php echo base_url() . 'admin/videos'; ?>">
+        <i class="icon-video-camera"></i>
+        <span>Videos</span>
+    </a>
+</li>-->
 <!--                                    <li class="<?php echo ($controller == 'email_template') ? 'active' : ''; ?>">
-                                        <a href="<?php echo base_url() . 'admin/email_template'; ?>">
-                                            <i class="icon-envelop"></i>
-                                            <span>Email Template</span>
-                                        </a>
-                                    </li>-->
+    <a href="<?php echo base_url() . 'admin/email_template'; ?>">
+        <i class="icon-envelop"></i>
+        <span>Email Template</span>
+    </a>
+</li>-->
 
 <!--                                    <li class="<?php echo ($controller == 'contact_inquiry') ? 'active' : ''; ?>">
                                         <a href="<?php echo base_url() . 'admin/contact_inquiry'; ?>">

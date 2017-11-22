@@ -106,10 +106,10 @@ class User_post extends CI_Controller
         }
     }
 
-    public function view_blog($blog_id)
+    public function view_blog($blog_post_id)
     {
         $sess_data = $this->session->userdata('client');
-        $data['blog'] = $this->Post_model->get_blogs_by_id($blog_id);
+        $data['blog'] = $this->Post_model->get_blogs_by_post_id($blog_post_id);
     }
 
     public function add_gallery()
@@ -197,10 +197,10 @@ class User_post extends CI_Controller
         }
     }
 
-    public function view_gallery($gallery_id)
+    public function view_gallery($gallery_post_id)
     {
         $sess_data = $this->session->userdata('client');
-        $data['gallery'] = $this->Post_model->get_gallery_by_id($gallery_id);
+        $data['gallery'] = $this->Post_model->get_gallery_by_post_id($gallery_post_id);
     }
 
     public function add_video()
