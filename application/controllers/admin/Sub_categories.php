@@ -205,4 +205,10 @@ class Sub_categories extends CI_Controller
         echo json_encode($result);
     }
 
+    public function select_icon()
+    {
+        $data['subview'] = 'admin/categories/icon';
+        $this->load->view('admin/layouts/layout_main', $data);
+    }
+
 }

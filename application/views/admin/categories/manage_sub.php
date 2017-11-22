@@ -29,20 +29,38 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Search Category </label>
                             <div class="col-lg-9">
-                                <?php if ($this->uri->segment(3) == 'edit'){ ?>
+                                <?php
+                                if ($this->uri->segment(3) == 'edit')
+                                {
+                                    ?>
                                     <select class="select-search" data-placeholder="Select a Category"  name="category" id="category">
                                         <option value="">Select Category</option> 
-                                                <?php foreach ($cat as $key => $cats){ ?> 
-                                            <option value="<?php echo $cats['id']; ?>" <?php if ($cats['id'] == $record['main_cat_id']){echo "selected";} ?>>
-                                            <?php echo $cats['category_name']; ?></option>
+                                        <?php
+                                        foreach ($cat as $key => $cats)
+                                        {
+                                            ?> 
+                                            <option value="<?php echo $cats['id']; ?>" <?php
+                                            if ($cats['id'] == $record['main_cat_id'])
+                                            {
+                                                echo "selected";
+                                            }
+                                            ?>>
+                                                <?php echo $cats['category_name']; ?></option>
                                         <?php } ?> 
                                     </select> 
-                                    <?php } else{ ?>
+                                    <?php
+                                }
+                                else
+                                {
+                                    ?>
                                     <select class="select-search" data-placeholder="Select a Category"  name="category" id="category">
                                         <option value="">Select Category</option> 
-                                    <?php foreach ($cat as $key => $cats){?> 
-                                        <option value="<?php echo $cats['id']; ?>"><?php echo $cats['category_name']; ?></option>
-                                     <?php } ?> 
+                                        <?php
+                                        foreach ($cat as $key => $cats)
+                                        {
+                                            ?> 
+                                            <option value="<?php echo $cats['id']; ?>"><?php echo $cats['category_name']; ?></option>
+                                        <?php } ?> 
                                     </select> 
                                 <?php } ?>
                             </div>
@@ -54,6 +72,13 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Category Icon </label>
+                            <div class="col-lg-9">
+                                <input type="text" name="icon" id="category_name" placeholder="Enter Icon" class="form-control" value="<?php echo (isset($record['icon'])) ? $record['icon'] : set_value('icon'); ?>">
+                                <span class="help-block">Please select the icon from the given link. <a href="<?php echo base_url() . 'admin/categories/select_icon' ?>" target="_blank">Icons</a></span>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Status:</label>
                             <div class="col-lg-3">
@@ -72,7 +97,7 @@
                                     {
                                         echo 'checked';
                                     }
-?>>
+                                    ?>>
                                     Block
                                 </label>
                             </div>
@@ -113,6 +138,26 @@
     });
 
     $('.select-search').select2();
+
+    // Format icon
+    function iconFormat(icon) {
+        var originalOption = icon.element;
+        if (!icon.id) {
+            return icon.text;
+        }
+        var $icon = "<i class='icon-" + $(icon.element).data('icon') + "'></i>" + icon.text;
+
+        return $icon;
+    }
+    // Initialize with options
+    $(".select-icons").select2({
+        templateResult: iconFormat,
+        minimumResultsForSearch: Infinity,
+        templateSelection: iconFormat,
+        escapeMarkup: function (m) {
+            return m;
+        }
+    });
 
 
     //---------------------- Validation -------------------

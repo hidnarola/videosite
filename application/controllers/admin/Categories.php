@@ -192,4 +192,10 @@ class Categories extends CI_Controller
         redirect('admin/categories');
     }
 
+    public function select_icon()
+    {
+        $data['subview'] = 'admin/categories/icon';
+        $this->load->view('admin/layouts/layout_main', $data);
+    }
+
 }
