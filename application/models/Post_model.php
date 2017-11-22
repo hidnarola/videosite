@@ -60,19 +60,22 @@ class Post_model extends CI_Model
      * @param : @table 
      * @author : HPA
      */
-    public function get_result($table, $condition = null,$is_single = null)
+    public function get_result($table, $condition = null, $is_single = null)
     {
         $this->db->select('*');
         if (!is_null($condition))
         {
             $this->db->where($condition);
         }
-        
+
         $query = $this->db->get($table);
-        
-        if($is_single !== null){
+
+        if ($is_single !== null)
+        {
             return $query->row_array();
-        }else{
+        }
+        else
+        {
             return $query->result_array();
         }
     }
@@ -118,6 +121,48 @@ class Post_model extends CI_Model
         $this->db->where('u.id = ', $user_id);
         $posts = $this->db->get('user_post up')->result_array();
         return $posts;
+    }
+
+    public function get_blogs_by_id($blog_id)
+    {
+        $this->db->select('b.id,post_id,blog_title,blog_description,img_path,u.id as user_id, u.username,c.id as channelid, c.user_id as channeluserid,c.channel_name, up.id as userpostid,up.channel_id as userpostchannelid,up.post_type');
+        $this->db->join('user_post up', 'up.id = b.post_id', 'left');
+        $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
+        $this->db->join('users u', 'u.id = c.user_id', 'left');
+        $this->db->where('b.id = ', $blog_id);
+        $this->db->where('b.is_deleted !=', '1');
+        $blogs = $this->db->get('blog b')->row_array();
+        qry();
+        pr($blogs, 1);
+        return $blogs;
+    }
+
+    public function get_gallery_by_id($gallery_id)
+    {
+        $this->db->select('g.id,post_id,title,description,img_path,u.id as user_id, u.username,c.id as channelid, c.user_id as channeluserid,c.channel_name, up.id as userpostid,up.channel_id as userpostchannelid,up.post_type');
+        $this->db->join('user_post up', 'up.id = g.post_id', 'left');
+        $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
+        $this->db->join('users u', 'u.id = c.user_id', 'left');
+        $this->db->where('g.id = ', $gallery_id);
+        $this->db->where('g.is_deleted !=', '1');
+        $gallery = $this->db->get('gallery g')->row_array();
+        qry();
+        pr($gallery, 1);
+        return $gallery;
+    }
+
+    public function get_video_by_id($video_id)
+    {
+        $this->db->select('v.id,post_id,title,description,upload_path,u.id as user_id, u.username,c.id as channelid, c.user_id as channeluserid,c.channel_name, up.id as userpostid,up.channel_id as userpostchannelid,up.post_type');
+        $this->db->join('user_post up', 'up.id = v.post_id', 'left');
+        $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
+        $this->db->join('users u', 'u.id = c.user_id', 'left');
+        $this->db->where('v.id = ', $video_id);
+        $this->db->where('v.is_deleted !=', '1');
+        $video = $this->db->get('video v')->row_array();
+        qry();
+        pr($video, 1);
+        return $video;
     }
 
 }
