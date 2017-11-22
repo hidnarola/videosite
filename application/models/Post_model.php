@@ -9,53 +9,6 @@ class Post_model extends CI_Model
     }
 
     /**
-     * @uses : this function is used to get result based on datatable in cms list page
-     * @param : @table 
-     * @author : HPA
-     */
-    public function get_all_post()
-    {
-
-        $this->db->select('id,channel_id,post_type,slug,DATE_FORMAT(up.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,up.is_blocked,c.id as channelid, c.channel_id', false);
-        $this->db->join('user_channels c', 'c.id = up.channel_id');
-        $this->db->where('up.is_deleted !=', 1);
-
-        $keyword = $this->input->get('search');
-        $keyword = str_replace('"', '', $keyword);
-
-        if (!empty($keyword['value']))
-        {
-            $this->db->having('channel_name LIKE "%' . $keyword['value'] . '%" OR post_type LIKE "%' . $keyword['value'] . '%"', NULL);
-        }
-
-        $this->db->limit($this->input->get('length'), $this->input->get('start'));
-        $res_data = $this->db->get('user_post up,(SELECT @a:= 0) AS a')->result_array();
-        return $res_data;
-    }
-
-    /**
-     * @uses : this function is used to count rows of cms based on datatable in cms list page
-     * @param : @table 
-     * @author : HPA
-     */
-    public function get_post_count()
-    {
-
-        $this->db->join('user_channels c', 'c.id = up.channel_id');
-        $this->db->where('up.is_deleted !=', 1);
-
-        $keyword = $this->input->get('search');
-        $keyword = str_replace('"', '', $keyword);
-
-        if (!empty($keyword['value']))
-        {
-            $this->db->having('channel_name LIKE "%' . $keyword['value'] . '%" OR post_type LIKE "%' . $keyword['value'] . '%"', NULL);
-        }
-        $res_data = $this->db->get('user_post up')->num_rows();
-        return $res_data;
-    }
-
-    /**
      * @uses : This function is used get result from the table
      * @param : @table 
      * @author : HPA
@@ -125,63 +78,21 @@ class Post_model extends CI_Model
 
     public function get_blogs_by_post_id($blog_post_id)
     {
-//        $this->db->select('b.id,post_id,blog_title,blog_description,img_path,u.id as user_id, u.username,c.id as channelid, c.user_id as channeluserid,c.channel_name, up.id as userpostid,up.channel_id as userpostchannelid,up.post_type');
-//        $this->db->join('user_post up', 'up.id = b.post_id', 'left');
-//        $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
-//        $this->db->join('users u', 'u.id = c.user_id', 'left');
-//        $this->db->where('b.post_id = ', $blog_post_id);
-//        $this->db->where('b.is_deleted !=', '1');
         $this->db->select('b.id,post_id,blog_title,blog_description,img_path,u.id as user_id, u.username,c.id as channelid, c.user_id as channeluserid,c.channel_name, up.id as userpostid,up.channel_id as userpostchannelid,up.post_type');
         $this->db->join('user_post up', 'up.id = b.post_id', 'left');
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
         $this->db->where('b.is_deleted !=', 1);
         $this->db->where('b.post_id', $blog_post_id);
-        $keyword = $this->input->get('search');
-        $keyword = str_replace('"', '', $keyword);
-
-        if (!empty($keyword['value']))
-        {
-            $this->db->having('title LIKE "%' . $keyword['value'] . '%"', NULL);
-        }
-        $this->db->limit($this->input->get('length'), $this->input->get('start'));
         $blogs = $this->db->get('blog b')->result_array();
-        return $blogs;
-    }
-
-    public function get_blogs_by_post_count($blog_post_id)
-    {
-//        $this->db->select('b.id,post_id,blog_title,blog_description,img_path,u.id as user_id, u.username,c.id as channelid, c.user_id as channeluserid,c.channel_name, up.id as userpostid,up.channel_id as userpostchannelid,up.post_type');
-//        $this->db->join('user_post up', 'up.id = b.post_id', 'left');
-//        $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
-//        $this->db->join('users u', 'u.id = c.user_id', 'left');
-//        $this->db->where('b.post_id = ', $blog_post_id);
-//        $this->db->where('b.is_deleted !=', '1');
-        $this->db->select('b.id,post_id,blog_title,blog_description,img_path,u.id as user_id, u.username,c.id as channelid, c.user_id as channeluserid,c.channel_name, up.id as userpostid,up.channel_id as userpostchannelid,up.post_type');
-        $this->db->join('user_post up', 'up.id = b.post_id', 'left');
-        $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
-        $this->db->join('users u', 'u.id = c.user_id', 'left');
-        $this->db->where('b.is_deleted !=', 1);
-        $this->db->where('b.post_id', $blog_post_id);
-        $keyword = $this->input->get('search');
-        $keyword = str_replace('"', '', $keyword);
-
-        if (!empty($keyword['value']))
-        {
-            $this->db->having('title LIKE "%' . $keyword['value'] . '%"', NULL);
-        }
-        $blogs = $this->db->get('blog b')->result_array();
+        qry();
+        pr($blogs, 1);
         return $blogs;
     }
 
     public function get_gallery_by_post_id($gallery_post_id)
     {
         $this->db->select('g.id,post_id,title,description,img_path,u.id as user_id, u.username,c.id as channelid, c.user_id as channeluserid,c.channel_name, up.id as userpostid,up.channel_id as userpostchannelid,up.post_type');
-//        $this->db->join('user_post up', 'up.id = g.post_id', 'left');
-//        $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
-//        $this->db->join('users u', 'u.id = c.user_id', 'left');
-//        $this->db->where('g.id = ', $gallery_id);
-//        $this->db->where('g.is_deleted !=', '1');
         $this->db->join('user_post up', 'up.id = g.post_id', 'left');
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
@@ -207,18 +118,157 @@ class Post_model extends CI_Model
         return $video;
     }
 
-    public function get_all_posts($id)
+    public function get_all_blogs($where = array())
     {
-        $this->db->select('COUNT(DISTINCT b.id) as blog,COUNT(DISTINCT v.id) as video,COUNT(DISTINCT g.id) as gallery');
+        $this->db->select('up.id,up.channel_id,up.post_type,b.id as blogid,post_id,blog_title,blog_description,img_path,u.id as user_id, u.username,c.id as channelid, c.user_id as channeluserid,c.channel_name,DATE_FORMAT(b.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,up.is_blocked', false);
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
-        $this->db->join('blog b', 'b.post_id = up.id', 'left');
-        $this->db->join('video v', 'v.post_id = up.id', 'left');
-        $this->db->join('gallery g', 'g.post_id = up.id', 'left');
-//        $this->db->group_by('up.id');
-        $this->db->where('up.id = ', $id);
-        $posts = $this->db->get('user_post up')->row_array();
-        return $posts;
+        $this->db->join('blog b', 'up.id = b.post_id');
+        $this->db->where('up.is_deleted !=', 1);
+        $this->db->where('up.post_type', 'blog');
+        if (count($where) > 0)
+        {
+            $this->db->where($where);
+        }
+
+        $keyword = $this->input->get('search');
+        $keyword = str_replace('"', '', $keyword);
+
+        if (!empty($keyword['value']))
+        {
+            $this->db->having('blog_title LIKE "%' . $keyword['value'] . '%"', NULL);
+        }
+
+        $this->db->limit($this->input->get('length'), $this->input->get('start'));
+        $res_data = $this->db->get('user_post up')->result_array();
+        return $res_data;
+    }
+
+    public function get_blogs_count($where = array())
+    {
+        $this->db->select('up.id,up.channel_id,up.post_type,b.id as blogid,post_id,blog_title,blog_description,img_path,u.id as user_id, u.username,c.id as channelid, c.user_id as channeluserid,c.channel_name,DATE_FORMAT(b.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,up.is_blocked', false);
+        $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
+        $this->db->join('users u', 'u.id = c.user_id', 'left');
+        $this->db->join('blog b', 'up.id = b.post_id');
+        $this->db->where('up.is_deleted !=', 1);
+        $this->db->where('up.post_type', 'blog');
+        if (count($where) > 0)
+        {
+            $this->db->where($where);
+        }
+
+        $keyword = $this->input->get('search');
+        $keyword = str_replace('"', '', $keyword);
+
+        if (!empty($keyword['value']))
+        {
+            $this->db->having('blog_title LIKE "%' . $keyword['value'] . '%"', NULL);
+        }
+
+        $res_data = $this->db->get('user_post up')->num_rows();
+        return $res_data;
+    }
+
+    public function get_all_videos($where = array())
+    {
+        $this->db->select('up.id,up.channel_id,up.post_type,v.id as videoid,post_id,title,description,upload_path,u.id as user_id, u.username,c.id as channelid, c.user_id as channeluserid,c.channel_name,DATE_FORMAT(v.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,up.is_blocked', false);
+        $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
+        $this->db->join('users u', 'u.id = c.user_id', 'left');
+        $this->db->join('video v', 'up.id = v.post_id');
+        $this->db->where('up.is_deleted !=', 1);
+        $this->db->where('up.post_type', 'video');
+        if (count($where) > 0)
+        {
+            $this->db->where($where);
+        }
+
+        $keyword = $this->input->get('search');
+        $keyword = str_replace('"', '', $keyword);
+
+        if (!empty($keyword['value']))
+        {
+            $this->db->having('title LIKE "%' . $keyword['value'] . '%"', NULL);
+        }
+
+        $this->db->limit($this->input->get('length'), $this->input->get('start'));
+        $res_data = $this->db->get('user_post up')->result_array();
+        return $res_data;
+    }
+
+    public function get_videos_count($where = array())
+    {
+        $this->db->select('up.id,up.channel_id,up.post_type,v.id as videoid,post_id,title,description,upload_path,u.id as user_id, u.username,c.id as channelid, c.user_id as channeluserid,c.channel_name,DATE_FORMAT(v.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,up.is_blocked', false);
+        $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
+        $this->db->join('users u', 'u.id = c.user_id', 'left');
+        $this->db->join('video v', 'up.id = v.post_id');
+        $this->db->where('up.is_deleted !=', 1);
+        $this->db->where('up.post_type', 'video');
+        if (count($where) > 0)
+        {
+            $this->db->where($where);
+        }
+
+        $keyword = $this->input->get('search');
+        $keyword = str_replace('"', '', $keyword);
+
+        if (!empty($keyword['value']))
+        {
+            $this->db->having('title LIKE "%' . $keyword['value'] . '%"', NULL);
+        }
+
+        $res_data = $this->db->get('user_post up')->num_rows();
+        return $res_data;
+    }
+
+    public function get_all_gallery($where = array())
+    {
+        $this->db->select('up.id,up.channel_id,up.post_type,g.id as galleryid,post_id,title,description,img_path,u.id as user_id, u.username,c.id as channelid, c.user_id as channeluserid,c.channel_name,DATE_FORMAT(g.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,up.is_blocked', false);
+        $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
+        $this->db->join('users u', 'u.id = c.user_id', 'left');
+        $this->db->join('gallery g', 'up.id = g.post_id');
+        $this->db->where('up.is_deleted !=', 1);
+        $this->db->where('up.post_type', 'gallery');
+        if (count($where) > 0)
+        {
+            $this->db->where($where);
+        }
+
+        $keyword = $this->input->get('search');
+        $keyword = str_replace('"', '', $keyword);
+
+        if (!empty($keyword['value']))
+        {
+            $this->db->having('title LIKE "%' . $keyword['value'] . '%"', NULL);
+        }
+
+        $this->db->limit($this->input->get('length'), $this->input->get('start'));
+        $res_data = $this->db->get('user_post up')->result_array();
+        return $res_data;
+    }
+
+    public function get_gallery_count($where = array())
+    {
+        $this->db->select('up.id,up.channel_id,up.post_type,g.id as galleryid,post_id,title,description,img_path,u.id as user_id, u.username,c.id as channelid, c.user_id as channeluserid,c.channel_name,DATE_FORMAT(g.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,up.is_blocked', false);
+        $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
+        $this->db->join('users u', 'u.id = c.user_id', 'left');
+        $this->db->join('gallery g', 'up.id = g.post_id');
+        $this->db->where('up.is_deleted !=', 1);
+        $this->db->where('up.post_type', 'gallery');
+        if (count($where) > 0)
+        {
+            $this->db->where($where);
+        }
+
+        $keyword = $this->input->get('search');
+        $keyword = str_replace('"', '', $keyword);
+
+        if (!empty($keyword['value']))
+        {
+            $this->db->having('title LIKE "%' . $keyword['value'] . '%"', NULL);
+        }
+
+        $res_data = $this->db->get('user_post up')->num_rows();
+        return $res_data;
     }
 
 }

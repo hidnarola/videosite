@@ -13,7 +13,7 @@ class Blogs_model extends CI_Model
      * @param : @table 
      * @author : HPA
      */
-    public function get_all_blogs()
+    public function get_all_blogs($where = array())
     {
 
         $this->db->select('b.id,post_id,blog_title,blog_description,img_path,u.id as user_id, u.username,c.id as channelid, c.user_id as channeluserid,c.channel_name, up.id as userpostid,up.channel_id as userpostchannelid,up.post_type,DATE_FORMAT(b.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,b.is_blocked', false);
@@ -22,6 +22,10 @@ class Blogs_model extends CI_Model
         $this->db->join('users u', 'u.id = c.user_id', 'left');
         $this->db->where('b.is_deleted !=', 1);
         $this->db->where('up.is_deleted !=', 1);
+        if (count($where) > 0)
+        {
+            $this->db->where($where);
+        }
 
         $keyword = $this->input->get('search');
         $keyword = str_replace('"', '', $keyword);
@@ -41,7 +45,7 @@ class Blogs_model extends CI_Model
      * @param : @table 
      * @author : HPA
      */
-    public function get_blogs_count()
+    public function get_blogs_count($where = array())
     {
 
         $this->db->join('user_post up', 'up.id = b.post_id', 'left');
@@ -49,6 +53,10 @@ class Blogs_model extends CI_Model
         $this->db->join('users u', 'u.id = c.user_id', 'left');
         $this->db->where('b.is_deleted !=', 1);
         $this->db->where('up.is_deleted !=', 1);
+        if (count($where) > 0)
+        {
+            $this->db->where($where);
+        }
 
         $keyword = $this->input->get('search');
         $keyword = str_replace('"', '', $keyword);

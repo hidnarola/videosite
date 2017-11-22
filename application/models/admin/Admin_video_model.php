@@ -13,7 +13,7 @@ class Admin_video_model extends CI_Model
      * @param : @table 
      * @author : HPA
      */
-    public function get_all_videos()
+    public function get_all_videos($where = array())
     {
 
         $this->db->select('v.id,post_id,title,description,upload_path,u.id as user_id, u.username,c.id as channelid, c.user_id as channeluserid,c.channel_name, up.id as userpostid,up.channel_id as userpostchannelid,up.post_type,DATE_FORMAT(v.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,v.is_blocked', false);
@@ -22,7 +22,10 @@ class Admin_video_model extends CI_Model
         $this->db->join('users u', 'u.id = c.user_id', 'left');
         $this->db->where('v.is_deleted !=', 1);
         $this->db->where('up.is_deleted !=', 1);
-
+        if (count($where) > 0)
+        {
+            $this->db->where($where);
+        }
         $keyword = $this->input->get('search');
         $keyword = str_replace('"', '', $keyword);
 
@@ -41,13 +44,17 @@ class Admin_video_model extends CI_Model
      * @param : @table 
      * @author : HPA
      */
-    public function get_videos_count()
+    public function get_videos_count($where = array())
     {
         $this->db->join('user_post up', 'up.id = v.post_id', 'left');
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
         $this->db->where('v.is_deleted !=', 1);
         $this->db->where('up.is_deleted !=', 1);
+        if (count($where) > 0)
+        {
+            $this->db->where($where);
+        }
 
         $keyword = $this->input->get('search');
         $keyword = str_replace('"', '', $keyword);
