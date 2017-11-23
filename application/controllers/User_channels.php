@@ -85,6 +85,15 @@ class User_channels extends CI_Controller {
 		}
 	}
 
+	// ------------------------------------------------------------------------
+
+	public function channel_detail($channel_name){
+		// echo $channel_name;
+	}
+
+	// ------------------------------------------------------------------------
+
+
 
 	/*=================================================================
 	=            Form custom validation by call back block            =
