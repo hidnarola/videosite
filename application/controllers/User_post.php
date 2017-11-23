@@ -125,7 +125,7 @@ class User_post extends CI_Controller
             $result = $this->Post_model->insert_record('comments', $ins_comment);
             if ($result)
             {
-                $this->session->set_flashdata('message', ['message' => 'Comment successfully Inserted!' . $msg, 'class' => 'success']);
+                $this->session->set_flashdata('message', ['message' => 'Comment successfully Inserted!', 'class' => 'success']);
             }
             else
             {

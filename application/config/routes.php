@@ -61,7 +61,9 @@ $route['user_post'] = 'user_post/index';
 // $all_news = $db->get( 'articles' );
 // $result_ar = $all_news->result_array();
 
-// $route['(:any)'] = "home/post_detail/$1";
+
+//$route['(:any)'] = "home/post_detail/$1";
+
 
 /* Routes For the Admin Start */
 $route['admin'] = "admin/admin/index";

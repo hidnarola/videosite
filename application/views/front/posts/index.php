@@ -55,64 +55,6 @@
                     ?>
                 </tbody>
             </table>
-<!--            <a href="<?php echo base_url() . 'user_post/add_video'; ?>" class="btn btn-primary" title=""> Add Video </a>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Blog Title</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-            <?php
-            if (!empty($all_posts))
-            {
-                foreach ($all_posts as $post)
-                {
-                    ?>
-                                                                                                    <tr>
-                                                                                                        <td><?php echo $post['channel_name']; ?></td>
-                                                                                                        <td><?php echo $post['channel_slug']; ?></td>
-                                                                                                        <td>
-                                                                                                            <a href="<?php echo base_url() . 'user_post/edit/' . $post['id']; ?>" title="" class="btn btn-success">  Edit </a>
-                                                                                                            <a href="<?php echo base_url() . 'user_post/delete/' . $post['id']; ?>" title="" class="btn btn-danger"> Delete </a>                            
-                                                                                                        </td>
-                                                                                                    </tr>
-                    <?php
-                }
-            }
-            ?>
-                </tbody>
-            </table>
-            <a href="<?php echo base_url() . 'user_post/add_gallery'; ?>" class="btn btn-primary" title=""> Add Gallery </a>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Blog Title</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-            <?php
-            if (!empty($all_posts))
-            {
-                foreach ($all_posts as $post)
-                {
-                    ?>
-                                                                                                    <tr>
-                                                                                                        <td><?php echo $post['channel_name']; ?></td>
-                                                                                                        <td><?php echo $post['channel_slug']; ?></td>
-                                                                                                        <td>
-                                                                                                            <a href="<?php echo base_url() . 'user_post/edit/' . $post['id']; ?>" title="" class="btn btn-success">  Edit </a>
-                                                                                                            <a href="<?php echo base_url() . 'user_post/delete/' . $post['id']; ?>" title="" class="btn btn-danger"> Delete </a>                            
-                                                                                                        </td>
-                                                                                                    </tr>
-                    <?php
-                }
-            }
-            ?>
-                </tbody>
-            </table>-->
         </div>
 
     </body>
