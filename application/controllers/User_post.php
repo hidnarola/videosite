@@ -14,10 +14,7 @@ class User_post extends CI_Controller
     public function index()
     {
         $sess_data = $this->session->userdata('client');
-//        pr($sess_data,1);
         $data['all_posts'] = $this->Post_model->get_all_posts_by_user_id($sess_data['id']);
-//        qry();
-//        pr($data['all_posts'],1);
         $data['subview'] = 'front/posts/index';
         $this->load->view('front/layouts/layout_main', $data);
     }
@@ -44,7 +41,6 @@ class User_post extends CI_Controller
             ];
 
             $last_post_id = $this->Post_model->insert_record('user_post', $ins_post);
-//            pr($last_post_id);die;
 
             $insert_array = [
                 'post_id' => $last_post_id,
@@ -53,7 +49,6 @@ class User_post extends CI_Controller
 //                'img_path' => $img_path,
                 'created_at' => date("Y-m-d H:i:s a"),
             ];
-//            pr($insert_array, 1);
 
             $result = $this->Post_model->insert_record('blog', $insert_array);
             if ($result)
@@ -111,6 +106,34 @@ class User_post extends CI_Controller
     {
         $sess_data = $this->session->userdata('client');
         $data['blog'] = $this->Post_model->get_blogs_by_post_id($blog_post_id);
+        $this->form_validation->set_rules('comments', 'Comment', 'required');
+        if ($this->form_validation->run() == FALSE)
+        {
+            $data['subview'] = 'front/posts/view_blog';
+            $this->load->view('front/layouts/layout_main', $data);
+        }
+        else
+        {
+            $comment = $this->input->post('comments');
+            $ins_comment = [
+                'message' => $comment,
+                'post_id' => $data['blog']['post_id'],
+                'user_id' => $sess_data['id'],
+                'created_at' => date('Y-m-d H:i:s')
+            ];
+//            pr($ins_comment, 1);
+            $result = $this->Post_model->insert_record('comments', $ins_comment);
+            if ($result)
+            {
+                $this->session->set_flashdata('message', ['message' => 'Comment successfully Inserted!' . $msg, 'class' => 'success']);
+            }
+            else
+            {
+                $this->session->set_flashdata('message', ['message' => 'Error Into Insert Comment!', 'class' => 'danger']);
+            }
+        }
+//        $data['subview'] = 'front/posts/view_blog';
+//        $this->load->view('front/layouts/layout_main', $data);
     }
 
     public function add_gallery()
@@ -143,7 +166,6 @@ class User_post extends CI_Controller
 //                'img_path' => $img_path,
                 'created_at' => date("Y-m-d H:i:s a"),
             ];
-//            pr($insert_array, 1);
 
             $result = $this->Post_model->insert_record('gallery', $insert_array);
             if ($result)
@@ -234,7 +256,6 @@ class User_post extends CI_Controller
 //                'img_path' => $img_path,
                 'created_at' => date("Y-m-d H:i:s a"),
             ];
-//            pr($insert_array, 1);
 
             $result = $this->Post_model->insert_record('video', $insert_array);
             if ($result)
@@ -260,7 +281,6 @@ class User_post extends CI_Controller
         $where = 'id = ' . $this->db->escape($blog_id);
         $data['record'] = $this->Post_model->get_result('video', $where, true);
 
-        // pr($data['record'],1);
 
         $this->form_validation->set_rules('title', 'Title', 'required');
         if ($this->form_validation->run() == FALSE)

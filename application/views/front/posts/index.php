@@ -1,3 +1,4 @@
+<?php // pr($all_posts, 1);        ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -10,22 +11,21 @@
     </head>
     <body>
 
-        <?php 
-            $res = $this->session->flashdata('message'); 
-            if(isset($res)){
-                echo $res['message'];
-            }
+        <?php
+        $res = $this->session->flashdata('message');
+        if (isset($res))
+        {
+            echo $res['message'];
+        }
         ?>
         <div class="container">
             <h2>Basic Table</h2>
             <a href="<?php echo base_url() . 'user_post/add_blog'; ?>" class="btn btn-primary" title=""> Add Blog </a>
-            <a href="<?php echo base_url() . 'user_post/add_video'; ?>" class="btn btn-primary" title=""> Add Video </a>
-            <a href="<?php echo base_url() . 'user_post/add_gallery'; ?>" class="btn btn-primary" title=""> Add Gallery </a>
-<!--            <table class="table">
+            <table class="table">
                 <thead>
                     <tr>
-                        <th>Channel Name</th>
-                        <th>Channel Slug</th>
+                        <th>Blog Title</th>
+                        <th>Slug</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -35,19 +35,82 @@
                     {
                         foreach ($all_posts as $post)
                         {
-                            ?>
-                            <tr>
-                                <td><?php echo $post['channel_name']; ?></td>
-                                <td><?php echo $post['channel_slug']; ?></td>
-                                <td>
-                                    <a href="<?php echo base_url() . 'user_post/edit/' . $post['id']; ?>" title="" class="btn btn-success">  Edit </a>
-                                    <a href="<?php echo base_url() . 'user_post/delete/' . $post['id']; ?>" title="" class="btn btn-danger"> Delete </a>                            
-                                </td>
-                            </tr>
-                            <?php
+                            if ($post['post_type'] == 'blog')
+                            {
+                                ?>
+
+                                <tr>
+                                    <td><?php echo $post['blog_title']; ?></td>
+                                    <td><?php echo $post['slug']; ?></td>
+                                    <td>
+                                        <a href="<?php echo base_url() . 'user_post/edit_blog/' . $post['id']; ?>" title="" class="btn btn-success">  Edit </a>
+                                        <a href="<?php echo base_url() . 'user_post/delete_blog/' . $post['id']; ?>" title="" class="btn btn-danger"> Delete </a>                           
+                                        <a href="<?php echo base_url() . 'user_post/view_blog/' . $post['id']; ?>" title="" class="btn btn-primary"> View </a>                           
+                                    </td>
+                                </tr>
+                                <?php
+                            }
                         }
                     }
                     ?>
+                </tbody>
+            </table>
+<!--            <a href="<?php echo base_url() . 'user_post/add_video'; ?>" class="btn btn-primary" title=""> Add Video </a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Blog Title</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+            <?php
+            if (!empty($all_posts))
+            {
+                foreach ($all_posts as $post)
+                {
+                    ?>
+                                                                                                    <tr>
+                                                                                                        <td><?php echo $post['channel_name']; ?></td>
+                                                                                                        <td><?php echo $post['channel_slug']; ?></td>
+                                                                                                        <td>
+                                                                                                            <a href="<?php echo base_url() . 'user_post/edit/' . $post['id']; ?>" title="" class="btn btn-success">  Edit </a>
+                                                                                                            <a href="<?php echo base_url() . 'user_post/delete/' . $post['id']; ?>" title="" class="btn btn-danger"> Delete </a>                            
+                                                                                                        </td>
+                                                                                                    </tr>
+                    <?php
+                }
+            }
+            ?>
+                </tbody>
+            </table>
+            <a href="<?php echo base_url() . 'user_post/add_gallery'; ?>" class="btn btn-primary" title=""> Add Gallery </a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Blog Title</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+            <?php
+            if (!empty($all_posts))
+            {
+                foreach ($all_posts as $post)
+                {
+                    ?>
+                                                                                                    <tr>
+                                                                                                        <td><?php echo $post['channel_name']; ?></td>
+                                                                                                        <td><?php echo $post['channel_slug']; ?></td>
+                                                                                                        <td>
+                                                                                                            <a href="<?php echo base_url() . 'user_post/edit/' . $post['id']; ?>" title="" class="btn btn-success">  Edit </a>
+                                                                                                            <a href="<?php echo base_url() . 'user_post/delete/' . $post['id']; ?>" title="" class="btn btn-danger"> Delete </a>                            
+                                                                                                        </td>
+                                                                                                    </tr>
+                    <?php
+                }
+            }
+            ?>
                 </tbody>
             </table>-->
         </div>

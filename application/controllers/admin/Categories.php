@@ -99,6 +99,7 @@ class Categories extends CI_Controller
             $update_array = [
                 'category_name' => $this->input->post('category_name'),
                 'is_blocked' => $this->input->post('is_blocked'),
+                'icon' => $this->input->post('icon')
             ];
 
             $result = $this->Admin_category_model->update_record('categories', $where, $update_array);
@@ -134,7 +135,9 @@ class Categories extends CI_Controller
                 'category_name' => $this->input->post('category_name'),
                 'created_at' => date("Y-m-d H:i:s a"),
                 'is_blocked' => $this->input->post('is_blocked'),
+                'icon' => $this->input->post('icon')
             ];
+            
             $result = $this->Admin_category_model->insert_record('categories', $insert_array);
             if ($result)
             {

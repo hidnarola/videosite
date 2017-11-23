@@ -82,11 +82,10 @@ class Post_model extends CI_Model
         $this->db->join('user_post up', 'up.id = b.post_id', 'left');
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
-        $this->db->where('b.is_deleted !=', 1);
         $this->db->where('b.post_id', $blog_post_id);
-        $blogs = $this->db->get('blog b')->result_array();
-        qry();
-        pr($blogs, 1);
+        $blogs = $this->db->get('blog b')->row_array();
+//        qry();
+//        pr($blogs, 1);
         return $blogs;
     }
 
@@ -96,11 +95,10 @@ class Post_model extends CI_Model
         $this->db->join('user_post up', 'up.id = g.post_id', 'left');
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
-        $this->db->where('g.is_deleted !=', 1);
         $this->db->where('g.post_id', $gallery_post_id);
         $gallery = $this->db->get('gallery g')->result_array();
-        qry();
-        pr($gallery, 1);
+//        qry();
+//        pr($gallery, 1);
         return $gallery;
     }
 
@@ -111,10 +109,9 @@ class Post_model extends CI_Model
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
         $this->db->where('v.id = ', $video_id);
-        $this->db->where('v.is_deleted !=', '1');
         $video = $this->db->get('video v')->row_array();
-        qry();
-        pr($video, 1);
+//        qry();
+//        pr($video, 1);
         return $video;
     }
 

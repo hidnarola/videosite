@@ -75,7 +75,7 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Category Icon </label>
                             <div class="col-lg-9">
-                                <input type="text" name="icon" id="category_name" placeholder="Enter Icon" class="form-control" value="<?php echo (isset($record['icon'])) ? $record['icon'] : set_value('icon'); ?>">
+                                <input type="text" name="icon" id="icon" placeholder="Enter Icon" class="form-control" value="<?php echo (isset($record['icon'])) ? $record['icon'] : set_value('icon'); ?>">
                                 <span class="help-block">Please select the icon from the given link. <a href="<?php echo base_url() . 'admin/categories/select_icon' ?>" target="_blank">Icons</a></span>
                             </div>
                         </div>
