@@ -6,6 +6,7 @@ class Dashboard extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('Users_model');
+		
 		if(empty(is_client_loggedin())){ redirect('registration/login'); }
 	}
 
@@ -75,6 +76,7 @@ class Dashboard extends CI_Controller {
 		$this->session->set_flashdata('success','Logout successful.');
 		redirect('registration/login');
 	}
+ 
 
 	/*========================================================================
 	=            Form validation callback functions comment block            =

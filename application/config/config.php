@@ -1,5 +1,7 @@
 <?php
 
+include_once 'vendor/autoload.php';
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
