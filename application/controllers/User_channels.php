@@ -88,7 +88,51 @@ class User_channels extends CI_Controller {
 	// ------------------------------------------------------------------------
 
 	public function channel_detail($channel_name){
-		// echo $channel_name;
+		
+		$data['res_channel'] = $this->db->get_where('user_channels',['channel_slug'=>$channel_name])->row_array();
+		if(empty($data['res_channel'])){ show_404(); }
+
+		// pr($data,1);
+
+		$this->load->view('front/channels/channel_details',$data);
+	}
+
+	public function subscribe_channel($channel_id){
+		
+		$sess_u_data = $this->session->userdata('client');
+		$channel_data = $this->db->get_where('user_channels',['id'=>$channel_id,'is_deleted'=>'0','is_blocked'=>'0'])->row_array();
+		
+		if(empty($channel_data)){ show_404(); }
+
+		$all_userchannel = $this->db->select('id')->get_where('user_channels',
+															['user_id'=>$sess_u_data['id'],'is_deleted'=>'0','is_blocked'=>'0'])
+												  ->result_array();
+
+		if(!empty($all_userchannel)){
+			$all_ids = array_column($all_userchannel,'id');
+			if(in_array($channel_id,$all_ids)){
+				echo 'Can not subscribe';
+			}
+		}
+		pr($all_userchannel,1);
+
+		$total_subscribers = $this->db->get_where('user_subscribers',['user_id'=>$user_id,'channel_id'=>$channel_id])
+									  ->num_rows();
+
+		if($total_subscribers != 0){
+			$ins_data = [
+							'user_id'=>$sess_u_data['id'],
+							'channel_id'=>$channel_id
+						];
+			$this->db->insert('user_subscribers',$ins_data);
+
+		}
+	}
+
+	public function unsubscribe_channel($channel_id){
+		$this->db->delete('user_subscribers',['user_id'=>$user_id,'channel_id'=>$channel_id]);
+		// $this->session->set_flashdata('error','');
+		redirect('dashboard');
 	}
 
 	// ------------------------------------------------------------------------
@@ -135,9 +179,8 @@ class User_channels extends CI_Controller {
 			return true;
 		}
 	}
-	
+
 	/*=====  End of Form custom validation by call back block  ======*/
-	
 
 }
 
