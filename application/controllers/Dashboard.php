@@ -113,6 +113,14 @@ class Dashboard extends CI_Controller {
 
 	/*=====  End of Form validation callback functions comment block  ======*/
 
+    public function view_history()
+    {
+        $sess_data = $this->session->userdata('client');
+        $data['history'] = $this->db->get_where('user_history', ['user_id' => $sess_data['id']])->result_array();
+        $data['subview'] = 'front/dashboard/history';
+        $this->load->view('front/layouts/layout_main', $data);
+    }
+
 }
 
 /* End of file Dashboard.php */

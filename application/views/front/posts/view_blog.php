@@ -85,7 +85,7 @@
                         if ($is_user_like == false)
                         {
                             ?>
-                            <a href="<?php echo base_url() . 'user_post/like_post/' . $posts['id']; ?>" class="btn btn-success">
+                            <a href="<?php echo base_url() . 'home/like_post/' . $posts['id']; ?>" class="btn btn-success">
                                 Like
                             </a>
                             <?php
@@ -93,8 +93,30 @@
                         else
                         {
                             ?>
-                            <a href="<?php echo base_url() . 'user_post/unlike_post/' . $posts['id']; ?>" class="btn btn-danger">
+                            <a href="<?php echo base_url() . 'home/unlike_post/' . $posts['id']; ?>" class="btn btn-danger">
                                 Un-Like
+                            </a>
+                        <?php } ?>
+                    <?php } ?>
+
+                    <?php
+                    if ($user_loggedin == true)
+                    {
+                        ?>
+                        <?php
+                        if ($is_user_bookmark == false)
+                        {
+                            ?>
+                            <a href="<?php echo base_url() . 'home/bookmark_post/' . $posts['id']; ?>" class="btn btn-success">
+                                BookMark
+                            </a>
+                            <?php
+                        }
+                        else
+                        {
+                            ?>
+                            <a href="<?php echo base_url() . 'home/unbookmark_post/' . $posts['id']; ?>" class="btn btn-danger">
+                                Un-BookMark
                             </a>
                         <?php } ?>
                     <?php } ?>
@@ -117,5 +139,5 @@
 <!-- / -->
 
 <script type="text/javascript">
-//    $('#channel').val('<?php // echo $record["post_id"];                   ?>');
+//    $('#channel').val('<?php // echo $record["post_id"];                      ?>');
 </script>

@@ -28,8 +28,34 @@ class Home extends CI_Controller
         $res_post_data = $this->db->get_where('user_post', ['slug' => $post_slug, 'post_type' => $post_type])->row_array();
         $data['user_loggedin'] = false;
         $data['is_user_like'] = false;
+        $data['is_user_bookmark'] = false;
 
         pr($res_post_data);
+        if ($data['posts']['post_type'] == 'blog')
+        {
+            $ins_history = [
+                'user_id' => $sess_data['id'],
+                'post_id' => $data['posts']['id'],
+                'activity' => date("Y-m-d H:i:s") . ' ' . $data['posts']['username'] . 'has viewed ' . $data['posts']['post_type'] . ' ' . $data['posts']['blog_title']
+            ];
+        }
+        elseif ($data['posts']['post_type'] == 'video')
+        {
+            $ins_history = [
+                'user_id' => $sess_data['id'],
+                'post_id' => $data['posts']['id'],
+                'activity' => date("Y-m-d H:i:s") . ' ' . $data['posts']['username'] . 'has viewed ' . $data['posts']['post_type'] . ' ' . $data['posts']['vtitle']
+            ];
+        }
+        elseif ($data['posts']['post_type'] == 'gallery')
+        {
+            $ins_history = [
+                'user_id' => $sess_data['id'],
+                'post_id' => $data['posts']['id'],
+                'activity' => date("Y-m-d H:i:s") . ' ' . $data['posts']['username'] . 'has viewed ' . $data['posts']['post_type'] . ' ' . $data['posts']['gtitle']
+            ];
+        }
+        $this->db->insert('user_history', $ins_history);
         if (!empty($sess_data))
         {
 
@@ -39,10 +65,15 @@ class Home extends CI_Controller
 
             $user_like_data = $this->db->get_where('user_likes', ['user_id' => $sess_data['id'], 'post_id' => $data['posts']['id']])
                     ->row_array();
-
             if (!empty($user_like_data))
             {
                 $data['is_user_like'] = true;
+            }
+            $user_bookmark_data = $this->db->get_where('user_bookmarks', ['user_id' => $sess_data['id'], 'post_id' => $data['posts']['id']])
+                    ->row_array();
+            if (!empty($user_bookmark_data))
+            {
+                $data['is_user_bookmark'] = true;
             }
         }
         if (empty($res_post_data))
@@ -115,6 +146,116 @@ class Home extends CI_Controller
             {
                 $this->db->insert('user_post_counts', $ins_data);
             }
+        }
+    }
+
+    public function like_post($post_id)
+    {
+
+        $sess_data = $this->session->userdata('client');
+        $post_data = $this->db->get_where('user_post', ['id' => $post_id, 'is_deleted' => '0', 'is_blocked' => '0'])->row_array();
+        if (empty($post_data))
+        {
+            show_404();
+        }
+
+        $is_post_liked = $this->db->get_where('user_likes', ['user_id' => $sess_data['id'], 'post_id' => $post_id])->num_rows();
+
+        if ($is_post_liked == 0)
+        {
+
+            $ins_data = [
+                'user_id' => $sess_data['id'],
+                'post_id' => $post_id
+            ];
+            $this->db->insert('user_likes', $ins_data);
+            $this->session->set_flashdata('success', 'You have liked this post successfully.');
+            if ($post_data['post_type'] == 'video')
+            {
+                redirect('video/' . $post_data['slug']);
+            }
+            elseif ($post_data['post_type'] == 'blog')
+            {
+                redirect('blog/' . $post_data['slug']);
+            }
+            elseif ($post_data['post_type'] == 'gallery')
+            {
+                redirect('blog/' . $post_data['slug']);
+            }
+        }
+    }
+
+    public function unlike_post($post_id)
+    {
+        $post_data = $this->db->get_where('user_post', ['id' => $post_id, 'is_deleted' => '0', 'is_blocked' => '0'])->row_array();
+        $sess_data = $this->session->userdata('client');
+        $this->db->delete('user_likes', ['user_id' => $sess_data['id'], 'post_id' => $post_id]);
+        if ($post_data['post_type'] == 'video')
+        {
+            redirect('video/' . $post_data['slug']);
+        }
+        elseif ($post_data['post_type'] == 'blog')
+        {
+            redirect('blog/' . $post_data['slug']);
+        }
+        elseif ($post_data['post_type'] == 'gallery')
+        {
+            redirect('blog/' . $post_data['slug']);
+        }
+    }
+
+    public function bookmark_post($post_id)
+    {
+
+        $sess_data = $this->session->userdata('client');
+        $post_data = $this->db->get_where('user_post', ['id' => $post_id, 'is_deleted' => '0', 'is_blocked' => '0'])->row_array();
+        if (empty($post_data))
+        {
+            show_404();
+        }
+
+        $is_post_bookmarked = $this->db->get_where('user_bookmarks', ['user_id' => $sess_data['id'], 'post_id' => $post_id])->num_rows();
+
+        if ($is_post_bookmarked == 0)
+        {
+
+            $ins_data = [
+                'user_id' => $sess_data['id'],
+                'post_id' => $post_id
+            ];
+            $this->db->insert('user_bookmarks', $ins_data);
+            $this->session->set_flashdata('success', 'You have Bookmarked this post successfully.');
+            if ($post_data['post_type'] == 'video')
+            {
+                redirect('video/' . $post_data['slug']);
+            }
+            elseif ($post_data['post_type'] == 'blog')
+            {
+                redirect('blog/' . $post_data['slug']);
+            }
+            elseif ($post_data['post_type'] == 'gallery')
+            {
+                redirect('blog/' . $post_data['slug']);
+            }
+        }
+    }
+
+    public function unbookmark_post($post_id)
+    {
+        $post_data = $this->db->get_where('user_post', ['id' => $post_id, 'is_deleted' => '0', 'is_blocked' => '0'])->row_array();
+        $sess_data = $this->session->userdata('client');
+        $this->db->delete('user_bookmarks', ['user_id' => $sess_data['id'], 'post_id' => $post_id]);
+        if ($post_data['post_type'] == 'video')
+        {
+            redirect('video/' . $post_data['slug']);
+        }
+        elseif ($post_data['post_type'] == 'blog')
+        {
+            redirect('blog/' . $post_data['slug']);
+        }
+        elseif ($post_data['post_type'] == 'gallery')
+        {
+            redirect('blog/' . $post_data['slug']);
         }
     }
 
