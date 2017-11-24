@@ -31,38 +31,13 @@ class Home extends CI_Controller
         $data['is_user_bookmark'] = false;
 
         pr($res_post_data);
-        if ($data['posts']['post_type'] == 'blog')
-        {
-            $ins_history = [
-                'user_id' => $sess_data['id'],
-                'post_id' => $data['posts']['id'],
-                'activity' => date("Y-m-d H:i:s") . ' ' . $data['posts']['username'] . 'has viewed ' . $data['posts']['post_type'] . ' ' . $data['posts']['blog_title']
-            ];
-        }
-        elseif ($data['posts']['post_type'] == 'video')
-        {
-            $ins_history = [
-                'user_id' => $sess_data['id'],
-                'post_id' => $data['posts']['id'],
-                'activity' => date("Y-m-d H:i:s") . ' ' . $data['posts']['username'] . 'has viewed ' . $data['posts']['post_type'] . ' ' . $data['posts']['vtitle']
-            ];
-        }
-        elseif ($data['posts']['post_type'] == 'gallery')
-        {
-            $ins_history = [
-                'user_id' => $sess_data['id'],
-                'post_id' => $data['posts']['id'],
-                'activity' => date("Y-m-d H:i:s") . ' ' . $data['posts']['username'] . 'has viewed ' . $data['posts']['post_type'] . ' ' . $data['posts']['gtitle']
-            ];
-        }
-        $this->db->insert('user_history', $ins_history);
+        
+
         if (!empty($sess_data))
         {
 
             $data['user_loggedin'] = true;
-
-            $user_post_data = $this->db->get_where('user_post', ['id' => $data['posts']['id'], 'is_deleted' => '0', 'is_blocked' => '0'])->row_array();
-
+            
             $user_like_data = $this->db->get_where('user_likes', ['user_id' => $sess_data['id'], 'post_id' => $data['posts']['id']])
                     ->row_array();
             if (!empty($user_like_data))
@@ -76,6 +51,7 @@ class Home extends CI_Controller
                 $data['is_user_bookmark'] = true;
             }
         }
+
         if (empty($res_post_data))
         {
             show_404();
@@ -113,6 +89,8 @@ class Home extends CI_Controller
         // Increase the count of user post
         // ------------------------------------------------------------------------
         $this->increase_post_views($res_post_data['id']);
+
+        $this->history_add($res_post_data);
     }
 
     /* ============================================================================
@@ -256,6 +234,28 @@ class Home extends CI_Controller
         elseif ($post_data['post_type'] == 'gallery')
         {
             redirect('blog/' . $post_data['slug']);
+        }
+    }
+
+    // ------------------------------------------------------------------------
+    public function history_add($post_data){
+
+        $sess_data = $this->session->userdata('client');
+        if(!empty($sess_data)){
+
+            $post_data_arr = $this->db->get_where('user_history',['user_id'=>$sess_data['id'],'post_id'=>$post_data['id'],'created_at'=>date('Y-m-d')])
+                                  ->row_array();
+
+            if(!empty($post_data_arr)){
+                $this->db->delete('user_history',['id'=>$post_data_arr['id']]);
+            }
+
+            $ins_history = [
+                'user_id' => $sess_data['id'],
+                'post_id' => $post_data['id'],
+                'created_at'=>date('Y-m-d')
+            ];        
+            $this->db->insert('user_history', $ins_history);
         }
     }
 
