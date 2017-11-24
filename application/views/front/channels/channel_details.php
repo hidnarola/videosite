@@ -12,10 +12,20 @@
 <body>
 
     <div class="jumbotron text-center">
+        
         <h1><?php echo $res_channel['channel_name']; ?></h1>
-        <a href="" title="">
-            Subscribe
-        </a>
+
+        <?php if($user_loggedin == true) { ?>
+            <?php if($is_user_subscribe == false) { ?>
+                <a href="<?php echo base_url().'user_channels/subscribe_channel/'.$res_channel['id']; ?>" class="btn btn-success">
+                    Subscribe
+                </a>
+            <?php } else { ?>
+                <a href="<?php echo base_url().'user_channels/unsubscribe_channel/'.$res_channel['id']; ?>" class="btn btn-danger">
+                    Un-Subscribe
+                </a>
+            <?php } ?>
+        <?php } ?>
     </div>
   
     <div class="container">

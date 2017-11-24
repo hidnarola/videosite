@@ -10,8 +10,11 @@ class Dashboard extends CI_Controller {
 	}
 
 	public function index() {
-		echo "hjkl";
-		pr($this->session->all_userdata());
+		// pr($this->session->all_userdata());
+		// $data = [];
+		$data['all_channels'] = $this->db->get_where('user_channels',['is_deleted'=>'0','is_blocked'=>'0'])->result_array();
+		// pr($data,1);
+		$this->load->view('front/dashboard/index', $data);
 	}
 
 	public function edit_profile(){
@@ -66,7 +69,7 @@ class Dashboard extends CI_Controller {
         	redirect('dashboard');
         }
 	}
-
+	
 	public function logout(){
 		$this->session->unset_userdata('client');
 		$this->session->set_flashdata('success','Logout successful.');

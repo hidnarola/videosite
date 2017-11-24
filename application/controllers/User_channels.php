@@ -92,6 +92,25 @@ class User_channels extends CI_Controller {
 		$data['res_channel'] = $this->db->get_where('user_channels',['channel_slug'=>$channel_name])->row_array();
 		if(empty($data['res_channel'])){ show_404(); }
 
+		$sess_data = $this->session->userdata('client');
+		$data['user_loggedin'] = false;
+		$data['is_user_subscribe'] = false;
+
+		if(!empty($sess_data)){
+			
+			$data['user_loggedin'] = true;
+			
+			$user_channel_data = $this->db->get_where('user_channels',['id'=>$data['res_channel']['id'],'is_deleted'=>'0','is_blocked'=>'0'])->row_array();
+
+			$user_subscribe_data =  $this->db->get_where('user_subscribers',['user_id'=>$sess_data['id'],'channel_id'=>$data['res_channel']['id']])
+											 ->row_array();
+			
+			if(!empty($user_subscribe_data)){
+				$data['is_user_subscribe'] = true;
+			}
+		}
+
+		// pr($data['is_user_subscribe'],1);
 		// pr($data,1);
 
 		$this->load->view('front/channels/channel_details',$data);
@@ -100,39 +119,47 @@ class User_channels extends CI_Controller {
 	public function subscribe_channel($channel_id){
 		
 		$sess_u_data = $this->session->userdata('client');
+		// fetch channel data
 		$channel_data = $this->db->get_where('user_channels',['id'=>$channel_id,'is_deleted'=>'0','is_blocked'=>'0'])->row_array();
-		
+
+		// pr($channel_data,1);
 		if(empty($channel_data)){ show_404(); }
 
+		// fetch all channel of loggedin user
 		$all_userchannel = $this->db->select('id')->get_where('user_channels',
 															['user_id'=>$sess_u_data['id'],'is_deleted'=>'0','is_blocked'=>'0'])
 												  ->result_array();
 
+		// put validation check - if logged in user try to subscribe own channel 
 		if(!empty($all_userchannel)){
 			$all_ids = array_column($all_userchannel,'id');
 			if(in_array($channel_id,$all_ids)){
-				echo 'Can not subscribe';
+				echo 'Can not subscribe'; 
+				redirect('channel/'.$channel_data['channel_slug']);
 			}
 		}
-		pr($all_userchannel,1);
 
-		$total_subscribers = $this->db->get_where('user_subscribers',['user_id'=>$user_id,'channel_id'=>$channel_id])
+		$total_subscribers = $this->db->get_where('user_subscribers',['user_id'=>$sess_u_data['id'],'channel_id'=>$channel_id])
 									  ->num_rows();
 
-		if($total_subscribers != 0){
+		if($total_subscribers == 0){
 			$ins_data = [
 							'user_id'=>$sess_u_data['id'],
 							'channel_id'=>$channel_id
 						];
 			$this->db->insert('user_subscribers',$ins_data);
-
+			$this->session->set_flashdata('success','You have subscribed this user successfully.');
+			redirect('channel/'.$channel_data['channel_slug']);
 		}
 	}
 
 	public function unsubscribe_channel($channel_id){
-		$this->db->delete('user_subscribers',['user_id'=>$user_id,'channel_id'=>$channel_id]);
+		$channel_data = $this->db->get_where('user_channels',['id'=>$channel_id,'is_deleted'=>'0','is_blocked'=>'0'])->row_array();
+		$sess_u_data = $this->session->userdata('client');
+		$this->db->delete('user_subscribers',['user_id'=>$sess_u_data['id'],'channel_id'=>$channel_id]);
 		// $this->session->set_flashdata('error','');
-		redirect('dashboard');
+		// redirect('dashboard');
+		redirect('channel/'.$channel_data['channel_slug']);
 	}
 
 	// ------------------------------------------------------------------------
