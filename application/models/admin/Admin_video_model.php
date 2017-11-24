@@ -121,11 +121,11 @@ class Admin_video_model extends CI_Model
 
     public function get_all_video_by_user($id)
     {
-        $this->db->select('v.id,post_id,title,DATE_FORMAT(v.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,v.is_blocked,username', false);
+        $this->db->select('v.id,post_id,title,DATE_FORMAT(v.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,username,u.is_blocked', false);
         $this->db->join('user_post up', 'up.id = v.post_id', 'left');
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
-        $this->db->where('v.is_deleted !=', 1);
+        $this->db->where('u.is_deleted !=', 1);
         $this->db->where('c.user_id', $id);
 
         $keyword = $this->input->get('search');
@@ -149,7 +149,7 @@ class Admin_video_model extends CI_Model
         $this->db->join('user_post up', 'up.id = v.post_id', 'left');
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
-        $this->db->where('v.is_deleted !=', 1);
+        $this->db->where('u.is_deleted !=', 1);
         $this->db->where('c.user_id', $id);
 
         $keyword = $this->input->get('search');
@@ -167,7 +167,7 @@ class Admin_video_model extends CI_Model
 
     public function get_videos_by_user_id($id = null)
     {
-        $this->db->select('v.id,user_id,title,u.id as userid,u.username,DATE_FORMAT(v.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,v.is_blocked');
+        $this->db->select('v.id,user_id,title,u.id as userid,u.username,DATE_FORMAT(v.created_at,"%d %b %Y <br> %l:%i %p") AS created_date');
         $this->db->join('users u', 'u.id = v.user_id');
         $this->db->where('v.is_deleted !=', 1);
         $this->db->where('user_id', $id);

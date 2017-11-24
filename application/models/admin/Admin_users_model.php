@@ -114,11 +114,11 @@ class Admin_users_model extends CI_Model
 
     public function get_all_blogs_by_user($id)
     {
-        $this->db->select('b.id,post_id,blog_title,u.id as userid,u.username,DATE_FORMAT(b.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,b.is_blocked', false);
+        $this->db->select('b.id,post_id,blog_title,u.id as userid,u.username,DATE_FORMAT(b.created_at,"%d %b %Y <br> %l:%i %p") AS created_date', false);
         $this->db->join('user_post up', 'up.id = b.post_id', 'left');
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
-        $this->db->where('b.is_deleted !=', 1);
+//        $this->db->where('b.is_deleted !=', 1);
         $this->db->where('c.user_id', $id);
 
         $keyword = $this->input->get('search');
@@ -141,7 +141,7 @@ class Admin_users_model extends CI_Model
         $this->db->join('user_post up', 'up.id = b.post_id', 'left');
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
-        $this->db->where('b.is_deleted !=', 1);
+//        $this->db->where('b.is_deleted !=', 1);
         $this->db->where('c.user_id', $id);
 
         $keyword = $this->input->get('search');
@@ -159,7 +159,7 @@ class Admin_users_model extends CI_Model
 
     public function get_blogs_by_user_id($id = null)
     {
-        $this->db->select('b.id,user_id,blog_title,u.id as userid,u.username,DATE_FORMAT(b.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,b.is_blocked');
+        $this->db->select('b.id,user_id,blog_title,u.id as userid,u.username,DATE_FORMAT(b.created_at,"%d %b %Y <br> %l:%i %p") AS created_date');
         $this->db->join('users u', 'u.id = b.user_id');
         $this->db->where('b.is_deleted !=', 1);
         $this->db->where('user_id', $id);

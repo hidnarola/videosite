@@ -92,7 +92,7 @@
                                     var action = '';
                                     var id = encodeURIComponent(btoa(full.id));
                                     if (full.is_blocked == '0') {
-                                        action += '<a href="<?php echo base_url(); ?>admin/users/see_video/' + id + '" class="btn border-primary text-primary-600 btn-flat btn-icon btn-rounded btn-sm" title="View"><i class="icon-eye4"></i></a>';
+                                        action += '<a href="<?php echo base_url(); ?>video/' + full.slug + '" class="btn border-primary text-primary-600 btn-flat btn-icon btn-rounded btn-sm" title="View"><i class="icon-eye4"></i></a>';
                                     } else if (full.is_blocked == 1) {
                                         action = "";
                                     }

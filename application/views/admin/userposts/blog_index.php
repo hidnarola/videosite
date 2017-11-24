@@ -47,7 +47,7 @@
 </div>
 <script>
     $(function () {
-//        var id = '<?php // echo $blog['user_id']        ?>';
+//        var id = '<?php // echo $blog['user_id']         ?>';
         $('.datatable-basic').dataTable({
             processing: true,
             serverSide: true,
@@ -92,11 +92,11 @@
                     width: 200,
                     render: function (data, type, full, meta) {
                         var action = '';
-//                        console.log(full.id);
+                        console.log(full.slug);
 //                        var id = encodeURIComponent(btoa(full.id));
 //                        console.log(id);
                         if (full.is_blocked == '0') {
-                            action += '<a href="<?php echo base_url(); ?>admin/users/see_blog/' + full.id + '" class="btn border-primary text-primary-600 btn-flat btn-icon btn-rounded btn-sm" title="View"><i class="icon-eye4"></i></a>';
+                            action += '<a href="<?php echo base_url(); ?>blog/' + full.slug + '" class="btn border-primary text-primary-600 btn-flat btn-icon btn-rounded btn-sm" title="View"><i class="icon-eye4"></i></a>';
                             action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/userpost/delete_blog/' + full.id + '" class="btn border-danger btn_delete text-danger-600 btn-flat btn-icon btn-rounded" title="Delete"><i class="icon-cross2"></i></a>';
                             action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/userpost/block_blog/' + full.id + '" class="btn border-warning text-warning-600 btn-flat btn-icon btn-rounded"  title="Block"><i class="icon-blocked"></i></a>';
                         } else if (full.is_blocked == 1) {

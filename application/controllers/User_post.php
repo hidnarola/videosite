@@ -46,10 +46,10 @@ class User_post extends CI_Controller
                 'post_id' => $last_post_id,
                 'blog_title' => $blog_title,
                 'blog_description' => htmlspecialchars($this->input->post('blog_description')),
-//                'img_path' => $img_path,
+                'img_path' => $this->saveuploadedfile(),
                 'created_at' => date("Y-m-d H:i:s a"),
             ];
-
+            pr($insert_array, 1);
             $result = $this->Post_model->insert_record('blog', $insert_array);
             if ($result)
             {
@@ -316,6 +316,40 @@ class User_post extends CI_Controller
     {
         $sess_data = $this->session->userdata('client');
         $data['video'] = $this->Post_model->get_video_by_id($video_id);
+    }
+
+    public function saveuploadedfile()
+    {
+        $file = $this->input->post('file');
+        pr($file);
+        $fileArray = array('image' => $file);
+        pr($fileArray);
+        $rules = array(
+            'image' => 'mimes:jpeg,jpg,png,gif|required|max:10000' // max 10000kb
+        );
+        $validator = $this->form_validation->set_rules('file', $fileArray, $rules);
+
+        if ($validator->run() == false)
+        {
+            $error = 'Invalid file type / size';
+            return $error;
+        }
+        else
+        {
+//            $uploads_dir = public_path() . '/uploads/blogs/';
+            $uploads_dir = '/uploads/blogs/';
+            echo $uploads_dir;
+//            $extension = $this->input->post('file')->getClientOriginalExtension();
+//            $extension = $this->input->post('file')->getClientOriginalExtension();
+//            echo $extension;
+            $tmp_name = $_FILES["file"]["tmp_name"];
+            echo $tmp_name;
+            $name = $filename = date('Ymdhis') . '_' . $_FILES["file"]["name"] . '.' . $extension;
+            echo $name;
+            move_uploaded_file($tmp_name, "$uploads_dir/$name");
+            die;
+            return "/uploads/blogs/" . $name;
+        };
     }
 
 }

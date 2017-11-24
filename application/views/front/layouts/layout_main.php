@@ -3,6 +3,7 @@
 <!--[if IE 9]>          <html class="ie ie9"> <![endif]-->
 <!--[if gt IE 9]><!-->  
 <html> 
+    <title>Videosite</title>
     <?php $this->load->view('front/layouts/layout_header'); ?>
     <?php $this->load->view($subview); ?>
     <?php $this->load->view('front/layouts/layout_footer'); ?>
