@@ -21,6 +21,30 @@
                             <?php } ?> 
                         </select>
                     </div>
+
+                    <div class="form-group">
+                        <select class="form-control" data-placeholder="Select a Category"  name="category" id="category">
+                            <option value="">Select Category</option> 
+                            <?php
+                            foreach ($all_category as $key => $category)
+                            {
+                                ?> 
+                                <option value="<?php echo $category['id']; ?>"><?php echo $category['category_name']; ?></option>
+                            <?php } ?> 
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <select class="form-control" data-placeholder="Select a Sub Category"  name="sub_category" id="sub_category">
+                            <option value="">Select Sub Category</option> 
+                            <?php
+                            foreach ($all_sub_cat as $key => $cat)
+                            {
+                                ?> 
+                                <option value="<?php echo $cat['id']; ?>"><?php echo $cat['category_name']; ?></option>
+                            <?php } ?> 
+                        </select>
+                    </div>
                     <div class="form-group">
                         <input type="text" name="blog_title" class="form-control" placeholder="Blog Title *" 
                                value="<?php echo set_value('blog_title'); ?>" >
@@ -79,7 +103,7 @@
 //['misc', ['undo','redo']]
             ]
         });
-        
+
         function sendFile(file, el) {
             var form_data = new FormData();
             form_data.append('file', file);

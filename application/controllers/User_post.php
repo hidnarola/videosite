@@ -23,6 +23,8 @@ class User_post extends CI_Controller
     {
         $sess_data = $this->session->userdata('client');
         $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
+        $data['all_category'] = $this->Post_model->get_result('categories', ['is_deleted' => '0', 'is_blocked' => '0']);
+        $data['all_sub_cat'] = $this->Post_model->get_result('sub_categories', ['is_deleted' => '0', 'is_blocked' => '0']);
         $this->form_validation->set_rules('blog_title', 'Blog Title', 'required');
         if ($this->form_validation->run() == FALSE)
         {
@@ -37,16 +39,17 @@ class User_post extends CI_Controller
                 'channel_id' => $this->input->post('channel'),
                 'post_type' => 'blog',
                 'slug' => $post_slug,
+                'category_id' => $this->input->post('category'),
+                'sub_category_id' => $this->input->post('sub_category'),
                 'created_at' => date('Y-m-d H:i:s')
             ];
-
             $last_post_id = $this->Post_model->insert_record('user_post', $ins_post);
 
             $insert_array = [
                 'post_id' => $last_post_id,
                 'blog_title' => $blog_title,
                 'blog_description' => htmlspecialchars($this->input->post('blog_description')),
-                'img_path' => $this->saveuploadedfile(),
+//                'img_path' => $this->saveuploadedfile(),
                 'created_at' => date("Y-m-d H:i:s a"),
             ];
             $result = $this->Post_model->insert_record('blog', $insert_array);
@@ -269,39 +272,6 @@ class User_post extends CI_Controller
             }
             redirect('user_post');
         }
-    }
-
-    public function like_post($post_id)
-    {
-
-        $sess_data = $this->session->userdata('client');
-        $post_data = $this->db->get_where('user_post', ['id' => $post_id, 'is_deleted' => '0', 'is_blocked' => '0'])->row_array();
-        if (empty($post_data))
-        {
-            show_404();
-        }
-
-        $is_post_liked = $this->db->get_where('user_likes', ['user_id' => $sess_data['id'], 'post_id' => $post_id])->num_rows();
-
-        if ($is_post_liked == 0)
-        {
-
-            $ins_data = [
-                'user_id' => $sess_data['id'],
-                'post_id' => $post_id
-            ];
-            $this->db->insert('user_likes', $ins_data);
-            $this->session->set_flashdata('success', 'You have liked this post successfully.');
-            redirect('user_post/view_blog/' . $post_data['id']);
-        }
-    }
-
-    public function unlike_post($post_id)
-    {
-        $post_data = $this->db->get_where('user_post', ['id' => $post_id, 'is_deleted' => '0', 'is_blocked' => '0'])->row_array();
-        $sess_data = $this->session->userdata('client');
-        $this->db->delete('user_likes', ['user_id' => $sess_data['id'], 'post_id' => $post_id]);
-        redirect('user_post/view_blog/' . $post_data['id']);
     }
 
 }
