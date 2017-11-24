@@ -105,8 +105,7 @@ class User_post extends CI_Controller
     public function view_blog($blog_post_id)
     {
         $sess_data = $this->session->userdata('client');
-        $data['blog'] = $this->Post_model->get_blogs_by_post_id($blog_post_id);
-//        pr($data,1);
+        $data['blog'] = $this->Post_model->get_blogs_by_post_id($blog_post_id);        
         $data['user_loggedin'] = false;
         $data['is_user_like'] = false;
         if (!empty($sess_data))
@@ -139,7 +138,6 @@ class User_post extends CI_Controller
                 'user_id' => $sess_data['id'],
                 'created_at' => date('Y-m-d H:i:s')
             ];
-//            pr($ins_comment, 1);
             $result = $this->Post_model->insert_record('comments', $ins_comment);
             if ($result)
             {
@@ -150,8 +148,6 @@ class User_post extends CI_Controller
                 $this->session->set_flashdata('message', ['message' => 'Error Into Insert Comment!', 'class' => 'danger']);
             }
         }
-//        $data['subview'] = 'front/posts/view_blog';
-//        $this->load->view('front/layouts/layout_main', $data);
     }
 
     public function add_gallery()
@@ -338,54 +334,30 @@ class User_post extends CI_Controller
 
     public function like_post($post_id)
     {
+
         $sess_data = $this->session->userdata('client');
         $post_data = $this->db->get_where('user_post', ['id' => $post_id, 'is_deleted' => '0', 'is_blocked' => '0'])->row_array();
-        if (empty($post_data))
-        {
-            show_404();
-        }
+        if (empty($post_data)) { show_404(); }
 
-        $all_userpost = $this->db->select('id')->get_where('user_post', ['is_deleted' => '0', 'is_blocked' => '0'])
-                ->result_array();
-        if (!empty($all_userpost))
-        {
-//            echo"in if empty";die;
-            $all_ids = array_column($all_userpost, 'id');
-            if (in_array($post_id, $all_ids))
-            {
-//                echo"in if inarray";die;
-//                pr($post_id);
-//                pr($all_ids);
-                echo 'Can not like';
-//                die;
-                redirect('user_post/view_blog/' . $post_data['id']);
-            }
-        }
+        $is_post_liked = $this->db->get_where('user_likes', ['user_id' => $sess_data['id'], 'post_id' => $post_id])->num_rows();
 
-        $total_likes = $this->db->get_where('user_likes', ['user_id' => $sess_data['id'], 'post_id' => $post_id])
-                ->num_rows();
-
-        if ($total_likes == 0)
-        {
+        if ($is_post_liked == 0) {
+            
             $ins_data = [
                 'user_id' => $sess_data['id'],
                 'post_id' => $post_id
-            ];
-            pr($ins_data, 1);
+            ];            
             $this->db->insert('user_likes', $ins_data);
             $this->session->set_flashdata('success', 'You have liked this post successfully.');
             redirect('user_post/view_blog/' . $post_data['id']);
         }
     }
 
-    public function unlike_post($post_id)
-    {
+    public function unlike_post($post_id) {        
         $post_data = $this->db->get_where('user_post', ['id' => $post_id, 'is_deleted' => '0', 'is_blocked' => '0'])->row_array();
         $sess_data = $this->session->userdata('client');
-        $this->db->delete('user_likes', ['user_id' => $sess_u_data['id'], 'post_id' => $post_id]);
-        // $this->session->set_flashdata('error','');
-        // redirect('dashboard');
-        redirect('posts/' . $post_data['slug']);
+        $this->db->delete('user_likes', ['user_id' => $sess_data['id'], 'post_id' => $post_id]);
+        redirect('user_post/view_blog/' . $post_data['id']);
     }
 
 }

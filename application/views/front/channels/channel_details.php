@@ -13,9 +13,13 @@
 
     <div class="jumbotron text-center">
         
-        <h1><?php echo $res_channel['channel_name']; ?></h1>
-
-        <?php if($user_loggedin == true) { ?>
+        <h1>
+            <?php echo $res_channel['channel_name']; ?>                
+        </h1>
+        <p>Total Subscriber - <span class="btn btn-primary"><?php echo (int)$total_subscriber; ?></span> 
+        </p>
+            
+        <?php if($user_loggedin == true && $is_this_users_channel == false) { ?>
             <?php if($is_user_subscribe == false) { ?>
                 <a href="<?php echo base_url().'user_channels/subscribe_channel/'.$res_channel['id']; ?>" class="btn btn-success">
                     Subscribe

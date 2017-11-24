@@ -95,12 +95,26 @@ class User_channels extends CI_Controller {
 		$sess_data = $this->session->userdata('client');
 		$data['user_loggedin'] = false;
 		$data['is_user_subscribe'] = false;
+		$data['is_this_users_channel'] = false;
+		$data['total_subscriber'] = $this->db->get_where('user_subscribers',['channel_id'=>$data['res_channel']['id']])->num_rows();
+
+		// pr($data['total_subscriber'],1);
 
 		if(!empty($sess_data)){
 			
 			$data['user_loggedin'] = true;
 			
-			$user_channel_data = $this->db->get_where('user_channels',['id'=>$data['res_channel']['id'],'is_deleted'=>'0','is_blocked'=>'0'])->row_array();
+			$all_userchannel = $this->db->select('id')->get_where('user_channels',
+															['user_id'=>$sess_data['id'],'is_deleted'=>'0','is_blocked'=>'0'])
+												  ->result_array();
+
+			// put validation check - if logged in user try to subscribe own channel 
+			if(!empty($all_userchannel)){
+				$all_ids = array_column($all_userchannel,'id');
+				if(in_array($data['res_channel']['id'],$all_ids)){
+					$data['is_this_users_channel'] = true;
+				}
+			}
 
 			$user_subscribe_data =  $this->db->get_where('user_subscribers',['user_id'=>$sess_data['id'],'channel_id'=>$data['res_channel']['id']])
 											 ->row_array();
@@ -111,7 +125,7 @@ class User_channels extends CI_Controller {
 		}
 
 		// pr($data['is_user_subscribe'],1);
-		// pr($data,1);
+		// pr($data['is_this_users_channel'],1);
 
 		$this->load->view('front/channels/channel_details',$data);
 	}
@@ -121,8 +135,7 @@ class User_channels extends CI_Controller {
 		$sess_u_data = $this->session->userdata('client');
 		// fetch channel data
 		$channel_data = $this->db->get_where('user_channels',['id'=>$channel_id,'is_deleted'=>'0','is_blocked'=>'0'])->row_array();
-
-		// pr($channel_data,1);
+		
 		if(empty($channel_data)){ show_404(); }
 
 		// fetch all channel of loggedin user
