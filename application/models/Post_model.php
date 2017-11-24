@@ -72,19 +72,19 @@ class Post_model extends CI_Model
         $this->db->join('video v', 'v.post_id = up.id', 'left');
         $this->db->join('gallery g', 'g.post_id = up.id', 'left');
         $this->db->where('u.id = ', $user_id);
-        $this->db->limit(3, 0);
+//        $this->db->limit(3, 0);
         $posts = $this->db->get('user_post up')->result_array();
         return $posts;
     }
 
     public function get_blogs_by_post_id($blog_post_id)
     {
-        $this->db->select('b.id,post_id,blog_title,blog_description,img_path,u.id as user_id, u.username,c.id as channelid, c.user_id as channeluserid,c.channel_name, up.id as userpostid,up.channel_id as userpostchannelid,up.post_type');
-        $this->db->join('user_post up', 'up.id = b.post_id', 'left');
+        $this->db->select('up.id,up.channel_id as userpostchannelid,up.post_type,up.slug,b.id as blogid,post_id,blog_title,blog_description,img_path,u.id as user_id, u.username,c.id as channelid, c.user_id as channeluserid,c.channel_name');
+        $this->db->join('blog b', 'up.id = b.post_id', 'left');
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
         $this->db->where('b.post_id', $blog_post_id);
-        $blogs = $this->db->get('blog b')->row_array();
+        $blogs = $this->db->get('user_post up')->row_array();
 //        qry();
 //        pr($blogs, 1);
         return $blogs;

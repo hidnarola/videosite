@@ -36,6 +36,28 @@
                             <button type="submit" class="btn btn_custom"><i class="fa fa-check"></i> Add </button>
                         </div>
                     </div>
+
+                    <?php
+                    if ($user_loggedin == true)
+                    {
+                        ?>
+                        <?php
+                        if ($is_user_like == false)
+                        {
+                            ?>
+                            <a href="<?php echo base_url() . 'user_post/like_post/' . $blog['id']; ?>" class="btn btn-success">
+                                Like
+                            </a>
+                            <?php
+                        }
+                        else
+                        {
+                            ?>
+                            <a href="<?php echo base_url() . 'user_post/unlike_post/' . $blog['id']; ?>" class="btn btn-danger">
+                                Un-Like
+                            </a>
+                        <?php } ?>
+                    <?php } ?>
                     <div class="box_style_1 expose">
                         <h3 class="inner"> Share </h3>
                         <div class="row">
@@ -44,6 +66,7 @@
                             </div>
                         </div>
                     </div>
+
                 </form>
                 <!-- /login form -->
             </div>
@@ -54,5 +77,5 @@
 <!-- / -->
 
 <script type="text/javascript">
-    $('#channel').val('<?php // echo $record["post_id"];               ?>');
+//    $('#channel').val('<?php // echo $record["post_id"];         ?>');
 </script>

@@ -106,6 +106,24 @@ class User_post extends CI_Controller
     {
         $sess_data = $this->session->userdata('client');
         $data['blog'] = $this->Post_model->get_blogs_by_post_id($blog_post_id);
+//        pr($data,1);
+        $data['user_loggedin'] = false;
+        $data['is_user_like'] = false;
+        if (!empty($sess_data))
+        {
+
+            $data['user_loggedin'] = true;
+
+            $user_post_data = $this->db->get_where('user_post', ['id' => $data['blog']['id'], 'is_deleted' => '0', 'is_blocked' => '0'])->row_array();
+
+            $user_like_data = $this->db->get_where('user_likes', ['user_id' => $sess_data['id'], 'post_id' => $data['blog']['id']])
+                    ->row_array();
+
+            if (!empty($user_like_data))
+            {
+                $data['is_user_like'] = true;
+            }
+        }
         $this->form_validation->set_rules('comments', 'Comment', 'required');
         if ($this->form_validation->run() == FALSE)
         {
@@ -318,38 +336,56 @@ class User_post extends CI_Controller
         $data['video'] = $this->Post_model->get_video_by_id($video_id);
     }
 
-    public function saveuploadedfile()
+    public function like_post($post_id)
     {
-        $file = $this->input->post('file');
-        pr($file);
-        $fileArray = array('image' => $file);
-        pr($fileArray);
-        $rules = array(
-            'image' => 'mimes:jpeg,jpg,png,gif|required|max:10000' // max 10000kb
-        );
-        $validator = $this->form_validation->set_rules('file', $fileArray, $rules);
-
-        if ($validator->run() == false)
+        $sess_data = $this->session->userdata('client');
+        $post_data = $this->db->get_where('user_post', ['id' => $post_id, 'is_deleted' => '0', 'is_blocked' => '0'])->row_array();
+        if (empty($post_data))
         {
-            $error = 'Invalid file type / size';
-            return $error;
+            show_404();
         }
-        else
+
+        $all_userpost = $this->db->select('id')->get_where('user_post', ['is_deleted' => '0', 'is_blocked' => '0'])
+                ->result_array();
+        if (!empty($all_userpost))
         {
-//            $uploads_dir = public_path() . '/uploads/blogs/';
-            $uploads_dir = '/uploads/blogs/';
-            echo $uploads_dir;
-//            $extension = $this->input->post('file')->getClientOriginalExtension();
-//            $extension = $this->input->post('file')->getClientOriginalExtension();
-//            echo $extension;
-            $tmp_name = $_FILES["file"]["tmp_name"];
-            echo $tmp_name;
-            $name = $filename = date('Ymdhis') . '_' . $_FILES["file"]["name"] . '.' . $extension;
-            echo $name;
-            move_uploaded_file($tmp_name, "$uploads_dir/$name");
-            die;
-            return "/uploads/blogs/" . $name;
-        };
+//            echo"in if empty";die;
+            $all_ids = array_column($all_userpost, 'id');
+            if (in_array($post_id, $all_ids))
+            {
+//                echo"in if inarray";die;
+//                pr($post_id);
+//                pr($all_ids);
+                echo 'Can not like';
+//                die;
+                redirect('user_post/view_blog/' . $post_data['id']);
+            }
+        }
+
+        $total_likes = $this->db->get_where('user_likes', ['user_id' => $sess_data['id'], 'post_id' => $post_id])
+                ->num_rows();
+
+        if ($total_likes == 0)
+        {
+            $ins_data = [
+                'user_id' => $sess_data['id'],
+                'post_id' => $post_id
+            ];
+            pr($ins_data, 1);
+            $this->db->insert('user_likes', $ins_data);
+            $this->session->set_flashdata('success', 'You have liked this post successfully.');
+            redirect('user_post/view_blog/' . $post_data['id']);
+        }
+    }
+
+    public function unlike_post($post_id)
+    {
+        $post_data = $this->db->get_where('user_post', ['id' => $post_id, 'is_deleted' => '0', 'is_blocked' => '0'])->row_array();
+        $sess_data = $this->session->userdata('client');
+        $this->db->delete('user_likes', ['user_id' => $sess_u_data['id'], 'post_id' => $post_id]);
+        // $this->session->set_flashdata('error','');
+        // redirect('dashboard');
+        redirect('posts/' . $post_data['slug']);
     }
 
 }
