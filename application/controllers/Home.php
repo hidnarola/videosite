@@ -24,10 +24,27 @@ class Home extends CI_Controller
 
         $sess_data = $this->session->userdata('client');
         $post_type = $this->uri->segment(1);
+        $data['posts'] = $this->Post_model->get_all_posts_by_slug($post_slug);
         $res_post_data = $this->db->get_where('user_post', ['slug' => $post_slug, 'post_type' => $post_type])->row_array();
+        $data['user_loggedin'] = false;
+        $data['is_user_like'] = false;
 
         pr($res_post_data);
+        if (!empty($sess_data))
+        {
 
+            $data['user_loggedin'] = true;
+
+            $user_post_data = $this->db->get_where('user_post', ['id' => $data['posts']['id'], 'is_deleted' => '0', 'is_blocked' => '0'])->row_array();
+
+            $user_like_data = $this->db->get_where('user_likes', ['user_id' => $sess_data['id'], 'post_id' => $data['posts']['id']])
+                    ->row_array();
+
+            if (!empty($user_like_data))
+            {
+                $data['is_user_like'] = true;
+            }
+        }
         if (empty($res_post_data))
         {
             show_404();

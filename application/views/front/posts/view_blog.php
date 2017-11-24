@@ -12,21 +12,61 @@
 
                 <form method="post" action="" id="frmblog" enctype="multipart/form-data">
                     <?php
-                    if (isset($blog))
+                    if (isset($posts))
                     {
+                        if ($posts['post_type'] == 'blog')
+                        {
+                            ?>
+
+                            <div class="form-group">
+                                Channel Name: <?php echo $posts['channel_name']; ?>
+                            </div>
+                            <div class="form-group">
+                                Title: <?php echo $posts['blog_title']; ?>
+                            </div>
+                            <div class="form-group">
+                                Description: <?php echo $posts['blog_description']; ?>
+                            </div>
+                            <div class="form-group">
+                                Image: <?php echo $posts['img_path']; ?>
+                            </div>
+                            <?php
+                        }
+                        elseif ($posts['post_type'] == 'gallery')
+                        {
+                            ?>
+                            <div class="form-group">
+                                Channel Name: <?php echo $posts['channel_name']; ?>
+                            </div>
+                            <div class="form-group">
+                                Title: <?php echo $posts['gtitle']; ?>
+                            </div>
+                            <div class="form-group">
+                                Description: <?php echo $posts['description']; ?>
+                            </div>
+                            <div class="form-group">
+                                Image: <?php echo $posts['img_path']; ?>
+                            </div>
+                            <?php
+                        }
+                        elseif ($posts['post_type'] == 'video')
+                        {
+                            ?>
+                            <div class="form-group">
+                                Channel Name: <?php echo $posts['channel_name']; ?>
+                            </div>
+                            <div class="form-group">
+                                Title: <?php echo $posts['vtitle']; ?>
+                            </div>
+                            <div class="form-group">
+                                Description: <?php echo $posts['description']; ?>
+                            </div>
+                            <div class="form-group">
+                                Image: <?php echo $posts['upload_path']; ?>
+                            </div>
+                            <?php
+                        }
                         ?>
-                        <div class="form-group">
-                            Channel Name: <?php echo $blog['channel_name']; ?>
-                        </div>
-                        <div class="form-group">
-                            Blog Title: <?php echo $blog['blog_title']; ?>
-                        </div>
-                        <div class="form-group">
-                            Blog Description: <?php echo $blog['blog_description']; ?>
-                        </div>
-                        <div class="form-group">
-                            Blog Image: <?php echo $blog['img_path']; ?>
-                        </div>
                     <?php } ?>
                     <div class="form-group">
                         <textarea name="comments" class="form-control" placeholder="Add Comments *" ><?php echo set_value('comments'); ?></textarea>
@@ -45,7 +85,7 @@
                         if ($is_user_like == false)
                         {
                             ?>
-                            <a href="<?php echo base_url() . 'user_post/like_post/' . $blog['id']; ?>" class="btn btn-success">
+                            <a href="<?php echo base_url() . 'user_post/like_post/' . $posts['id']; ?>" class="btn btn-success">
                                 Like
                             </a>
                             <?php
@@ -53,7 +93,7 @@
                         else
                         {
                             ?>
-                            <a href="<?php echo base_url() . 'user_post/unlike_post/' . $blog['id']; ?>" class="btn btn-danger">
+                            <a href="<?php echo base_url() . 'user_post/unlike_post/' . $posts['id']; ?>" class="btn btn-danger">
                                 Un-Like
                             </a>
                         <?php } ?>
@@ -77,5 +117,5 @@
 <!-- / -->
 
 <script type="text/javascript">
-//    $('#channel').val('<?php // echo $record["post_id"];         ?>');
+//    $('#channel').val('<?php // echo $record["post_id"];                   ?>');
 </script>

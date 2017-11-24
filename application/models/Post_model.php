@@ -72,20 +72,33 @@ class Post_model extends CI_Model
         $this->db->join('video v', 'v.post_id = up.id', 'left');
         $this->db->join('gallery g', 'g.post_id = up.id', 'left');
         $this->db->where('u.id = ', $user_id);
-//        $this->db->limit(3, 0);
         $posts = $this->db->get('user_post up')->result_array();
         return $posts;
     }
 
-    public function get_blogs_by_post_id($blog_post_id)
+    public function get_all_posts_by_slug($post_slug)
+    {
+        $this->db->select('up.id,up.channel_id,up.post_type,up.slug,c.id as channelid,c.user_id as chaneeluserid,c.channel_name,c.channel_slug,u.id as userid,u.username,b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description,g.img_path,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description,v.upload_path');
+        $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
+        $this->db->join('users u', 'u.id = c.user_id', 'left');
+        $this->db->join('blog b', 'b.post_id = up.id', 'left');
+        $this->db->join('video v', 'v.post_id = up.id', 'left');
+        $this->db->join('gallery g', 'g.post_id = up.id', 'left');
+//        $this->db->where('u.id = ', $user_id);
+        $this->db->where('up.slug', $post_slug);
+        $posts = $this->db->get('user_post up')->row_array();
+        return $posts;
+    }
+
+    public function get_blogs_by_post_slug($post_slug)
     {
         $this->db->select('up.id,up.channel_id as userpostchannelid,up.post_type,up.slug,b.id as blogid,post_id,blog_title,blog_description,img_path,u.id as user_id, u.username,c.id as channelid, c.user_id as channeluserid,c.channel_name');
         $this->db->join('blog b', 'up.id = b.post_id', 'left');
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
-        $this->db->where('b.post_id', $blog_post_id);
+        $this->db->where('up.slug', $post_slug);
         $blogs = $this->db->get('user_post up')->row_array();
-//        qry();
+        qry();
 //        pr($blogs, 1);
         return $blogs;
     }

@@ -49,7 +49,6 @@ class User_post extends CI_Controller
                 'img_path' => $this->saveuploadedfile(),
                 'created_at' => date("Y-m-d H:i:s a"),
             ];
-            pr($insert_array, 1);
             $result = $this->Post_model->insert_record('blog', $insert_array);
             if ($result)
             {
@@ -99,54 +98,6 @@ class User_post extends CI_Controller
                 $this->session->set_flashdata('message', ['message' => 'Error Into Update Blog!', 'class' => 'danger']);
             }
             redirect('user_post');
-        }
-    }
-
-    public function view_blog($blog_post_id)
-    {
-        $sess_data = $this->session->userdata('client');
-        $data['blog'] = $this->Post_model->get_blogs_by_post_id($blog_post_id);        
-        $data['user_loggedin'] = false;
-        $data['is_user_like'] = false;
-        if (!empty($sess_data))
-        {
-
-            $data['user_loggedin'] = true;
-
-            $user_post_data = $this->db->get_where('user_post', ['id' => $data['blog']['id'], 'is_deleted' => '0', 'is_blocked' => '0'])->row_array();
-
-            $user_like_data = $this->db->get_where('user_likes', ['user_id' => $sess_data['id'], 'post_id' => $data['blog']['id']])
-                    ->row_array();
-
-            if (!empty($user_like_data))
-            {
-                $data['is_user_like'] = true;
-            }
-        }
-        $this->form_validation->set_rules('comments', 'Comment', 'required');
-        if ($this->form_validation->run() == FALSE)
-        {
-            $data['subview'] = 'front/posts/view_blog';
-            $this->load->view('front/layouts/layout_main', $data);
-        }
-        else
-        {
-            $comment = $this->input->post('comments');
-            $ins_comment = [
-                'message' => $comment,
-                'post_id' => $data['blog']['post_id'],
-                'user_id' => $sess_data['id'],
-                'created_at' => date('Y-m-d H:i:s')
-            ];
-            $result = $this->Post_model->insert_record('comments', $ins_comment);
-            if ($result)
-            {
-                $this->session->set_flashdata('message', ['message' => 'Comment successfully Inserted!', 'class' => 'success']);
-            }
-            else
-            {
-                $this->session->set_flashdata('message', ['message' => 'Error Into Insert Comment!', 'class' => 'danger']);
-            }
         }
     }
 
@@ -232,12 +183,6 @@ class User_post extends CI_Controller
             }
             redirect('user_post');
         }
-    }
-
-    public function view_gallery($gallery_post_id)
-    {
-        $sess_data = $this->session->userdata('client');
-        $data['gallery'] = $this->Post_model->get_gallery_by_post_id($gallery_post_id);
     }
 
     public function add_video()
@@ -326,34 +271,33 @@ class User_post extends CI_Controller
         }
     }
 
-    public function view_video($video_id)
-    {
-        $sess_data = $this->session->userdata('client');
-        $data['video'] = $this->Post_model->get_video_by_id($video_id);
-    }
-
     public function like_post($post_id)
     {
 
         $sess_data = $this->session->userdata('client');
         $post_data = $this->db->get_where('user_post', ['id' => $post_id, 'is_deleted' => '0', 'is_blocked' => '0'])->row_array();
-        if (empty($post_data)) { show_404(); }
+        if (empty($post_data))
+        {
+            show_404();
+        }
 
         $is_post_liked = $this->db->get_where('user_likes', ['user_id' => $sess_data['id'], 'post_id' => $post_id])->num_rows();
 
-        if ($is_post_liked == 0) {
-            
+        if ($is_post_liked == 0)
+        {
+
             $ins_data = [
                 'user_id' => $sess_data['id'],
                 'post_id' => $post_id
-            ];            
+            ];
             $this->db->insert('user_likes', $ins_data);
             $this->session->set_flashdata('success', 'You have liked this post successfully.');
             redirect('user_post/view_blog/' . $post_data['id']);
         }
     }
 
-    public function unlike_post($post_id) {        
+    public function unlike_post($post_id)
+    {
         $post_data = $this->db->get_where('user_post', ['id' => $post_id, 'is_deleted' => '0', 'is_blocked' => '0'])->row_array();
         $sess_data = $this->session->userdata('client');
         $this->db->delete('user_likes', ['user_id' => $sess_data['id'], 'post_id' => $post_id]);
