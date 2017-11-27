@@ -31,8 +31,15 @@ class Home extends CI_Controller
         $data['is_user_like'] = false;
         $data['is_user_bookmark'] = false;
 
-        if($res_post_data['post_type']  == 'gallery'){
-            $all_posts = $this->db->get_where('gallery',['post_id'=>$res_post_data['id']])->result_array();
+        if ($res_post_data['post_type'] == 'gallery')
+        {
+            $data['gallery'] = $this->db->get_where('gallery', ['post_id' => $res_post_data['id']])->result_array();
+        }
+
+        if ($res_post_data['post_type'] == 'blog')
+        {
+            $data['blog'] = $this->db->get_where('blog', ['post_id' => $res_post_data['id']])->result_array();
+//            pr($data['blog']);die;
         }
         
         // pr($all_posts);

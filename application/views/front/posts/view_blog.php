@@ -4,7 +4,7 @@
             <div class="row">						
                 <div class="col-md-12">
                     <!-- login form -->
-
+                    <?php // pr($blog);die;?>
                     <?php echo validation_errors(); ?>
 
                     <form method="post" action="" id="frmblog" enctype="multipart/form-data">
@@ -13,21 +13,24 @@
                         {
                             if ($posts['post_type'] == 'blog')
                             {
-                                ?>
+                                foreach ($blog as $key => $blogs)
+                                {
+                                    ?>
 
-                                <div class="form-group">
-                                    <b>Channel Name:</b> <?php echo $posts['channel_name']; ?>
-                                </div>
-                                <div class="form-group">
-                                    <b> Title: </b> <?php echo $posts['blog_title']; ?>
-                                </div>
-                                <div class="form-group">
-                                    <b> Description:</b> <?php echo $posts['blog_description']; ?>
-                                </div>
-                                <div class="form-group">
-                                    <img src="<?php echo base_url() . $posts['bimg']; ?>"> 
-                                </div>
-                                <?php
+                                    <div class="form-group">
+                                        <b>Channel Name:</b> <?php echo $posts['channel_name']; ?>
+                                    </div>
+                                    <div class="form-group">
+                                        <b> Title: </b> <?php echo $blogs['blog_title']; ?>
+                                    </div>
+                                    <div class="form-group">
+                                        <b> Description:</b> <?php echo $blogs['blog_description']; ?>
+                                    </div>
+                                    <div class="form-group">
+                                        <img src="<?php echo base_url() . $blogs['img_path']; ?>"> 
+                                    </div>
+                                    <?php
+                                }
                             }
                             elseif ($posts['post_type'] == 'gallery')
                             {
@@ -137,5 +140,5 @@
 <!-- / -->
 
 <script type="text/javascript">
-//    $('#channel').val('<?php // echo $record["post_id"];                            ?>');
+//    $('#channel').val('<?php // echo $record["post_id"];                               ?>');
 </script>
