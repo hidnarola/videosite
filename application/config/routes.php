@@ -55,13 +55,13 @@ $route['video/(:any)'] = 'home/post_detail/$1';
 $route['gallery/(:any)'] = 'home/post_detail/$1';
 $route['blog/(:any)'] = 'home/post_detail/$1';
 
+$route['category_detail_page/(:any)'] = 'home/category_detail_page/$1';
+
 $route['channel/(:any)'] = 'user_channels/channel_detail/$1';
 
 $route['user_post'] = 'user_post/index';
 // $all_news = $db->get( 'articles' );
 // $result_ar = $all_news->result_array();
-
-
 //$route['(:any)'] = "home/post_detail/$1";
 
 
@@ -87,7 +87,7 @@ $route['admin/(:any)/(:any)'] = "admin/$1/$2";
 $route['admin/(:any)/(:any)/(:any)'] = "admin/$1/$2/$3";
 
 
-/*--- End Route For Front --- */
+/* --- End Route For Front --- */
 $route['faq'] = 'page/index/faq';
 $route['terms-condition'] = 'page/index/terms-condition';
 $route['privacy-policy'] = 'page/index/privacy-policy';
@@ -95,7 +95,7 @@ $route['contact_us'] = 'page/contact_us';
 $route['what-we-can-do-for-you'] = 'page/index/what-we-can-do-for-you';
 $route['who-we-are'] = 'page/index/who-we-are';
 
-/*--- End Route For Front --- */
+/* --- End Route For Front --- */
 
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
