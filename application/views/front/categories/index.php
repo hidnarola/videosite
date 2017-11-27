@@ -6,6 +6,7 @@
         <h2>Suggested</h2>
         <ul>
             <?php
+//            pr($posts);die;
             foreach ($posts as $key => $post)
             {
                 if ($post['post_type'] == 'blog')
@@ -13,7 +14,7 @@
                     ?>
                     <li>
                         <div class="list-box">
-                            <div class="list-top"><a href=""><img src="<?php echo DEFAULT_BLOG_IMAGE_PATH . $post['img_path'] ?>" alt="" style="height: 100px; width: 187px;"/></a> 
+                            <div class="list-top"><a href=""><img src="<?php echo base_url() . $post['bimg'] ?>" alt="" style="height: 100px; width: 187px;"/></a> 
                                                                                               <!--<span>10:53</span>-->
                             </div>
                             <div class="list-btm">
@@ -31,7 +32,7 @@
                     ?>
                     <li>
                         <div class="list-box">
-                            <div class="list-top"><a href=""><img src="<?php echo DEFAULT_VIDEO_PATH . $post['upload_path'] ?>" alt="" style="height: 100px; width: 187px;"/></a> 
+                            <div class="list-top"><a href=""><img src="<?php echo base_url() . $post['upload_path'] ?>" alt="" style="height: 100px; width: 187px;"/></a> 
                                 <!--<span>10:53</span>-->
                             </div>
                             <div class="list-btm">
@@ -49,7 +50,7 @@
                     ?>
                     <li>
                         <div class="list-box">
-                            <div class="list-top"><a href=""><img src="<?php echo DEFAULT_GALLERY_PATH . $post['img_path'] ?>" alt="" style="height: 100px; width: 187px;"/></a> 
+                            <div class="list-top"><a href=""><img src="<?php echo base_url() . $post['gimg'] ?>" alt="" style="height: 100px; width: 187px;"/></a> 
                                 <!--<span>10:53</span>-->
                             </div>
                             <div class="list-btm">

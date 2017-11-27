@@ -284,7 +284,7 @@ class Post_model extends CI_Model
 
     public function get_posts_category_id($id)
     {
-        $this->db->select('up.id,up.channel_id,up.post_type,up.slug,up.category_id,up.sub_category_id,c.id as channelid,c.user_id as chaneeluserid,c.channel_name,c.channel_slug,u.id as userid,u.username,b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description,g.img_path,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description,v.upload_path');
+        $this->db->select('up.id,up.channel_id,up.post_type,up.slug,up.category_id,up.sub_category_id,c.id as channelid,c.user_id as chaneeluserid,c.channel_name,c.channel_slug,u.id as userid,u.username,b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path as bimg,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description,g.img_path as gimg,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description,v.upload_path');
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
         $this->db->join('categories cat', 'cat.id = up.category_id','left');

@@ -22,7 +22,7 @@
 </head>
 
 <header class="header">
-    <div class="logo"><a href="index.html"><img src="<?php echo DEFAULT_ADMIN_IMAGE_PATH?>front/logo.png" alt="" /></a></div>
+    <div class="logo"><a href="home"><img src="<?php echo DEFAULT_ADMIN_IMAGE_PATH?>front/logo.png" alt="" /></a></div>
     <div class="search">
         <form>
             <input type="text" name="" placeholder="search here" />
