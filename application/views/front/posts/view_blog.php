@@ -1,144 +1,120 @@
-<div class="right-panel">
-    <section>
-        <div class="container">
-            <div class="row">						
-                <div class="col-md-12">
-                    <!-- login form -->
-                    <?php // pr($blog);die;?>
-                    <?php echo validation_errors(); ?>
+<form method="post" action="" id="frmblog" enctype="multipart/form-data">
+    <?php echo validation_errors(); ?>
+    <div class="right-panel">
+    <?php if ($user_loggedin == true){
+        if ($is_user_like == false){ ?>
+            <a href="<?php echo base_url() . 'home/like_post/' . $posts['id']; ?>" class="btn btn-success">Like</a>
+            <?php } else { ?>
+            <a href="<?php echo base_url() . 'home/unlike_post/' . $posts['id']; ?>" class="btn btn-danger">Un-Like</a>
+    <?php } } ?>
 
-                    <form method="post" action="" id="frmblog" enctype="multipart/form-data">
-                        <?php
-                        if (isset($posts))
-                        {
-                            if ($posts['post_type'] == 'blog')
-                            {
-                                foreach ($blog as $key => $blogs)
-                                {
-                                    ?>
-
-                                    <div class="form-group">
-                                        <b>Channel Name:</b> <?php echo $posts['channel_name']; ?>
-                                    </div>
-                                    <div class="form-group">
-                                        <b> Title: </b> <?php echo $blogs['blog_title']; ?>
-                                    </div>
-                                    <div class="form-group">
-                                        <b> Description:</b> <?php echo $blogs['blog_description']; ?>
-                                    </div>
-                                    <div class="form-group">
-                                        <img src="<?php echo base_url() . $blogs['img_path']; ?>"> 
-                                    </div>
-                                    <?php
-                                }
-                            }
-                            elseif ($posts['post_type'] == 'gallery')
-                            {
-                                ?>
-                                <div class="form-group">
-                                    <b> Channel Name:</b> <?php echo $posts['channel_name']; ?>
-                                </div>
-                                <div class="form-group">
-                                    <b> Title:</b> <?php echo $posts['gtitle']; ?>
-                                </div>
-                                <div class="form-group">
-                                    <b>Description:</b> <?php echo $posts['description']; ?>
-                                </div>
-                                <div class="form-group">
-                                    <img src="<?php echo base_url() . $posts['gimg']; ?>">
-                                </div>
-                                <?php
-                            }
-                            elseif ($posts['post_type'] == 'video')
-                            {
-                                ?>
-                                <div class="form-group">
-                                    <b> Channel Name:</b> <?php echo $posts['channel_name']; ?>
-                                </div>
-                                <div class="form-group">
-                                    <b> Title:</b> <?php echo $posts['vtitle']; ?>
-                                </div>
-                                <div class="form-group">
-                                    <b>Description:</b> <?php echo $posts['description']; ?>
-                                </div>
-                                <div class="form-group">
-                                    <img src="<?php echo $posts['upload_path']; ?>">
-                                </div>
-                                <?php
-                            }
-                            ?>
-                        <?php } ?>
-                        <div class="col-md-9 col-sm-9 col-xs-9 form-group">                   
-                            <textarea name="comments" class="form-control" placeholder="Add Comments *" ><?php echo set_value('comments'); ?></textarea>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-9 col-sm-9 col-xs-9 text-right register-btn">
-                                <button type="submit" class="btn btn_custom"><i class="fa fa-check"></i> Add </button>
+    <?php if ($user_loggedin == true){
+            if ($is_user_bookmark == false){ ?>
+            <a href="<?php echo base_url() . 'home/bookmark_post/' . $posts['id']; ?>" class="btn btn-success">BookMark</a>
+            <?php } else { ?>
+            <a href="<?php echo base_url() . 'home/unbookmark_post/' . $posts['id']; ?>" class="btn btn-danger">Un-BookMark</a>
+            <?php } } ?>
+        <div class="listing-l">
+            <div class="listing-l-div">
+                <?php if (isset($posts)) {
+                    if ($posts['post_type'] == 'blog') { foreach ($blog as $key => $blogs){ ?>
+                <h4>Channel Name: </h4> <?php echo $posts['channel_name'] ?>
+                <br><br>
+                            <div class="big-img">
+                                <a href=""><img src="<?php echo base_url() . $blogs['img_path'] ?>" alt="" /></a>
+                                <span>06 <small>of 40</small></span>
                             </div>
-                        </div>
-
-                        <?php
-                        if ($user_loggedin == true)
-                        {
-                            ?>
-                            <?php
-                            if ($is_user_like == false)
-                            {
-                                ?>
-                                <a href="<?php echo base_url() . 'home/like_post/' . $posts['id']; ?>" class="btn btn-success">
-                                    Like
-                                </a>
-                                <?php
-                            }
-                            else
-                            {
-                                ?>
-                                <a href="<?php echo base_url() . 'home/unlike_post/' . $posts['id']; ?>" class="btn btn-danger">
-                                    Un-Like
-                                </a>
-                            <?php } ?>
-                        <?php } ?>
-
-                        <?php
-                        if ($user_loggedin == true)
-                        {
-                            ?>
-                            <?php
-                            if ($is_user_bookmark == false)
-                            {
-                                ?>
-                                <a href="<?php echo base_url() . 'home/bookmark_post/' . $posts['id']; ?>" class="btn btn-success">
-                                    BookMark
-                                </a>
-                                <?php
-                            }
-                            else
-                            {
-                                ?>
-                                <a href="<?php echo base_url() . 'home/unbookmark_post/' . $posts['id']; ?>" class="btn btn-danger">
-                                    Un-BookMark
-                                </a>
-                            <?php } ?>
-                        <?php } ?>
-                        <div class="box_style_1 expose">
-                            <h3 class="inner"> Share </h3>
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <!-- Go to www.addthis.com/dashboard to customize your tools --> <div class="addthis_inline_share_toolbox_cmq4"></div>
-                                </div>
+                            <div class="list-content">
+                                <h2><?php echo $blogs['blog_title'] ?></h2>
+                                <p><?php echo $blogs['blog_description'] ?></p>
                             </div>
+                            <?php } } elseif ($posts['post_type'] == 'gallery') { foreach ($gallery as $key => $gal) { ?>
+                            <div class="big-img">
+                                <a href=""><img src="<?php echo base_url() . $gal['img_path'] ?>" alt="" /></a>
+                                <span>06 <small>of 40</small></span>
+                            </div>
+                            <div class="list-content">
+                                <h2><?php echo $gal['title'] ?></h2>
+                                <p><?php echo $gal['description'] ?></p>
+                            </div>
+                            <?php } } elseif ($posts['post_type'] == 'video') { ?>
+                        <div class="big-img">
+                            <a href=""><img src="<?php echo base_url() . $posts['upload_path'] ?>" alt="" /></a>
+                            <span>06 <small>of 40</small></span>
                         </div>
-
-                    </form>
-                    <!-- /login form -->
+                        <div class="list-content">
+                            <h2><?php echo $posts['vtitle'] ?></h2>
+                            <p><?php echo $posts['description'] ?></p>
+                        </div>
+                        <?php } } ?>
+                <div class="list-content">
+                    <a href="">Comments</a>
                 </div>
-                <!-- /LOGIN -->
+                <div class="box_style_1 expose">
+                    <h3 class="inner"> Share </h3>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <!--Go to www.addthis.com/dashboard to customize your tools-->  
+                            <div class="addthis_inline_share_toolbox_cmq4"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
-</div>
-<!-- / -->
-
-<script type="text/javascript">
-//    $('#channel').val('<?php // echo $record["post_id"];                               ?>');
-</script>
+        <div class="listing-r">
+            <h3>Related videos</h3>
+            <ul class="list-ul">
+                <li>
+                    <div class="list-ul-box">
+                        <span><a href=""><img src="<?php echo DEFAULT_ADMIN_IMAGE_PATH ?>front/img02.jpg" alt="" /></a></span>
+                        <h4><a href="">When an unknown printer took a  of.</a></h4>
+                        <p>By : Scrambled it to</p>
+                        <h6>1,50.000 Views</h6>
+                    </div>
+                </li>
+                <li>
+                    <div class="list-ul-box">
+                        <span><a href=""><img src="<?php echo DEFAULT_ADMIN_IMAGE_PATH ?>front/img02.jpg" alt="" /></a></span>
+                        <h4><a href="">When an unknown printer took a  of.</a></h4>
+                        <p>By : Scrambled it to</p>
+                        <h6>1,50.000 Views</h6>
+                    </div>
+                </li>
+                <li>
+                    <div class="list-ul-box">
+                        <span><a href=""><img src="<?php echo DEFAULT_ADMIN_IMAGE_PATH ?>front/img02.jpg" alt="" /></a></span>
+                        <h4><a href="">When an unknown printer took a  of.</a></h4>
+                        <p>By : Scrambled it to</p>
+                        <h6>1,50.000 Views</h6>
+                    </div>
+                </li>
+                <li class="ad-li"><a href=""><img src="<?php echo DEFAULT_ADMIN_IMAGE_PATH ?>front/ad-02.jpg" alt="" /></a></li>
+                <li>
+                    <div class="list-ul-box">
+                        <span><a href=""><img src="<?php echo DEFAULT_ADMIN_IMAGE_PATH ?>front/img02.jpg" alt="" /></a></span>
+                        <h4><a href="">When an unknown printer took a  of.</a></h4>
+                        <p>By : Scrambled it to</p>
+                        <h6>1,50.000 Views</h6>
+                    </div>
+                </li>
+                <li>
+                    <div class="list-ul-box">
+                        <span><a href=""><img src="<?php echo DEFAULT_ADMIN_IMAGE_PATH ?>front/img02.jpg" alt="" /></a></span>
+                        <h4><a href="">When an unknown printer took a  of.</a></h4>
+                        <p>By : Scrambled it to</p>
+                        <h6>1,50.000 Views</h6>
+                    </div>
+                </li>
+                <li>
+                    <div class="list-ul-box">
+                        <span><a href=""><img src="<?php echo DEFAULT_ADMIN_IMAGE_PATH ?>front/img02.jpg" alt="" /></a></span>
+                        <h4><a href="">When an unknown printer took a  of.</a></h4>
+                        <p>By : Scrambled it to</p>
+                        <h6>1,50.000 Views</h6>
+                    </div>
+                </li>
+                <li class="ad-li"><a href=""><img src="<?php echo DEFAULT_ADMIN_IMAGE_PATH ?>front/ad-02.jpg" alt="" /></a></li>
+            </ul>
+        </div>
+    </div>
+</form>
