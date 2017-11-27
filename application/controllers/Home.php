@@ -39,6 +39,7 @@ class Home extends CI_Controller
         if ($res_post_data['post_type'] == 'blog')
         {
             $data['blog'] = $this->db->get_where('blog', ['post_id' => $res_post_data['id']])->result_array();
+            // pr($data['blog'],1);
         }
                 
 
