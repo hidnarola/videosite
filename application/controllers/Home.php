@@ -167,7 +167,7 @@ class Home extends CI_Controller
             }
             elseif ($post_data['post_type'] == 'gallery')
             {
-                redirect('blog/' . $post_data['slug']);
+                redirect('gallery/' . $post_data['slug']);
             }
         }
     }
@@ -187,7 +187,7 @@ class Home extends CI_Controller
         }
         elseif ($post_data['post_type'] == 'gallery')
         {
-            redirect('blog/' . $post_data['slug']);
+            redirect('gallery/' . $post_data['slug']);
         }
     }
 
