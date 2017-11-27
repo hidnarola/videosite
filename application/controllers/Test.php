@@ -210,20 +210,25 @@ class Test extends CI_Controller {
 		pr($map);
 	}
 
-	public function truncate_tables(){
-		$this->db->truncate('blog');
-		$this->db->truncate('comments');
-		$this->db->truncate('gallery');
-		$this->db->truncate('users');
-		$this->db->truncate('user_bookmarks');
-		$this->db->truncate('user_channels');
-		$this->db->truncate('user_history');
-		$this->db->truncate('user_likes');
-		$this->db->truncate('user_post');
-		$this->db->truncate('user_post_counts');
-		$this->db->truncate('user_subscribers');
-		$this->db->truncate('video');
-	}
+	// public function truncate_tables(){
+	// 	$this->db->truncate('blog');
+	// 	$this->db->truncate('comments');
+	// 	$this->db->truncate('gallery');
+	// 	$this->db->truncate('users');
+	// 	$this->db->truncate('user_bookmarks');
+	// 	$this->db->truncate('user_channels');
+	// 	$this->db->truncate('user_history');
+	// 	$this->db->truncate('user_likes');
+	// 	$this->db->truncate('user_post');
+	// 	$this->db->truncate('user_post_counts');
+	// 	$this->db->truncate('user_subscribers');
+	// 	$this->db->truncate('video');
+	// }
+
+	
+	public function test_new(){
+		$this->load->view('welcome_message');
+	}	
 
 
 

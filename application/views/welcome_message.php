@@ -1,99 +1,149 @@
-<?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<title>Welcome to CodeIgniter</title>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="<?php echo base_url().'public/front_js/jquery_validation.js'; ?>"></script>
 
-	<style type="text/css">
+  <script>
+  $.validator.setDefaults({
+    submitHandler: function() {
+      alert("submitted!");
+    }
+  });
 
-	::selection { background-color: #E13300; color: white; }
-	::-moz-selection { background-color: #E13300; color: white; }
+  $().ready(function() {
+    // validate the comment form when it is submitted
+    $("#commentForm").validate();
 
-	body {
-		background-color: #fff;
-		margin: 40px;
-		font: 13px/20px normal Helvetica, Arial, sans-serif;
-		color: #4F5155;
-	}
+    // validate signup form on keyup and submit
+    $("#signupForm").validate({
+      rules: {
+        firstname: "required",
+        lastname: "required",
+        username: {
+          required: true,
+          minlength: 2
+        },
+        password: {
+          required: true,
+          minlength: 5
+        },
+        confirm_password: {
+          required: true,
+          minlength: 5,
+          equalTo: "#password"
+        },
+        email: {
+          required: true,
+          email: true
+        },
+        topic: {
+          required: "#newsletter:checked",
+          minlength: 2
+        },
+        agree: "required"
+      },
+      messages: {
+        firstname: "Please enter your firstname",
+        lastname: "Please enter your lastname",
+        username: {
+          required: "Please enter a username",
+          minlength: "Your username must consist of at least 2 characters"
+        },
+        password: {
+          required: "Please provide a password",
+          minlength: "Your password must be at least 5 characters long"
+        },
+        confirm_password: {
+          required: "Please provide a password",
+          minlength: "Your password must be at least 5 characters long",
+          equalTo: "Please enter the same password as above"
+        },
+        email: "Please enter a valid email address",
+        agree: "Please accept our policy",
+        topic: "Please select at least 2 topics"
+      }
+    });
 
-	a {
-		color: #003399;
-		background-color: transparent;
-		font-weight: normal;
-	}
+    // propose username by combining first- and lastname
+    $("#username").focus(function() {
+      var firstname = $("#firstname").val();
+      var lastname = $("#lastname").val();
+      if (firstname && lastname && !this.value) {
+        this.value = firstname + "." + lastname;
+      }
+    });
 
-	h1 {
-		color: #444;
-		background-color: transparent;
-		border-bottom: 1px solid #D0D0D0;
-		font-size: 19px;
-		font-weight: normal;
-		margin: 0 0 14px 0;
-		padding: 14px 15px 10px 15px;
-	}
-
-	code {
-		font-family: Consolas, Monaco, Courier New, Courier, monospace;
-		font-size: 12px;
-		background-color: #f9f9f9;
-		border: 1px solid #D0D0D0;
-		color: #002166;
-		display: block;
-		margin: 14px 0 14px 0;
-		padding: 12px 10px 12px 10px;
-	}
-
-	#body {
-		margin: 0 15px 0 15px;
-	}
-
-	p.footer {
-		text-align: right;
-		font-size: 11px;
-		border-top: 1px solid #D0D0D0;
-		line-height: 32px;
-		padding: 0 10px 0 10px;
-		margin: 20px 0 0 0;
-	}
-
-	#container {
-		margin: 10px;
-		border: 1px solid #D0D0D0;
-		box-shadow: 0 0 8px #D0D0D0;
-	}
-	</style>
+    //code to hide topic selection, disable for demo
+    var newsletter = $("#newsletter");
+    // newsletter topics are optional, hide at first
+    var inital = newsletter.is(":checked");
+    var topics = $("#newsletter_topics")[inital ? "removeClass" : "addClass"]("gray");
+    var topicInputs = topics.find("input").attr("disabled", !inital);
+    // show when newsletter is checked
+    newsletter.click(function() {
+      topics[this.checked ? "removeClass" : "addClass"]("gray");
+      topicInputs.attr("disabled", !this.checked);
+    });
+  });
+  </script>
 </head>
 <body>
 
-<div id="container">
-	<h1>Welcome to CodeIgniter!</h1>
-
-	<div id="body">
-		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
-
-		<p>If you would like toaaaaaaaaaaaaaaaaaa edit this page you'll find it located at:</p>
-		<code>application/views/welcome_message.php</code>
-
-		<p>The corresponding controller for this page is found at:</p>
-		<code>application/controllers/Welcome.php</code>
-
-		<p>If you are exploring CodeIgniter for the very first time, you should start by reading the <a href="user_guide/">User Guide</a>.</p>
-	</div>
-
-	<p class="footer">Page rendered in vdfgdtgdgh<strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
+<div class="jumbotron text-center">
+  <h1>My First Bootstrap Page</h1>
+  <p>Resize this responsive page to see the effect!</p> 
 </div>
+  
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <h3>Column 1</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+    </div>
+    <div class="col-sm-4">
+      <h3>Column 2</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+    </div>
+    <div class="col-sm-4">
+      <h3>Column 3</h3>        
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+    </div>
+  </div>
 
-  	<script src="//js.pusher.com/3.2/pusher.min.js"></script>
-    <script>
-    	Pusher.logToConsole = true;
-        var pusher = new Pusher("fd64588aa59825c4045b")
-        var channel = pusher.subscribe('test-channel');
-        channel.bind('test-event', function(data) {
-            alert('Here');
-        });
-    </script>  
+  <form class="cmxform" id="commentForm" method="get" action="">
+    <fieldset>
+      <legend>Please provide your name, email address (won't be published) and a comment</legend>
+      <p>
+        <label for="cname">Name (required, at least 2 characters)</label>
+        <input id="cname" name="name" minlength="2" type="text" required>
+      </p>
+      <p>
+        <label for="cemail">E-Mail (required)</label>
+        <input id="cemail" type="email" name="email" required>
+      </p>
+      <p>
+        <label for="curl">URL (optional)</label>
+        <input id="curl" type="url" name="url">
+      </p>
+      <p>
+        <label for="ccomment">Your comment (required)</label>
+        <textarea id="ccomment" name="comment" required></textarea>
+      </p>
+      <p>
+        <input class="submit" type="submit" value="Submit">
+      </p>
+    </fieldset>
+  </form>
+</div>
 
 </body>
 </html>
