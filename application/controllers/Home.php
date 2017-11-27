@@ -39,11 +39,8 @@ class Home extends CI_Controller
         if ($res_post_data['post_type'] == 'blog')
         {
             $data['blog'] = $this->db->get_where('blog', ['post_id' => $res_post_data['id']])->result_array();
-//            pr($data['blog']);die;
         }
-        
-        // pr($all_posts);
-        // pr($res_post_data,1);
+                
 
         if (!empty($sess_data))
         {
@@ -276,6 +273,7 @@ class Home extends CI_Controller
 
     public function category_detail_page($id)
     {
+        // die('fghjk');
         $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $data['posts'] = $this->Post_model->get_posts_category_id($id);
         $data['subview'] = 'front/categories/index';
