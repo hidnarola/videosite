@@ -6,8 +6,8 @@
     <div class="left-panel">
         <div class="nav-div">
             <ul>
-                <li><a href="home"><i class=""><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+                <li><a href="<?php echo base_url() ?>home"><i class=""><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                                            viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
                                 <g>
                                     <g>
                                         <path d="M506.555,208.064L263.859,30.367c-4.68-3.426-11.038-3.426-15.716,0L5.445,208.064
@@ -243,7 +243,7 @@
                 {
                     ?>
 
-                    <li><a href="<?php echo site_url('/home/category_detail_page/'.$cat['id']) ; ?>" class="ct-link"> 
+                    <li><a href="<?php echo base_url() . 'home/category_detail_page/' . $cat['id']; ?>" class="ct-link"> 
                             <i class="">
     <!--                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                                      viewBox="0 0 477.216 477.216" style="enable-background:new 0 0 477.216 477.216;" xml:space="preserve">

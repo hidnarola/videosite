@@ -24,13 +24,14 @@ class Home extends CI_Controller
 
         $sess_data = $this->session->userdata('client');
         $post_type = $this->uri->segment(1);
+        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $data['posts'] = $this->Post_model->get_all_posts_by_slug($post_slug);
         $res_post_data = $this->db->get_where('user_post', ['slug' => $post_slug, 'post_type' => $post_type])->row_array();
         $data['user_loggedin'] = false;
         $data['is_user_like'] = false;
         $data['is_user_bookmark'] = false;
 
-        pr($res_post_data);
+//        pr($res_post_data);
 
 
         if (!empty($sess_data))
