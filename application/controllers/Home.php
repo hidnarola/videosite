@@ -40,8 +40,9 @@ class Home extends CI_Controller
         {
             $data['blog'] = $this->db->get_where('blog', ['post_id' => $res_post_data['id']])->result_array();
         }
-
-
+        
+        // pr($all_posts);
+        // pr($res_post_data,1);
 
         if (!empty($sess_data))
         {
