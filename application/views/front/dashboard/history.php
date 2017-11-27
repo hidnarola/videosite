@@ -17,7 +17,7 @@
                     <tr>
                         <th>Username</th>
                         <th>Post Title</th>
-                        <th>Activity</th>
+                        <!--<th>Activity</th>-->
                     </tr>
                 </thead>
                 <tbody>
@@ -30,7 +30,7 @@
                             <tr>
                                 <td><?php echo $his['user_id']; ?></td>
                                 <td><?php echo $his['post_id']; ?></td>
-                                <td><?php echo $his['activity']; ?></td>
+                                <!--<td><?php // echo $his['activity']; ?></td>-->
                             </tr>
                             <?php
                         }

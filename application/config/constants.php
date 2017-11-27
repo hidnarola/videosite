@@ -119,3 +119,4 @@ defined('DEFAULT_MOBILE_CSS_PATH') OR define('DEFAULT_MOBILE_CSS_PATH', Asset_pa
 defined('DEFAULT_BLOG_IMAGE_PATH') OR define('DEFAULT_BLOG_IMAGE_PATH', Asset_path . 'uploads/blogs/'); // highest automatically-assigned error code
 defined('DEFAULT_USER_IMAGE_PATH') OR define('DEFAULT_USER_IMAGE_PATH', Asset_path . 'uploads/avatars/'); // highest automatically-assigned error code
 defined('DEFAULT_VIDEO_PATH') OR define('DEFAULT_VIDEO_PATH', Asset_path . 'uploads/videos/'); // highest automatically-assigned error code
+defined('DEFAULT_GALLERY_PATH') OR define('DEFAULT_GALLERY_PATH', Asset_path . 'uploads/gallery/'); // highest automatically-assigned error code

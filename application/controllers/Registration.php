@@ -44,7 +44,8 @@ class Registration extends CI_Controller {
         $this->form_validation->set_rules('i_agree', 'I Agree', 'trim|required');
 
         if($this->form_validation->run() == FALSE){
-            $data['subview']='front/registration/registration_user_1';
+        $data['subview']='front/registration/registration_user_1';
+            // $data['subview']='front/home';
             $this->load->view('front/layouts/layout_main',$data);
         }else{
             

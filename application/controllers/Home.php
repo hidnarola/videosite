@@ -14,9 +14,9 @@ class Home extends CI_Controller
 
     public function index()
     {
-        // $data['subview']="front/home";
-        // $this->load->view('front/layouts/layout_main',$data);
-        echo "Video site";
+        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
+        $data['subview'] = "front/home";
+        $this->load->view('front/layouts/layout_main', $data);
     }
 
     public function post_detail($post_slug)
@@ -31,13 +31,13 @@ class Home extends CI_Controller
         $data['is_user_bookmark'] = false;
 
         pr($res_post_data);
-        
+
 
         if (!empty($sess_data))
         {
 
             $data['user_loggedin'] = true;
-            
+
             $user_like_data = $this->db->get_where('user_likes', ['user_id' => $sess_data['id'], 'post_id' => $data['posts']['id']])
                     ->row_array();
             if (!empty($user_like_data))
@@ -238,25 +238,36 @@ class Home extends CI_Controller
     }
 
     // ------------------------------------------------------------------------
-    public function history_add($post_data){
+    public function history_add($post_data)
+    {
 
         $sess_data = $this->session->userdata('client');
-        if(!empty($sess_data)){
+        if (!empty($sess_data))
+        {
 
-            $post_data_arr = $this->db->get_where('user_history',['user_id'=>$sess_data['id'],'post_id'=>$post_data['id'],'created_at'=>date('Y-m-d')])
-                                  ->row_array();
+            $post_data_arr = $this->db->get_where('user_history', ['user_id' => $sess_data['id'], 'post_id' => $post_data['id'], 'created_at' => date('Y-m-d')])
+                    ->row_array();
 
-            if(!empty($post_data_arr)){
-                $this->db->delete('user_history',['id'=>$post_data_arr['id']]);
+            if (!empty($post_data_arr))
+            {
+                $this->db->delete('user_history', ['id' => $post_data_arr['id']]);
             }
 
             $ins_history = [
                 'user_id' => $sess_data['id'],
                 'post_id' => $post_data['id'],
-                'created_at'=>date('Y-m-d')
-            ];        
+                'created_at' => date('Y-m-d')
+            ];
             $this->db->insert('user_history', $ins_history);
         }
+    }
+
+    public function category_detail_page($id)
+    {
+        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
+        $data['posts'] = $this->Post_model->get_posts_category_id($id);
+        $data['subview'] = 'front/categories/index';
+        $this->load->view('front/layouts/layout_main', $data);
     }
 
     /* =====  End of Section For increase total count for user post block  ====== */

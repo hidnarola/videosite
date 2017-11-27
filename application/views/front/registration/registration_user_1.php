@@ -1,9 +1,9 @@
- <section>
-	<div class="container">
-		<div class="row">						
-			<div class="col-md-12">
-				<!-- login form -->
-				
+<!-- <section>
+	<div class="container">-->
+<!--		<div class="row">						
+			<div class="col-md-12">-->
+				 <!--login form--> 
+				<div class="right-panel">
 				<?php echo validation_errors(); ?>
 
 				<form method="post" action="" id="frmregister" >
@@ -45,10 +45,12 @@
 						</div>
 					</div>
 				</form>
-				<!-- /login form -->
-			</div>
-			<!-- /LOGIN -->
-		</div>
-	</div>
-</section>
+                                    
+                                </div>
+				 <!--/login form--> 
+			<!--</div>-->
+			 <!--/LOGIN--> 
+		<!--</div>-->
+<!--	</div>
+</section>-->
 <!-- / -->
