@@ -14,12 +14,12 @@
                     ?>
                     <li>
                         <div class="list-box">
-                            <div class="list-top"><a href=""><img src="<?php echo base_url() . $blogs['bimg'] ?>" alt=""/></a> 
+                            <div class="list-top"><a href=""><img src="<?php echo base_url() . $post['bimg'] ?>" alt=""/></a> 
                                                                                               <!--<span>10:53</span>-->
                             </div>
                             <div class="list-btm">
                                 <a href="<?php echo base_url() . 'blog/' . $post['slug']; ?>"><?php echo $post['blog_title'] ?></a>
-                                <p>By : <?php echo $blogs['username'] ?> <span></span></p>
+                                <p>By : <?php echo $post['username'] ?> <span></span></p>
                                 <h6><i class="fa fa-eye"></i> 1,25,000 Views</h6>
                                 <h6><i class="fa fa-clock-o"></i> 5 Months aago</h6>
                             </div>
@@ -43,11 +43,11 @@
                             </div>
                         </div>
                     </li>
-        <?php
-    }
-    elseif ($post['post_type'] == 'gallery')
-    {
-        ?>
+                    <?php
+                }
+                elseif ($post['post_type'] == 'gallery')
+                {
+                    ?>
                     <li>
                         <div class="list-box">
                             <div class="list-top"><a href=""><img src="<?php echo base_url() . $post['gimg'] ?>" alt=""/></a> 
@@ -61,10 +61,10 @@
                             </div>
                         </div>
                     </li>
-        <?php
-    }
-}
-?>
+                    <?php
+                }
+            }
+            ?>
         </ul>
     </div>
 
