@@ -40,7 +40,7 @@ class Home extends CI_Controller
         {
             $data['blog'] = $this->db->get_where('blog', ['post_id' => $res_post_data['id']])->result_array();
         }
-                
+
 
         if (!empty($sess_data))
         {
@@ -273,11 +273,12 @@ class Home extends CI_Controller
 
     public function category_detail_page($id)
     {
-        // die('fghjk');
         $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
-//        $data['gallery'] = $this->db->get_where('gallery', ['post_id' => $res_post_data['id']])->result_array();
-//        $data['blog'] = $this->db->get_where('blog', ['post_id' => $res_post_data['id']])->result_array();
         $data['posts'] = $this->Post_model->get_posts_category_id($id);
+        pr($data['posts']);
+        $data['views'] = $this->Post_model->get_total_no_of_views($id);
+        pr($data['views']);
+        die;
         $data['subview'] = 'front/categories/index';
         $this->load->view('front/layouts/layout_main', $data);
     }
