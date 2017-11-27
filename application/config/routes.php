@@ -60,6 +60,7 @@ $route['category_detail_page/(:any)'] = 'home/category_detail_page/$1';
 $route['channel/(:any)'] = 'user_channels/channel_detail/$1';
 
 $route['user_post'] = 'user_post/index';
+$route['search'] = 'Without_login/search';
 // $all_news = $db->get( 'articles' );
 // $result_ar = $all_news->result_array();
 //$route['(:any)'] = "home/post_detail/$1";

@@ -3,7 +3,10 @@
     <?php $this->load->view('front/layouts/layout_header'); ?>    
     <?php $this->load->view($subview); ?>
     <?php $this->load->view('front/layouts/side_bar'); ?>
-    
+	
+	
+	
+	<script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'custom.js'; ?>"></script>
 
 </body>
 

@@ -4,7 +4,7 @@
 
     <div class="home-listing">
         <h2>Suggested</h2>
-        <ul>
+        <ul class="ul-list">
             <?php
 //            pr($posts);die;
             foreach ($posts as $key => $post)
