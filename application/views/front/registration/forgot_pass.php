@@ -9,7 +9,7 @@
 				<form method="post" action="" id="frmregister" >
 					<div class="clearfix">
 						<div class="form-group">
-							<input type="text" name="email_id" class="form-control" placeholder="Email *" 
+							<input type="text" name="email_id" class="form-control" placeholder="Email *" 									
 								   value="<?php echo set_value('email_id'); ?>" >
 						</div>
 					</div>

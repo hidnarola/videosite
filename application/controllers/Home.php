@@ -10,6 +10,7 @@ class Home extends CI_Controller
         parent::__construct();
         $this->load->model(['Users_model', 'Post_model']);
         $this->load->helper('paypal_helper');
+        // pr($_SESSION,1);
     }
 
     public function index()

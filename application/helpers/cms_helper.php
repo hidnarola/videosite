@@ -148,7 +148,7 @@ function pagination_config()
 function pagination_front_config()
 {
 
-    $config['full_tag_open'] = '<div><ul class="pagination nomargin">';
+    $config['full_tag_open'] = '<div><ul class="pagination">';
     $config['full_tag_close'] = '</ul></div>';
     $config['num_tag_open'] = '<li>';
     $config['num_tag_close'] = '</li>';
@@ -181,7 +181,7 @@ function mail_config()
         'smtp_host' => 'smtp.gmail.com',
         'smtp_port' => 465,
         'smtp_user' => 'demo.narola@gmail.com',
-        'smtp_pass' => 'Narola21',
+        'smtp_pass' => 'Narola21#',
         'smtp_crypto' => 'ssl',
         'transport' => 'Smtp',
         'charset' => 'utf-8',

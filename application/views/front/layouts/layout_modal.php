@@ -31,18 +31,18 @@
                             <big>Sign Up</big>
                             <small>Please enter your login information.</small>
                         </h2>
-                        <form>
-                            <input type="text" name="" class="input-css" placeholder="Name"/>
-                            <input type="text" name="" class="input-css" placeholder="E-mail"/>
-                            <input type="password" name="" class="input-css" placeholder="Password"/>
-                            <input type="password" name="" class="input-css" placeholder="Re-Password"/>
+                        <form id="sign_up_form" method="post">
+                            <input type="text" name="username" class="input-css" placeholder="Username"/>
+                            <input type="text" name="email_id" class="input-css" placeholder="E-mail"/>
+                            <input type="password" name="password" class="input-css" placeholder="Password" id="password"/>
+                            <input type="password" name="repeat_password" class="input-css" placeholder="Re-Password"/>
                             <div class="remember-forgat">
                                 <div class="checkbox">
-                                    <input id="check2" type="checkbox" name="check" value="check2">
-                                    <label for="check2">Term & Condition</label>
+                                    <input type="checkbox" name="i_agree" id="i_agree" title="Please agree to our policy!" required>
+                                    <label for="i_agree">Term & Condition</label>
                                 </div>
                             </div>
-                            <button type="submit" name="">SIGN IN</button>
+                            <button type="submit" >Sign up</button>
                         </form>
                     </div>
                     <div class="sign-in-r">
@@ -64,3 +64,124 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    
+    var dialog = null;
+
+    $("#commentForm").validate({
+        submitHandler:function(form){
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url(); ?>/registration/ajax_login",
+                data: $(form).serialize(),
+                dataType:'JSON',
+                success: function (data) {
+
+                    if(data['success'] == false){
+                        var new_str = '';                               
+                        new_str += '<p>'+data['email_error']+'</p>';
+                        new_str += '<p>'+data['password_error']+'</p>';
+                        
+                        // bootbox.alert(new_str);
+
+                        dialog = bootbox.dialog({
+                            message: '<p class="text-center">'+new_str+'</p>',
+                            closeButton: false
+                        });
+                        
+                        // do something in the background
+                        setTimeout(function(){
+                            dialog.modal('hide');
+                        },2000);                                
+
+                    }else{
+                        window.location.href="<?php echo base_url().'dashboard'; ?>";
+                    }
+                    return false;
+                }
+            });
+            return false; // required to block normal submit since you used ajax
+        }
+    });
+
+    $("#sign_up_form").validate({
+        rules: {
+            username: {
+                required: true,
+                minlength: 2
+            },
+            password: {
+                required: true,
+                minlength: 5
+            },
+            repeat_password: {
+                required: true,
+                minlength: 5,
+                equalTo: "#password"
+            },
+            email_id : {
+                required: true,
+                email: true
+            }
+        },
+        submitHandler:function(form){
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url(); ?>/registration/user",
+                data: $(form).serialize(),
+                dataType:'JSON',
+                beforeSend: function(){
+                    dialog = bootbox.dialog({
+                        message: '<p class="text-center">Please while we process</p>',
+                        closeButton: false
+                    });                        
+                    // dialog.modal('hide');
+                },
+                success: function (data) {
+                    
+                    setTimeout(function(){
+                        dialog.modal('hide');
+                    },1500);
+
+                    setTimeout(function(){                            
+                        if(data['success'] == false){
+                            
+                            var dialog_new = bootbox.dialog({
+                                message: '<p class="text-center">'+data['all_erros']+'</p>',
+                                closeButton: false
+                            });
+
+                            setTimeout(function(){
+                                dialog_new.modal('hide');
+                            },2000);
+                        }else{
+                            var dialog_new = bootbox.dialog({
+                                message: "<p class='text-center'>  Verification Mail has been sent to you. Please verify it in order to login your account.</p>",
+                                closeButton: false
+                            });
+
+                            setTimeout(function(){
+                                dialog_new.modal('hide');
+                                $("#sign_up_form")[0].reset();
+                                $("#commentForm")[0].reset();
+                                $('#login-register').modal('hide');
+                            },3000);
+
+                            window.location.href="<?php echo base_url().'dashboard'; ?>";
+                        }
+                    },2000);
+
+
+                }
+            });
+            return false; // required to block normal submit since you used ajax
+        }
+    });
+    
+
+    $("#login-register").on('hide.bs.modal', function () {
+        $('label.error').remove();        
+    });
+
+</script>

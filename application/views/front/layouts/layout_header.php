@@ -1,33 +1,40 @@
+<?php $sess_u_data = $this->session->userdata('client'); ?>
 <head>
     <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-                <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-                <title>Videosite.com</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Videosite.com</title>
 
-                <!-- Bootstrap -->
-                <link href="https://fonts.googleapis.com/css?family=Comfortaa:300,400,700|Roboto:400,500" rel="stylesheet">
-                <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
-                <link href="<?php echo DEFAULT_CSS_PATH ?>bootstrap.min.css" rel="stylesheet">
-                <link href="<?php echo DEFAULT_CSS_PATH ?>font.css" rel="stylesheet">
-                <link href="<?php echo DEFAULT_CSS_PATH ?>style.css" rel="stylesheet" />
-                <link href="<?php echo DEFAULT_CSS_PATH ?>responsive.css" rel="stylesheet" />
-                
-                <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'jquery.min.js'; ?>"></script>    
-                <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'bootstrap.min.js'; ?>"></script>    
-                <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'owl.carousel.min.js'; ?>"></script>    
-                <!-- DEFAULT_JS_PATH
-                DEFAULT_CSS_PATH -->
+    <!-- Bootstrap -->
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa:300,400,700|Roboto:400,500" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
+    <link href="<?php echo DEFAULT_CSS_PATH ?>bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo DEFAULT_CSS_PATH ?>font.css" rel="stylesheet">
+    <link href="<?php echo DEFAULT_CSS_PATH ?>style.css" rel="stylesheet" />
+    <link href="<?php echo DEFAULT_CSS_PATH ?>responsive.css" rel="stylesheet" />
 
-                <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-                <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-                <!--[if lt IE 9]>
-                  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-                  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-                <![endif]-->
-                <style type="text/css">
-                    .cursor_pointer { cursor: pointer;  }
-                </style>
+    <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'jquery.min.js'; ?>"></script>
+    <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'bootstrap.min.js'; ?>"></script>
+    <script src="<?php echo base_url().'public/front_js/jquery_validation.js'; ?>"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+
+    <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'bootbox.min.js'; ?>"></script>
+    <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'bootstrap-notify.min.js'; ?>"></script>    
+    <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'owl.carousel.min.js'; ?>"></script>
+
+    <!-- DEFAULT_JS_PATH
+    DEFAULT_CSS_PATH -->
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        .cursor_pointer { cursor: pointer;  }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -49,9 +56,30 @@
                 </span>
             </a>
         </div>
-        <div class="sign-in-up">
-            <a href="javascript:void(0)" data-toggle="modal" data-target="#login-register" class="btn_header_login">Sign In</a>
-            <a href="javascript:void(0)" data-toggle="modal" data-target="#login-register" class="btn_header_register">Sign Up</a>
-        </div>
-        
+
+        <?php if(!empty($sess_u_data)){ ?>
+            <div class="user-nav dropdown">
+                <a href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="images/pic.jpg" alt="" /> Profle Name<span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">                    
+                    <li>
+                        <a href="">
+                            A galley
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url().'dashboard/logout'; ?>">Log Out</a>
+                    </li>
+                </ul>
+            </div>
+        <?php } else { ?>
+            <div class="sign-in-up">
+                <a href="javascript:void(0)" data-toggle="modal" data-target="#login-register" class="btn_header_login">
+                    Sign In
+                </a>
+                <a href="javascript:void(0)" data-toggle="modal" data-target="#login-register" class="btn_header_register">Sign Up</a>
+            </div>
+        <?php } ?>
+
     </header>

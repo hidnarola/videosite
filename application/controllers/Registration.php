@@ -29,30 +29,28 @@ class Registration extends CI_Controller {
             $this->session->set_userdata(['client' => $user_data]); // Start Loggedin User Session
             $this->session->set_flashdata('success','Login Successfull');
             $this->Users_model->update_user_data($user_data['id'], ['last_login' => date('Y-m-d H:i:s')]); // update last login time
-            redirect('home');
-        }
-    }
-
-    public function login(){
-
-        $this->form_validation->set_rules('email_id', 'Email', 'required|valid_email');        
-        $this->form_validation->set_rules('password', 'Password', 'required|callback_password_match');
-
-        if($this->form_validation->run() == FALSE){
-            $data['subview']='front/login_front';
-            $this->load->view('front/layouts/layout_main',$data);
-        }else{
-            
-            $email_id = $this->input->post('email_id');
-            $user_data = $this->Users_model->get_data(['email_id'=>$email_id],true);
-
-            $this->session->set_userdata(['client' => $user_data]); // Start Loggedin User Session
-            $this->session->set_flashdata('success','Login Successfull');
-            $this->Users_model->update_user_data($user_data['id'], ['last_login' => date('Y-m-d H:i:s')]); // update last login time
             redirect('dashboard');
         }
     }
 
+    public function ajax_login(){
+        $this->form_validation->set_rules('email_id', 'Email', 'required|valid_email');        
+        $this->form_validation->set_rules('password', 'Password', 'required|callback_password_match'); 
+        
+        if($this->form_validation->run() == FALSE){
+            $res['email_error'] = strip_tags(form_error('email_id'));
+            $res['password_error'] = strip_tags(form_error('password'));
+            $res['success'] = false;
+        }else{
+            $email_id = $this->input->post('email_id');
+            $user_data = $this->Users_model->get_data(['email_id'=>$email_id],true);
+
+            $this->session->set_userdata(['client' => $user_data]); // Start Loggedin User Session
+            $this->Users_model->update_user_data($user_data['id'], ['last_login' => date('Y-m-d H:i:s')]); // update last login time            
+            $res['success'] = true;            
+        }
+        echo json_encode($res);
+    }    
 
     public function user(){
 
@@ -65,9 +63,10 @@ class Registration extends CI_Controller {
         $this->form_validation->set_rules('i_agree', 'I Agree', 'trim|required');
 
         if($this->form_validation->run() == FALSE){
-        $data['subview']='front/registration/registration_user_1';
-            // $data['subview']='front/home';
-            $this->load->view('front/layouts/layout_main',$data);
+            // $data['subview']='front/registration/registration_user_1';            
+            // $this->load->view('front/layouts/layout_main',$data);
+            $res['all_erros'] = validation_errors();
+            $res['success'] = false;
         }else{
             
             $username = $this->input->post('username');
@@ -109,10 +108,10 @@ class Registration extends CI_Controller {
                         ->message($html_content);
             $this->email->send();
 
-            $this->session->set_flashdata('success','User has been inserted successfully.');
-            redirect('registration/login');
+            $res['success'] = true; // Set final variable whether it is true or not
         } 
-    }
+        echo json_encode($res);
+    }   
 
     public function forgot_password(){
 
@@ -227,8 +226,16 @@ class Registration extends CI_Controller {
             $this->form_validation->set_message('password_match', 'Creadentials mis-matched. Please try it again.');
             return false;
         }        
-    }
+    }    
 
     /*=====  End of All CallBack functions for valication  ======*/
+
+    /*================================================================
+    =            Section Jquery Form validation functions            =
+    ================================================================*/    
+    
+    
+    /*=====  End of Section Jquery Form validation functions  ======*/
+    
     
 }
