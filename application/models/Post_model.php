@@ -313,6 +313,62 @@ class Post_model extends CI_Model
         return $views;
     }
 
+    public function get_bookmarked_post()
+    {
+        $this->db->select('user_id,post_id,u.username,b.blog_title,g,title as gtitle, v.title as vtitle');
+        $this->db->join('users u', 'u.id = ub.user_id', 'left');
+        $this->db->join('blog b', 'b.post_id = ub.post_id', 'left');
+        $this->db->join('video v', 'v.post_id = ub.post_id', 'left');
+        $this->db->join('gallery g', 'g.post_id = ub.post_id', 'left');
+        $bookmark = $this->db->get('user_bookmarks ub')->result_array();
+        qry();
+        pr($bookmark, 1);
+        return $bookmark;
+    }
+
+    public function get_front_result($table, $condition = null, $limit, $offset)
+    {
+        $this->db->select('*');
+        if (!is_null($condition))
+        {
+            $this->db->where($condition);
+        }
+        $this->db->order_by('id', 'desc');
+        $this->db->limit($limit, $offset);
+        $query = $this->db->get($table);
+        return $query->result_array();
+    }
+
+    public function get_posts_front_count($where)
+    {
+        $this->db->where($where);
+        $res_data = $this->db->get('user_bookmarks')->num_rows();
+        return $res_data;
+    }
+
+    public function record_count()
+    {
+        return $this->db->count_all("user_bookmarks");
+    }
+
+// Fetch data according to per_page limit.
+    public function fetch_data($limit, $id)
+    {
+        $this->db->limit($limit);
+        $this->db->where('user_id', $id);
+        $query = $this->db->get("user_bookmarks");
+        if ($query->num_rows() > 0)
+        {
+            foreach ($query->result() as $row)
+            {
+                $data[] = $row;
+            }
+
+            return $data;
+        }
+        return false;
+    }
+
 }
 
 ?> 

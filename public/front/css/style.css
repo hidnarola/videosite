@@ -263,7 +263,7 @@ textarea.textarea-css {background: #e9e9e9; padding: 15px; line-height: 24px; fo
 
 .h3-title{color:#f0351c;font-size:20px;text-transform:uppercase;margin:0 0 22px;padding:0 0 12px;border-bottom:1px solid #eee;display:block;}
 .input-file{position:relative;}
-.input-group-btn{position:absolute;top:5px;right:5px;background:#f0351c;border:0;color:#fff;line-height:40px;width:120px;text-align:center;cursor: pointer;}
+.input-group-btn{position:absolute !important;top:5px !important;right:5px !important;background:#f0351c !important;border:0 !important;color:#fff !important;line-height:40px !important;width:120px !important;text-align:center !important;cursor: pointer !important;}
 .input-group-btn > span{ width:100%;color: #fff;font-size: 15px;text-transform: uppercase;font-weight: 700;font-family: 'Comfortaa';padding: 4px 0 0;display: block;}
 
 .radiobox input[type=radio]{display:none;}
