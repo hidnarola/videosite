@@ -33,7 +33,9 @@
                             <?php } } elseif ($posts['post_type'] == 'gallery') { foreach ($gallery as $key => $gal) { ?>
                             <div class="big-img">
                                 <a href=""><img src="<?php echo base_url() . $gal['img_path'] ?>" alt="" /></a>
-                                <span>06 <small>of <?php echo $count_gallery?></small></span>
+                                <?php if($count_gallery > 1) { ?>
+                                <span><?php echo $key +1; ?> <small>of <?php echo $count_gallery?></small></span>
+                                <?php } ?>
                             </div>
                             <div class="list-content">
                                 <h2><?php echo $gal['title'] ?></h2>
