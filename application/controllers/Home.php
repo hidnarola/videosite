@@ -34,12 +34,13 @@ class Home extends CI_Controller
         if ($res_post_data['post_type'] == 'gallery')
         {
             $data['gallery'] = $this->db->get_where('gallery', ['post_id' => $res_post_data['id']])->result_array();
+            $data['count_gallery'] = count($data['gallery']);
         }
 
         if ($res_post_data['post_type'] == 'blog')
         {
             $data['blog'] = $this->db->get_where('blog', ['post_id' => $res_post_data['id']])->result_array();
-            // pr($data['blog'],1);
+            $data['count_blog'] = count($data['blog']);
         }
 
 
@@ -276,10 +277,6 @@ class Home extends CI_Controller
     {
         $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $data['posts'] = $this->Post_model->get_posts_category_id($id);
-        pr($data['posts']);
-        $data['views'] = $this->Post_model->get_total_no_of_views($id);
-        pr($data['views']);
-        die;
         $data['subview'] = 'front/categories/index';
         $this->load->view('front/layouts/layout_main', $data);
     }

@@ -20,8 +20,8 @@
                             <div class="list-btm">
                                 <a href="<?php echo base_url() . 'blog/' . $post['slug']; ?>"><?php echo $post['blog_title'] ?></a>
                                 <p>By : <?php echo $post['username'] ?> <span></span></p>
-                                <h6><i class="fa fa-eye"></i> <?php echo $views['total_views'] ?></h6>
-                                <h6><i class="fa fa-clock-o"></i><?php get_ago_time($post['blog_created_date'],date("Y-m-d H:i:s a")) ?></h6>
+                                <h6><i class="fa fa-eye"></i> <?php echo $post['total_views'] ?></h6>
+                                <h6><i class="fa fa-clock-o"></i><?php get_ago_time($post['blog_created_date'], date("Y-m-d H:i:s a")) ?></h6>
                             </div>
                         </div>
                     </li>
@@ -38,8 +38,8 @@
                             <div class="list-btm">
                                 <a href="<?php echo base_url() . 'video/' . $post['slug']; ?>"><?php echo $post['vtitle'] ?></a>
                                 <p>By : <?php echo $post['username'] ?> <span></span></p>
-                                <h6><i class="fa fa-eye"></i> <?php echo $views['total_views'] ?></h6>
-                                <h6><i class="fa fa-clock-o"></i><?php get_ago_time($post['video_created_date'],date("Y-m-d H:i:s a")) ?></h6>
+                                <h6><i class="fa fa-eye"></i> <?php echo $post['total_views'] ?></h6>
+                                <h6><i class="fa fa-clock-o"></i><?php get_ago_time($post['video_created_date'], date("Y-m-d H:i:s a")) ?></h6>
                             </div>
                         </div>
                     </li>
@@ -56,8 +56,8 @@
                             <div class="list-btm">
                                 <a href="<?php echo base_url() . 'gallery/' . $post['slug']; ?>"><?php echo $post['gtitle'] ?></a>
                                 <p>By : <?php echo $post['username'] ?> <span></span></p>
-                                <h6><i class="fa fa-eye"></i> <?php echo $views['total_views'] ?></h6>
-                                <h6><i class="fa fa-clock-o"></i> <?php get_ago_time($post['gallery_created_date'],date("Y-m-d H:i:s a")) ?></h6>
+                                <h6><i class="fa fa-eye"></i> <?php echo $post['total_views'] ?></h6>
+                                <h6><i class="fa fa-clock-o"></i> <?php get_ago_time($post['gallery_created_date'], date("Y-m-d H:i:s a")) ?></h6>
                             </div>
                         </div>
                     </li>

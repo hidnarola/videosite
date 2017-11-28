@@ -22,7 +22,7 @@
                 <br><br>
                             <div class="big-img">
                                 <a href=""><img src="<?php echo base_url() . $blogs['img_path'] ?>" alt="" /></a>
-                                <span>06 <small>of 40</small></span>
+                                <span>06 <small>of <?php echo $count_blog?></small></span>
                             </div>
                             <div class="list-content">
                                 <h2><?php echo $blogs['blog_title'] ?></h2>
@@ -31,7 +31,7 @@
                             <?php } } elseif ($posts['post_type'] == 'gallery') { foreach ($gallery as $key => $gal) { ?>
                             <div class="big-img">
                                 <a href=""><img src="<?php echo base_url() . $gal['img_path'] ?>" alt="" /></a>
-                                <span>06 <small>of 40</small></span>
+                                <span>06 <small>of <?php echo $count_gallery?></small></span>
                             </div>
                             <div class="list-content">
                                 <h2><?php echo $gal['title'] ?></h2>
@@ -40,7 +40,7 @@
                             <?php } } elseif ($posts['post_type'] == 'video') { ?>
                         <div class="big-img">
                             <a href=""><img src="<?php echo base_url() . $posts['upload_path'] ?>" alt="" /></a>
-                            <span>06 <small>of 40</small></span>
+                            <!--<span>06 <small>of 40</small></span>-->
                         </div>
                         <div class="list-content">
                             <h2><?php echo $posts['vtitle'] ?></h2>
