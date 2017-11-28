@@ -346,9 +346,11 @@ class Post_model extends CI_Model
         return $res_data;
     }
 
-    public function record_count()
+    public function record_count($id)
     {
-        return $this->db->count_all("user_bookmarks");
+//        return $this->db->count_all("user_bookmarks");
+        $query = $this->db->where('user_id', $id)->get('user_bookmarks');
+        return $query->num_rows();
     }
 
 // Fetch data according to per_page limit.

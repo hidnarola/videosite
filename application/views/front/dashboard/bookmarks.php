@@ -18,8 +18,8 @@
                     {
                         ?>
                         <tr>
-                            <td><?php echo $book->user_id; ?></td>
-                            <td><?php echo $book->post_id; ?></td>
+                            <td><?php echo $book['user_id']; ?></td>
+                            <td><?php echo $book['post_id']; ?></td>
                         </tr>
                         <?php
                     }
@@ -28,16 +28,16 @@
             </tbody>
         </table>
         <div id="pagination">
-            <ul class="tsc_pagination">
+            <!--<ul class="tsc_pagination">-->
 
                 <!-- Show pagination links -->
                 <?php
                 foreach ($links as $link)
                 {
-                    echo "<li>" . $link . "</li>";
+                    echo  $link;
                 }
                 ?>
-            </ul>
+            <!--</ul>-->
         </div>
 
     </div>
