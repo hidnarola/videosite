@@ -13,6 +13,7 @@ class Dashboard extends CI_Controller {
 	public function index() {
 		// pr($this->session->all_userdata());
 		// $data = [];
+             $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
 		$data['all_channels'] = $this->db->get_where('user_channels',['is_deleted'=>'0','is_blocked'=>'0'])->result_array();
 		// pr($data,1);
 		$this->load->view('front/dashboard/index', $data);
@@ -21,6 +22,7 @@ class Dashboard extends CI_Controller {
 	public function edit_profile(){
 		
 		$client_data = $this->session->userdata('client');
+                 $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
 		$data['user_data'] = $this->Users_model->get_data(['id'=>$client_data['id']],true);
 
 		$this->form_validation->set_rules('username', 'Username', 'trim|required|callback_username_check',
@@ -31,6 +33,15 @@ class Dashboard extends CI_Controller {
         if($this->form_validation->run() == FALSE){
             $data['subview']='front/dashboard/edit_profile';
             $this->load->view('front/layouts/layout_main',$data);
+            
+            $avtar['msg']='';
+            $path = "uploads/avatars/";
+            //2 MB File Size
+            $avtar = $this->filestorage->FileInsert($path, 'avatar', 'image', 2097152,$this->input->post('H_avatar'));
+            //----------------------------------------
+            if ($avtar['status'] == 0) {
+               $this->session->set_flashdata('message', ['message'=> $avtar['msg'],'class'=>'alert alert-danger']);
+           }
         }else{
 
         	$username = $this->input->post('username');
@@ -41,11 +52,11 @@ class Dashboard extends CI_Controller {
 							'fname'=>$fname,
 							'lname'=>$lname,
 							'username'=>$username,
-							'avatar'=>''
+							'avatar'=>$avtar['msg']
 						];
 			$this->Users_model->update_user_data($client_data['id'],$upd_arr);
 			$this->session->set_flashdata('success','Record has been updated successfully.');
-			redirect('dashboard');
+			redirect('home');
         }
 	}
 

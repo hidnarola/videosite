@@ -29,7 +29,7 @@ class Registration extends CI_Controller {
             $this->session->set_userdata(['client' => $user_data]); // Start Loggedin User Session
             $this->session->set_flashdata('success','Login Successfull');
             $this->Users_model->update_user_data($user_data['id'], ['last_login' => date('Y-m-d H:i:s')]); // update last login time
-            redirect('dashboard');
+            redirect('home');
         }
     }
 
