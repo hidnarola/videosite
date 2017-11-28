@@ -1,78 +1,86 @@
 <script type="text/javascript" src="<?= DEFAULT_ADMIN_JS_PATH ?>plugins/forms/tags/tokenfield.min.js"></script>
 <script type="text/javascript" src="<?= DEFAULT_ADMIN_JS_PATH ?>plugins/editors/summernote/summernote.min.js"></script>
 <script type="text/javascript" src="<?= DEFAULT_ADMIN_JS_PATH ?>pages/editor_summernote.js"></script>
-<section>
-    <div class="container">
-        <div class="row">						
-            <div class="col-md-12">
-                <!-- login form -->
 
-                <?php echo validation_errors(); ?>
-
-                <form method="post" action="" id="frmblog" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <select class="form-control" data-placeholder="Select a Channel"  name="channel" id="channel">
-                            <option value="">Select Channel</option> 
-                            <?php
-                            foreach ($all_channels as $key => $channel)
-                            {
-                                ?> 
-                                <option value="<?php echo $channel['id']; ?>"><?php echo $channel['channel_name']; ?></option>
-                            <?php } ?> 
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <select class="form-control" data-placeholder="Select a Category"  name="category" id="category">
-                            <option value="">Select Category</option> 
-                            <?php
-                            foreach ($all_category as $key => $category)
-                            {
-                                ?> 
-                                <option value="<?php echo $category['id']; ?>"><?php echo $category['category_name']; ?></option>
-                            <?php } ?> 
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <select class="form-control" data-placeholder="Select a Sub Category"  name="sub_category" id="sub_category">
-                            <option value="">Select Sub Category</option> 
-                            <?php
-                            foreach ($all_sub_cat as $key => $cat)
-                            {
-                                ?> 
-                                <option value="<?php echo $cat['id']; ?>"><?php echo $cat['category_name']; ?></option>
-                            <?php } ?> 
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="blog_title" class="form-control" placeholder="Blog Title *" 
-                               value="<?php echo set_value('blog_title'); ?>" >
-                    </div>
-                    <!--                    <div class="form-group">
-                                            <textarea name="blog_description" class="form-control" placeholder="Blog Description *" ><?php echo set_value('blog_description'); ?></textarea>
-                                        </div>-->
-                    <div class="form-group">
-                        <input type="file" name="img_path[]" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-
-                        <textarea name="blog_description" id="blog_description" placeholder="Enter blog Description *" class="summernote form-control"><?php echo set_value('blog_description'); ?></textarea>
-
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12 col-xs-12 text-right register-btn">
-                            <button type="submit" class="btn btn_custom"><i class="fa fa-check"></i> Create </button>
-                        </div>
-                    </div>
-                </form>
-                <!-- /login form -->
+<?php echo validation_errors(); ?>
+<div class="right-panel">
+    <div class="form-element">
+        <h3 class="h3-title">Add Blog</h3>
+        <form method="post" action="" id="frmblog" enctype="multipart/form-data">
+            <div class="input-wrap">
+                <label class="label-css">Select Channel </label>
+                <select class="form-control" data-placeholder="Select a Channel"  name="channel" id="channel" class="form-css">
+                    <option value="">Select Channel</option> 
+                    <?php
+                    foreach ($all_channels as $key => $channel)
+                    {
+                        ?> 
+                        <option value="<?php echo $channel['id']; ?>"><?php echo $channel['channel_name']; ?></option>
+                    <?php } ?> 
+                </select>
             </div>
-            <!-- /LOGIN -->
-        </div>
+
+            <div class="input-wrap">
+                <label class="label-css">Select Category </label>
+                <select class="form-control category" data-placeholder="Select a Category"  name="category" id="category"class="form-css">
+                    <option value="">Select Category</option> 
+                    <?php
+                    foreach ($all_category as $key => $category)
+                    {
+                        ?> 
+                        <option value="<?php echo $category['id']; ?>"><?php echo $category['category_name']; ?></option>
+                    <?php } ?> 
+                </select>
+            </div>
+
+            <div class="input-wrap">
+                <label class="label-css">Select Sub Category </label>
+                <select class="form-control sub_category" data-placeholder="Select a Sub Category"  name="sub_category" id="sub_category" class="form-css">
+                    <option value="">Select Sub Category</option> 
+                    <?php
+                    foreach ($all_sub_cat as $key => $cat)
+                    {
+                        ?> 
+                        <option value="<?php echo $cat['id']; ?>"><?php echo $cat['category_name']; ?></option>
+                    <?php } ?> 
+                </select>
+            </div>
+            
+            <div class="input-wrap">
+                <label class="label-css">Blog Title </label>
+                <input type="text" name="blog_title" id ="blog_title" placeholder="Blog Title" value="" class="form-css" />
+            </div>
+            <!--                    <div class="form-group">
+                                    <textarea name="blog_description" class="form-control" placeholder="Blog Description *" ><?php echo set_value('blog_description'); ?></textarea>
+                                </div>-->
+            <div class="input-wrap">
+                <label class="label-css">Upload File</label>
+                <div class="input-file">
+                    <input type="text" class="form-css" readonly>
+                    <label class="input-group-btn">
+                        <span class="">
+                            Browse <input type="file" name="img_path[]" style="display: none;" multiple>
+                        </span>
+                    </label>
+
+                </div>
+            </div>
+
+<!--            <div class="form-group">
+
+                <textarea name="blog_description" id="blog_description" placeholder="Enter blog Description *" class="summernote form-control"><?php echo set_value('blog_description'); ?></textarea>
+
+            </div>-->
+
+            <div class="btn-btm">
+                <button class="common-btn btn-submit" type="submit">Submit</button>
+            </div>
+        </form>
+        <!-- /login form -->
     </div>
+    <!-- /LOGIN -->
+</div>
+</div>
 </section>
 <script>
     $(document).ready(function () {
@@ -120,7 +128,39 @@
                 }
             });
         }
+//
+//        $("[name*='category']").on('change', function () {
+//            $.ajax({
+//                data: form_data,
+//                type: "POST",
+//                url: '/saveuploadedfile',
+//                cache: false,
+//                contentType: false,
+//                processData: false,
+//                success: function (url) {
+//                    
+//                }
+//            });
+//        });
+
+
+        $('.category').change(function () {
+            var selCategory = $(this).val();
+            console.log(selCategory);
+            $.ajax({
+                url: "ajax_call",
+                async: false,
+                type: "POST",
+                data: "category=" + selCategory,
+                dataType: "html",
+                success: function (data) {
+                    $('.sub_category').html(data);
+                }
+            })
+        });
+
     });
+
 
 </script>
 <!-- / -->

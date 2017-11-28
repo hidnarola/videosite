@@ -313,17 +313,36 @@ class Post_model extends CI_Model
         return $views;
     }
 
-    public function get_bookmarked_post()
+    public function get_bookmarked_post($id, $limit, $offset)
     {
-        $this->db->select('user_id,post_id,u.username,b.blog_title,g,title as gtitle, v.title as vtitle');
+        $this->db->select('user_id,ub.post_id,u.username,b.blog_title,g.title as gtitle, v.title as vtitle,post_type,slug');
         $this->db->join('users u', 'u.id = ub.user_id', 'left');
+        $this->db->join('user_post up', 'up.id = ub.post_id');
         $this->db->join('blog b', 'b.post_id = ub.post_id', 'left');
         $this->db->join('video v', 'v.post_id = ub.post_id', 'left');
         $this->db->join('gallery g', 'g.post_id = ub.post_id', 'left');
+        $this->db->where('user_id',$id);
+        $this->db->group_by('ub.post_id');
+        $this->db->order_by('ub.id', 'desc');
+        $this->db->limit($limit, $offset);
         $bookmark = $this->db->get('user_bookmarks ub')->result_array();
-        qry();
-        pr($bookmark, 1);
         return $bookmark;
+    }
+    
+    public function get_history($id, $limit, $offset)
+    {
+        $this->db->select('user_id,uh.post_id,u.username,b.blog_title,g.title as gtitle, v.title as vtitle,post_type,slug');
+        $this->db->join('users u', 'u.id = uh.user_id', 'left');
+        $this->db->join('user_post up', 'up.id = uh.post_id');
+        $this->db->join('blog b', 'b.post_id = uh.post_id', 'left');
+        $this->db->join('video v', 'v.post_id = uh.post_id', 'left');
+        $this->db->join('gallery g', 'g.post_id = uh.post_id', 'left');
+        $this->db->where('user_id',$id);
+        $this->db->group_by('uh.post_id');
+        $this->db->order_by('uh.id', 'desc');
+        $this->db->limit($limit, $offset);
+        $history = $this->db->get('user_history uh')->result_array();
+        return $history;
     }
 
     public function get_front_result($table, $condition = null, $limit, $offset)
@@ -338,39 +357,46 @@ class Post_model extends CI_Model
         $query = $this->db->get($table);
         return $query->result_array();
     }
+    public function get_front_result_join($table, $condition = null, $limit, $offset)
+    {
+        $this->db->select('*');
+        if (!is_null($condition))
+        {
+            $this->db->where($condition);
+        }
+        $this->db->order_by('id', 'desc');
+        $this->db->limit($limit, $offset);
+        $this->db->join('users u', 'u.id = ub.user_id', 'left');
+        $this->db->join('blog b', 'b.post_id = ub.post_id', 'left');
+        $this->db->join('video v', 'v.post_id = ub.post_id', 'left');
+        $this->db->join('gallery g', 'g.post_id = ub.post_id', 'left');
+        $query = $this->db->get($table);
+        return $query->result_array();
+    }
 
-    public function get_posts_front_count($where)
+    public function get_posts_front_count($table,$where = array())
     {
         $this->db->where($where);
-        $res_data = $this->db->get('user_bookmarks')->num_rows();
+        $res_data = $this->db->get($table)->num_rows();
         return $res_data;
     }
 
-    public function record_count($id)
-    {
-//        return $this->db->count_all("user_bookmarks");
-        $query = $this->db->where('user_id', $id)->get('user_bookmarks');
-        return $query->num_rows();
-    }
-
-// Fetch data according to per_page limit.
-    public function fetch_data($limit, $id)
-    {
-        $this->db->limit($limit);
-        $this->db->where('user_id', $id);
-        $query = $this->db->get("user_bookmarks");
-        if ($query->num_rows() > 0)
-        {
-            foreach ($query->result() as $row)
-            {
-                $data[] = $row;
-            }
-
-            return $data;
+    function loadcategories() {
+        $query = $this->db->query("SELECT DISTINCT category_name FROM categories");
+         
+        if ($query->num_rows() > 0) {
+            return $query->result();
         }
-        return false;
     }
-
+     
+    function loadsubcategorycategories($category_id) {
+	
+        $query = $this->db->query("SELECT category_name FROM sub_categories WHERE main_cat_id = '{$category_id}'");
+         
+        if ($query->num_rows() > 0) {
+            return $query->result();
+        }
+    }
 }
 
 ?> 
