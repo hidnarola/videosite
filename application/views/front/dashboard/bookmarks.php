@@ -6,20 +6,40 @@
                 <tr>
                     <th>Username</th>
                     <th>Post Title</th>
-                    <!--<th>Activity</th>-->
+                    <th>Slug</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                if (!empty($bookmark))
+                if (!empty($book))
                 {
 
-                    foreach ($bookmark as $book)
+                    foreach ($book as $books)
                     {
                         ?>
                         <tr>
-                            <td><?php echo $book->user_id; ?></td>
-                            <td><?php echo $book->post_id; ?></td>
+                            <td><?php echo $books['username']; ?></td>
+                            <?php
+                            if ($books['post_type'] == 'blog')
+                            {
+                                ?>
+                                <td><?php echo $books['blog_title']; ?></td>
+                                <td><a href="<?php echo base_url() . 'blog/' . $books['slug']; ?>"><?php echo $books['slug']; ?></a></td>
+                                <?php
+                            }
+                            elseif ($books['post_type'] == 'gallery')
+                            {
+                                ?>
+                                <td><?php echo $books['gtitle']; ?></td>
+                                <td><a href="<?php echo base_url() . 'gallery/' . $books['slug']; ?>"><?php echo $books['slug']; ?></a></td>
+                            <?php
+                            }
+                            elseif ($books['post_type'] == 'video')
+                            {
+                                ?>
+                                <td><?php echo $books['vtitle']; ?></td>
+                                <td><a href="<?php echo base_url() . 'video/' . $books['slug']; ?>"><?php echo $books['slug']; ?></a></td>
+                        <?php } ?>
                         </tr>
                         <?php
                     }
@@ -28,16 +48,12 @@
             </tbody>
         </table>
         <div id="pagination">
-            <ul class="tsc_pagination">
-
-                <!-- Show pagination links -->
-                <?php
-                foreach ($links as $link)
-                {
-                    echo "<li>" . $link . "</li>";
-                }
-                ?>
-            </ul>
+            <?php
+            foreach ($links as $link)
+            {
+                echo $link;
+            }
+            ?>
         </div>
 
     </div>

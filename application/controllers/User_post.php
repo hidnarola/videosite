@@ -9,11 +9,13 @@ class User_post extends CI_Controller
     {
         parent::__construct();
         $this->load->model(['Post_model']);
+        
     }
 
     public function index()
     {
         $sess_data = $this->session->userdata('client');
+        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $data['all_posts'] = $this->Post_model->get_all_posts_by_user_id($sess_data['id']);
         $data['subview'] = 'front/posts/index';
         $this->load->view('front/layouts/layout_main', $data);
@@ -22,6 +24,7 @@ class User_post extends CI_Controller
     public function add_blog()
     {
         $sess_data = $this->session->userdata('client');
+        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
         $data['all_category'] = $this->Post_model->get_result('categories', ['is_deleted' => '0', 'is_blocked' => '0']);
         $data['all_sub_cat'] = $this->Post_model->get_result('sub_categories', ['is_deleted' => '0', 'is_blocked' => '0']);
@@ -271,6 +274,28 @@ class User_post extends CI_Controller
                 $this->session->set_flashdata('message', ['message' => 'Error Into Update Video!', 'class' => 'danger']);
             }
             redirect('user_post');
+        }
+    }
+
+   function ajax_call()
+    {
+
+        if (isset($_POST) && isset($_POST['category']))
+        {
+            $category = $_POST['category'];
+            $arrSub = $this->Post_model->loadsubcategorycategories($category);
+            $array_sub = [];
+            foreach ($arrSub as $sub)
+            {
+
+                $array_sub[$sub->category_name] = $sub->category_name;
+            }
+
+            print form_dropdown('sub_category', $array_sub);
+        }
+        else
+        {
+            redirect('user_post/add_blog');
         }
     }
 
