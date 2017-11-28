@@ -20,10 +20,12 @@
                     if ($posts['post_type'] == 'blog') { foreach ($blog as $key => $blogs){ ?>
                 <h4>Channel Name: </h4> <?php echo $posts['channel_name'] ?>
                 <br><br>
-                            <div class="big-img">
-                                <a href=""><img src="<?php echo base_url() . $blogs['img_path'] ?>" alt="" /></a>
-                                <span>06 <small>of <?php echo $count_blog?></small></span>
-                            </div>
+                                <div class="big-img">
+                                    <a href=""><img src="<?php echo base_url() . $blogs['img_path'] ?>" alt="" /></a>
+                                    <?php if($count_blog > 1) { ?>
+                                        <span><?php echo $key +1; ?> <small>of <?php echo $count_blog; ?></small></span>
+                                    <?php } ?>
+                                </div>
                             <div class="list-content">
                                 <h2><?php echo $blogs['blog_title'] ?></h2>
                                 <p><?php echo $blogs['blog_description'] ?></p>

@@ -16,7 +16,7 @@
                                     <input id="check1" type="checkbox" name="check" value="check1">
                                     <label for="check1">Remember Me</label>
                                 </div>  
-                                <a class="cursor_pointer">
+                                <a class="cursor_pointer" onclick="$('')">
                                     Forget password?
                                 </a>
                             </div>
