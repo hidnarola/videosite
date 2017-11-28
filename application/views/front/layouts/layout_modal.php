@@ -8,15 +8,11 @@
                             <big>Sign in</big>
                             <small>Please enter your login information.</small>
                         </h2>
-                        <form>
-                            <input type="text" name="" class="input-css" placeholder="Name"/>
-                            <input type="text" name="" class="input-css" placeholder="E-mail"/>
-                            <div class="remember-forgat">
-                                <div class="checkbox">
-                                    <input id="check1" type="checkbox" name="check" value="check1">
-                                    <label for="check1">Remember Me</label>
-                                </div>  
-                                <a class="cursor_pointer" onclick="$('')">
+                        <form id="commentForm" autocomplete="off">
+                            <input type="email" name="email_id" class="input-css" placeholder="Email" required />
+                            <input type="password" name="password" class="input-css" placeholder="Password"/>
+                            <div class="remember-forgat">                                
+                                <a class="cursor_pointer" onclick="$('.sing_in_up').addClass('hide'); $('.re-password').removeClass('hide');">
                                     Forget password?
                                 </a>
                             </div>
@@ -56,15 +52,15 @@
                     </div>
                 </div>
             </div>
-            <div class="re-password hide">
-                <h2>Forgot password</h2>
-                <p>Please enter your email information.</p>
-                <form>
-                    <input type="text" name="" placeholder="E-mail"/>
-                    <button type="submit">Submit</button>
-                    <button type="reset">cencel</button>
-                </form>
-            </div>
+        </div>
+        <div class="re-password hide">
+            <h2>Forgot password</h2>
+            <p>Please enter your email information.</p>
+            <form>
+                <input type="text" name="" placeholder="E-mail"/>
+                <button type="submit">Submit</button>
+                <a onclick="$('.sing_in_up').removeClass('hide'); $('.re-password').addClass('hide');" >cancel</a>
+            </form>
         </div>
     </div>
 </div>

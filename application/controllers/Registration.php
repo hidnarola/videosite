@@ -33,6 +33,27 @@ class Registration extends CI_Controller {
         }
     }
 
+    public function login(){
+
+        $this->form_validation->set_rules('email_id', 'Email', 'required|valid_email');        
+        $this->form_validation->set_rules('password', 'Password', 'required|callback_password_match');
+
+        if($this->form_validation->run() == FALSE){
+            $data['subview']='front/login_front';
+            $this->load->view('front/layouts/layout_main',$data);
+        }else{
+            
+            $email_id = $this->input->post('email_id');
+            $user_data = $this->Users_model->get_data(['email_id'=>$email_id],true);
+
+            $this->session->set_userdata(['client' => $user_data]); // Start Loggedin User Session
+            $this->session->set_flashdata('success','Login Successfull');
+            $this->Users_model->update_user_data($user_data['id'], ['last_login' => date('Y-m-d H:i:s')]); // update last login time
+            redirect('dashboard');
+        }
+    }
+
+
     public function user(){
 
         $this->form_validation->set_rules('username', 'Username', 'trim|required|callback_username_check',
