@@ -17,7 +17,7 @@
                                 <div class="list-btm">
                                     <a href="<?php echo base_url() . 'blog/' . $books['slug']; ?>"><?php echo $books['blog_title'] ?></a>
                                     <p>By : <?php echo $books['username'] ?> <span></span></p>
-                                    <h6><i class="fa fa-eye"></i> <?php echo $books['total_views'] ?></h6>
+                                    <h6><i class="fa fa-eye"></i> <?php echo $books['total_views'] ?> Views</h6>
                                     <h6><i class="fa fa-clock-o"></i><?php get_ago_time($books['blog_created_date'], date("Y-m-d H:i:s")) ?></h6>
                                 </div>
                             </div>
@@ -35,7 +35,7 @@
                                 <div class="list-btm">
                                     <a href="<?php echo base_url() . 'video/' . $books['slug']; ?>"><?php echo $books['vtitle'] ?></a>
                                     <p>By : <?php echo $books['username'] ?> <span></span></p>
-                                    <h6><i class="fa fa-eye"></i> <?php echo $books['total_views'] ?></h6>
+                                    <h6><i class="fa fa-eye"></i> <?php echo $books['total_views'] ?> Views</h6>
                                     <h6><i class="fa fa-clock-o"></i><?php get_ago_time($books['video_created_date'], date("Y-m-d H:i:s a")) ?></h6>
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
                                 <div class="list-btm">
                                     <a href="<?php echo base_url() . 'gallery/' . $books['slug']; ?>"><?php echo $books['gtitle'] ?></a>
                                     <p>By : <?php echo $books['username'] ?> <span></span></p>
-                                    <h6><i class="fa fa-eye"></i> <?php echo $books['total_views'] ?></h6>
+                                    <h6><i class="fa fa-eye"></i> <?php echo $books['total_views'] ?> Views</h6>
                                     <h6><i class="fa fa-clock-o"></i> <?php get_ago_time($books['gallery_created_date'], date("Y-m-d H:i:s a")) ?></h6>
                                 </div>
                             </div>

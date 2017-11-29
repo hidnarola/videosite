@@ -83,29 +83,55 @@
             </div>
         </div>
             <div class="listing-r"> 
-                <h3>Related <?php echo $new_var; ?></h3>
+                <h3>Related <?php echo $new_var . 's'; ?></h3>
                 <ul class="list-ul">
-                <?php if (isset($posts))
-                {
-                    if ($posts['post_type'] == 'blog')
+                    <?php
+                    if (isset($related_posts))
                     {
-                        foreach ($blog as $key => $blogs)
-                        {
-                            ?>
+                        foreach ($related_posts as $key => $related)
+                            if ($related['post_type'] == 'blog')
+                            {
+                                ?>
                                 <li>
                                     <div class="list-ul-box">
-                                        <span><a href=""><img src="<?php echo DEFAULT_ADMIN_IMAGE_PATH ?>front/img02.jpg" alt="" /></a></span>
-                                        <h4><a href="">When an unknown printer took a  of.</a></h4>
-                                        <p>By : Scrambled it to</p>
-                                        <h6>1,50.000 Views</h6>
+                                        <span><a href=""><img src="<?php echo base_url() . $related['bimg']   ?>" alt="" /></a></span>
+                                        <h4><a href="<?php echo base_url() . 'blog/' . $related['slug']; ?>"><?php echo $related['blog_title'] ?></a></h4>
+                                        <p><?php echo $related['username'] ?></p>
+                                        <h6><?php echo $related['total_views'] ?> Views</h6>
                                     </div>
                                 </li>
-                    <?php       }
+                                <?php
+                            }
+                            elseif ($posts['post_type'] == 'gallery')
+                            {
+                                ?>
+                                <li>
+                                    <div class="list-ul-box">
+                                        <span><a href=""><img src="<?php echo base_url() . $related['gimg']   ?>" alt="" /></a></span>
+                                        <h4><a href="<?php echo base_url() . 'blog/' . $related['slug']; ?>"><?php echo $related['gtitle'] ?></a></h4>
+                                        <p><?php echo $related['username'] ?></p>
+                                        <h6><?php echo $related['total_views'] ?> Views</h6>
+                                    </div>
+                                </li>
+                                <?php
+                            }
+                            elseif ($posts['post_type'] == 'video')
+                            {
+                                ?>
+                               <li>
+                                    <div class="list-ul-box">
+                                        <span><a href=""><img src="<?php echo base_url() . $related['upload_path']   ?>" alt="" /></a></span>
+                                        <h4><a href="<?php echo base_url() . 'blog/' . $related['slug']; ?>"><?php echo $related['vtitle'] ?></a></h4>
+                                        <p><?php echo $related['username'] ?></p>
+                                        <h6><?php echo $related['total_views'] ?> Views</h6>
+                                    </div>
+                                </li>
+                                <?php
+                            }
                     }
-                } ?>
-                        <li class="ad-li"><a href=""><img src="<?php echo DEFAULT_ADMIN_IMAGE_PATH ?>front/ad-02.jpg" alt="" /></a></li>
+                    ?>
+                    <li class="ad-li"><a href=""><img src="<?php echo DEFAULT_ADMIN_IMAGE_PATH ?>front/ad-02.jpg" alt="" /></a></li>
                 </ul>
-
             </div>
     </div>
 </form>

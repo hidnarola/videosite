@@ -17,7 +17,7 @@
                                 <div class="list-btm">
                                     <a href="<?php echo base_url() . 'blog/' . $his['slug']; ?>"><?php echo $his['blog_title'] ?></a>
                                     <p>By : <?php echo $his['username'] ?> <span></span></p>
-                                    <h6><i class="fa fa-eye"></i> <?php echo $his['total_views'] ?></h6>
+                                    <h6><i class="fa fa-eye"></i> <?php echo $his['total_views'] ?> Views</h6>
                                     <h6><i class="fa fa-clock-o"></i><?php get_ago_time($his['blog_created_date'], date("Y-m-d H:i:s")) ?></h6>
                                 </div>
                             </div>
@@ -35,7 +35,7 @@
                                 <div class="list-btm">
                                     <a href="<?php echo base_url() . 'video/' . $his['slug']; ?>"><?php echo $his['vtitle'] ?></a>
                                     <p>By : <?php echo $his['username'] ?> <span></span></p>
-                                    <h6><i class="fa fa-eye"></i> <?php echo $his['total_views'] ?></h6>
+                                    <h6><i class="fa fa-eye"></i> <?php echo $his['total_views'] ?> Views</h6>
                                     <h6><i class="fa fa-clock-o"></i><?php get_ago_time($his['video_created_date'], date("Y-m-d H:i:s a")) ?></h6>
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
                                 <div class="list-btm">
                                     <a href="<?php echo base_url() . 'gallery/' . $his['slug']; ?>"><?php echo $his['gtitle'] ?></a>
                                     <p>By : <?php echo $his['username'] ?> <span></span></p>
-                                    <h6><i class="fa fa-eye"></i> <?php echo $his['total_views'] ?></h6>
+                                    <h6><i class="fa fa-eye"></i> <?php echo $his['total_views'] ?> Views</h6>
                                     <h6><i class="fa fa-clock-o"></i> <?php get_ago_time($his['gallery_created_date'], date("Y-m-d H:i:s a")) ?></h6>
                                 </div>
                             </div>
