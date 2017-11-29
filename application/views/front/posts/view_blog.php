@@ -51,19 +51,30 @@
                             <p><?php echo $posts['description'] ?></p>
                         </div>
                         <?php } } ?>
-                <div class="list-content">
-                    <a href="">Comments</a>
+                <div class="list-content comment">
+                    <a href="javascript:;">Comments</a>
                 </div>
-                
+                <div class="input-wrap comments" style="display: none;">
+                    <label class="label-css">Add Comments </label>
+                    <input type="text" name="comments" id ="comments" placeholder="Comments" class="form-css" />
+                    
+                    <div class="col-md-12 col-sm-12 col-xs-12 text-right register-btn">
+                    <button type="submit" class="btn btn_custom"><i class="fa fa-check"></i> Add</button>
+                </div>
+                </div>
                 
     <div class="comman-tab">
         <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#intro" aria-controls="home" role="tab" data-toggle="tab">Comment</a></li>
+                <li role="presentation" class="active"><a href="#intro" aria-controls="home" role="tab" data-toggle="tab">Comments</a></li>
                 <li role="presentation"><a href="#data" aria-controls="profile" role="tab" data-toggle="tab">Feedback</a></li>
         </ul>
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="intro">
-                        <p class="general-text">When an unknown printer took a galley of type and scrambled it to make a type specimen book has survived not only five centuries b also the leap the lectronic typesetting remaining essentially unchanged.</p>
+                <ul>
+                    <?php if(isset($comments)){ foreach ($comments as $key =>$comm){?>
+                    <li><?php echo $comm['message'];?></li>
+                    <?php } }?>
+                </ul>
             </div>
             <div role="tabpanel" class="tab-pane" id="data">
                 <p class="general-text">Has been the industry's standard dummy text ever since the is simply dummy text of the printing and typesetting industry been industry's standard dummy text eversince thehas survived not only five centuries but also the leap into electronic typesettwas popularised in the was popularised in the with the release of etraset sheets containing and more recently with desktop publishing software like aldus pageMaker including versions.</p>
@@ -135,3 +146,13 @@
             </div>
     </div>
 </form>
+
+
+<script>
+    $('.comment').on ('click', function() {
+        $('.comments').show();
+    });
+    $('.register-btn').on ('click', function() {
+        $('.comments').hide();
+    });
+</script>
