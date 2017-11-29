@@ -35,16 +35,16 @@
                 <label class="label-css">Birth Date </label>
                 <?php $post_birth_date = ($_POST) ? set_value('birth_date') : $user_data['birth_date']; ?>
                 <input type="text" name="birth_date" id="birth_date" placeholder="Birth Date" value="<?php echo $post_birth_date; ?>" class="form-css datepicker"
-                        data-date-format="yyyy-mm-dd" disabled />
+                        data-date-format="yyyy-mm-dd"  />
             </div>
 
             <div class="input-wrap">
                 <label class="label-css">Upload File</label>
                 <div class="input-file">
-                    <input type="text" class="form-css" readonly>
+                    <input type="text" class="form-css browse_text" readonly >
                     <label class="input-group-btn">
                         <span class="">
-                            Browse <input type="file" style="display: none;" >
+                            Browse <input type="file" style="display: none;" name="my_img">
                         </span>
                     </label>
                 </div>
@@ -52,12 +52,11 @@
 
             <div class="btn-btm">
                 <button class="common-btn btn-submit" type="submit">Submit</button>
-                <button class="common-btn btn-reset" type="reset">Reset</button>
+                <!-- <button class="common-btn btn-reset" type="reset">Reset</button> -->
             </div>
+
+            <img src="<?php echo base_url().$user_data['avatar'] ?>" alt="" width="100px" height="100px">
         </form>
     </div>
 </div>
 
-<script type="text/javascript">    
-    $('.datepicker').datepicker();
-</script>

@@ -3,10 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Dashboard extends CI_Controller {
 
+    public $img_var = '';
+
 	public function __construct() {
 		parent::__construct();
 		$this->load->model(['Users_model','Post_model']);
         $this->load->library('pagination');
+        $this->config->set_item('language', 'english');
 		if(empty(is_client_loggedin())){ redirect('registration/login'); }
 	}
 
@@ -22,11 +25,14 @@ class Dashboard extends CI_Controller {
                  $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
 		$data['user_data'] = $this->Users_model->get_data(['id'=>$client_data['id']],true);
 
+		$this->img_var = $data['user_data']['avatar'];
+
 		$this->form_validation->set_rules('username', 'Username', 'trim|required|callback_username_check',
                                           ['username_check'=>'Username should be unique.']);
 		$this->form_validation->set_rules('fname', 'fname', 'trim');
 		$this->form_validation->set_rules('lname', 'lname', 'trim');
-		$this->form_validation->set_rules('birth_date', 'birth_date', 'trim');
+		// $this->form_validation->set_rules('birth_date', 'birth_date', 'trim');
+		$this->form_validation->set_rules('file_upload', 'File Upload', 'callback_file_upload');
 
         if($this->form_validation->run() == FALSE){
             $data['subview']='front/dashboard/edit_profile';
@@ -35,19 +41,21 @@ class Dashboard extends CI_Controller {
 
         	$username = $this->input->post('username');
 			$fname = $this->input->post('fname');
-			$lname = $this->input->post('lname');
-			$birth_date = $this->input->post('lname');
+			$lname = $this->input->post('lname');			
 
 			$upd_arr = [
 							'fname'=>$fname,
 							'lname'=>$lname,
-							'username'=>$username,
-							'birth_date'=>$birth_date,
-							'avatar'=>''
+							'username'=>$username,							
+							'avatar'=>$this->img_var
 						];
 			$this->Users_model->update_user_data($client_data['id'],$upd_arr);
+			
+			$user_data = $this->Users_model->get_data(['id'=>$client_data['id']],true);
+			$this->session->set_userdata('client',$user_data);
+
 			$this->session->set_flashdata('success','Record has been updated successfully.');
-			redirect('home');
+			redirect('dashboard/edit_profile');
         }
 	}
 
@@ -76,7 +84,7 @@ class Dashboard extends CI_Controller {
 	public function logout(){
 		$this->session->unset_userdata('client');
 		$this->session->set_flashdata('success','Logout successful.');
-		redirect('registration/login');
+		redirect('home');
 	}
  
 
@@ -112,6 +120,30 @@ class Dashboard extends CI_Controller {
 			return true;
 		}
 	}
+
+	public function file_upload(){
+
+    	$config['upload_path'] = './uploads/avatars/';
+    	$config['allowed_types'] = 'gif|jpg|png';
+    	$config['max_size']  = '1000000';    	
+    	$config['encrypt_name'] = true;
+
+    	$this->load->library('upload', $config);
+    	
+    	if ( ! $this->upload->do_upload('my_img')){    		
+    		$error_msg = strip_tags($this->upload->display_errors());
+    		if($error_msg == 'You did not select a file to upload.'){
+    			return true;
+    		}else{
+	    		$this->form_validation->set_message('file_upload', $this->upload->display_errors());
+    			return false;
+    		}    		
+    	} else {
+    		$data = array('upload_data' => $this->upload->data());
+    		$this->img_var = 'uploads/avatars/'.$data['upload_data']['file_name'];
+    		return true;
+    	}
+    }
 
 	/*=====  End of Form validation callback functions comment block  ======*/
 
@@ -158,6 +190,8 @@ class Dashboard extends CI_Controller {
         $data['subview'] = 'front/dashboard/bookmarks';
         $this->load->view('front/layouts/layout_main', $data);
     }
+
+    
 
 }
 

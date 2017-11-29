@@ -9,17 +9,14 @@ class User_post extends CI_Controller
         parent::__construct();
         $this->load->model(['Post_model']);
         
+    }    
+
+    public function add_post(){
+
     }
 
-    public function index()
-    {
-        $sess_data = $this->session->userdata('client');
-        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
-        $data['all_posts'] = $this->Post_model->get_all_posts_by_user_id($sess_data['id']);
-        $data['subview'] = 'front/posts/index';
-        $this->load->view('front/layouts/layout_main', $data);
-    }
-
+    // ------------------------------------------------------------------------ 
+    
     public function add_blog()
     {
         $sess_data = $this->session->userdata('client');
@@ -278,7 +275,7 @@ class User_post extends CI_Controller
         }
     }
 
-   function ajax_call()
+    public function ajax_call()
     {
 
         if (isset($_POST) && isset($_POST['category']))

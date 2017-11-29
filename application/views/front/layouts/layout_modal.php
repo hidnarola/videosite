@@ -34,7 +34,7 @@
                         <form id="sign_up_form" method="post">
                             <input type="text" name="username" class="input-css" placeholder="Username"/>
                             <input type="text" name="email_id" class="input-css" placeholder="E-mail"/>
-                            <input type="text" name="birth_date" class="form-css datepicker" placeholder="Birth Date"/>
+                            <input type="text" name="birth_date" class="form-css datepicker" placeholder="Birth Date" data-date-format="yyyy-mm-dd"/>
                             <input type="password" name="password" class="input-css" placeholder="Password" id="password"/>
                             <input type="password" name="repeat_password" class="input-css" placeholder="Re-Password"/>                            
                             <div class="remember-forgat">
@@ -67,10 +67,16 @@
 </div>
 
 <script type="text/javascript">
-    
-    $("#login-register").on('show.bs.modal', function () {
+    // $('.datepicker').datepicker();
+
+    $(function(){
         $('.datepicker').datepicker();
     });
+    
+    // $("#login-register").on('show.bs.modal', function () {
+    //     setTimeout(function(){
+    //     },2000);
+    // });
     
 
     var dialog = null;
@@ -102,7 +108,7 @@
                         },2000);                                
 
                     }else{
-                        window.location.href="<?php echo base_url().'dashboard'; ?>";
+                        window.location.href="<?php echo base_url().'home'; ?>";
                     }
                     return false;
                 }
