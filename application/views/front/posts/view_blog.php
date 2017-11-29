@@ -83,6 +83,8 @@
             </div>
         </div>
             <div class="listing-r"> 
+                <h3>Related <?php echo $new_var; ?></h3>
+                <ul class="list-ul">
                 <?php if (isset($posts))
                 {
                     if ($posts['post_type'] == 'blog')
@@ -90,8 +92,6 @@
                         foreach ($blog as $key => $blogs)
                         {
                             ?>
-                            <h3>Related <?php echo $posts['post_type'] . 's'; ?></h3>
-                            <ul class="list-ul">
                                 <li>
                                     <div class="list-ul-box">
                                         <span><a href=""><img src="<?php echo DEFAULT_ADMIN_IMAGE_PATH ?>front/img02.jpg" alt="" /></a></span>
@@ -100,11 +100,11 @@
                                         <h6>1,50.000 Views</h6>
                                     </div>
                                 </li>
-                                <li class="ad-li"><a href=""><img src="<?php echo DEFAULT_ADMIN_IMAGE_PATH ?>front/ad-02.jpg" alt="" /></a></li>
-                            </ul>
-            <?php       }
+                    <?php       }
                     }
                 } ?>
+                        <li class="ad-li"><a href=""><img src="<?php echo DEFAULT_ADMIN_IMAGE_PATH ?>front/ad-02.jpg" alt="" /></a></li>
+                </ul>
 
             </div>
     </div>

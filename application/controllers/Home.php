@@ -31,15 +31,18 @@ class Home extends CI_Controller
         $data['user_loggedin'] = false;
         $data['is_user_like'] = false;
         $data['is_user_bookmark'] = false;
+        $data['new_var'] = 'Video';
 
         if ($res_post_data['post_type'] == 'gallery')
         {
+            $data['new_var'] = 'Gallery'; 
             $data['gallery'] = $this->db->get_where('gallery', ['post_id' => $res_post_data['id']])->result_array();
             $data['count_gallery'] = count($data['gallery']);
         }
 
         if ($res_post_data['post_type'] == 'blog')
         {
+            $data['new_var'] = 'Blog'; 
             $data['blog'] = $this->db->get_where('blog', ['post_id' => $res_post_data['id']])->result_array();
             $data['count_blog'] = count($data['blog']);
         }
