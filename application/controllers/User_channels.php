@@ -5,6 +5,7 @@ class User_channels extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
+                $this->load->model(['Users_model','Post_model']);
 		
 	}
 
@@ -88,8 +89,10 @@ class User_channels extends CI_Controller {
 	// ------------------------------------------------------------------------
 
 	public function channel_detail($channel_name){
-		
+            $sess_data = $this->session->userdata('client');
+		$data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
 		$data['res_channel'] = $this->db->get_where('user_channels',['channel_slug'=>$channel_name])->row_array();
+                $data['posts'] = $this->Post_model->get_all_posts_by_user_id($sess_data['id']);
 		if(empty($data['res_channel'])){ show_404(); }
 
 		$sess_data = $this->session->userdata('client');
@@ -126,8 +129,9 @@ class User_channels extends CI_Controller {
 
 		// pr($data['is_user_subscribe'],1);
 		// pr($data['is_this_users_channel'],1);
-
-		$this->load->view('front/channels/channel_details',$data);
+                $data['subview']='front/channels/channel_details';
+        	$this->load->view('front/layouts/layout_main',$data);
+//		$this->load->view('front/channels/channel_details',$data);
 	}
 
 	public function subscribe_channel($channel_id){
