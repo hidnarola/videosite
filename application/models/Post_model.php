@@ -63,7 +63,7 @@ class Post_model extends CI_Model
         return $last_id;
     }
 
-    public function get_all_posts_by_user_id($user_id)
+    public function get_all_posts_by_user_id($user_id,$limit)
     {
 //        $this->db->select('up.id,up.channel_id,up.post_type,up.slug,c.id as channelid,c.user_id as chaneeluserid,c.channel_name,c.channel_slug,u.id as userid,u.username,b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description,g.img_path,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description,v.upload_path');
         $this->db->select('up.id,up.channel_id,up.post_type,up.slug,up.category_id,up.sub_category_id,c.id as channelid,c.user_id as chaneeluserid,c.channel_name,c.channel_slug,u.id as userid,u.username,b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path as bimg,DATE_FORMAT(b.created_at,"%d %b %Y %l:%i %p") AS blog_created_date,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description as gdesc,g.img_path as gimg,DATE_FORMAT(g.created_at,"%d %b %Y %l:%i %p") AS gallery_created_date,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description as vdesc,v.upload_path,DATE_FORMAT(v.created_at,"%d %b %Y %l:%i %p") AS video_created_date,upc.post_id as upcpostid, COUNT(distinct upc.id) as total_views');
@@ -78,6 +78,8 @@ class Post_model extends CI_Model
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
         $this->db->where('u.id = ', $user_id);
         $this->db->group_by('up.id');
+        $this->db->order_by('up.id', 'desc');
+        $this->db->limit($limit);
         $posts = $this->db->get('user_post up')->result_array();
         return $posts;
     }
@@ -413,6 +415,30 @@ class Post_model extends CI_Model
             return $query->result();
         }
     }
+    
+    
+    public function get_content_by_slug($slug)
+    {
+        $this->db->select('*');
+        $this->db->where('is_active', '1');
+        $this->db->where('is_delete', '0');
+        $this->db->where('navigation_name', $url);
+        $url = $this->db->get('pages')->row_array();
+//        echo $this->db->last_query();
+//        pr($url);
+        return $url;
+    }
+
+    public function get_slug($slug)
+    {
+        $this->db->select('titile,url');
+        $this->db->where('title', $url);
+        $pages = $this->db->get('pages')->row_array();
+//        echo $this->db->last_query();
+//        pr($pages);die;
+        return $pages;
+    }
+
 }
 
 ?> 

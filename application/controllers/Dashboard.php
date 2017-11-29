@@ -190,6 +190,8 @@ class Dashboard extends CI_Controller {
         $data['subview'] = 'front/dashboard/bookmarks';
         $this->load->view('front/layouts/layout_main', $data);
     }
+    
+        
 
     
 

@@ -92,7 +92,7 @@ class User_channels extends CI_Controller {
             $sess_data = $this->session->userdata('client');
 		$data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
 		$data['res_channel'] = $this->db->get_where('user_channels',['channel_slug'=>$channel_name])->row_array();
-                $data['posts'] = $this->Post_model->get_all_posts_by_user_id($sess_data['id']);
+                $data['posts'] = $this->Post_model->get_all_posts_by_user_id($sess_data['id'],5);
 		if(empty($data['res_channel'])){ show_404(); }
 
 		$sess_data = $this->session->userdata('client');

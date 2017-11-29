@@ -285,6 +285,15 @@ class Home extends CI_Controller
         $data['subview'] = 'front/categories/index';
         $this->load->view('front/layouts/layout_main', $data);
     }
+    
+    
+    public function display_cms($slug = null)
+    {
+        $data['url'] = $this->Post_model->get_slug($slug);
+        $data['html'] = $this->Post_model->get_content_by_slug($slug);
+//        $data['subview'] = 'front/layouts/layout_main';
+        $this->template->load('front/layouts/layout_main', $data);
+    }
 
     /* =====  End of Section For increase total count for user post block  ====== */
 }
