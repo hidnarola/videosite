@@ -61,7 +61,7 @@ $all_cms_pages = $this->db->get_where('cms_page',['is_deleted'=>'0','is_blocked'
                 <?php if(isset($all_cms_pages)){
                             foreach ($all_cms_pages as $key =>$cms){
                                 if($cms['title'] != 'Home'){?>
-                <li><a href="<?php echo base_url(). $cms['slug']; ?>"><i class="">
+                <li><a href="<?php echo base_url(). 'page/'.$cms['slug']; ?>"><i class="">
                             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
                                 <g>
                                     <g>
@@ -300,7 +300,7 @@ $all_cms_pages = $this->db->get_where('cms_page',['is_deleted'=>'0','is_blocked'
                 {
                     ?>
 
-                    <li><a href="<?php echo base_url() . 'home/category_detail_page/' . $cat['id']; ?>" class="ct-link"> 
+                    <li><a href="<?php echo base_url() . 'category_detail_page/' . $cat['id']; ?>" class="ct-link"> 
                             <i class="">
     <!--                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                                      viewBox="0 0 477.216 477.216" style="enable-background:new 0 0 477.216 477.216;" xml:space="preserve">

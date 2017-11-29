@@ -99,7 +99,7 @@ $route['contact_us'] = 'page/contact_us';
 $route['what-we-can-do-for-you'] = 'page/index/what-we-can-do-for-you';
 $route['who-we-are'] = 'page/index/who-we-are';
 
-$route['(:any)'] = 'home/display_cms/$1';
+$route['page/(:any)'] = 'home/display_cms/$1';
 
 /* --- End Route For Front --- */
 
