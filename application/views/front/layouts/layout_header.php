@@ -60,7 +60,8 @@
         <?php if(!empty($sess_u_data)){ ?>
             <div class="user-nav dropdown">
                 <a href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="images/pic.jpg" alt="" /> Profle Name<span class="caret"></span>
+                    <img src="<?php echo DEFAULT_IMAGE_PATH?>pic.jpg" alt="" /> <?php echo $sess_u_data['username'];?><span class="caret"></span>
+                    <!--http://localhost/videosite/public/front/images/pic.jpg-->
                 </a>
                 <ul class="dropdown-menu">                    
                     <li>
