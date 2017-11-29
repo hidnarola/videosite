@@ -60,7 +60,7 @@ class Dashboard extends CI_Controller {
 	}
 
 	public function change_password(){
-
+                $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
 		$this->form_validation->set_rules('old_password', 'Old Password', 'trim|required|callback_verify_password',
 										  ['verify_password'=>'Old password doen not match with current one.']);
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
