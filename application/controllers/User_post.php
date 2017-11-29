@@ -12,11 +12,11 @@ class User_post extends CI_Controller
     }    
 
     public function add_post(){
-
+                
     }
 
     // ------------------------------------------------------------------------ 
-    
+
     public function add_blog()
     {
         $sess_data = $this->session->userdata('client');
