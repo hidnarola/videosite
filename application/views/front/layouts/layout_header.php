@@ -69,6 +69,7 @@
                          onerror="this.src='<?php echo base_url().'uploads/avatars/user-icon-image-download.jpg'; ?>'" />
                     <?php echo $u_data['username']; ?>
                     <span class="caret"></span>
+
                 </a>
                 <ul class="dropdown-menu">                    
                     <li>

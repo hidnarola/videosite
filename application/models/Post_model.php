@@ -84,7 +84,6 @@ class Post_model extends CI_Model
         $this->db->join('blog b', 'b.post_id = up.id', 'left');
         $this->db->join('video v', 'v.post_id = up.id', 'left');
         $this->db->join('gallery g', 'g.post_id = up.id', 'left');
-//        $this->db->where('u.id = ', $user_id);
         $this->db->where('up.slug', $post_slug);
         $posts = $this->db->get('user_post up')->row_array();
         return $posts;
@@ -98,8 +97,6 @@ class Post_model extends CI_Model
         $this->db->join('users u', 'u.id = c.user_id', 'left');
         $this->db->where('up.slug', $post_slug);
         $blogs = $this->db->get('user_post up')->row_array();
-        qry();
-//        pr($blogs, 1);
         return $blogs;
     }
 
@@ -111,8 +108,6 @@ class Post_model extends CI_Model
         $this->db->join('users u', 'u.id = c.user_id', 'left');
         $this->db->where('g.post_id', $gallery_post_id);
         $gallery = $this->db->get('gallery g')->result_array();
-//        qry();
-//        pr($gallery, 1);
         return $gallery;
     }
 
@@ -124,8 +119,6 @@ class Post_model extends CI_Model
         $this->db->join('users u', 'u.id = c.user_id', 'left');
         $this->db->where('v.id = ', $video_id);
         $video = $this->db->get('video v')->row_array();
-//        qry();
-//        pr($video, 1);
         return $video;
     }
 
@@ -295,16 +288,12 @@ class Post_model extends CI_Model
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
         $this->db->where('up.category_id = ', $id);
         $this->db->group_by('upc.post_id');
-//        $this->db->limit(4, 0);
         $posts = $this->db->get('user_post up')->result_array();
-//        qry();
-//        pr($posts,1);
         return $posts;
     }
 
     public function get_total_no_of_views($post_id)
     {
-//        SELECT post_id,count(post_id) FROM `user_post_counts` GROUP by post_id
         $this->db->select('post_id, count(post_id) as total_views');
         $this->db->join('user_post up', 'up.id = upc.post_id');
         $this->db->where('up.id', $post_id);
@@ -315,7 +304,7 @@ class Post_model extends CI_Model
 
     public function get_bookmarked_post($id, $limit, $offset)
     {
-        $this->db->select('user_id,ub.post_id,u.username,b.blog_title,g.title as gtitle, v.title as vtitle,post_type,slug');
+        $this->db->select('user_id,ub.post_id,u.username,post_type,slug,b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path as bimg,DATE_FORMAT(b.created_at,"%d %b %Y %l:%i %p") AS blog_created_date,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description,g.img_path as gimg,DATE_FORMAT(g.created_at,"%d %b %Y %l:%i %p") AS gallery_created_date,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description,v.upload_path,DATE_FORMAT(v.created_at,"%d %b %Y %l:%i %p") AS video_created_date,count(ub.post_id) as total_views');
         $this->db->join('users u', 'u.id = ub.user_id', 'left');
         $this->db->join('user_post up', 'up.id = ub.post_id');
         $this->db->join('blog b', 'b.post_id = ub.post_id', 'left');
@@ -331,7 +320,7 @@ class Post_model extends CI_Model
     
     public function get_history($id, $limit, $offset)
     {
-        $this->db->select('user_id,uh.post_id,u.username,b.blog_title,g.title as gtitle, v.title as vtitle,post_type,slug');
+        $this->db->select('user_id,uh.post_id,u.username,post_type,slug,b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path as bimg,DATE_FORMAT(b.created_at,"%d %b %Y %l:%i %p") AS blog_created_date,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description,g.img_path as gimg,DATE_FORMAT(g.created_at,"%d %b %Y %l:%i %p") AS gallery_created_date,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description,v.upload_path,DATE_FORMAT(v.created_at,"%d %b %Y %l:%i %p") AS video_created_date,count(uh.post_id) as total_views');
         $this->db->join('users u', 'u.id = uh.user_id', 'left');
         $this->db->join('user_post up', 'up.id = uh.post_id');
         $this->db->join('blog b', 'b.post_id = uh.post_id', 'left');
