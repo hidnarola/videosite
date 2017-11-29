@@ -34,8 +34,9 @@
                         <form id="sign_up_form" method="post">
                             <input type="text" name="username" class="input-css" placeholder="Username"/>
                             <input type="text" name="email_id" class="input-css" placeholder="E-mail"/>
+                            <input type="text" name="birth_date" class="form-css datepicker" placeholder="Birth Date"/>
                             <input type="password" name="password" class="input-css" placeholder="Password" id="password"/>
-                            <input type="password" name="repeat_password" class="input-css" placeholder="Re-Password"/>
+                            <input type="password" name="repeat_password" class="input-css" placeholder="Re-Password"/>                            
                             <div class="remember-forgat">
                                 <div class="checkbox">
                                     <input type="checkbox" name="i_agree" id="i_agree" title="Please agree to our policy!" required>
@@ -67,6 +68,11 @@
 
 <script type="text/javascript">
     
+    $("#login-register").on('show.bs.modal', function () {
+        $('.datepicker').datepicker();
+    });
+    
+
     var dialog = null;
 
     $("#commentForm").validate({

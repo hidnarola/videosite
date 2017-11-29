@@ -13,6 +13,7 @@
     <link href="<?php echo DEFAULT_CSS_PATH ?>font.css" rel="stylesheet">
     <link href="<?php echo DEFAULT_CSS_PATH ?>style.css" rel="stylesheet" />
     <link href="<?php echo DEFAULT_CSS_PATH ?>responsive.css" rel="stylesheet" />
+    <link href="<?php echo DEFAULT_CSS_PATH ?>datepicker.css" rel="stylesheet" />    
 
     <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'jquery.min.js'; ?>"></script>
     <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'bootstrap.min.js'; ?>"></script>
@@ -22,6 +23,7 @@
     <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'bootbox.min.js'; ?>"></script>
     <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'bootstrap-notify.min.js'; ?>"></script>    
     <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'owl.carousel.min.js'; ?>"></script>
+    <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'bootstrap-datepicker.js'; ?>"></script>    
 
     <!-- DEFAULT_JS_PATH
     DEFAULT_CSS_PATH -->
@@ -57,15 +59,31 @@
             </a>
         </div>
 
-        <?php if(!empty($sess_u_data)){ ?>
+        <?php 
+            if(!empty($sess_u_data)){ 
+                $u_data = $this->db->get_where('users',['id'=>$sess_u_data['id']])->row_array();
+        ?>
             <div class="user-nav dropdown">
                 <a href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="images/pic.jpg" alt="" /> Profle Name<span class="caret"></span>
+                    <img src="<?php echo base_url().$u_data['avatar']; ?>" alt="" 
+                         onerror="this.src='<?php echo base_url().'uploads/avatars/user-icon-image-download.jpg'; ?>'" />
+                    <?php echo $u_data['username']; ?>
+                    <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">                    
                     <li>
-                        <a href="">
-                            A galley
+                        <a href="<?php echo base_url().'dashboard/view_bookmarked_post';?>">
+                            View Bookmark Posts
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url().'dashboard/view_history';?>">
+                            View History
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url().'dashboard/edit_profile';?>">
+                            Edit Profile
                         </a>
                     </li>
                     <li>

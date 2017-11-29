@@ -6,16 +6,13 @@ class Dashboard extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model(['Users_model','Post_model']);
-                $this->load->library('pagination');
+        $this->load->library('pagination');
 		if(empty(is_client_loggedin())){ redirect('registration/login'); }
 	}
 
-	public function index() {
-		// pr($this->session->all_userdata());
-		// $data = [];
-             $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
-		$data['all_channels'] = $this->db->get_where('user_channels',['is_deleted'=>'0','is_blocked'=>'0'])->result_array();
-		// pr($data,1);
+	public function index() {		
+        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
+		$data['all_channels'] = $this->db->get_where('user_channels',['is_deleted'=>'0','is_blocked'=>'0'])->result_array();		
 		$this->load->view('front/dashboard/index', $data);
 	}
 
@@ -27,15 +24,13 @@ class Dashboard extends CI_Controller {
 
 		$this->form_validation->set_rules('username', 'Username', 'trim|required|callback_username_check',
                                           ['username_check'=>'Username should be unique.']);
-		$this->form_validation->set_rules('fname', 'fname', 'trim|required');
-		$this->form_validation->set_rules('lname', 'lname', 'trim|required');
-		$this->form_validation->set_rules('birth_date', 'birth_date', 'trim|required');
+		$this->form_validation->set_rules('fname', 'fname', 'trim');
+		$this->form_validation->set_rules('lname', 'lname', 'trim');
+		$this->form_validation->set_rules('birth_date', 'birth_date', 'trim');
 
         if($this->form_validation->run() == FALSE){
             $data['subview']='front/dashboard/edit_profile';
             $this->load->view('front/layouts/layout_main',$data);
-            
-            
         }else{
 
         	$username = $this->input->post('username');
@@ -50,7 +45,6 @@ class Dashboard extends CI_Controller {
 							'birth_date'=>$birth_date,
 							'avatar'=>''
 						];
-//                        pr($upd_arr,1);
 			$this->Users_model->update_user_data($client_data['id'],$upd_arr);
 			$this->session->set_flashdata('success','Record has been updated successfully.');
 			redirect('home');

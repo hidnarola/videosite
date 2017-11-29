@@ -4,7 +4,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User_post extends CI_Controller
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -28,7 +27,9 @@ class User_post extends CI_Controller
         $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
         $data['all_category'] = $this->Post_model->get_result('categories', ['is_deleted' => '0', 'is_blocked' => '0']);
         $data['all_sub_cat'] = $this->Post_model->get_result('sub_categories', ['is_deleted' => '0', 'is_blocked' => '0']);
+        
         $this->form_validation->set_rules('blog_title', 'Blog Title', 'required');
+
         if ($this->form_validation->run() == FALSE)
         {
             $data['subview'] = 'front/posts/add_blog';
@@ -52,7 +53,7 @@ class User_post extends CI_Controller
                 'post_id' => $last_post_id,
                 'blog_title' => $blog_title,
                 'blog_description' => htmlspecialchars($this->input->post('blog_description')),
-//                'img_path' => $this->saveuploadedfile(),
+                // img_path' => $this->saveuploadedfile(),
                 'created_at' => date("Y-m-d H:i:s a"),
             ];
             $result = $this->Post_model->insert_record('blog', $insert_array);
@@ -134,7 +135,7 @@ class User_post extends CI_Controller
                 'post_id' => $last_post_id,
                 'title' => $title,
                 'description' => htmlspecialchars($this->input->post('description')),
-//                'img_path' => $img_path,
+                //'img_path' => $img_path,
                 'created_at' => date("Y-m-d H:i:s a"),
             ];
 
@@ -218,7 +219,7 @@ class User_post extends CI_Controller
                 'post_id' => $last_post_id,
                 'title' => $video_title,
                 'description' => htmlspecialchars($this->input->post('description')),
-//                'img_path' => $img_path,
+                //'img_path' => $img_path,
                 'created_at' => date("Y-m-d H:i:s a"),
             ];
 
@@ -285,10 +286,12 @@ class User_post extends CI_Controller
             $category = $_POST['category'];
             $arrSub = $this->Post_model->loadsubcategorycategories($category);
             $array_sub = [];
-            foreach ($arrSub as $sub)
-            {
+            if(!empty($arrSub)){
+                foreach ($arrSub as $sub)
+                {
 
-                $array_sub[$sub->category_name] = $sub->category_name;
+                    $array_sub[$sub->category_name] = $sub->category_name;
+                }
             }
 
             print form_dropdown('sub_category', $array_sub);
