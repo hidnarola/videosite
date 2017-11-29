@@ -420,22 +420,18 @@ class Post_model extends CI_Model
     public function get_content_by_slug($slug)
     {
         $this->db->select('*');
-        $this->db->where('is_active', '1');
-        $this->db->where('is_delete', '0');
-        $this->db->where('navigation_name', $url);
-        $url = $this->db->get('pages')->row_array();
-//        echo $this->db->last_query();
-//        pr($url);
-        return $url;
+        $this->db->where('is_deleted', '0');
+        $this->db->where('is_blocked', '0');
+        $this->db->where('slug', $slug);
+        $slug = $this->db->get('cms_page')->row_array();
+        return $slug;
     }
 
     public function get_slug($slug)
     {
-        $this->db->select('titile,url');
-        $this->db->where('title', $url);
-        $pages = $this->db->get('pages')->row_array();
-//        echo $this->db->last_query();
-//        pr($pages);die;
+        $this->db->select('title,slug');
+        $this->db->where('title', $slug);
+        $pages = $this->db->get('cms_page')->row_array();
         return $pages;
     }
 

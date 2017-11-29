@@ -289,10 +289,11 @@ class Home extends CI_Controller
     
     public function display_cms($slug = null)
     {
-        $data['url'] = $this->Post_model->get_slug($slug);
+        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
+        $data['slug'] = $this->Post_model->get_slug($slug);
         $data['html'] = $this->Post_model->get_content_by_slug($slug);
-//        $data['subview'] = 'front/layouts/layout_main';
-        $this->template->load('front/layouts/layout_main', $data);
+        $data['subview'] = "front/cms_pages";
+        $this->load->view('front/layouts/layout_main', $data);
     }
 
     /* =====  End of Section For increase total count for user post block  ====== */

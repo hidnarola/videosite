@@ -55,6 +55,9 @@ $route['video/(:any)'] = 'home/post_detail/$1';
 $route['gallery/(:any)'] = 'home/post_detail/$1';
 $route['blog/(:any)'] = 'home/post_detail/$1';
 
+//$route['contact/(:any)'] = 'home/display_cms/$1';
+//$route['about'] = 'home/display_cms';
+
 $route['category_detail_page/(:any)'] = 'home/category_detail_page/$1';
 
 $route['channel/(:any)'] = 'user_channels/channel_detail/$1';
@@ -95,6 +98,8 @@ $route['privacy-policy'] = 'page/index/privacy-policy';
 $route['contact_us'] = 'page/contact_us';
 $route['what-we-can-do-for-you'] = 'page/index/what-we-can-do-for-you';
 $route['who-we-are'] = 'page/index/who-we-are';
+
+$route['(:any)'] = 'home/display_cms/$1';
 
 /* --- End Route For Front --- */
 
