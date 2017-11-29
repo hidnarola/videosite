@@ -1,4 +1,3 @@
-<div class="right-panel">
 
     <div class="home-listing">
         <h2>Suggested</h2>
@@ -63,4 +62,4 @@
         </ul>
     </div>
 
-</div>
+

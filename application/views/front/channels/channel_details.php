@@ -1,4 +1,4 @@
-<div class="right-panel">      
+
         <h1>
             <?php echo $res_channel['channel_name']; ?>                
         </h1>
@@ -37,4 +37,3 @@
         </div>
     </div>
 
-</div>

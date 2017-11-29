@@ -8,6 +8,7 @@
     <!-- Global stylesheets -->
     <link href="<?php echo DEFAULT_ADMIN_CSS_PATH . "font.css"; ?>" rel="stylesheet" type="text/css">
     <link href="<?php echo DEFAULT_ADMIN_CSS_PATH . "icons/icomoon/styles.css"; ?>" rel="stylesheet" type="text/css">
+    
     <link href="<?php echo DEFAULT_ADMIN_CSS_PATH . "bootstrap.css"; ?>" rel="stylesheet" type="text/css">
     <link href="<?php echo DEFAULT_ADMIN_CSS_PATH . "core.css"; ?>" rel="stylesheet" type="text/css">
     <link href="<?php echo DEFAULT_ADMIN_CSS_PATH . "components.css"; ?>" rel="stylesheet" type="text/css">

@@ -10,17 +10,21 @@
     <link href="https://fonts.googleapis.com/css?family=Comfortaa:300,400,700|Roboto:400,500" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
     <link href="<?php echo DEFAULT_CSS_PATH ?>bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo DEFAULT_CSS_PATH . "owl.carousel.css"; ?>" rel="stylesheet" type="text/css">      
+    <link href="<?php echo DEFAULT_CSS_PATH ?>datepicker.css" rel="stylesheet" />    
+    <link href="<?php echo DEFAULT_CSS_PATH ?>bootstrap-select.min.css" rel="stylesheet" />
     <link href="<?php echo DEFAULT_CSS_PATH ?>font.css" rel="stylesheet">
     <link href="<?php echo DEFAULT_CSS_PATH ?>style.css" rel="stylesheet" />
-    <link href="<?php echo DEFAULT_CSS_PATH ?>responsive.css" rel="stylesheet" />
-    <link href="<?php echo DEFAULT_CSS_PATH ?>datepicker.css" rel="stylesheet" />    
+    
+    
 
-    <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'jquery.min.js'; ?>"></script>
+    <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'jquery.min.js'; ?>"></script>    
     <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'bootstrap.min.js'; ?>"></script>
     <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'bootstrap-datepicker.js'; ?>"></script>    
     <script src="<?php echo DEFAULT_JS_PATH.'jquery_validation.js'; ?>"></script>
+    <script src="<?php echo DEFAULT_JS_PATH.'bootstrap-select.min.js'; ?>"></script>    
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-
+    
     <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'bootbox.min.js'; ?>"></script>
     <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'bootstrap-notify.min.js'; ?>"></script>    
     <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'owl.carousel.min.js'; ?>"></script>

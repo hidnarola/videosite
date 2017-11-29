@@ -1,4 +1,4 @@
-<div class="right-panel">
+
     <div class="home-listing">
         <h2>Search result for </h2>
         <ul>
@@ -21,4 +21,3 @@
             </li>
         </ul>
     </div>
-</div>

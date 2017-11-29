@@ -11,8 +11,26 @@ class User_post extends CI_Controller
         
     }    
 
-    public function add_post(){
-                
+    public function add_video_post(){
+        
+        $sess_data = $this->session->userdata('client');
+
+        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
+        $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
+        
+        $data['all_category'] = $this->Post_model->get_result('categories', ['is_deleted' => '0', 'is_blocked' => '0']);
+        $data['all_sub_cat'] = $this->Post_model->get_result('sub_categories', ['is_deleted' => '0', 'is_blocked' => '0']);
+
+        $this->form_validation->set_rules('blog_title', 'Blog Title', 'required');
+
+        if ($this->form_validation->run() == FALSE)
+        {
+            $data['subview'] = 'front/posts/video_add_post';
+            $this->load->view('front/layouts/layout_main', $data);
+        } else {
+
+        }
+
     }
 
     // ------------------------------------------------------------------------ 
@@ -100,90 +118,6 @@ class User_post extends CI_Controller
             {
 
                 $this->session->set_flashdata('message', ['message' => 'Error Into Update Blog!', 'class' => 'danger']);
-            }
-            redirect('user_post');
-        }
-    }
-
-    public function add_gallery()
-    {
-        $sess_data = $this->session->userdata('client');
-        $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
-        $this->form_validation->set_rules('title', 'Title', 'required');
-        if ($this->form_validation->run() == FALSE)
-        {
-            $data['subview'] = 'front/posts/add_gallery';
-            $this->load->view('front/layouts/layout_main', $data);
-        }
-        else
-        {
-            $title = $this->input->post('title');
-            $post_slug = slugify($title);
-            $ins_post = [
-                'channel_id' => $this->input->post('channel'),
-                'post_type' => 'gallery',
-                'slug' => $post_slug,
-                'created_at' => date('Y-m-d H:i:s')
-            ];
-
-            $last_post_id = $this->Post_model->insert_record('user_post', $ins_post);
-
-            $insert_array = [
-                'post_id' => $last_post_id,
-                'title' => $title,
-                'description' => htmlspecialchars($this->input->post('description')),
-                //'img_path' => $img_path,
-                'created_at' => date("Y-m-d H:i:s a"),
-            ];
-
-            $result = $this->Post_model->insert_record('gallery', $insert_array);
-            if ($result)
-            {
-                $msg = "<br>" . $success . " File Uploaded Successfully <br>" . $unsuccess . " File Not Upload";
-                $this->session->set_flashdata('message', ['message' => 'Gallery successfully Inserted!' . $msg, 'class' => 'success']);
-            }
-            else
-            {
-                $this->session->set_flashdata('message', ['message' => 'Error Into Insert Gallery!', 'class' => 'danger']);
-            }
-
-            redirect('user_post');
-        }
-    }
-
-    public function edit_gallery($gallery_id)
-    {
-
-        $sess_data = $this->session->userdata('client');
-        $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
-
-        $where = 'id = ' . $this->db->escape($blog_id);
-        $data['record'] = $this->Post_model->get_result('gallery', $where, true);
-        $this->form_validation->set_rules('title', ' Title', 'required');
-        if ($this->form_validation->run() == FALSE)
-        {
-            $data['subview'] = 'front/posts/edit_gallery';
-            $this->load->view('front/layouts/layout_main', $data);
-        }
-        else
-        {
-
-            $update_array = [
-                'title' => $this->input->post('title'),
-                'description' => htmlspecialchars($this->input->post('description')),
-                    // 'img_path' => $img_path,
-            ];
-
-            $result = $this->Post_model->update_record('gallery', $where, $update_array);
-
-            if ($result)
-            {
-                $this->session->set_flashdata('message', ['message' => 'Gallery successfully updated!' . $msg, 'class' => 'success']);
-            }
-            else
-            {
-
-                $this->session->set_flashdata('message', ['message' => 'Error Into Update Gallery!', 'class' => 'danger']);
             }
             redirect('user_post');
         }
