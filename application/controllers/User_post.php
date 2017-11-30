@@ -92,10 +92,14 @@ class User_post extends CI_Controller
         }
     }
 
-    public function add_post(){
+    // ------------------------------------------------------------------------
+
+    public function add_post($post_type="blog"){
         
+        if(empty($post_type)){ show_404(); }
         $sess_data = $this->session->userdata('client');
 
+        $data['post_type'] = $post_type;
         $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
         
@@ -115,7 +119,7 @@ class User_post extends CI_Controller
         
         if ($this->form_validation->run() == FALSE)
         {
-            $data['subview'] = 'front/posts/video_add_post';
+            $data['subview'] = 'front/posts/add_post';
             $this->load->view('front/layouts/layout_main', $data);
         } else {
 
