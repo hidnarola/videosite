@@ -409,7 +409,7 @@ class Post_model extends CI_Model
      
     function loadsubcategorycategories($category_id) {
 	
-        $query = $this->db->query("SELECT category_name FROM sub_categories WHERE main_cat_id = '{$category_id}'");
+        $query = $this->db->query("SELECT * FROM sub_categories WHERE main_cat_id = '{$category_id}'");
          
         if ($query->num_rows() > 0) {
             return $query->result();

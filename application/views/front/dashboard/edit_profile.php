@@ -1,4 +1,4 @@
-<div class="right-panel">
+
     <div class="form-element">
         <h3 class="h3-title">Edit Profile</h3>
     
@@ -58,5 +58,5 @@
             <img src="<?php echo base_url().$user_data['avatar'] ?>" alt="" width="100px" height="100px">
         </form>
     </div>
-</div>
+
 

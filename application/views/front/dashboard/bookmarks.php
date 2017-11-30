@@ -1,4 +1,4 @@
-<div class="right-panel">
+
     <div class="home-listing">
         <h2>User Bookmarks</h2>
         <ul class="ul-list">
@@ -73,4 +73,4 @@
         </div>
     </div>
 
-</div>
+
