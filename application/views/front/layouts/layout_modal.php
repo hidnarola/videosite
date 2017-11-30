@@ -74,10 +74,7 @@
         $('.datepicker').datepicker();
     });
     
-    // $("#login-register").on('show.bs.modal', function () {
-    //     setTimeout(function(){
-    //     },2000);
-    // });
+   
     
 
     var dialog = null;
