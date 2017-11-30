@@ -8,7 +8,7 @@
 		    	<?php $this->load->view($subview); ?>
 		    	<div class="clearfix"></div>
 		    	<footer class="footer">
-	               <p>©Copyright 2017 <span>Break.com</span>, All Right Reserved</p>
+	               <p>©Copyright 2017 <a href="<?php echo base_url()?>home"><span>Videosite.com</span></a>, All Right Reserved</p>
 	            </footer>
 		    </div>
 			<?php $this->load->view('front/layouts/layout_modal'); ?>
@@ -33,6 +33,7 @@
 
 		</script>
 	</body>
+
 
 
 

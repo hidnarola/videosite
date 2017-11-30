@@ -46,34 +46,34 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">First Name:</label>
                             <div class="col-lg-9">
-                                <input type="text" name="fname" class="form-control" placeholder="First Name" value="<?php echo isset($user_data['fname']) ? $user_data['fname'] : ''; ?>" >
+                                <input type="text" name="fname" class="form-control" placeholder="First Name" value="<?php echo isset($user_data['fname']) ? $user_data['fname'] : set_value('fname'); ?>" >
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Last Name:</label>
                             <div class="col-lg-9">
-                                <input type="text" name="lname" class="form-control" placeholder="Last Name" value="<?php echo isset($user_data['lname']) ? $user_data['lname'] : ''; ?>" >
+                                <input type="text" name="lname" class="form-control" placeholder="Last Name" value="<?php echo isset($user_data['lname']) ? $user_data['lname'] : set_value('lname'); ?>" >
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Email:</label>
                             <div class="col-lg-9">
-                                <input type="email" name="email_id" id="email_id" class="form-control" placeholder="Email" value="<?php echo isset($user_data['email_id']) ? $user_data['email_id'] : ''; ?>" >
+                                <input type="email" name="email_id" id="email_id" class="form-control" placeholder="Email" value="<?php echo isset($user_data['email_id']) ? $user_data['email_id'] : set_value('email_id'); ?>" >
                             </div>
                         </div> 
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Username:</label>
                             <div class="col-lg-9">
-                                <input type="text" name="username" id="username" class="form-control" placeholder="Username" value="<?php echo isset($user_data['username']) ? $user_data['username'] : ''; ?>" >
+                                <input type="text" name="username" id="username" class="form-control" placeholder="Username" value="<?php echo isset($user_data['username']) ? $user_data['username'] : set_value('username'); ?>" >
                             </div>
                         </div> 
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Birth Date:</label>
                             <div class="col-lg-9">
                                 <input type="text" name="birth_date" class="form-control" id="anytime-date" placeholder="Birth Date" 
-                                       value="<?php echo isset($user_data['birth_date']) ? $user_data['birth_date'] : ''; ?>">
+                                       value="<?php echo isset($user_data['birth_date']) ? $user_data['birth_date'] : set_value('birth_date'); ?>">
                             </div>
                         </div>
                         <div class="form-group">

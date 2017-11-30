@@ -161,6 +161,7 @@ class Dashboard extends CI_Controller {
         $this->pagination->initialize($config);
         
         $data['history'] = $this->Post_model->get_history($sess_data['id'],$config['per_page'],$offset);
+
         
         $str_links = $this->pagination->create_links();
         $data["links"] = explode('&nbsp;',$str_links );

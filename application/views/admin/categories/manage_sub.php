@@ -59,7 +59,7 @@
                                         foreach ($cat as $key => $cats)
                                         {
                                             ?> 
-                                            <option value="<?php echo $cats['id']; ?>"><?php echo $cats['category_name']; ?></option>
+                                            <option value="<?php echo $cats['id']; ?>" <?php echo set_select('category', $cats['id'], False); ?>><?php echo $cats['category_name']; ?></option>
                                         <?php } ?> 
                                     </select> 
                                 <?php } ?>

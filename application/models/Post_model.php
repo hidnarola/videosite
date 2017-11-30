@@ -66,8 +66,9 @@ class Post_model extends CI_Model
     public function get_all_posts_by_user_id($user_id,$limit)
     {
 //        $this->db->select('up.id,up.channel_id,up.post_type,up.slug,c.id as channelid,c.user_id as chaneeluserid,c.channel_name,c.channel_slug,u.id as userid,u.username,b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description,g.img_path,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description,v.upload_path');
-        $this->db->select('up.id,up.channel_id,up.post_type,up.slug,up.category_id,up.sub_category_id,c.id as channelid,c.user_id as chaneeluserid,c.channel_name,c.channel_slug,u.id as userid,u.username,b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path as bimg,DATE_FORMAT(b.created_at,"%d %b %Y %l:%i %p") AS blog_created_date,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description as gdesc,g.img_path as gimg,DATE_FORMAT(g.created_at,"%d %b %Y %l:%i %p") AS gallery_created_date,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description as vdesc,v.upload_path,DATE_FORMAT(v.created_at,"%d %b %Y %l:%i %p") AS video_created_date,upc.post_id as upcpostid, COUNT(distinct upc.id) as total_views');
-        
+        $this->db->select('up.id,up.channel_id,up.post_type,up.slug,up.category_id,up.sub_category_id,c.id as channelid,c.user_id as chaneeluserid,c.channel_name,c.channel_slug,u.id as userid,u.fname,u.lname,u.username,u.avatar,b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path as bimg,DATE_FORMAT(b.created_at,"%d %b %Y %l:%i %p") AS blog_created_date,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description as gdesc,g.img_path as gimg,DATE_FORMAT(g.created_at,"%d %b %Y %l:%i %p") AS gallery_created_date,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description as vdesc,v.upload_path,DATE_FORMAT(v.created_at,"%d %b %Y %l:%i %p") AS video_created_date,upc.post_id as upcpostid, COUNT(distinct upc.id) as total_views');
+//        COUNT(distinct us.id) as total_subscribers
+//        COUNT(distinct uk.id) as total_likes?
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
         $this->db->join('categories cat', 'cat.id = up.category_id', 'left');
@@ -76,11 +77,14 @@ class Post_model extends CI_Model
         $this->db->join('video v', 'v.post_id = up.id', 'left');
         $this->db->join('gallery g', 'g.post_id = up.id', 'left');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
+//        $this->db->join('user_subscribers us', 'c.id = us.channel_id', 'left');
+//        $this->db->join('user_likes uk', 'up.id = uk.post_id', 'left');
         $this->db->where('u.id = ', $user_id);
         $this->db->group_by('up.id');
         $this->db->order_by('up.id', 'desc');
         $this->db->limit($limit);
         $posts = $this->db->get('user_post up')->result_array();
+//        qry();
         return $posts;
     }
 
@@ -442,7 +446,31 @@ class Post_model extends CI_Model
         $comments = $this->db->get('comments')->result_array();
         return $comments;
     }
-
+    
+    
+    public function get_all_posts_by_channel_id($id)
+    {
+        $this->db->select('uc.id,uc.user_id as ucuserid,channel_name,channel_slug,up.channel_id,up.post_type,up.slug,b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path as bimg,DATE_FORMAT(b.created_at,"%d %b %Y <br> %l:%i %p") AS blogcreated_date,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description as gdesc,g.img_path as gimg,DATE_FORMAT(g.created_at,"%d %b %Y <br> %l:%i %p") AS gallerycreated_date,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description as vdesc,v.upload_path,DATE_FORMAT(v.created_at,"%d %b %Y <br> %l:%i %p") AS videocreated_date,count(distinct upc.id) as total_views');
+        $this->db->join('user_post up','up.channel_id = uc.id');
+        $this->db->join('blog b', 'b.post_id = up.id', 'left');
+        $this->db->join('video v', 'v.post_id = up.id', 'left');
+        $this->db->join('gallery g', 'g.post_id = up.id', 'left');
+        $this->db->join('user_post_counts upc','upc.post_id = up.id');
+        $this->db->where('uc.id',$id);
+        $channels = $this->db->get('user_channels uc')->result_array();
+        
+        return $channels;
+    }
+    
+    public function get_total_likes($id)
+    {
+        $this->db->select('COUNT(distinct uk.id)');
+        $this->db->join('user_post up','up.id = uk.post_id');
+        $likes = $this->db->get('user_likes')->num_rows();
+        return $likes;
+        
+    }
+    
 }
 
 ?> 

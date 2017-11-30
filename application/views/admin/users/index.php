@@ -39,10 +39,10 @@
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Email</th> 
-                    <th>No. Of Blogs</th> 
+<!--                    <th>No. Of Blogs</th> 
                     <th>No. Of Videos</th> 
                     <th>No. Of Galleries</th> 
-                    <th>Last Login</th>                       
+                    <th>Last Login</th>                       -->
                     <th>Created Date</th>                        
                     <th>Action</th>
                 </tr>
@@ -94,35 +94,35 @@
                     data: "email_id",
                     visible: true
                 },
-                {
-                    sortable: false,
-                    data: "blog",
-                    visible: true
-                },
-                {
-                    sortable: false,
-                    data: "video",
-                    visible: true
-                },
-                {
-                    sortable: false,
-                    data: "gallery",
-                    visible: true
-                },
-                {
-                    sortable: false,
-                    data: "last_login",
-                    visible: true,
-                    render: function (data, type, full, meta) {
-                        var login_date = '';
-                        if (data) {
-                            login_date = data;
-                        } else {
-                            login_date = '-';
-                        }
-                        return login_date;
-                    },
-                },
+//                {
+//                    sortable: false,
+//                    data: "blog",
+//                    visible: false
+//                },
+//                {
+//                    sortable: false,
+//                    data: "video",
+//                    visible: false
+//                },
+//                {
+//                    sortable: false,
+//                    data: "gallery",
+//                    visible: false
+//                },
+//                {
+//                    sortable: false,
+//                    data: "last_login",
+//                    visible: false,
+//                    render: function (data, type, full, meta) {
+//                        var login_date = '';
+//                        if (data) {
+//                            login_date = data;
+//                        } else {
+//                            login_date = '-';
+//                        }
+//                        return login_date;
+//                    },
+//                },
                 {
                     sortable: false,
                     data: "created_at",

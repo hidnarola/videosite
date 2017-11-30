@@ -1,39 +1,92 @@
+<?php // pr($post);die;?>
+    <div class="chanelle-page">
+        <div class="chanelle-head">
+            <div class="chanelle-head-l">
+                <?php // pr($session_info);?>
+                <span><img src="<?php echo base_url().$session_info['avatar']?>" alt=""/></span>
+                <big><?php echo $session_info['fname'].' '. $session_info['lname']?> 
+                    <!--(Username: <?php // echo $session_info['username']?>)-->
+                </big><small>Author, Blogger</small>
+            </div>
+            <div class="chanelle-head-r">
+                <a href="">Subscribers  <span>(<?php echo $total_subscriber?>) </span></a>
+                <a href="">Views  <span>(<?php echo array_sum(array_column($post,'total_views'))?>) </span></a>
+            </div>
+        </div>
+        <div class="chanelle-body">
+            <div class="chanelle-body-l">
+<?php foreach($comments as $key => $comm){
+ echo '<ul><li>'.$comm['message'].'</ul></li>';   
+}?>
 
-        <h1>
-            <?php echo $res_channel['channel_name']; ?>                
-        </h1>
-        <p>Total Subscriber - <span class="btn btn-primary"><?php echo (int)$total_subscriber; ?></span> 
-        </p>
-            
-        <?php if($user_loggedin == true && $is_this_users_channel == false) { ?>
-            <?php if($is_user_subscribe == false) { ?>
-                <a href="<?php echo base_url().'user_channels/subscribe_channel/'.$res_channel['id']; ?>" class="btn btn-success">
-                    Subscribe
-                </a>
-            <?php } else { ?>
-                <a href="<?php echo base_url().'user_channels/unsubscribe_channel/'.$res_channel['id']; ?>" class="btn btn-danger">
-                    Un-Subscribe
-                </a>
-            <?php } ?>
-        <?php } ?>
-    
-  
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-4">
-                <h3>Comments</h3>
-                
-            </div>     
+            </div>
+            <div class="chanelle-body-r">
+                <ul class="ul-list">
+                    <?php // pr($post);?>
+                    <?php foreach($post as $key => $posts){  ?>
+                    <li>
+                        <div class="list-box">
+                            <div class="list-top"><a href="">
+                                        <?php
+                                        if ($posts['post_type'] == 'blog')
+                                        {
+                                            ?>
+                                            <img src="<?php echo base_url() . $posts['bimg'] ?>" alt="" />
+                                        <?php
+                                        }
+                                        else if ($posts['post_type'] == 'gallery')
+                                        {
+                                            ?>
+                                            <img src="<?php echo base_url() . $posts['gimg'] ?>" alt="" />
+                                        <?php
+                                        }
+                                        else if ($posts['post_type'] == 'video')
+                                        {
+                                            ?>
+                                            
+                                            <img src="<?php echo base_url() . $posts['upload_path'] ?>" alt="" />
+    <?php } ?>
+                                    </a> <span>10:53</span></div>
+                            <div class="list-btm">
+                                <a href="">
+                                    <?php
+                                        if ($posts['post_type'] == 'blog')
+                                        {
+                                            echo $posts['blog_title'];           
+                                        }
+                                        else if($posts['post_type'] == 'gallery')
+                                        {
+                                            echo $posts['gtitle'];
+                                        }
+                                        else if($posts['post_type'] == 'video')
+                                        {
+                                            echo $posts['vtitle'];
+                                        }
+                                    ?>
+                                    
+                                </a>
+                                <p>By : <?php echo $session_info['username'];?> <span></span></p>
+                                <h6><i class="fa fa-eye"></i><?php echo $posts['total_views']?> </h6>
+                                <h6><i class="fa fa-clock-o"></i>
+                            <?php 
+                                If($posts['post_type'] == 'blog'){
+                                    echo get_ago_time($posts['blog_created_date'], date("Y-m-d H:i:s")) ;
+                                }
+                                else if($posts['post_type'] == 'gallery'){
+                                    echo get_ago_time($posts['gallery_created_date'], date("Y-m-d H:i:s")) ;
+                                }
+                                else if($posts['post_type'] == 'video'){
+                                    echo get_ago_time($posts['video_created_date'], date("Y-m-d H:i:s")) ;
+                                }
+                            ?>
+                                </h6>
+                            </div>
+                        </div>
+                    </li>
+                    <?php } ?>
+                </ul>	
+            </div>
         </div>
-    </div>
-        
-        
-        <div class="container">
-        <div class="row">
-            <div class="col-sm-4">
-                <h3><?php pr($posts);?></h3>
-                
-            </div>     
-        </div>
+
     </div>
 

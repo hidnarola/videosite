@@ -1,5 +1,6 @@
 <?php
 $role_id = $this->session->userdata['admin']['role_id'];
+$sess_data  = $this->session->userdata('admin');
 if ($this->session->userdata['admin']['avatar'] != '')
 {
     $image = (string) base_url('uploads/avatars/' . $this->session->userdata['admin']['avatar']);
@@ -16,11 +17,6 @@ else
         <!-- Main navbar -->
         <div class="navbar navbar-inverse">
             <div class="navbar-header">
-                <!--                .navbar-brand > img {
-                                margin-top: -1px;
-                                height: 33px;
-                                width: 100px;
-                                }-->
                 <a class="navbar-brand" href="<?= base_url('admin/dashboard') ?>"><img style="margin-top: -1px;height: 33px;width: 100px;" src="<?= DEFAULT_ADMIN_IMAGE_PATH ?>logo_admin.jpg" alt=""></a>
 
                 <ul class="nav navbar-nav visible-xs-block">
@@ -37,7 +33,9 @@ else
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown dropdown-user">                       
                         <a class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="<?php echo $image ?>" alt="">                                
+                            <img src="<?php echo $image ?>" alt="">
+                            
+                            <span><?php echo $sess_data['fname'] .' '. $sess_data['lname'];?></span>
                             <i class="caret"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
