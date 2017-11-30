@@ -18,6 +18,7 @@ class Users extends CI_Controller
     public function index()
     {
         $data['subview'] = 'admin/users/index';
+        $data['user_data'] = $this->session->userdata('admin');
         $this->load->view('admin/layouts/layout_main', $data);
     }
 

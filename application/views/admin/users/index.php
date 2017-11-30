@@ -97,22 +97,22 @@
                 {
                     sortable: false,
                     data: "blog",
-                    visible: true
+                    visible: false
                 },
                 {
                     sortable: false,
                     data: "video",
-                    visible: true
+                    visible: false
                 },
                 {
                     sortable: false,
                     data: "gallery",
-                    visible: true
+                    visible: false
                 },
                 {
                     sortable: false,
                     data: "last_login",
-                    visible: true,
+                    visible: false,
                     render: function (data, type, full, meta) {
                         var login_date = '';
                         if (data) {
