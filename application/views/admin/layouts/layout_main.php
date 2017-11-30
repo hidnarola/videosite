@@ -1,5 +1,6 @@
 <?php
 $role_id = $this->session->userdata['admin']['role_id'];
+$sess_data  = $this->session->userdata('admin');
 if ($this->session->userdata['admin']['avatar'] != '')
 {
     $image = (string) base_url('uploads/avatars/' . $this->session->userdata['admin']['avatar']);
@@ -34,7 +35,7 @@ else
                         <a class="dropdown-toggle" data-toggle="dropdown">
                             <img src="<?php echo $image ?>" alt="">
                             
-                            <span><?php echo $user_data['fname'] .' '. $user_data['lname'];?></span>
+                            <span><?php echo $sess_data['fname'] .' '. $sess_data['lname'];?></span>
                             <i class="caret"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">

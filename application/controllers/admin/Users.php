@@ -18,7 +18,6 @@ class Users extends CI_Controller
     public function index()
     {
         $data['subview'] = 'admin/users/index';
-        $data['user_data'] = $this->session->userdata('admin');
         $this->load->view('admin/layouts/layout_main', $data);
     }
 
@@ -237,6 +236,8 @@ class Users extends CI_Controller
         $data['id'] = $id;
         $user_id = decode($id);
         $data['post'] = $this->Admin_users_model->get_user_by_id($user_id);
+        $data['channels'] = $this->Admin_users_model->get_channels_by_user_id($user_id);
+        $data['posts'] = $this->Admin_users_model->get_posts_by_channel($user_id);
         // qry();
         // pr($data['post'],1);
         $data['subview'] = 'admin/users/post_index';

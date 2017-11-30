@@ -5,7 +5,7 @@ class User_channels extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
-                $this->load->model(['Users_model','Post_model']);
+                $this->load->model(['Users_model','Post_model','admin/Admin_users_model']);
 		
 	}
 
@@ -89,17 +89,26 @@ class User_channels extends CI_Controller {
 	// ------------------------------------------------------------------------
 
 	public function channel_detail($channel_name){
+            
             $sess_data = $this->session->userdata('client');
+            $data['session_info'] = $sess_data;
 		$data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
 		$data['res_channel'] = $this->db->get_where('user_channels',['channel_slug'=>$channel_name])->row_array();
+		$data['res_posts'] = $this->db->get_where('user_post',['channel_id' => $data['res_channel']['id']])->row_array();
                 $data['posts'] = $this->Post_model->get_all_posts_by_user_id($sess_data['id'],5);
+                $data['post'] = $this->Post_model->get_all_posts_by_user_id($sess_data['id'],12);
+                $data['channel_post'] = $this->Post_model->get_all_posts_by_channel_id($data['res_channel']['id']);
+                $data['comments'] = $this->Post_model->get_comments_by_post_id($data['res_posts']['id']);
 		if(empty($data['res_channel'])){ show_404(); }
 
-		$sess_data = $this->session->userdata('client');
+//		$sess_data = $this->session->userdata('client');
 		$data['user_loggedin'] = false;
 		$data['is_user_subscribe'] = false;
 		$data['is_this_users_channel'] = false;
 		$data['total_subscriber'] = $this->db->get_where('user_subscribers',['channel_id'=>$data['res_channel']['id']])->num_rows();
+//		$data['total_likes'] = $this->db->get_where('user_likes',['post_id'=>$data['res_posts']['id']])->num_rows();
+//		$data['total_views'] = $this->db->get_where('user_post_counts',['post_id'=>$data['res_posts']['id']])->num_rows();
+                
 
 		// pr($data['total_subscriber'],1);
 
