@@ -2,25 +2,48 @@
 <form method="post" action="" id="frmblog" enctype="multipart/form-data">
     <?php echo validation_errors(); ?>
 
-    <?php if ($user_loggedin == true){
-        if ($is_user_like == false){ ?>
-            <a href="<?php echo base_url() . 'home/like_post/' . $posts['id']; ?>" class="btn btn-success">Like</a>
-            <?php } else { ?>
-            <a href="<?php echo base_url() . 'home/unlike_post/' . $posts['id']; ?>" class="btn btn-danger">Un-Like</a>
-    <?php } } ?>
+    <?php // if ($user_loggedin == true){
+//        if ($is_user_like == false){ ?>
+            <!--<a href="<?php // echo base_url() . 'home/like_post/' . $posts['id']; ?>" class="btn btn-success">Like</a>-->
+           <?php // } else { ?>
+            <!--<a href="<?php // echo base_url() . 'home/unlike_post/' . $posts['id']; ?>" class="btn btn-danger">Un-Like</a>-->
+    <?php // } } ?>
 
-    <?php if ($user_loggedin == true){
-        if ($is_user_bookmark == false){ ?>
-        <a href="<?php echo base_url() . 'home/bookmark_post/' . $posts['id']; ?>" class="btn btn-success">BookMark</a>
-        <?php } else { ?>
-        <a href="<?php echo base_url() . 'home/unbookmark_post/' . $posts['id']; ?>" class="btn btn-danger">Un-BookMark</a>
-    <?php } } ?>
+    <?php // if ($user_loggedin == true){
+//        if ($is_user_bookmark == false){ ?>
+        <!--<a href="<?php // echo base_url() . 'home/bookmark_post/' . $posts['id']; ?>" class="btn btn-success">BookMark</a>-->
+        <?php // } else { ?>
+        <!--<a href="<?php // echo base_url() . 'home/unbookmark_post/' . $posts['id']; ?>" class="btn btn-danger">Un-BookMark</a>-->
+    <?php // } } ?>
     <div class="listing-l">
+        <div class="head-bg-01">
+            <h2><?php echo $posts['post_title'] ?></h2>
+            <p>By : <?php echo $posts['username'] ?> <span class="verify-user"></span> </p> <p><i class="fa fa-eye"></i> <?php echo $posts['total_views'] ?> Views</p>
+            <div class="r-links">
+                <?php if ($user_loggedin == true){
+        if ($is_user_bookmark == false){ ?>
+      <a href="<?php echo base_url() . 'home/bookmark_post/' . $posts['id']; ?>" class="bookmark-btn"><i class="fa fa-folder-open"></i>Bookmark<small><?php echo $bookmarked;?></small></a>
+        <?php } else { ?>
+        <a href="<?php echo base_url() . 'home/unbookmark_post/' . $posts['id']; ?>" class="bookmark-btn"><i class="fa fa-folder-open"></i>UnBookmark<small><?php echo $bookmarked;?></small></a>
+    <?php } } ?>
+                
+                
+                
+                 <?php if ($user_loggedin == true){
+        if ($is_user_like == false){ ?>
+            <a href="<?php echo base_url() . 'home/like_post/' . $posts['id']; ?>" class="like-btn"><i class="fa fa-thumbs-up"></i>like <small><?php echo $liked;?></small></a>
+            <?php } else { ?>
+            <a href="<?php echo base_url() . 'home/unlike_post/' . $posts['id']; ?>" class="like-btn"><i class="fa fa-thumbs-up"></i>unlike <small><?php echo $liked;?></small></a>
+    <?php } } ?>
+                
+                
+                
+            </div>
+        </div>
         <div class="listing-l-div">
-            <?php if (isset($posts)) {
-                if ($posts['post_type'] == 'blog') { foreach ($blog as $key => $blogs){ ?>
-            <h4>Channel Name: </h4> <?php echo $posts['channel_name'] ?>
-            <br><br>
+            <?php if (isset($posts)) {?>
+            <h4>Channel Name: <?php echo $posts['channel_name'] ?></h4>
+              <?php  if ($posts['post_type'] == 'blog') { foreach ($blog as $key => $blogs){ ?>
                             <div class="big-img">
                                 <a href=""><img src="<?php echo base_url() . $blogs['img_path'] ?>" alt="" /></a>
                                 <?php if($count_blog > 1) { ?>

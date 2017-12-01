@@ -90,7 +90,7 @@ class Post_model extends CI_Model
 
     public function get_all_posts_by_slug($post_slug)
     {
-        $this->db->select('up.id,up.channel_id,up.post_type,up.slug,c.id as channelid,c.user_id as chaneeluserid,c.channel_name,c.channel_slug,u.id as userid,u.username,b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path as bimg,DATE_FORMAT(b.created_at,"%d %b %Y <br> %l:%i %p") AS blogcreated_date,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description,g.img_path as gimg,DATE_FORMAT(g.created_at,"%d %b %Y <br> %l:%i %p") AS gallerycreated_date,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description,v.upload_path,DATE_FORMAT(v.created_at,"%d %b %Y <br> %l:%i %p") AS videocreated_date,COUNT(distinct upc.id) as total_views');
+        $this->db->select('up.id,up.post_title,up.main_image,up.channel_id,up.post_type,up.slug,c.id as channelid,c.user_id as chaneeluserid,c.channel_name,c.channel_slug,u.id as userid,u.username,b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path as bimg,DATE_FORMAT(b.created_at,"%d %b %Y <br> %l:%i %p") AS blogcreated_date,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description,g.img_path as gimg,DATE_FORMAT(g.created_at,"%d %b %Y <br> %l:%i %p") AS gallerycreated_date,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description,v.upload_path,DATE_FORMAT(v.created_at,"%d %b %Y <br> %l:%i %p") AS videocreated_date,COUNT(distinct upc.id) as total_views');
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
         $this->db->join('blog b', 'b.post_id = up.id', 'left');
@@ -100,6 +100,15 @@ class Post_model extends CI_Model
         $this->db->where('up.slug', $post_slug);
         $posts = $this->db->get('user_post up')->row_array();
         return $posts;
+    }
+    
+    public function get_bookmarked_post_by_slug($post_slug)
+    {
+        $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
+        $this->db->where('up.slug',$post_slug);
+        $this->db->group_by('up.id');
+        $bookmark = $this->db->get('user_bookmarks ub')->result_array();
+        return $bookmark;
     }
 
     public function get_blogs_by_post_slug($post_slug)
@@ -554,6 +563,14 @@ class Post_model extends CI_Model
         return $posts;
     }
     
+    public function get_sub_cat()
+    {
+        $this->db->select('s.id,s.category_name as sub_cat,main_cat_id,s.icon');
+        $this->db->join('categories c','c.id = s.main_cat_id');
+        $this->db->where('s.main_cat_id = c.id');
+        $sub = $this->db->get('sub_categories s')->result_array();
+        return $sub;
+    }
 }
 
 ?> 

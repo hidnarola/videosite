@@ -13,8 +13,9 @@ class Dashboard extends CI_Controller {
 		if(empty(is_client_loggedin())){ redirect('registration/login'); }
 	}
 
-	public function index() {		
+	public function index() {
         $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
+        
 		$data['all_channels'] = $this->db->get_where('user_channels',['is_deleted'=>'0','is_blocked'=>'0'])->result_array();		
 		$this->load->view('front/dashboard/index', $data);
 	}
