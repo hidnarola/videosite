@@ -4,7 +4,15 @@
     <?php if (!empty($book)) { foreach ($book as $books) {?>
         <li>
             <div class="list-box">
-                <div class="list-top"><a href=""><img src="<?php echo base_url() . $books['main_image'] ?>" alt=""/></a></div>
+                <div class="list-top"><a href=""><img src="<?php echo base_url() . $books['main_image'] ?>" alt=""/></a>
+                <?php if($books['post_type'] == 'blog'){?>
+                    <a href="" class="tag-a">A</a>
+                    <?php } else if($books['post_type'] == 'gallery'){?>
+                    <a href="" class="tag-g">G</a>
+                    <?php } else if($books['post_type'] == 'video'){?>
+                    <a href="" class="tag-v">V</a>
+                    <?php } ?>
+                </div>
                 <div class="list-btm">
                     <?php if($books['post_type'] = 'blog') { ?>
                     <a href="<?php echo base_url() . 'blog/' . $books['slug']; ?>"><?php echo $books['post_title'] ?></a>

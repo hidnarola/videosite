@@ -1,20 +1,5 @@
-
 <form method="post" action="" id="frmblog" enctype="multipart/form-data">
     <?php echo validation_errors(); ?>
-
-    <?php // if ($user_loggedin == true){
-//        if ($is_user_like == false){ ?>
-            <!--<a href="<?php // echo base_url() . 'home/like_post/' . $posts['id']; ?>" class="btn btn-success">Like</a>-->
-           <?php // } else { ?>
-            <!--<a href="<?php // echo base_url() . 'home/unlike_post/' . $posts['id']; ?>" class="btn btn-danger">Un-Like</a>-->
-    <?php // } } ?>
-
-    <?php // if ($user_loggedin == true){
-//        if ($is_user_bookmark == false){ ?>
-        <!--<a href="<?php // echo base_url() . 'home/bookmark_post/' . $posts['id']; ?>" class="btn btn-success">BookMark</a>-->
-        <?php // } else { ?>
-        <!--<a href="<?php // echo base_url() . 'home/unbookmark_post/' . $posts['id']; ?>" class="btn btn-danger">Un-BookMark</a>-->
-    <?php // } } ?>
     <div class="listing-l">
         <div class="head-bg-01">
             <h2><?php echo $posts['post_title'] ?></h2>
@@ -22,7 +7,7 @@
             <div class="r-links">
                 <?php if ($user_loggedin == true){
         if ($is_user_bookmark == false){ ?>
-      <a href="<?php echo base_url() . 'home/bookmark_post/' . $posts['id']; ?>" class="bookmark-btn"><i class="fa fa-folder-open"></i>Bookmark<small><?php echo $bookmarked;?></small></a>
+      <a href="<?php echo base_url() . 'home/bookmark_post/' . $posts['id']; ?>" class="bookmark-btn"><i class="fa fa-folder-open"></i>Bookmark<small><?php // echo $bookmarked;?></small></a>
         <?php } else { ?>
         <a href="<?php echo base_url() . 'home/unbookmark_post/' . $posts['id']; ?>" class="bookmark-btn"><i class="fa fa-folder-open"></i>Bookmarked<small><?php echo $bookmarked;?></small></a>
     <?php } } ?>

@@ -29,7 +29,7 @@ class Home extends CI_Controller
         $post_type = $this->uri->segment(1);
         $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $data['posts'] = $this->Post_model->get_all_posts_by_slug($post_slug);
-        $data['bookmarked'] = $this->db->get_where('user_bookmarks', ['post_id' => $data['posts']['id']])->num_rows();
+//        $data['bookmarked'] = $this->db->get_where('user_bookmarks', ['post_id' => $data['posts']['id']])->num_rows();
         $data['liked'] = $this->db->get_where('user_likes', ['post_id' => $data['posts']['id']])->num_rows();
         $res_post_data = $this->db->get_where('user_post', ['slug' => $post_slug, 'post_type' => $post_type])->row_array();
         $data['comments'] = $this->Post_model->get_comments_by_post_id($res_post_data['id']);
