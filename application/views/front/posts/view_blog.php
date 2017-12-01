@@ -24,7 +24,7 @@
         if ($is_user_bookmark == false){ ?>
       <a href="<?php echo base_url() . 'home/bookmark_post/' . $posts['id']; ?>" class="bookmark-btn"><i class="fa fa-folder-open"></i>Bookmark<small><?php echo $bookmarked;?></small></a>
         <?php } else { ?>
-        <a href="<?php echo base_url() . 'home/unbookmark_post/' . $posts['id']; ?>" class="bookmark-btn"><i class="fa fa-folder-open"></i>UnBookmark<small><?php echo $bookmarked;?></small></a>
+        <a href="<?php echo base_url() . 'home/unbookmark_post/' . $posts['id']; ?>" class="bookmark-btn"><i class="fa fa-folder-open"></i>Bookmarked<small><?php echo $bookmarked;?></small></a>
     <?php } } ?>
                 
                 
@@ -33,7 +33,7 @@
         if ($is_user_like == false){ ?>
             <a href="<?php echo base_url() . 'home/like_post/' . $posts['id']; ?>" class="like-btn"><i class="fa fa-thumbs-up"></i>like <small><?php echo $liked;?></small></a>
             <?php } else { ?>
-            <a href="<?php echo base_url() . 'home/unlike_post/' . $posts['id']; ?>" class="like-btn"><i class="fa fa-thumbs-up"></i>unlike <small><?php echo $liked;?></small></a>
+            <a href="<?php echo base_url() . 'home/unlike_post/' . $posts['id']; ?>" class="like-btn"><i class="fa fa-thumbs-up"></i>Liked <small><?php echo $liked;?></small></a>
     <?php } } ?>
                 
                 
