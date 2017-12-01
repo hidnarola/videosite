@@ -364,13 +364,9 @@ class Post_model extends CI_Model
     
     public function get_history($id, $limit, $offset)
     {
-//        b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path as bimg,DATE_FORMAT(b.created_at,"%d %b %Y %l:%i %p") AS blog_created_date,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description,g.img_path as gimg,DATE_FORMAT(g.created_at,"%d %b %Y %l:%i %p") AS gallery_created_date,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description,v.upload_path,DATE_FORMAT(v.created_at,"%d %b %Y %l:%i %p") AS video_created_date
         $this->db->select('uh.user_id,uh.post_id,u.username,post_type,slug,post_title,main_image,COUNT(distinct upc.id) as total_views');
         $this->db->join('users u', 'u.id = uh.user_id');
         $this->db->join('user_post up', 'up.id = uh.post_id');
-//        $this->db->join('blog b', 'b.post_id = uh.post_id', 'left');
-//        $this->db->join('video v', 'v.post_id = uh.post_id', 'left');
-//        $this->db->join('gallery g', 'g.post_id = uh.post_id', 'left');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
         $this->db->where('uh.user_id',$id);
         $this->db->group_by('uh.post_id');
@@ -381,21 +377,15 @@ class Post_model extends CI_Model
     }
     
     public function get_history_count($id)
-    {
-//        b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path as bimg,DATE_FORMAT(b.created_at,"%d %b %Y %l:%i %p") AS blog_created_date,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description,g.img_path as gimg,DATE_FORMAT(g.created_at,"%d %b %Y %l:%i %p") AS gallery_created_date,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description,v.upload_path,DATE_FORMAT(v.created_at,"%d %b %Y %l:%i %p") AS video_created_date
+    {        
         $this->db->select('uh.user_id,uh.post_id,u.username,post_type,slug,post_title,main_image,COUNT(distinct upc.id) as total_views');
         $this->db->join('users u', 'u.id = uh.user_id');
         $this->db->join('user_post up', 'up.id = uh.post_id');
-//        $this->db->join('blog b', 'b.post_id = uh.post_id', 'left');
-//        $this->db->join('video v', 'v.post_id = uh.post_id', 'left');
-//        $this->db->join('gallery g', 'g.post_id = uh.post_id', 'left');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
-//        $this->db->where('uh.user_id',$id);
+        $this->db->where('uh.user_id',$id['user_id']);
         $this->db->group_by('uh.post_id');
-        $this->db->order_by('uh.id', 'desc');
-//        $this->db->limit($limit, $offset);
+        $this->db->order_by('uh.id', 'desc');        
         $history = $this->db->get('user_history uh')->num_rows();
-        qry();
         return $history;
     }
 

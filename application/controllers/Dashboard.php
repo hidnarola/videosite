@@ -155,6 +155,10 @@ class Dashboard extends CI_Controller {
         
         $config['base_url'] = base_url().'dashboard/view_history';
         $config['total_rows'] = $this->Post_model->get_history_count(['user_id' => $sess_data['id']]);
+        // echo "<br/>1======================================================<br/>";
+        // qry();
+        
+
         $config['per_page'] = 3;
         $offset = $this->input->get('per_page');
         $config = array_merge($config,pagination_front_config());
@@ -163,6 +167,12 @@ class Dashboard extends CI_Controller {
         
         $data['history'] = $this->Post_model->get_history($sess_data['id'],$config['per_page'],$offset);
 
+        // echo "<br/>2======================================================<br/>";
+        // qry();
+        // echo "<br/>2======================================================<br/>";
+        // pr($config['total_rows']);
+        // pr($data['history']);
+        // die();
         
         $str_links = $this->pagination->create_links();
         $data["links"] = explode('&nbsp;',$str_links );
