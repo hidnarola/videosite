@@ -8,8 +8,7 @@ class Test extends CI_Controller {
 		$this->load->model(['Users_model', 'Post_model']);
 		$this->load->helper('directory');
 	}
-
- 
+	
 	// Step 1
 	public function add_user(){
 		$faker = Faker\Factory::create();
@@ -90,18 +89,33 @@ class Test extends CI_Controller {
 			$all_channel = $this->db->select('id')->get_where('user_channels',['user_id'=>$r['id']])->result_array();
 			foreach($all_channel as $a_channel){
 
-				$no_of_posts = [4,5,6,7,8,9,10];
+				$no_of_posts = [4,5,6,7,8,9,10,11,15,20];
 				$select_posts = $no_of_posts[array_rand($no_of_posts)];
 
 				$post_types = ['video', 'blog', 'gallery'];
 				$select_post_type = $post_types[array_rand($post_types)];
 
 				for($i=0;$i<$select_posts;$i++){
+					
 					$text = $faker->realText(30);
 					$post_slug = slugify($text);
+
+					if($select_post_type == 'blog'){
+						$map = directory_map('./uploads/blogs');
+						$post_img = 'uploads/blogs/'.$map[array_rand($map)];
+					}else if($select_post_type == 'gallery'){
+						$map = directory_map('./uploads/gallery');
+						$post_img = 'uploads/gallery/'.$map[array_rand($map)];
+					}else if($select_post_type == 'video'){
+						$map = directory_map('./uploads/gallery');
+						$post_img = 'uploads/videos/'.$map[array_rand($map)];
+					}
+
 					$ins_post = [
 									'channel_id'=>$a_channel['id'],
 									'post_type'=>$select_post_type,
+									'post_title'=>$text,
+									'main_image'=>$post_img,									
 									'slug'=>$post_slug,
 									'category_id'=>rand(1,12),
 									'created_at'=>date('Y-m-d H:i:s')
@@ -166,7 +180,7 @@ class Test extends CI_Controller {
 		// pr($res,1);
 		foreach($all_post as $a_post){
 
-			$random_likes = rand(10,20);			
+			$random_likes = rand(20,30);			
 			$random_comment = rand(20,30);
 
 			for($i=0;$i<$random_likes;$i++){
@@ -198,7 +212,7 @@ class Test extends CI_Controller {
 			$img_url = $faker->imageUrl($width = 640, $height = 480);
 			$random_name = random_string('alnum',20).'.jpg';
 			$contents=file_get_contents($img_url);
-			$save_path="uploads/avatars/".$random_name;
+			$save_path="uploads/gallery/".$random_name;
 			file_put_contents($save_path,$contents);	 
 		}
 	}

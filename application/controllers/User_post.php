@@ -161,25 +161,107 @@ class User_post extends CI_Controller
         }
     }
 
-    public function add_post_slide($post_id){
+    public function view_all_slides($post_id){
         
+        $sess_data = $this->session->userdata('client');
+        $all_channels = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
+        $all_channel_id = array_column($all_channels,'id');
+
+        $post_data = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
+        $data['post_type'] = $post_data['post_type'];
+        // if(in_array($post_data['channel_id'],$all_channel_id) == false){
+        //     die('Do not have access');
+        // }
+
+        if($post_data['post_type'] == 'blog'){
+            $data['all_slides'] = $this->db->get_where('blog',['post_id'=>$post_id])->result_array();
+        }else{
+            $data['all_slides'] = $this->db->get_where('gallery',['post_id'=>$post_id])->result_array();
+        }
+
+        // pr($post_data);
+        // pr($data['all_slides'],1);
+
+        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $this->form_validation->set_rules('blog_title', 'Blog Title', 'required');
 
         if ($this->form_validation->run() == FALSE) {
+            $data['subview'] = 'front/posts/view_all_slides';
+            $this->load->view('front/layouts/layout_main', $data);
+        }else{
+
+        }
+    }
+
+    public function add_post_slide($post_id){
+
+        $sess_data = $this->session->userdata('client');
+        $all_channels = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
+        $all_channel_id = array_column($all_channels,'id');
+
+        $post_data = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
+
+        if(in_array($post_data['channel_id'],$all_channel_id) == false){
+            die('Do not have access');
+        }
+
+        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();        
+
+        $this->form_validation->set_rules('title', 'Title', 'required');
+        $this->form_validation->set_rules('description', 'Description', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
             
-            $data['subview'] = 'front/posts/add_blog';
+            $data['subview'] = 'front/posts/add_slide';
             $this->load->view('front/layouts/layout_main', $data);
 
         }else{
 
-            // $insert_array = [
-            //     'post_id' => $last_post_id,
-            //     'blog_title' => $blog_title,
-            //     'blog_description' => htmlspecialchars($this->input->post('blog_description')),
-            //     // img_path' => $this->saveuploadedfile(),
-            //     'created_at' => date("Y-m-d H:i:s a"),
-            // ];
-            // $result = $this->Post_model->insert_record('blog', $insert_array);
+            // ------------------------------------------------------------------------
+            
+            if($post_data['post_type'] == 'blog'){ $folder_name = 'blogs'; }else { $folder_name = 'gallery'; }
+
+            $config['upload_path'] = './uploads/'.$folder_name.'/';
+            $config['allowed_types'] = 'gif|jpg|png';
+            $config['max_size']  = '10000000';
+            $config['encrypt_name'] = true;
+            
+            $this->load->library('upload', $config);
+            
+            if ( ! $this->upload->do_upload('img_path')){
+                $this->session->set_flashdata('error', $this->upload->display_errors());
+                redirect('user_post/add_post');
+            }
+            else{
+                $data = array('upload_data' => $this->upload->data());
+                $file_path = 'uploads/'.$folder_name.'/'.$data['upload_data']['file_name'];
+            }
+            
+            // ------------------------------------------------------------------------
+
+            if($post_data['post_type'] == 'blog'){
+                
+                $insert_array = [
+                    'post_id' => $post_id,
+                    'blog_title' => $blog_title,
+                    'blog_description' => htmlspecialchars($this->input->post('description')),
+                    'img_path' => $file_path,
+                    'created_at' => date("Y-m-d H:i:s"),
+                ];
+
+                $this->Post_model->insert_record('blog',$insert_array);
+
+            } else {
+                $insert_array = [
+                    'post_id' => $post_id,
+                    'blog_title' => $blog_title,
+                    'blog_description' => htmlspecialchars($this->input->post('description')),
+                    'img_path' => $file_path,
+                    'created_at' => date("Y-m-d H:i:s"),
+                ];
+                $this->Post_model->insert_record('gallery',$insert_array);
+            }
+
         }
     }
 
