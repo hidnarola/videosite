@@ -1,6 +1,6 @@
 <!-- include summernote css/js-->
-<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+<!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script> -->
 
 
 <div class="form-element">    
@@ -59,26 +59,26 @@
         </div>
         
         <div class="input-wrap">
-            <label class="label-css">Video Title </label>
-            <input type="text" name="video_title" id ="video_title" placeholder="Blog Title" value="<?php echo set_value('video_title'); ?>" class="form-css" />
+            <label class="label-css">Title </label>
+            <input type="text" name="title" id ="title" placeholder="Title" value="<?php echo set_value('title'); ?>" class="form-css" />
         </div>
 
         <div class="input-wrap">
             <label class="label-css">Upload File</label>
             <div class="input-file">
-                <input type="text" class="form-css" name="video_path" readonly >
+                <input type="text" class="form-css" name="main_img_path" readonly >
                 <label class="input-group-btn">
                     <span class="">
-                        Browse <input type="file" name="vid_path" style="display: none;">
+                        Browse <input type="file" name="img_path" style="display: none;">
                     </span>
                 </label>
             </div>
         </div>
 
-        <div class="input-wrap full-width">
-            <label class="label-css">Comment</label>            
+        <!-- <div class="input-wrap full-width">
+            <label class="label-css">Comment</label>
             <div id="summernote">Hello Summernote</div>
-        </div>
+        </div> -->
 
         <div class="btn-btm">
             <button class="common-btn btn-submit" type="submit">Submit</button>
@@ -93,8 +93,10 @@
 <script>
 
     $(document).ready(function() {
-  $('#summernote').summernote();
-});
+        // $('#summernote').summernote({
+        //     height:300
+        // });
+    });
     
     $(document).ready(function () {                
         $('.selectpicker_blog').selectpicker();
