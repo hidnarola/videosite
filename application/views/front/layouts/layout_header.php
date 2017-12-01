@@ -86,6 +86,11 @@
                             View History
                         </a>
                     </li>
+                     <li>
+                        <a href="<?php echo base_url().'dashboard/view_my_posts';?>">
+                            View My Posts
+                        </a>
+                    </li>
                     <li>
                         <a href="<?php echo base_url().'dashboard/edit_profile';?>">
                             Edit Profile

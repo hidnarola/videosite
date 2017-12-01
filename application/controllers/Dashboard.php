@@ -153,7 +153,7 @@ class Dashboard extends CI_Controller {
         $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         
         $config['base_url'] = base_url().'dashboard/view_history';
-        $config['total_rows'] = $this->Post_model->get_posts_front_count('user_history',['user_id' => $sess_data['id']]);
+        $config['total_rows'] = $this->Post_model->get_history_count(['user_id' => $sess_data['id']]);
         $config['per_page'] = 3;
         $offset = $this->input->get('per_page');
         $config = array_merge($config,pagination_front_config());
@@ -198,9 +198,10 @@ class Dashboard extends CI_Controller {
     public function view_my_posts()
     {
         $sess_data = $this->session->userdata('client');
+        $data['session_info'] = $sess_data;
         $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         
-        $config['base_url'] = base_url().'dashboard/view_my_videos';
+        $config['base_url'] = base_url().'dashboard/view_my_posts';
         $config['total_rows'] = $this->Post_model->get_my_posts_count($sess_data['id']);
         $config['per_page'] = 3;
         $offset = $this->input->get('per_page');
@@ -208,7 +209,7 @@ class Dashboard extends CI_Controller {
         
         $this->pagination->initialize($config);
         
-        $data['posts'] = $this->Post_model->get_all_posts_by_user($sess_data['id'],$config['per_page'],$offset);
+        $data['posts'] = $this->Post_model->get_my_posts_data($sess_data['id'],$config['per_page'],$offset);
         $str_links = $this->pagination->create_links();
         $data["links"] = explode('&nbsp;',$str_links );
         

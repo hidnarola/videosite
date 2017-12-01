@@ -121,7 +121,7 @@
                         <li>
                             <div class="list-ul-box">
                                 <span><a href=""><img src="<?php echo base_url() . $related['gimg']   ?>" alt="" /></a></span>
-                                <h4><a href="<?php echo base_url() . 'blog/' . $related['slug']; ?>"><?php echo $related['gtitle'] ?></a></h4>
+                                <h4><a href="<?php echo base_url() . 'gallery/' . $related['slug']; ?>"><?php echo $related['gtitle'] ?></a></h4>
                                 <p><?php echo $related['username'] ?></p>
                                 <h6><?php echo $related['total_views'] ?> Views</h6>
                             </div>
@@ -134,7 +134,7 @@
                        <li>
                             <div class="list-ul-box">
                                 <span><a href=""><img src="<?php echo base_url() . $related['upload_path']   ?>" alt="" /></a></span>
-                                <h4><a href="<?php echo base_url() . 'blog/' . $related['slug']; ?>"><?php echo $related['vtitle'] ?></a></h4>
+                                <h4><a href="<?php echo base_url() . 'video/' . $related['slug']; ?>"><?php echo $related['vtitle'] ?></a></h4>
                                 <p><?php echo $related['username'] ?></p>
                                 <h6><?php echo $related['total_views'] ?> Views</h6>
                             </div>
