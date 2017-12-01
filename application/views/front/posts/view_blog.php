@@ -18,7 +18,7 @@
     <div class="listing-l">
         <div class="head-bg-01">
             <h2><?php echo $posts['post_title'] ?></h2>
-            <p>By : <?php echo $posts['username'] ?> <span class="verify-user"></span> </p> <p><i class="fa fa-eye"></i> <?php echo $posts['total_views'] ?> Views</p>
+            <p>By : <a href="<?php echo base_url() . 'channel/' . $posts['channel_slug']; ?>" target="_blank"><?php echo $posts['channel_name'] ?></a> <span class="verify-user"></span> </p> <p><i class="fa fa-eye"></i> <?php echo $posts['total_views'] ?> Views</p>
             <div class="r-links">
                 <?php if ($user_loggedin == true){
         if ($is_user_bookmark == false){ ?>
@@ -42,7 +42,7 @@
         </div>
         <div class="listing-l-div">
             <?php if (isset($posts)) {?>
-            <h4>Channel Name: <?php echo $posts['channel_name'] ?></h4>
+            
               <?php  if ($posts['post_type'] == 'blog') { foreach ($blog as $key => $blogs){ ?>
                             <div class="big-img">
                                 <a href=""><img src="<?php echo base_url() . $blogs['img_path'] ?>" alt="" /></a>
