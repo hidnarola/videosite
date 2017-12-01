@@ -444,13 +444,14 @@ class Post_model extends CI_Model
     }
 
     public function get_my_posts_data($user_id,$limit,$offset) {
+//        b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path as bimg,DATE_FORMAT(b.created_at,"%d %b %Y %l:%i %p") AS blog_created_date,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description as gdesc,g.img_path as gimg,DATE_FORMAT(g.created_at,"%d %b %Y %l:%i %p") AS gallery_created_date,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description as vdesc,v.upload_path,DATE_FORMAT(v.created_at,"%d %b %Y %l:%i %p") AS video_created_date
         $all_channel_data = $this->db->select('id')->get_where('user_channels',['user_id'=>$user_id,'is_deleted'=>'0','is_blocked'=>'0'])->result_array();
         $all_channel_id = array_column($all_channel_data,'id');        
         // ------------------------------------------------------------------------
-        $this->db->select('user_post.id,user_post.channel_id,user_post.slug,user_post.post_type,b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path as bimg,DATE_FORMAT(b.created_at,"%d %b %Y %l:%i %p") AS blog_created_date,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description as gdesc,g.img_path as gimg,DATE_FORMAT(g.created_at,"%d %b %Y %l:%i %p") AS gallery_created_date,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description as vdesc,v.upload_path,DATE_FORMAT(v.created_at,"%d %b %Y %l:%i %p") AS video_created_date,COUNT(distinct upc.id) as total_views');
-        $this->db->join('blog b', 'b.post_id = user_post.id', 'left');
-        $this->db->join('video v', 'v.post_id = user_post.id', 'left');
-        $this->db->join('gallery g', 'g.post_id = user_post.id', 'left');
+        $this->db->select('user_post.id,user_post.channel_id,user_post.slug,user_post.post_type,user_post.post_title,user_post.main_image,COUNT(distinct upc.id) as total_views');
+//        $this->db->join('blog b', 'b.post_id = user_post.id', 'left');
+//        $this->db->join('video v', 'v.post_id = user_post.id', 'left');
+//        $this->db->join('gallery g', 'g.post_id = user_post.id', 'left');
         $this->db->join('user_post_counts upc', 'user_post.id = upc.post_id', 'left');
         $this->db->group_by('user_post.id');
         $this->db->limit($limit,$offset);
