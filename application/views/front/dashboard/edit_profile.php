@@ -37,10 +37,12 @@
                 <input type="text" name="birth_date" id="birth_date" placeholder="Birth Date" value="<?php echo $post_birth_date; ?>" class="form-css datepicker"
                         data-date-format="yyyy-mm-dd"  />
             </div>
-
+            
+            
             <div class="input-wrap">
                 <label class="label-css">Upload File</label>
                 <div class="input-file">
+                    <img src="<?php echo base_url().$user_data['avatar'] ?>" alt="" width="100px" height="100px">
                     <input type="text" class="form-css browse_text" readonly >
                     <label class="input-group-btn">
                         <span class="">
@@ -55,7 +57,7 @@
                 <!-- <button class="common-btn btn-reset" type="reset">Reset</button> -->
             </div>
 
-            <img src="<?php echo base_url().$user_data['avatar'] ?>" alt="" width="100px" height="100px">
+            
         </form>
     </div>
 

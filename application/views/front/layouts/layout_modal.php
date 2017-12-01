@@ -10,8 +10,12 @@
                             <small>Please enter your login information.</small>
                         </h2>
                         <form id="commentForm" autocomplete="off">
-                            <input type="email" name="email_id" class="input-css" placeholder="Email" required />
-                            <input type="password" name="password" class="input-css" placeholder="Password"/>
+                            <div class="input-wrap-div">
+                                <input type="email" name="email_id" class="input-css" placeholder="Email" required />
+                            </div>
+                            <div class="input-wrap-div">
+                                <input type="password" name="password" class="input-css" placeholder="Password"/>
+                            </div>
                             <div class="remember-forgat">                                
                                 <a class="cursor_pointer" onclick="$('.sing_in_up').addClass('hide'); $('.re-password').removeClass('hide');">
                                     Forget password?
@@ -33,11 +37,21 @@
                             <small>Please enter your login information.</small>
                         </h2>
                         <form id="sign_up_form" method="post">
-                            <input type="text" name="username" class="input-css" placeholder="Username"/>
-                            <input type="text" name="email_id" class="input-css" placeholder="E-mail"/>
-                            <input type="text" name="birth_date" class="form-css datepicker" placeholder="Birth Date" data-date-format="yyyy-mm-dd"/>
-                            <input type="password" name="password" class="input-css" placeholder="Password" id="password"/>
-                            <input type="password" name="repeat_password" class="input-css" placeholder="Re-Password"/>                            
+                            <div class="input-wrap-div">
+                                <input type="text" name="username" class="input-css" placeholder="Username"/>
+                            </div>    
+                            <div class="input-wrap-div">
+                                <input type="text" name="email_id" class="input-css" placeholder="E-mail"/>
+                            </div>
+                            <div class="input-wrap-div">
+                                <input type="text" name="birth_date" class="form-css datepicker" placeholder="Birth Date" data-date-format="yyyy-mm-dd"/>
+                            </div>
+                            <div class="input-wrap-div">
+                                <input type="password" name="password" class="input-css" placeholder="Password" id="password"/>
+                            </div>
+                            <div class="input-wrap-div">
+                                <input type="password" name="repeat_password" class="input-css" placeholder="Re-Password"/>                            
+                            </div>
                             <div class="remember-forgat">
                                 <div class="checkbox">
                                     <input type="checkbox" name="i_agree" id="i_agree" title="Please agree to our policy!" required>
@@ -59,7 +73,9 @@
             <h2>Forgot password</h2>
             <p>Please enter your email information.</p>
             <form>
-                <input type="text" name="" placeholder="E-mail"/>
+                <div class="input-wrap-div">
+                    <input type="text" name="" placeholder="E-mail"/>
+                </div>
                 <button type="submit">Submit</button>
                 <a onclick="$('.sing_in_up').removeClass('hide'); $('.re-password').addClass('hide');" >cancel</a>
             </form>

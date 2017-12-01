@@ -103,13 +103,13 @@ font-family: 'Comfortaa', cursive;
 .home-listing h2{display:block;width:100%;font-size:21px;color:#282424;text-transform:uppercase;margin:0;}
 .home-listing .item{padding:18px 0;}
 .home-listing .owl-carousel {margin:-5px 0 0 -10px;position:relative;}
-.list-box{padding:10px 10px 5px;background:#fff;box-shadow:0 40px 0 0 rgba(0,0,0,.4);margin:0 12px; box-shadow: 0 0 40px 0 rgba(0,0,0,.1);border-radius:4px;}
+.list-box{padding:1px;background:#fff;box-shadow:0 40px 0 0 rgba(0,0,0,.4);margin:0 12px; box-shadow: 0 0 40px 0 rgba(0,0,0,.1);}
 .list-top{display:block;width:100%;margin:0 0 15px;position:relative;}
 .list-top > a{display:block;}
 .list-top > a > img{width:100%;}
 .list-top > span{position:absolute;bottom:15px;right:15px;background:#68ac9f;border-radius:4px;width:48px;height:24px;color:#fff;font-size:13px;text-transform:uppercase;text-align:center;line-height:24px;}
 
-.list-btm{display:block;width:100%;margin:0;padding:0 8px;}
+.list-btm{display:block;width:100%;margin:0;padding:0 10px 5px 18px;}
 .list-btm > a{margin:0 0 12px;font-size:13px;text-transform:uppercase;color:#333;line-height:20px;letter-spacing:.02em;display:block;}
 .list-btm > a:hover{opacity:.6;text-decoration:none;}
 .list-btm p{display:block;font-size:12px;color:#666;display:block;width:100%;line-height:16px;margin:0 0 20px;padding:0;}
@@ -245,7 +245,7 @@ font-family: 'Comfortaa', cursive;
 /***** Full width *****/
 .form-element{background:#fff;padding:30px;}
 .label-css{display:block;font-size:14px;color:#999;line-height:20px;margin:0 0 5px;}
-input.form-css {background: #e9e9e9; padding: 15px; line-height: 24px; font-family: 'Roboto'; font-size: 16px; font-weight: 400; color: #ccc; width: 100%; margin: 0 0 20px; border:0;}
+input.form-css {background: #e9e9e9; padding: 15px; line-height: 24px; font-family: 'Roboto'; font-size: 16px; font-weight: 400; color: #666; width: 100%; margin: 0 0 20px; border:0;}
 textarea.textarea-css {background: #e9e9e9; padding: 15px; line-height: 24px; font-family: 'Roboto'; font-size: 16px; font-weight: 400; color: #7f7f7f; width: 100%; margin: 0 0 20px; border:0;height:160px;}
 .form-element form{display:inline-block;width:100%;vertical-align:top;}
 .input-wrap{display:block;width:49%;float:left;}
@@ -335,3 +335,7 @@ p.general-text {margin:0 0 15px; padding:0; color:#666; font-size: 15px; line-he
 .like-btn:hover{opacity:.8;text-decoration:none;color:#fff;}
 
 span.verify-user {background: url(../images/check.png) no-repeat 0 0;width: 16px;height: 16px;margin-left: 2px;display: inline-block;vertical-align: middle;margin-top: -2px;}
+.edit-dlt{display:inline-block;vertical-align:top;width:100%;margin-bottom:20px;}
+.edit-dlt p{width:auto;float:left;margin-bottom:0; }  
+.edit-dlt a{float:right;color:#999;text-decoration:none;margin-left:10px;line-height:18px;font-size:15px;vertical-align:middle;}
+.edit-dlt a:hover{color:red;}
