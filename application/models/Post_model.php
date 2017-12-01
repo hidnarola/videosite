@@ -403,6 +403,30 @@ class Post_model extends CI_Model
         return $res_data;
     }
 
+    // ------------------------------------------------------------------------
+
+    public function get_my_posts_count($user_id) {
+        
+        $all_channel_data = $this->db->select('id')->get_where('user_channels',['user_id'=>$user_id,'is_deleted'=>'0','is_blocked'=>'0'])->result_array();
+        $all_channel_id = array_column($all_channel_data,'id');        
+        // ------------------------------------------------------------------------
+        $this->db->where_in('channel_id',$all_channel_id);
+        $all_u_posts_cnt = $this->db->get_where('user_post',['is_deleted'=>'0','is_blocked'=>'0'])->num_rows();
+        return $all_u_posts_cnt;
+    }
+
+    public function get_my_posts_data($user_id) {
+        $all_channel_data = $this->db->select('id')->get_where('user_channels',['user_id'=>$user_id,'is_deleted'=>'0','is_blocked'=>'0'])->result_array();
+        $all_channel_id = array_column($all_channel_data,'id');        
+        // ------------------------------------------------------------------------
+        // $this->db->limit($limit,$offset);
+        $this->db->where_in('channel_id',$all_channel_id);
+        $all_u_posts_cnt = $this->db->get_where('user_post',['is_deleted'=>'0','is_blocked'=>'0'])->num_rows();
+        return $all_u_posts_cnt;        
+    }
+
+    // ------------------------------------------------------------------------
+
     function loadcategories() {
         $query = $this->db->query("SELECT DISTINCT category_name FROM categories");
          
