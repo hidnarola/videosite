@@ -29,7 +29,9 @@ class Home extends CI_Controller
         $data['posts'] = $this->Post_model->get_all_posts_by_slug($post_slug);
         $res_post_data = $this->db->get_where('user_post', ['slug' => $post_slug, 'post_type' => $post_type])->row_array();
         $data['comments'] = $this->Post_model->get_comments_by_post_id($res_post_data['id']);
-        $data['related_posts'] = $this->Post_model->get_related_posts_category_id($res_post_data['category_id'],4);
+        $data['related_posts'] = $this->Post_model->get_related_posts_category_id($res_post_data['category_id'],$res_post_data['id'],4);
+//        qry();
+//        pr($data['related_posts'],1);
         $data['user_loggedin'] = false;
         $data['is_user_like'] = false;
         $data['is_user_bookmark'] = false;

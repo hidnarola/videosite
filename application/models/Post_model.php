@@ -304,7 +304,7 @@ class Post_model extends CI_Model
         $posts = $this->db->get('user_post up')->result_array();
         return $posts;
     }
-    public function get_related_posts_category_id($id,$limit)
+    public function get_related_posts_category_id($id,$post_id,$limit)
     {
         $this->db->select('up.id,up.channel_id,up.post_type,up.slug,up.category_id,up.sub_category_id,c.id as channelid,c.user_id as chaneeluserid,c.channel_name,c.channel_slug,u.id as userid,u.username,b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path as bimg,DATE_FORMAT(b.created_at,"%d %b %Y %l:%i %p") AS blog_created_date,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description as gdesc,g.img_path as gimg,DATE_FORMAT(g.created_at,"%d %b %Y %l:%i %p") AS gallery_created_date,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description as vdesc,v.upload_path,DATE_FORMAT(v.created_at,"%d %b %Y %l:%i %p") AS video_created_date,upc.post_id as upcpostid, COUNT(distinct upc.id) as total_views');
         $this->db->join('user_channels c', 'c.id = up.channel_id');
@@ -317,8 +317,8 @@ class Post_model extends CI_Model
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
         $this->db->where('up.category_id = ', $id);
         $this->db->group_by('up.id');
-        $this->db->order_by('up.id','desc');
         $this->db->limit($limit);
+        $this->db->where('up.id > ',$post_id);
         $posts = $this->db->get('user_post up')->result_array();
         return $posts;
     }
@@ -469,6 +469,31 @@ class Post_model extends CI_Model
         $likes = $this->db->get('user_likes')->num_rows();
         return $likes;
         
+    }
+    
+    public function get_all_posts_by_user($user_id,$limit,$offset)
+    {
+         $this->db->select('up.id,up.channel_id,up.post_type,up.slug,c.id as channelid,c.user_id as chaneeluserid,c.channel_name,c.channel_slug,u.id as userid,u.username,b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description,g.img_path,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description,v.upload_path');
+        $this->db->select('up.id,up.channel_id,up.post_type,up.slug,up.category_id,up.sub_category_id,c.id as channelid,c.user_id as chaneeluserid,c.channel_name,c.channel_slug,u.id as userid,u.fname,u.lname,u.username,u.avatar,b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path as bimg,DATE_FORMAT(b.created_at,"%d %b %Y %l:%i %p") AS blog_created_date,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description as gdesc,g.img_path as gimg,DATE_FORMAT(g.created_at,"%d %b %Y %l:%i %p") AS gallery_created_date,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description as vdesc,v.upload_path,DATE_FORMAT(v.created_at,"%d %b %Y %l:%i %p") AS video_created_date,upc.post_id as upcpostid, COUNT(distinct upc.id) as total_views');
+//        COUNT(distinct us.id) as total_subscribers
+//        COUNT(distinct uk.id) as total_likes?
+        $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
+        $this->db->join('users u', 'u.id = c.user_id', 'left');
+        $this->db->join('categories cat', 'cat.id = up.category_id', 'left');
+        $this->db->join('sub_categories sub_cat', 'sub_cat.id = up.sub_category_id', 'left');
+        $this->db->join('blog b', 'b.post_id = up.id', 'left');
+        $this->db->join('video v', 'v.post_id = up.id', 'left');
+        $this->db->join('gallery g', 'g.post_id = up.id', 'left');
+        $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
+//        $this->db->join('user_subscribers us', 'c.id = us.channel_id', 'left');
+//        $this->db->join('user_likes uk', 'up.id = uk.post_id', 'left');
+        $this->db->where('u.id = ', $user_id);
+        $this->db->group_by('up.id');
+        $this->db->order_by('up.id', 'desc');
+        $this->db->limit($limit,$offset);
+        $posts = $this->db->get('user_post up')->result_array();
+//        qry();
+        return $posts;
     }
     
 }

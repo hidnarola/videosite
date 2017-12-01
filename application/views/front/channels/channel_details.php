@@ -48,23 +48,27 @@
     <?php } ?>
                                     </a> <span>10:53</span></div>
                             <div class="list-btm">
-                                <a href="">
-                                    <?php
+                                <?php // pr($posts);die;?>
+                                    <?php 
+
                                         if ($posts['post_type'] == 'blog')
                                         {
-                                            echo $posts['blog_title'];           
-                                        }
+                                            ?>
+                                <a href="<?php echo base_url() . 'blog/' . $posts['slug']; ?>"> <?php echo $posts['blog_title'];?> </a>           
+                                <?php        }
                                         else if($posts['post_type'] == 'gallery')
-                                        {
-                                            echo $posts['gtitle'];
+                                        {?>
+                                            <a href="<?php echo base_url() . 'gallery/' . $posts['slug']; ?>"> <?php echo $posts['gtitle'];?> </a> 
+                                            <?php
                                         }
                                         else if($posts['post_type'] == 'video')
-                                        {
-                                            echo $posts['vtitle'];
+                                        {?>
+                                           <a href="<?php echo base_url() . 'video/' . $posts['slug']; ?>"> <?php echo $posts['vtitle'];?> </a> 
+                                           <?php
                                         }
                                     ?>
                                     
-                                </a>
+                                
                                 <p>By : <?php echo $session_info['username'];?> <span></span></p>
                                 <h6><i class="fa fa-eye"></i><?php echo $posts['total_views']?> </h6>
                                 <h6><i class="fa fa-clock-o"></i>

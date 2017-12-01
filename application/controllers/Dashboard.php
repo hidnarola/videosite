@@ -192,6 +192,27 @@ class Dashboard extends CI_Controller {
         $this->load->view('front/layouts/layout_main', $data);
     }
     
+     public function view_my_posts()
+    {
+        $sess_data = $this->session->userdata('client');
+        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
+        
+        $config['base_url'] = base_url().'dashboard/view_my_videos';
+        $config['total_rows'] = $this->Post_model->get_posts_front_count('user_post',['is_deleted' => 0, 'is_blocked' => 0]);
+        $config['per_page'] = 3;
+        $offset = $this->input->get('per_page');
+        $config = array_merge($config,pagination_front_config());
+        
+        $this->pagination->initialize($config);
+        
+        $data['posts'] = $this->Post_model->get_all_posts_by_user($sess_data['id'],$config['per_page'],$offset);
+        $str_links = $this->pagination->create_links();
+        $data["links"] = explode('&nbsp;',$str_links );
+        
+        $data['subview'] = 'front/dashboard/my_posts';
+        $this->load->view('front/layouts/layout_main', $data);
+    }
+    
         
 
     

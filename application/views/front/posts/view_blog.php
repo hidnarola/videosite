@@ -98,6 +98,7 @@
         <h3>Related <?php echo $new_var . 's'; ?></h3>
         <ul class="list-ul">
             <?php
+//            pr($related_posts);
             if (isset($related_posts))
             {
                 foreach ($related_posts as $key => $related)
@@ -114,7 +115,7 @@
                         </li>
                         <?php
                     }
-                    elseif ($posts['post_type'] == 'gallery')
+                    else if ($related['post_type'] == 'gallery')
                     {
                         ?>
                         <li>
@@ -127,7 +128,7 @@
                         </li>
                         <?php
                     }
-                    elseif ($posts['post_type'] == 'video')
+                    else if ($related['post_type'] == 'video')
                     {
                         ?>
                        <li>
