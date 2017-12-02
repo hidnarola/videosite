@@ -1,53 +1,32 @@
 <div class="carousel-type">
   <ul>
-      <?php if(!empty($most_recent)) { foreach($most_recent as $key => $recent){?>
+      <?php foreach($most_recent_video as $key => $recent_video){?>
       <li>
-          <?php 
-          if($recent['post_type'] == 'video')
-          {
-            $class = 'video-type';
-            $tag = 'V';
-            $img = $recent['main_image'];
-            $slug =  base_url() . 'video/' . $recent['slug']; 
-            $title = $recent['post_title'];
-          }
-          else if($recent['post_type'] == 'blog')
-          {
-            $class = 'artical-type';
-            $tag = 'A';
-            $img = $recent['main_image'];
-            $slug =  base_url() . 'blog/' . $recent['slug']; 
-            $title = $recent['post_title'];
-          }
-          else if($recent['post_type'] == 'gallery')
-          {
-            $class = 'gallery-type';  
-            $tag = 'G';
-            $img = $recent['main_image'];
-            $slug =  base_url() . 'gallery/' . $recent['slug']; 
-            $title = $recent['post_title'];
-          }
-          ?>
-          <div class="<?php echo $class;?>">
-              <a href="" class="tag"><?php echo $tag;?></a>
-              <a href="" class="img"><img src="<?php echo $img?>" alt="" /></a>
-              <h4><a href="<?php echo $slug?>"><?php $title?></a></h4>
+          <div class="video-type">
+              <a href="" class="tag">V</a>
+              <a href="" class="img"><img src="<?php echo $recent_video['main_image']?>" alt="" /></a>
+              <h4><a href="<?php echo base_url() . 'video/' . $recent_video['slug']; ?>"><?php echo $recent_video['post_title']?></a></h4>
           </div>
       </li>
-      <?php } } ?>
+      <?php } ?>
+      
+      <?php foreach($most_recent_blog as $key => $recent_blog){?>
       <li>
           <div class="artical-type">
               <a href="" class="tag">A</a>
-              <a href="" class="img"><img src="public/front/images/artical-img.jpg" alt="" /></a>
-              <h4><a href="">electronic typesettin remai essentially unchanged.</a></h4>
+              <a href="" class="img"><img src="<?php echo $recent_blog['main_image']?>" alt="" /></a>
+              <h4><a href="<?php echo base_url() . 'blog/' . $recent_blog['slug']; ?>"><?php echo $recent_blog['post_title']?></a></h4>
           </div>
       </li>
+      <?php }  ?>
+      <?php  foreach($most_recent_gallery as $key => $recent_gallery){?>
       <li>
           <div class="gallery-type">
               <a href="" class="tag">G</a>
-              <a href=""><img src="public/front/images/gallery-01.jpg" alt="" /></a>
+              <a href=""><img src="<?php echo $recent_gallery['main_image']?>" alt="" /></a>
           </div>
       </li>
+      <?php  } ?>
   </ul>
 </div>
 
