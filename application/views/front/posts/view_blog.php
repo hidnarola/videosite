@@ -81,28 +81,27 @@
                             <li><?php echo $comm['message'];?></li>
                             <?php } }?>
                         </ul>
-                    </div>
+                        <div class="input-wrap comments">
+                            <?php $all_erros = validation_errors();
+                            if (!empty($all_erros))
+                            { ?>
+                                <div class="alert alert-danger"><?php echo $all_erros; ?></div>
+<?php } ?>
+                            <label class="label-css">Add Comments </label>
+                            <input type="text" name="comments" id ="comments" placeholder="Comments" class="form-css" />
+
+                            <div class="col-md-12 col-sm-12 col-xs-12 text-right register-btn">
+                                <button type="submit" class="btn btn_custom"><i class="fa fa-check"></i> Add</button>
+                            </div>
+                        </div>
+                </div>
                     <div role="tabpanel" class="tab-pane" id="data">
                         <p class="general-text">Has been the industry's standard dummy text ever since the is simply dummy text of the printing and typesetting industry been industry's standard dummy text eversince thehas survived not only five centuries but also the leap into electronic typesettwas popularised in the was popularised in the with the release of etraset sheets containing and more recently with desktop publishing software like aldus pageMaker including versions.</p>
                     </div>
                 </div>
             </div>
 
-            <div class="input-wrap comments">
-                <?php // echo validation_errors(); ?>
-                <?php 
-            $all_erros = validation_errors(); 
-            if(!empty($all_erros)){
-        ?>
-            <div class="alert alert-danger"><?php echo $all_erros; ?></div>
-        <?php } ?>
-                <label class="label-css">Add Comments </label>
-                <input type="text" name="comments" id ="comments" placeholder="Comments" class="form-css" />
-                
-                <div class="col-md-12 col-sm-12 col-xs-12 text-right register-btn">
-                <button type="submit" class="btn btn_custom"><i class="fa fa-check"></i> Add</button>
-                </div>
-            </div>
+            
             
             <div class="box_style_1 expose">
                 <h3 class="inner"> Share </h3>
@@ -118,52 +117,22 @@
     <div class="listing-r"> 
         <h3>Related <?php echo $new_var . 's'; ?></h3>
         <ul class="list-ul">
-            <?php
-//            pr($related_posts);
-            if (isset($related_posts))
-            {
-                foreach ($related_posts as $key => $related)
-                    if ($related['post_type'] == 'blog')
-                    {
-                        ?>
-                        <li>
-                            <div class="list-ul-box">
-                                <span><a href=""><img src="<?php echo base_url() . $related['bimg']   ?>" alt="" /></a></span>
-                                <h4><a href="<?php echo base_url() . 'blog/' . $related['slug']; ?>"><?php echo $related['blog_title'] ?></a></h4>
-                                <p><?php echo $related['username'] ?></p>
-                                <h6><?php echo $related['total_views'] ?> Views</h6>
-                            </div>
-                        </li>
-                        <?php
-                    }
-                    else if ($related['post_type'] == 'gallery')
-                    {
-                        ?>
-                        <li>
-                            <div class="list-ul-box">
-                                <span><a href=""><img src="<?php echo base_url() . $related['gimg']   ?>" alt="" /></a></span>
-                                <h4><a href="<?php echo base_url() . 'gallery/' . $related['slug']; ?>"><?php echo $related['gtitle'] ?></a></h4>
-                                <p><?php echo $related['username'] ?></p>
-                                <h6><?php echo $related['total_views'] ?> Views</h6>
-                            </div>
-                        </li>
-                        <?php
-                    }
-                    else if ($related['post_type'] == 'video')
-                    {
-                        ?>
-                       <li>
-                            <div class="list-ul-box">
-                                <span><a href=""><img src="<?php echo base_url() . $related['upload_path']   ?>" alt="" /></a></span>
-                                <h4><a href="<?php echo base_url() . 'video/' . $related['slug']; ?>"><?php echo $related['vtitle'] ?></a></h4>
-                                <p><?php echo $related['username'] ?></p>
-                                <h6><?php echo $related['total_views'] ?> Views</h6>
-                            </div>
-                        </li>
-                        <?php
-                    }
-            }
-            ?>
+            <?php if (isset($related_posts)) { foreach ($related_posts as $key => $related) {  ?>
+            <li>
+                <div class="list-ul-box">
+                        <span><a href=""><img src="<?php echo base_url() . $related['main_image'] ?>" alt="" /></a></span>
+                        <?php if ($related['post_type'] == 'blog') { ?>
+                            <h4><a href="<?php echo base_url() . 'blog/' . $related['slug']; ?>"><?php echo $related['post_title'] ?></a></h4>
+                        <?php } else if($related['post_type'] == 'gallery') { ?>
+                            <h4><a href="<?php echo base_url() . 'gallery/' . $related['slug']; ?>"><?php echo $related['post_title'] ?></a></h4>
+                        <?php } else if($related['post_type'] == 'video') {?>
+                            <h4><a href="<?php echo base_url() . 'video/' . $related['slug']; ?>"><?php echo $related['post_title'] ?></a></h4>
+                        <?php }?>
+                        <p><?php echo $related['username'] ?></p>
+                        <h6><?php echo $related['total_views'] ?> Views</h6>
+                    </div>
+                </li>
+            <?php } }?>
             <li class="ad-li"><a href=""><img src="<?php echo DEFAULT_ADMIN_IMAGE_PATH ?>front/ad-02.jpg" alt="" /></a></li>
         </ul>
     </div>    
