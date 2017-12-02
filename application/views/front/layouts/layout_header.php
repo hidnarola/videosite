@@ -99,6 +99,11 @@
                         </a>
                     </li>
                     <li>
+                        <a href="<?php echo base_url().'dashboard/change_password';?>">
+                            Change Password
+                        </a>
+                    </li>
+                    <li>
                         <a href="<?php echo base_url().'dashboard/logout'; ?>">Log Out</a>
                     </li>
                 </ul>

@@ -346,20 +346,29 @@ class Post_model extends CI_Model
 
     public function get_bookmarked_post($id, $limit, $offset)
     {
-//        b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path as bimg,DATE_FORMAT(b.created_at,"%d %b %Y %l:%i %p") AS blog_created_date,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description,g.img_path as gimg,DATE_FORMAT(g.created_at,"%d %b %Y %l:%i %p") AS gallery_created_date,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description,v.upload_path,DATE_FORMAT(v.created_at,"%d %b %Y %l:%i %p") AS video_created_date
         $this->db->select('ub.user_id,ub.post_id,u.username,post_type,slug,post_title,main_image,COUNT(distinct upc.id) as total_views');
         $this->db->join('users u', 'u.id = ub.user_id');
         $this->db->join('user_post up', 'up.id = ub.post_id');
-//        $this->db->join('blog b', 'b.post_id = ub.post_id', 'left');
-//        $this->db->join('video v', 'v.post_id = ub.post_id', 'left');
-//        $this->db->join('gallery g', 'g.post_id = ub.post_id', 'left');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
         $this->db->where('ub.user_id',$id);
-        $this->db->group_by('up.id');
+        $this->db->group_by('ub.post_id');
         $this->db->order_by('ub.id', 'desc');
         $this->db->limit($limit, $offset);
-        $bookmark = $this->db->get('user_bookmarks ub')->result_array();
-        return $bookmark;
+        $bookmarks = $this->db->get('user_bookmarks ub')->result_array();
+        return $bookmarks;
+    }
+    
+    public function get_bookmarked_post_count($id)
+    {
+        $this->db->select('ub.user_id,ub.post_id,u.username,post_type,slug,post_title,main_image,COUNT(distinct upc.id) as total_views');
+        $this->db->join('users u', 'u.id = ub.user_id');
+        $this->db->join('user_post up', 'up.id = ub.post_id');
+        $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
+        $this->db->where('ub.user_id',$id['user_id']);
+        $this->db->group_by('ub.post_id');
+        $this->db->order_by('ub.id', 'desc');        
+        $bookmarks = $this->db->get('user_bookmarks ub')->num_rows();
+        return $bookmarks;
     }
     
     public function get_history($id, $limit, $offset)
@@ -567,6 +576,20 @@ class Post_model extends CI_Model
         $this->db->where('s.main_cat_id = c.id');
         $sub = $this->db->get('sub_categories s')->result_array();
         return $sub;
+    }
+    
+    
+    public function get_most_liked_post($limit,$offset)
+    {
+        $this->db->select('up.id as userpostid,up.channel_id,up.post_type,up.post_title,up.main_image,up.slug,uk.id as userlikeid,uk.user_id,uk.post_id,u.id as userid,u.username,count(distinct uk.id) as total_likes,count(distinct upc.id) as total_views');
+        $this->db->join('user_likes uk','uk.post_id = up.id','left');
+        $this->db->join('users u','u.id = uk.user_id');
+        $this->db->join('user_post_counts upc','up.id = upc.post_id');
+        $this->db->group_by('uk.post_id');
+        $this->db->order_by('total_likes','desc');
+        $this->db->limit($limit,$offset);
+        $likes = $this->db->get('user_post up')->result_array();
+        return $likes;
     }
 }
 

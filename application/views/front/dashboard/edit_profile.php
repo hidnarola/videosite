@@ -30,6 +30,11 @@
                 <?php $post_lname = ($_POST) ? set_value('lname') : $user_data['lname']; ?>
                 <input type="text" name="lname" id="lname" placeholder="Last Name" value="<?php echo $post_lname; ?>" class="form-css" />
             </div>
+            <div class="input-wrap">
+                <label class="label-css">Designation </label>
+                <?php $post_designation = ($_POST) ? set_value('designation') : $user_data['designation']; ?>
+                <input type="text" name="designation" id="designation" placeholder="Designation" value="<?php echo $post_designation; ?>" class="form-css" />
+            </div>
 
             <div class="input-wrap">
                 <label class="label-css">Birth Date </label>

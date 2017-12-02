@@ -42,11 +42,13 @@ class Dashboard extends CI_Controller {
 
         	$username = $this->input->post('username');
 			$fname = $this->input->post('fname');
-			$lname = $this->input->post('lname');			
+			$lname = $this->input->post('lname');	
+                        $designation = $this->input->post('designation');
 
 			$upd_arr = [
 							'fname'=>$fname,
 							'lname'=>$lname,
+							'designation'=>$designation,
 							'username'=>$username,							
 							'avatar'=>$this->img_var
 						];
@@ -155,9 +157,6 @@ class Dashboard extends CI_Controller {
         
         $config['base_url'] = base_url().'dashboard/view_history';
         $config['total_rows'] = $this->Post_model->get_history_count(['user_id' => $sess_data['id']]);
-        // echo "<br/>1======================================================<br/>";
-        // qry();
-        
 
         $config['per_page'] = 3;
         $offset = $this->input->get('per_page');
@@ -167,13 +166,6 @@ class Dashboard extends CI_Controller {
         
         $data['history'] = $this->Post_model->get_history($sess_data['id'],$config['per_page'],$offset);
 
-        // echo "<br/>2======================================================<br/>";
-        // qry();
-        // echo "<br/>2======================================================<br/>";
-        // pr($config['total_rows']);
-        // pr($data['history']);
-        // die();
-        
         $str_links = $this->pagination->create_links();
         $data["links"] = explode('&nbsp;',$str_links );
         
@@ -187,7 +179,7 @@ class Dashboard extends CI_Controller {
         $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         
         $config['base_url'] = base_url().'dashboard/view_bookmarked_post';
-        $config['total_rows'] = $this->Post_model->get_posts_front_count('user_bookmarks',['user_id' => $sess_data['id']]);
+        $config['total_rows'] = $this->Post_model->get_bookmarked_post_count(['user_id' => $sess_data['id']]);
         $config['per_page'] = 3;
         $offset = $this->input->get('per_page');
         $config = array_merge($config,pagination_front_config());

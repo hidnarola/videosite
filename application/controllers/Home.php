@@ -17,6 +17,7 @@ class Home extends CI_Controller
     {
         $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $data['sub_categories'] = $this->Post_model->get_sub_cat();
+        $data['most_likes'] = $this->Post_model->get_most_liked_post(10,0);
         $data['subview'] = "front/home";
         $this->load->view('front/layouts/layout_main', $data);
     }
@@ -28,7 +29,6 @@ class Home extends CI_Controller
         $post_type = $this->uri->segment(1);
         $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $data['posts'] = $this->Post_model->get_all_posts_by_slug($post_slug);
-//        $data['bookmarked'] = $this->db->get_where('user_bookmarks', ['post_id' => $data['posts']['id']])->num_rows();
         $data['liked'] = $this->db->get_where('user_likes', ['post_id' => $data['posts']['id']])->num_rows();
         $res_post_data = $this->db->get_where('user_post', ['slug' => $post_slug, 'post_type' => $post_type])->row_array();
         $data['comments'] = $this->Post_model->get_comments_by_post_id($res_post_data['id']);
@@ -40,7 +40,7 @@ class Home extends CI_Controller
 
         if ($res_post_data['post_type'] == 'gallery')
         {
-            $data['new_var'] = 'Gallery'; 
+            $data['new_var'] = 'Gallerie'; 
             $data['gallery'] = $this->db->get_where('gallery', ['post_id' => $res_post_data['id']])->result_array();
             $data['count_gallery'] = count($data['gallery']);
         }
