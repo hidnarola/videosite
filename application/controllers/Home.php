@@ -14,7 +14,7 @@ class Home extends CI_Controller
     }
 
     public function index()
-    {
+    {        
         $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $data['sub_categories'] = $this->Post_model->get_sub_cat();
         $data['most_likes'] = $this->Post_model->get_most_liked_post(10,0);
