@@ -34,23 +34,35 @@ $all_cms_pages = $this->db->get_where('cms_page',['is_deleted'=>'0','is_blocked'
     <div class="category-nav nav-div">
         <ul>
             <?php
-            foreach ($categories as $key => $cat)
-            {
-                ?>
-
-                <li><a href="<?php echo base_url() . 'home/category_detail_page/' . $cat['id']; ?>" class="ct-link"><i class="<?php echo $cat['icon']; ?>"></i><?php echo $cat['category_name'] ?></a> <a href="" class="fa fa-angle-down arrow-down"></a>
+                foreach ($categories as $key => $cat) {
+                    $sub_cat = $this->db->get_where('sub_categories', ['main_cat_id' => $cat['id']])->result_array();
+            ?>
+                <li>
+                    <a href="<?php echo base_url() . 'home/category_detail_page/' . $cat['id']; ?>" class="ct-link">
+                        <i class="<?php echo $cat['icon']; ?>"></i>
+                        <?php echo $cat['category_name'] ?></a> 
+                        
+                        <?php if(!empty($sub_cat)) { ?>
+                            <a class="fa fa-angle-down arrow-down"></a>
+                        <?php } ?>
+                    <?php                         
+                        if(!empty($sub_cat)) {
+                    ?>
                     <ul class="sub-category">
-                        <?php
-                        $sub_cat = $this->db->get_where('sub_categories', ['main_cat_id' => $cat['id']])->result_array();
-                        foreach ($sub_cat as $key => $sub)
-                        {
-                            ?>                  
-                            <li><a href="<?php echo base_url() . 'home/category_detail_page/' . $cat['id']; ?>"><i class="<?php echo $sub['icon']; ?>"></i><?php echo $sub['category_name'] ?></a></li>
-                  <?php } ?>
+                        <?php                        
+                            foreach ($sub_cat as $key => $sub) {
+                        ?>                  
+                            <li>
+                                <a href="<?php echo base_url() . 'home/category_detail_page/' . $cat['id']; ?>">
+                                    <i class="<?php echo $sub['icon']; ?>"></i>
+                                    <?php echo $sub['category_name'] ?>
+                                </a>
+                            </li>
+                        <?php } ?>
                     </ul>
-    <?php } ?>
-
-            </li>
+                    <?php } ?>
+                </li>
+            <?php } ?>
         </ul>
     </div>
 </div>
