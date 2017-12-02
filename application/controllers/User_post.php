@@ -5,8 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class User_post extends CI_Controller
 {
 
-    public function __construct()
-    {
+    public function __construct(){
         parent::__construct();
         $this->load->model(['Post_model']);
     }    
@@ -89,6 +88,47 @@ class User_post extends CI_Controller
             $this->Post_model->insert_record('video',$video_data);
             $this->session->set_flashdata('success','Video has been uploaded successfully.');
             redirect('user_post/add_video_post');
+        }
+    }
+
+    public function edit_video_post($post_id){
+        
+        $data['post_data'] = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
+        if(empty($data['post_data'])){ show_404(); }
+
+        $data['post_data']['video'] = $this->db->get_where('video',['post_id'=>$post_id])->row_array();
+        
+        $sess_data = $this->session->userdata('client');
+
+        // ------------------------------------------------------------------------
+        $all_ids_arr = $this->db->select('id')->get_where('user_channels',['user_id'=>$sess_data['id']])->result_array();
+        $all_channel_ids = array_column($all_ids_arr,'id');
+        if(in_array($data['post_data']['channel_id'],$all_channel_ids) == false){ show_404(); }
+        // ------------------------------------------------------------------------
+
+        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
+        $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
+        
+        $data['all_category'] = [];
+        $data['all_sub_cat'] = [];
+        $video_path = $this->input->post('video_path');
+
+        if($_POST){
+            $post_cat_id = $this->input->post('category');
+            $data['all_category'] = $this->Post_model->get_result('categories', ['is_deleted' => '0', 'is_blocked' => '0']);
+            $data['all_sub_cat'] = $this->Post_model->get_result('sub_categories', ['main_cat_id'=>$post_cat_id,'is_deleted' => '0', 'is_blocked' => '0']);
+        }else{
+            $data['all_category'] = $this->Post_model->get_result('categories', ['is_deleted' => '0', 'is_blocked' => '0']);
+        }
+
+        $this->form_validation->set_rules('video_title', 'Video Title', 'required');
+        $this->form_validation->set_rules('category', 'Category', 'required');        
+
+        if ($this->form_validation->run() == FALSE){
+            $data['subview'] = 'front/posts/video_edit_post';
+            $this->load->view('front/layouts/layout_main', $data);
+        } else {
+
         }
     }
 
@@ -266,6 +306,21 @@ class User_post extends CI_Controller
     }
 
     // ------------------------------------------------------------------------ 
+
+    public function delete_user_post($post_id){
+        $sess_data = $this->session->userdata('client');
+        $all_ids_arr = $this->db->select('id')->get_where('user_channels',['user_id'=>$sess_data['id']])->result_array();
+        $all_channel_ids = array_column($all_ids_arr,'id');
+
+        $post_data = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
+        if(in_array($post_data['channel_id'],$all_channel_ids) == false){ show_404(); }
+
+        $this->db->update('user_post',['is_deleted'=>'1'],['id'=>$post_id]);
+        $this->session->set_flashdata('success','Post has been deleted successfully.');
+        redirect('dashboard/view_my_posts');
+    }
+
+    // ------------------------------------------------------------------------
 
     public function ajax_call() {
 

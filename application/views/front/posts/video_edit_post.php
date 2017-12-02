@@ -8,17 +8,7 @@
         <div class="alert alert-danger"><?php echo $all_erros; ?></div>
     <?php } ?>
 
-
-
-    <h3 class="h3-title">Add Video</h3>
-    
-    <a href="<?php echo base_url().'user_post/add_post/blog'; ?>" class="btn btn-warning">Add Blog</a>
-    <a href="<?php echo base_url().'user_post/add_post/gallery'; ?>" class="btn btn-success">Add Gallery</a>
-    
-    <br>
-    <br>
-    <br>
-    
+    <h3 class="h3-title">Edit Video</h3>
     <form method="post" action="" id="frmblog" enctype="multipart/form-data">
         <div class="input-wrap">
             <label class="label-css">Select Channel </label>
@@ -67,24 +57,14 @@
         
         <div class="input-wrap">
             <label class="label-css">Video Title </label>
-            <input type="text" name="video_title" id ="video_title" placeholder="Blog Title" value="<?php echo set_value('video_title'); ?>" class="form-css" />
-        </div>
-
-        <div class="input-wrap">
-            <label class="label-css">Upload File</label>
-            <div class="input-file">
-                <input type="text" class="form-css" name="video_path" readonly >
-                <label class="input-group-btn">
-                    <span class="">
-                        Browse <input type="file" name="vid_path" style="display: none;">
-                    </span>
-                </label>
-            </div>
+            <?php if($_POST){$post_val = set_value('video_title'); }else{$post_val = $post_data['post_title']; } ?>
+            <input type="text" name="video_title" id ="video_title" placeholder="Blog Title" value="<?php echo $post_val; ?>" class="form-css" />
         </div>
 
         <div class="input-wrap full-width">
             <label class="label-css">Comment</label>
-            <textarea class="textarea-css" name="video_desc"></textarea>
+            <?php if($_POST){ $post_comm = set_value('video_desc'); }else{ $post_comm = $post_data['video']['description']; } ?>
+            <textarea class="textarea-css" name="video_desc"><?php echo $post_comm; ?></textarea>
         </div>
 
         <div class="btn-btm">

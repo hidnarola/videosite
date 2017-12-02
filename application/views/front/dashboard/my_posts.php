@@ -23,8 +23,8 @@
                    <?php }?>
                     <div class="edit-dlt">
                         <p>By : <?php echo $session_info['username'] ?> <span></span></p>
-                        <a href="" class="fa fa-edit"></a>
-                        <a href="" class="fa fa-trash"></a>
+                        <a href="<?php echo base_url().'user_post/edit_video_post/'.$post['id']; ?>" class="fa fa-edit"></a>
+                        <a onclick="delete_confirm(this)" data-id="<?php echo $post['id']; ?>" class="cursor_pointer fa fa-trash"></a>
                     </div>
                     <h6><i class="fa fa-eye"></i> <?php echo $post['total_views'] ?> Views</h6>
                     <!--<h6><i class="fa fa-clock-o"></i><?php get_ago_time($post['blog_created_date'], date("Y-m-d H:i:s")) ?></h6>-->
@@ -42,5 +42,21 @@
         ?>
     </div>
 </div>
+
+<script type="text/javascript">
+    function delete_confirm(obj){
+        var post_id = $(obj).data('id');
+        
+        bootbox.confirm("Are you sure ?", 
+            function(result){ 
+                if(result){
+                    window.location.href="<?php echo base_url().'user_post/delete_user_post/'; ?>"+post_id;
+                }
+            }
+        );
+    }
+</script>
+
+
 
 
