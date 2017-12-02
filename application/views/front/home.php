@@ -1,32 +1,31 @@
 <div class="carousel-type">
   <ul>
-      <?php foreach($most_recent_video as $key => $recent_video){?>
       <li>
+      <?php if(!empty($most_recent_video)) { foreach($most_recent_video as $key => $recent_video){?>
           <div class="video-type">
               <a href="" class="tag">V</a>
               <a href="" class="img"><img src="<?php echo $recent_video['main_image']?>" alt="" /></a>
               <h4><a href="<?php echo base_url() . 'video/' . $recent_video['slug']; ?>"><?php echo $recent_video['post_title']?></a></h4>
           </div>
+      <?php } } ?>
       </li>
-      <?php } ?>
-      
-      <?php foreach($most_recent_blog as $key => $recent_blog){?>
       <li>
+      <?php if(!empty($most_recent_blog)) { foreach($most_recent_blog as $key => $recent_blog){?>
           <div class="artical-type">
               <a href="" class="tag">A</a>
               <a href="" class="img"><img src="<?php echo $recent_blog['main_image']?>" alt="" /></a>
               <h4><a href="<?php echo base_url() . 'blog/' . $recent_blog['slug']; ?>"><?php echo $recent_blog['post_title']?></a></h4>
           </div>
+      <?php } } ?>
       </li>
-      <?php }  ?>
-      <?php  foreach($most_recent_gallery as $key => $recent_gallery){?>
       <li>
+      <?php if(!empty($most_recent_blog)) { foreach($most_recent_gallery as $key => $recent_gallery){?>
           <div class="gallery-type">
               <a href="" class="tag">G</a>
               <a href=""><img src="<?php echo $recent_gallery['main_image']?>" alt="" /></a>
           </div>
+      <?php  } } ?>
       </li>
-      <?php  } ?>
   </ul>
 </div>
 

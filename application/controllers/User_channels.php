@@ -12,12 +12,13 @@ class User_channels extends CI_Controller {
 	public function index() {
 		$sess_data = $this->session->userdata('client');
 		$data['all_channels'] = $this->Cms_model->get_result('user_channels',['user_id'=>$sess_data['id'],'is_deleted'=>'0','is_blocked'=>'0']);
+                $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
 		$data['subview']='front/channels/index';
     	$this->load->view('front/layouts/layout_main',$data);
 	}
 
 	public function add(){
-		
+		$data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
 		$this->form_validation->set_rules('channel_name', 'Channel Name', 'required|callback_check_maximum_channel|callback_check_unique_channel',
 											[
 												'check_maximum_channel'=>'Can not add more than 3 Channels.',
@@ -47,6 +48,7 @@ class User_channels extends CI_Controller {
 
 	public function edit($channel_id){
 
+            $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
 		$this->form_validation->set_rules('channel_name', 'Channel Name', 'required|callback_check_unique_channel_edit['.$channel_id.']',
 										 ['check_unique_channel_edit'=>'Channel name must be unique.']);
 
@@ -73,6 +75,7 @@ class User_channels extends CI_Controller {
 	}
 
 	public function delete($id){
+            $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
 		$sess_data = $this->session->userdata('client');
 		$res = $this->Cms_model->get_result('user_channels',['user_id'=>$sess_data['id'],'id'=>$id]);
 		
@@ -89,7 +92,6 @@ class User_channels extends CI_Controller {
 	// ------------------------------------------------------------------------
 
 	public function channel_detail($channel_name){
-            
             $sess_data = $this->session->userdata('client');
             $data['session_info'] = $sess_data;
 		$data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
