@@ -608,20 +608,32 @@ class Post_model extends CI_Model
     public function get_recently_posted_videos($limit,$offset)
     {
         $this->db->select('id,post_title,main_image,slug,post_type');
+        $this->db->where('post_type','video');
         $this->db->order_by('created_at','desc');
-        $recent = $this->db->get('user_post up')->result_array();
-        return $recent;
+        $this->db->limit($limit,$offset);
+        $recent_video = $this->db->get('user_post up')->result_array();
+        return $recent_video;
         
     }
     
     public function get_recently_posted_blogs($limit,$offset)
     {
-        
+        $this->db->select('id,post_title,main_image,slug,post_type');
+        $this->db->where('post_type','blog');
+        $this->db->order_by('created_at','desc');
+        $this->db->limit($limit,$offset);
+        $recent_blog = $this->db->get('user_post up')->result_array();
+        return $recent_blog;
     }
     
     public function get_recently_posted_gallery($limit,$offset)
     {
-        
+        $this->db->select('id,post_title,main_image,slug,post_type');
+        $this->db->where('post_type','gallery');
+        $this->db->order_by('created_at','desc');
+        $this->db->limit($limit,$offset);
+        $recent_gallery = $this->db->get('user_post up')->result_array();
+        return $recent_gallery;
     }
 }
 
