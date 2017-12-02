@@ -19,7 +19,11 @@ class Home extends CI_Controller
         $data['sub_categories'] = $this->Post_model->get_sub_cat();
         $data['most_likes'] = $this->Post_model->get_most_liked_post(10,0);
         $data['most_views'] = $this->Post_model->get_most_viewed_post(10,0);
+
         $data['most_recent'] = $this->Post_model->get_recently_posted_videos(7,0);
+
+        // pr($data['most_recent'],1);
+        
         $data['subview'] = "front/home";
         $this->load->view('front/layouts/layout_main', $data);
     }
