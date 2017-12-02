@@ -17,7 +17,6 @@ class Home extends CI_Controller
     {
         $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $data['sub_categories'] = $this->Post_model->get_sub_cat();
-//        pr($data['sub_categories']);
         $data['subview'] = "front/home";
         $this->load->view('front/layouts/layout_main', $data);
     }
@@ -102,6 +101,18 @@ class Home extends CI_Controller
             else
             {
                 $this->session->set_flashdata('message', ['message' => 'Error Into Insert Comment!', 'class' => 'danger']);
+            }
+            if ($res_post_data['post_type'] == 'video')
+            {
+                redirect('video/' . $res_post_data['slug']);
+            }
+            elseif ($res_post_data['post_type'] == 'blog')
+            {
+                redirect('blog/' . $res_post_data['slug']);
+            }
+            elseif ($res_post_data['post_type'] == 'gallery')
+            {
+                redirect('gallery/' . $res_post_data['slug']);
             }
         }
 

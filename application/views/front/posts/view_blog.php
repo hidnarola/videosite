@@ -1,5 +1,5 @@
 <form method="post" action="" id="frmblog" enctype="multipart/form-data">
-    <?php echo validation_errors(); ?>
+    <?php // echo validation_errors(); ?>
     <div class="listing-l">
         <div class="head-bg-01">
             <h2><?php echo $posts['post_title'] ?></h2>
@@ -7,7 +7,7 @@
             <div class="r-links">
                 <?php if ($user_loggedin == true){
         if ($is_user_bookmark == false){ ?>
-      <a href="<?php echo base_url() . 'home/bookmark_post/' . $posts['id']; ?>" class="bookmark-btn"><i class="fa fa-folder-open"></i>Bookmark<small><?php // echo $bookmarked;?></small></a>
+      <a href="<?php echo base_url() . 'home/bookmark_post/' . $posts['id']; ?>" class="bookmark-btn"><i class="fa fa-folder-open"></i>Bookmark<small></small></a>
         <?php } else { ?>
         <a href="<?php echo base_url() . 'home/unbookmark_post/' . $posts['id']; ?>" class="bookmark-btn"><i class="fa fa-folder-open"></i>Bookmarked<small><?php echo $bookmarked;?></small></a>
     <?php } } ?>
@@ -27,8 +27,9 @@
         </div>
         <div class="listing-l-div">
             <?php if (isset($posts)) {?>
-            
-              <?php  if ($posts['post_type'] == 'blog') { foreach ($blog as $key => $blogs){ ?>
+              <?php  if ($posts['post_type'] == 'blog') 
+//            ==================================Blogs========================================================
+                     { foreach ($blog as $key => $blogs){ ?>
                             <div class="big-img">
                                 <a href=""><img src="<?php echo base_url() . $blogs['img_path'] ?>" alt="" /></a>
                                 <?php if($count_blog > 1) { ?>
@@ -39,7 +40,11 @@
                             <h2><?php echo $blogs['blog_title'] ?></h2>
                             <p><?php echo $blogs['blog_description'] ?></p>
                         </div>
-                        <?php } } elseif ($posts['post_type'] == 'gallery') { foreach ($gallery as $key => $gal) { ?>
+                        <?php } } 
+//          ==================================Blogs========================================================
+
+//          ==================================Gallery========================================================
+                        elseif ($posts['post_type'] == 'gallery') { foreach ($gallery as $key => $gal) { ?>
                         <div class="big-img">
                             <a href=""><img src="<?php echo base_url() . $gal['img_path'] ?>" alt="" /></a>
                             <?php if($count_gallery > 1) { ?>
@@ -50,27 +55,19 @@
                             <h2><?php echo $gal['title'] ?></h2>
                             <p><?php echo $gal['description'] ?></p>
                         </div>
-                        <?php } } elseif ($posts['post_type'] == 'video') { ?>
+                        <?php } } 
+//          ==================================Gallery========================================================
+//          ==================================Video========================================================
+                        elseif ($posts['post_type'] == 'video') { ?>
                     <div class="big-img">
                         <a href=""><img src="<?php echo base_url() . $posts['upload_path'] ?>" alt="" /></a>
-                        <!--<span>06 <small>of 40</small></span>-->
                     </div>
                     <div class="list-content">
                         <h2><?php echo $posts['vtitle'] ?></h2>
                         <p><?php echo $posts['description'] ?></p>
                     </div>
                     <?php } } ?>
-            <div class="list-content comment">
-                <a href="javascript:;">Comments</a>
-            </div>
-            <div class="input-wrap comments" style="display: none;">
-                <label class="label-css">Add Comments </label>
-                <input type="text" name="comments" id ="comments" placeholder="Comments" class="form-css" />
-                
-                <div class="col-md-12 col-sm-12 col-xs-12 text-right register-btn">
-                <button type="submit" class="btn btn_custom"><i class="fa fa-check"></i> Add</button>
-            </div>
-            </div>
+ <!--==================================Video========================================================-->            
             
             <div class="comman-tab">
                 <ul class="nav nav-tabs" role="tablist">
@@ -91,6 +88,22 @@
                 </div>
             </div>
 
+            <div class="input-wrap comments">
+                <?php // echo validation_errors(); ?>
+                <?php 
+            $all_erros = validation_errors(); 
+            if(!empty($all_erros)){
+        ?>
+            <div class="alert alert-danger"><?php echo $all_erros; ?></div>
+        <?php } ?>
+                <label class="label-css">Add Comments </label>
+                <input type="text" name="comments" id ="comments" placeholder="Comments" class="form-css" />
+                
+                <div class="col-md-12 col-sm-12 col-xs-12 text-right register-btn">
+                <button type="submit" class="btn btn_custom"><i class="fa fa-check"></i> Add</button>
+                </div>
+            </div>
+            
             <div class="box_style_1 expose">
                 <h3 class="inner"> Share </h3>
                 <div class="row">
@@ -157,11 +170,3 @@
 </form>
 
 
-<script>
-    $('.comment').on ('click', function() {
-        $('.comments').show();
-    });
-    $('.register-btn').on ('click', function() {
-        $('.comments').hide();
-    });
-</script>
