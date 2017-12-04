@@ -18,7 +18,7 @@
                             </div>
                             <div class="remember-forgat">                                
                                 <a class="cursor_pointer" onclick="$('.sing_in_up').addClass('hide'); $('.re-password').removeClass('hide');">
-                                    Forget password?
+                                    Forgot password?
                                 </a>
                             </div>
                             <button type="submit" name="">SIGN IN</button>
@@ -26,7 +26,7 @@
                     </div>
                     <div class="sign-in-r">
                         <h3>Don’t have an account?</h3>
-                        <p>When an unknown printer took a galley of type and scrambled it to make a type specimen book has survived not only five.</p>
+                        <p>When an unknown printer took a gallery of type and scrambled it to make a type specimen book has survived not only five.</p>
                         <a href="javascript:void(0)" class="btn_sign_up">sign up</a>
                     </div>
                 </div>
@@ -72,12 +72,12 @@
         <div class="re-password hide">
             <h2>Forgot password</h2>
             <p>Please enter your email information.</p>
-            <form>
+            <form id="forgotpassword">
                 <div class="input-wrap-div">
-                    <input type="text" name="" placeholder="E-mail"/>
+                    <input type="text" name="email_id" placeholder="E-mail" required/>
                 </div>
                 <button type="submit">Submit</button>
-                <a onclick="$('.sing_in_up').removeClass('hide'); $('.re-password').addClass('hide');" >cancel</a>
+                <a onclick="$('.sing_in_up').removeClass('hide'); $('.re-password').addClass('hide');" >Cancel</a>
             </form>
         </div>
     </div>
@@ -89,9 +89,6 @@
     $(function(){
         $('.datepicker').datepicker();
     });
-    
-   
-    
 
     var dialog = null;
 
@@ -130,7 +127,40 @@
             return false; // required to block normal submit since you used ajax
         }
     });
+    
+$("#forgotpassword").validate({
+        submitHandler:function(form){
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url(); ?>/registration/ajax_forgot_password",
+                data: $(form).serialize(),
+                dataType:'JSON',
+                success: function (data) {
 
+                    if(data['success'] == false){
+                        var new_str = '';                               
+                        new_str += '<p>'+data['email_error']+'</p>';
+                        // bootbox.alert(new_str);
+
+                        dialog = bootbox.dialog({
+                            message: '<p class="text-center">'+new_str+'</p>',
+                            closeButton: false
+                        });
+                        
+                        // do something in the background
+                        setTimeout(function(){
+                            dialog.modal('hide');
+                        },2000);                                
+
+                    }else{
+                        window.location.href="<?php echo base_url().'home'; ?>";
+                    }
+                    return false;
+                }
+            });
+            return false; // required to block normal submit since you used ajax
+        }
+    });
     $("#sign_up_form").validate({
         rules: {
             username: {

@@ -113,36 +113,40 @@ class Registration extends CI_Controller {
         echo json_encode($res);
     }   
 
-    public function forgot_password(){
-
+    public function ajax_forgot_password(){
+        
         $this->form_validation->set_rules('email_id', 'Email Id', 'trim|required|valid_email|callback_forgot_email_check',
                                          ['forgot_email_check'=>'OOPS !! Email does not exists.']);
-
-        if($this->form_validation->run() == FALSE){
-            $data['subview']='front/registration/forgot_pass';
-            $this->load->view('front/layouts/layout_main',$data);
+       
+        if($this->form_validation->run() == FALSE){   
+            $res['email_error'] = strip_tags(form_error('email_id'));         
         }else{
-            $email_id = $this->input->post('email_id');
-            $res = $this->Users_model->get_data(['email_id'=>$email_id],true);
-            $random_no = random_string('alnum',5);
+            $user_data=$this->Users_model->check_if_user_exist(['email_id' => $this->input->post('email_id')], false, true,['1','2','3']);
+            if($user_data){
 
-            $this->Users_model->update_user_data($res['id'],['activation_code'=>$random_no]);
+                $random_no=random_string('alnum',5);
+                $this->db->set('activation_code', $random_no);
+                $this->db->where('id',$user_data['id']);
+                $this->db->update('users');                
+                $html_content = '<h1> Hello World </h1> <a href="'.base_url().'admin/set_password/'.$random_no.'"> Click Here </a>';
+                
 
-            $html_content = '<h1> Hello World </h1> <a href="'.base_url().'registration/verify_email/'.$random_no.'"> Click Here </a>';
-
-            $email_config = mail_config();
-            $this->email->initialize($email_config);
-            $subject='Reset Password';
-            $this->email->from('test@mail.com')
-                        ->to('vpa@narola.email')
-                        ->subject($subject)
-                        ->message($html_content);
-            $this->email->send();
-
-            $this->session->set_flashdata('success','User has been inserted successfully.');
-            redirect('registration/user');
-            echo "Success";
+                $email_config = mail_config();
+                $this->email->initialize($email_config);
+                $subject= config('site_name').' - Forgot Password Request';    
+                $this->email->from(config('contact_email'), config('sender_name'))
+                            ->to($this->input->post('email_id'),'nik@narola.email')
+                            ->subject($subject)
+                            ->message($html_content);
+                $this->email->send();
+                 $this->session->set_flashdata('message', ['message' => 'Forgot password request sent successfully, You will receive the confirmation mail', 'class' => 'alert alert-success']);
+            }
+            else{
+                 $this->session->set_flashdata('message', ['message' => 'Provided email address does not match with the system records.', 'class' => 'alert alert-danger']);
+            }
+            echo json_encode($res);
         }
+        
     }
 
     public function reset_password(){
