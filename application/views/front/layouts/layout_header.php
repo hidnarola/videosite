@@ -16,6 +16,8 @@
     <link href="<?php echo DEFAULT_CSS_PATH ?>font.css" rel="stylesheet">
     <link href="<?php echo DEFAULT_ADMIN_CSS_PATH . "font.css"; ?>" rel="stylesheet" type="text/css">
     <link href="<?php echo DEFAULT_ADMIN_CSS_PATH . "icons/icomoon/styles.css"; ?>" rel="stylesheet" type="text/css">
+    <script src="<?php echo DEFAULT_ADMIN_JS_PATH . "sweetalert.min.js"; ?>"></script>
+    <link rel="stylesheet" type="text/css" href="<?php echo DEFAULT_ADMIN_CSS_PATH . "sweetalert.css"; ?>">
     <link href="<?php echo DEFAULT_CSS_PATH ?>icomoon.css" rel="stylesheet" />
     <link href="<?php echo DEFAULT_CSS_PATH ?>style.css" rel="stylesheet" />
     <link href="<?php echo DEFAULT_CSS_PATH ?>pam_style.css" rel="stylesheet" />    
@@ -101,6 +103,11 @@
                     <li>
                         <a href="<?php echo base_url().'dashboard/change_password';?>">
                             Change Password
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url().'user_channels';?>">
+                            Channels
                         </a>
                     </li>
                     <li>
