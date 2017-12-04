@@ -15,22 +15,13 @@ class Admin_users_model extends CI_Model
      */
     public function get_all_users()
     {
-
-//                            DATE_FORMAT(last_login,"%d %b %Y <br> %l:%i %p") AS last_login
-//                            COUNT(DISTINCT blg.id) as blog,COUNT(DISTINCT v.id) as video,COUNT(DISTINCT g.id) as gallery,
         $this->db->select('u.id,u.id AS test_id,r.role_name,fname,lname,email_id,
                             DATE_FORMAT(u.created_at,"%d %b %Y <br> %l:%i %p") AS created_at,
                             u.is_blocked', false);
         $this->db->join('role r', 'u.role_id = r.id');
-//        $this->db->join('user_channels c', 'u.id = c.user_id', 'left');
-//        $this->db->join('user_post up', 'up.channel_id = c.id', 'left');
-//        $this->db->join('blog blg', 'up.id = blg.post_id', 'left');
-//        $this->db->join('video v', 'up.id = v.post_id', 'left');
-//        $this->db->join('gallery g', 'up.id = g.post_id', 'left');
+
         $this->db->where_in('role_id', [2, 3]);
         $this->db->where('u.is_deleted !=', 1);
-//        $this->db->group_by('u.id');
-
         $keyword = $this->input->get('search');
         $keyword = str_replace('"', '', $keyword);
 
@@ -41,8 +32,6 @@ class Admin_users_model extends CI_Model
 
         $this->db->limit($this->input->get('length'), $this->input->get('start'));
         $res_data = $this->db->get('users u')->result_array();
-//        qry();
-//        pr($res_data, 1);
         return $res_data;
     }
 
@@ -53,22 +42,9 @@ class Admin_users_model extends CI_Model
      */
     public function get_users_count()
     {
-//        $this->db->select('u.id,u.id AS test_id,r.role_name,fname,lname,email_id,
-//                            DATE_FORMAT(last_login,"%d %b %Y <br> %l:%i %p") AS last_login,DATE_FORMAT(u.created_at,"%d %b %Y <br> %l:%i %p") AS created_at,
-//                            u.is_blocked,COUNT(blg.user_id) as total', false);
         $this->db->join('role r', 'u.role_id = r.id');
-//        $this->db->join('user_channels c', 'u.id = c.user_id', 'left');
-//        $this->db->join('user_post up', 'up.channel_id = c.id', 'left');
-//        $this->db->join('blog blg', 'up.id = blg.post_id', 'left');
-//        $this->db->join('video v', 'up.id = v.post_id', 'left');
-//        $this->db->join('gallery g', 'up.id = g.post_id', 'left');
         $this->db->where_in('role_id', [2, 3]);
         $this->db->where('u.is_deleted !=', 1);
-//        $this->db->group_by('u.id');
-//        $this->db->join('role r', 'u.role_id = r.id');
-//        $this->db->where_in('role_id', [2, 3]);
-//        $this->db->where('is_deleted !=', 1);
-
         $keyword = $this->input->get('search');
         $keyword = str_replace('"', '', $keyword);
 
@@ -120,7 +96,6 @@ class Admin_users_model extends CI_Model
         $this->db->join('user_post up', 'up.id = b.post_id', 'left');
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
-//        $this->db->where('b.is_deleted !=', 1);
         $this->db->where('c.user_id', $id);
 
         $keyword = $this->input->get('search');
@@ -134,7 +109,6 @@ class Admin_users_model extends CI_Model
         $this->db->limit($this->input->get('length'), $this->input->get('start'));
 
         $res_data = $this->db->get('blog b')->result_array();
-//        qry();
         return $res_data;
     }
 
@@ -143,7 +117,6 @@ class Admin_users_model extends CI_Model
         $this->db->join('user_post up', 'up.id = b.post_id', 'left');
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
-//        $this->db->where('b.is_deleted !=', 1);
         $this->db->where('c.user_id', $id);
 
         $keyword = $this->input->get('search');
@@ -155,7 +128,6 @@ class Admin_users_model extends CI_Model
         }
 
         $res_data = $this->db->get('blog b')->num_rows();
-//        pr($res_data,1);    
         return $res_data;
     }
 
@@ -173,7 +145,7 @@ class Admin_users_model extends CI_Model
     {
 
         $this->db->select('u.id,u.id AS test_id,r.role_name,fname,lname,email_id,username,
-                            DATE_FORMAT(last_login,"%d %b %Y <br> %l:%i %p") AS last_login,DATE_FORMAT(u.created_at,"%d %b %Y <br> %l:%i %p") AS created_at,
+                            DATE_FORMAT(u.created_at,"%d %b %Y <br> %l:%i %p") AS created_at,
                             u.is_blocked,COUNT(DISTINCT blg.id) as blog,COUNT(DISTINCT v.id) as video,COUNT(DISTINCT g.id) as gallery');
         $this->db->join('role r', 'u.role_id = r.id');
         $this->db->join('user_channels c', 'u.id = c.user_id', 'left');
@@ -191,24 +163,36 @@ class Admin_users_model extends CI_Model
     
     public function get_channels_by_user_id($user_id)
     {   
-        $this->db->select('uc.id,uc.user_id,channel_name,channel_slug,count(DISTINCT up.id) as posts,count(DISTINCT b.id) as blogs,count(DISTINCT v.id) as videos,count(DISTINCT g.id) as gallery,count(DISTINCT us.id) as subscribers,count(DISTINCT uk.id) as likes,count(DISTINCT upc.id) as views');
+        $this->db->select('uc.id,uc.user_id,channel_name,channel_slug,COUNT(DISTINCT us.id) AS subscribers,COUNT(DISTINCT b.id) AS blogs,COUNT(DISTINCT v.id) AS videos,COUNT(DISTINCT g.id) AS gallery,COUNT(DISTINCT uk.id) AS likes,COUNT(DISTINCT upc.id) AS views');
         $this->db->where('uc.user_id',$user_id);
-        $this->db->join('users u','u.id = uc.user_id');
-        $this->db->join('user_post up', 'up.channel_id = uc.id', 'left');
         $this->db->join('user_subscribers us', 'us.channel_id = uc.id', 'left');
-        $this->db->join('blog b', 'up.id = b.post_id', 'left');
-        $this->db->join('video v', 'up.id = v.post_id', 'left');
-        $this->db->join('gallery g', 'up.id = g.post_id', 'left');
+        $this->db->join('user_post up', 'up.channel_id = uc.id', 'left');
+        $this->db->join('user_post b', 'b.channel_id = uc.id and b.post_type = "blog"', 'left');
+        $this->db->join('user_post v', 'v.channel_id = uc.id and v.post_type = "video"', 'left');
+        $this->db->join('user_post g', 'g.channel_id = uc.id and g.post_type = "gallery"', 'left');
         $this->db->join('user_likes uk','up.id = uk.post_id');
-        $this->db->join('user_post_counts upc','up.id = upc.post_id');
+        $this->db->join('user_post up1', 'up1.channel_id = uc.id', 'left');
+        $this->db->join('user_post_counts upc','up1.id = upc.post_id');
         $this->db->group_by('uc.id');
         $users = $this->db->get('user_channels uc')->result_array();
-        qry();
         return $users;
-                
+//                
     }
     
-    public function get_posts_by_channel($user_id)
+    public function get_likes($user_id)
+    {
+        $this->db->select('count(distinct uk.id)');
+        $this->db->join('users u','u.id = uk.user_id');
+        $this->db->join('user_channels uc','u.id = uc.user_id');
+        $this->db->join('user_post up','up.id = uk.post_id','left');
+        $this->db->where('uk.user_id',$user_id);
+        $this->db->group_by('u.id');
+        $likes = $this->db->get('user_likes uk')->num_rows();
+        return $likes;
+        
+    }
+
+        public function get_posts_by_channel($user_id)
     {
         $this->db->select('c.id,user_id,up.id,COUNT(DISTINCT blg.id) as blog,COUNT(DISTINCT v.id) as video,COUNT(DISTINCT g.id) as gallery');
         $this->db->join('users u','u.id = c.user_id');
@@ -216,15 +200,10 @@ class Admin_users_model extends CI_Model
         $this->db->join('blog blg', 'up.id = blg.post_id', 'left');
         $this->db->join('video v', 'up.id = v.post_id', 'left');
         $this->db->join('gallery g', 'up.id = g.post_id', 'left');
-//        $this->db->where('c.user_id',$user_id);
         $this->db->group_by('u.id');
         $channel_posts = $this->db->get('user_channels c')->result_array();
-//        qry();
         return $channel_posts;
     }
-    
-            
-
 }
 
 ?>

@@ -120,13 +120,16 @@
             <?php if (isset($related_posts)) { foreach ($related_posts as $key => $related) {  ?>
             <li>
                 <div class="list-ul-box">
-                        <span><a href=""><img src="<?php echo base_url() . $related['main_image'] ?>" alt="" /></a></span>
+                        
                         <?php if ($related['post_type'] == 'blog') { ?>
-                            <h4><a href="<?php echo base_url() . 'blog/' . $related['slug']; ?>"><?php echo $related['post_title'] ?></a></h4>
+                    <span><a href="<?php echo base_url() . 'blog/' . $related['slug']; ?>"><img src="<?php echo base_url() . $related['main_image'] ?>" alt="" /></a></span>    
+                    <h4><a href="<?php echo base_url() . 'blog/' . $related['slug']; ?>"><?php echo $related['post_title'] ?></a></h4>
                         <?php } else if($related['post_type'] == 'gallery') { ?>
-                            <h4><a href="<?php echo base_url() . 'gallery/' . $related['slug']; ?>"><?php echo $related['post_title'] ?></a></h4>
+                    <span><a href="<?php echo base_url() . 'gallery/' . $related['slug']; ?>"><img src="<?php echo base_url() . $related['main_image'] ?>" alt="" /></a></span>        
+                    <h4><a href="<?php echo base_url() . 'gallery/' . $related['slug']; ?>"><?php echo $related['post_title'] ?></a></h4>
                         <?php } else if($related['post_type'] == 'video') {?>
-                            <h4><a href="<?php echo base_url() . 'video/' . $related['slug']; ?>"><?php echo $related['post_title'] ?></a></h4>
+                    <span><a href="<?php echo base_url() . 'video/' . $related['slug']; ?>"><img src="<?php echo base_url() . $related['main_image'] ?>" alt="" /></a></span>        
+                    <h4><a href="<?php echo base_url() . 'video/' . $related['slug']; ?>"><?php echo $related['post_title'] ?></a></h4>
                         <?php }?>
                         <p><?php echo $related['username'] ?></p>
                         <h6><?php echo $related['total_views'] ?> Views</h6>

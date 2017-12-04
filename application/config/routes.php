@@ -58,7 +58,10 @@ $route['blog/(:any)'] = 'home/post_detail/$1';
 //$route['contact/(:any)'] = 'home/display_cms/$1';
 //$route['about'] = 'home/display_cms';
 
+$route['category_detail_page/(:any)/sub/(:any)'] = 'home/category_detail_page/$1/$2';
+
 $route['category_detail_page/(:any)'] = 'home/category_detail_page/$1';
+
 
 $route['channel/(:any)'] = 'user_channels/channel_detail/$1';
 
