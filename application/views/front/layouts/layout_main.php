@@ -5,7 +5,9 @@
 	    <section class="content-wrap">
 		    <?php $this->load->view('front/layouts/side_bar'); ?>
 		    <div class="right-panel">
-		    	<?php $this->load->view($subview); ?>
+		    	<div class="for_height">		    		
+		    		<?php $this->load->view($subview); ?>
+		    	</div>
 		    	<div class="clearfix"></div>
 		    	<footer class="footer">
 	               <p>©Copyright 2017 <a href="<?php echo base_url()?>home"><span>Videosite.com</span></a>, All Right Reserved</p>

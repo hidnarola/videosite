@@ -6,8 +6,8 @@
             <big><?php echo $session_info['fname'].' '. $session_info['lname']?> </big><small>Author, Blogger</small>
         </div>
         <div class="chanelle-head-r">
-            <a href="" class="bookmark-btn">Subscribers  <span>(<?php echo $total_subscriber?>) </span></a>
-            <a href="" class="like-btn">Views  <span>(<?php echo array_sum(array_column($post,'total_views'))?>) </span></a>
+            <a href="" class="bookmark-btn"><i class="fa fa-folder-open"></i>Subscribers  <span>(<?php echo $total_subscriber?>) </span></a>
+            <a href="" class="like-btn"><i class="fa fa-thumbs-up"></i> Views  <span>(<?php echo array_sum(array_column($post,'total_views'))?>) </span></a>
         </div>
         </div>
         <div class="chanelle-body">

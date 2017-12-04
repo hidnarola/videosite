@@ -76,9 +76,17 @@
                 </ul>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="intro">
-                        <ul>
+                        <ul class="list-ul comment-ul ">
                             <?php if(isset($comments)){ foreach ($comments as $key =>$comm){?>
-                            <li><?php echo $comm['message'];?></li>
+                            <!-- <li><?php echo $comm['message'];?></li> -->
+                            <li>
+                                <div class="list-ul-box">
+                                        
+                                <span><a href="http://localhost/videosite/video/white-rabbit-read-out-at"><img src="http://localhost/videosite/uploads/videos/k9obPx8ULBdyJsO3IM5u.jpg" alt=""></a></span>
+                                <h4><?php echo $comm['message']; ?></h4>
+                                <p>janelle.hudson</p>                                
+                                </div>
+                            </li>
                             <?php } }?>
                         </ul>
                         <div class="input-wrap comments">
@@ -88,10 +96,17 @@
                                 <div class="alert alert-danger"><?php echo $all_erros; ?></div>
 <?php } ?>
                             <label class="label-css">Add Comments </label>
-                            <input type="text" name="comments" id ="comments" placeholder="Comments" class="form-css" />
+                            <textarea name="
+                            id  
+                            comments    
+                            placeholder 
+                            Comments    
+                            class   
+                            form-css    
+                            /<textarea name="" id="" cols="30" rows="10"></textarea>" id="" cols="30" rows="10"></textarea>
 
                             <div class="col-md-12 col-sm-12 col-xs-12 text-right register-btn">
-                                <button type="submit" class="btn btn_custom"><i class="fa fa-check"></i> Add</button>
+                                <button type="submit" class="btn-black"><i class="fa fa-check"></i> Add</button>
                             </div>
                         </div>
                 </div>

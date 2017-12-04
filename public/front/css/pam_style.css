@@ -12,7 +12,8 @@ label.error {font-size: 12px;color: red;margin-top: -20px;position:absolute;bott
 .re-password a:hover{background:transparent;color:#999;text-decoration:none;  }
 .head-bg-01 p a{display: inline-block;vertical-align: top;font-size: 12px;color: #999;line-height: 20px;letter-spacing: .02em;margin:0; text-decoration:underline; 
 padding: 0;line-height: 38px;}
-.input-file > img{position: absolute;left: 6px;top: 6px;width: 42px;height: 42px;}
+.input-file > img,
+.input-file > a > img{position: absolute;left: 6px;top: 6px;width: 42px;height: 42px;}
 
 .drag-ul li{width:49%;float:left;margin-bottom:20px;}
 .drag-ul li:nth-child(2n+2){float:right;}
@@ -26,3 +27,10 @@ padding: 0;line-height: 38px;}
 .option-02 a{margin: 0;font-size: 14px;text-decoration: none;border-radius: 80px;width: 30px;height: 30px;line-height: 16px;vertical-align: top;
 text-align: center;display: inline-block;padding: 6px 0;}
 .option-02 a i{vertical-align:middle;}
+
+.btn-black {color: #fff;background-color:#282424;border-color:#282424;display:inline-block;padding:8px 20px;vertical-align:top;border:2px solid #282424;}
+.btn-black:hover{color:#282424;background:transparent;text-decoration:none; }
+.btn-black i{padding-right:6px;}
+.btn-red {color: #fff;background-color: #f0351c;border-color:#f0351c;display:inline-block;padding:8px 20px;vertical-align:top;border:2px solid #f0351c;}
+.btn-red:hover{color:#f035c1;background:transparent;text-decoration:none;}
+.btn-red i{padding-right:6px;}

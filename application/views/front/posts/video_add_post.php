@@ -12,8 +12,14 @@
 
     <h3 class="h3-title">Add Video</h3>
     
-    <a href="<?php echo base_url().'user_post/add_post/blog'; ?>" class="btn btn-warning">Add Blog</a>
-    <a href="<?php echo base_url().'user_post/add_post/gallery'; ?>" class="btn btn-success">Add Gallery</a>
+    <a href="<?php echo base_url().'user_post/add_post/blog'; ?>" class="btn-black">
+        <i class="fa fa-user"></i>
+        Add Blog
+    </a>
+    <a href="<?php echo base_url().'user_post/add_post/gallery'; ?>" class="btn-red">
+        <i class="fa fa-camera"></i>
+        Add Gallery
+    </a>
     
     <br>
     <br>
