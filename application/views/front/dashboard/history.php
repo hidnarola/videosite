@@ -6,13 +6,13 @@
             <div class="list-box">
                 <div class="list-top">
                 <?php if($his['post_type'] == 'blog'){?>
-                    <a href="<?php echo base_url() . 'blog/' . $his['slug']; ?>"><img src="<?php echo base_url() . $his['main_image'] ?>" alt=""/></a>
+                    <a class="img-anchor" href="<?php echo base_url() . 'blog/' . $his['slug']; ?>"><img src="<?php echo base_url() . $his['main_image'] ?>" alt=""/></a>
                     <a href="" class="tag-a">A</a>
                     <?php } else if($his['post_type'] == 'gallery'){?>
-                    <a href="<?php echo base_url() . 'gallery/' . $his['slug']; ?>"><img src="<?php echo base_url() . $his['main_image'] ?>" alt=""/></a>
+                    <a class="img-anchor" href="<?php echo base_url() . 'gallery/' . $his['slug']; ?>"><img src="<?php echo base_url() . $his['main_image'] ?>" alt=""/></a>
                     <a href="" class="tag-g">G</a>
                     <?php } else if($his['post_type'] == 'video'){?>
-                    <a href="<?php echo base_url() . 'video/' . $his['slug']; ?>"><img src="<?php echo base_url() . $his['main_image'] ?>" alt=""/></a>
+                    <a class="img-anchor" href="<?php echo base_url() . 'video/' . $his['slug']; ?>"><img src="<?php echo base_url() . $his['main_image'] ?>" alt=""/></a>
                     <a href="" class="tag-v">V</a>
                     <?php } ?>
                 </div>

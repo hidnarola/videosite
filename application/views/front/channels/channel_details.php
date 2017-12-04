@@ -1,13 +1,13 @@
-<?php // pr($posts);die;?>
+<?php // pr($session_info);die;?>
 <div class="chanelle-page">
     <div class="chanelle-head">
         <div class="chanelle-head-l">
             <span><img src="<?php echo base_url().$session_info['avatar']?>" alt=""/></span>
-            <big><?php echo $session_info['fname'].' '. $session_info['lname']?> </big><small>Author, Blogger</small>
+            <big><?php echo $session_info['fname'].' '. $session_info['lname']?> </big><small><?php echo $session_info['designation']?></small>
         </div>
         <div class="chanelle-head-r">
             <a href="" class="bookmark-btn"><i class="fa fa-folder-open"></i>Subscribers  <span>(<?php echo $total_subscriber?>) </span></a>
-            <a href="" class="like-btn"><i class="fa fa-thumbs-up"></i> Views  <span>(<?php echo array_sum(array_column($post,'total_views'))?>) </span></a>
+            <a href="" class="like-btn"><i class="fa fa-eye"></i> Views  <span>(<?php echo array_sum(array_column($post,'total_views'))?>) </span></a>
         </div>
         </div>
         <div class="chanelle-body">
@@ -53,13 +53,13 @@
             <div class="list-box">
                 <div class="list-top">
                 <?php if($posts['post_type'] == 'blog'){?>
-                    <a href="<?php echo base_url() . 'blog/' . $posts['slug']; ?>"><img src="<?php echo base_url() . $posts['main_image'] ?>" alt=""/></a>
+                    <a class="img-anchor" href="<?php echo base_url() . 'blog/' . $posts['slug']; ?>"><img src="<?php echo base_url() . $posts['main_image'] ?>" alt=""/></a>
                     <a href="" class="tag-a">A</a>
                     <?php } else if($posts['post_type'] == 'gallery'){?>
-                    <a href="<?php echo base_url() . 'gallery/' . $posts['slug']; ?>"><img src="<?php echo base_url() . $posts['main_image'] ?>" alt=""/></a>
+                    <a class="img-anchor" href="<?php echo base_url() . 'gallery/' . $posts['slug']; ?>"><img src="<?php echo base_url() . $posts['main_image'] ?>" alt=""/></a>
                     <a href="" class="tag-g">G</a>
                     <?php } else if($posts['post_type'] == 'video'){?>
-                    <a href="<?php echo base_url() . 'video/' . $posts['slug']; ?>"><img src="<?php echo base_url() . $posts['main_image'] ?>" alt=""/></a>
+                    <a class="img-anchor" href="<?php echo base_url() . 'video/' . $posts['slug']; ?>"><img src="<?php echo base_url() . $posts['main_image'] ?>" alt=""/></a>
                     <a href="" class="tag-v">V</a>
                     <?php } ?>
                 </div>
@@ -72,7 +72,7 @@
                     <a href="<?php echo base_url() . 'video/' . $posts['slug']; ?>"><?php echo $posts['post_title'] ?></a>
                     <?php } ?>
                     <p>By : <?php echo $posts['username'] ?> <span></span></p>
-                    <h6><i class="fa fa-eye"></i> <?php echo $posts['total_views'] ?> Views</h6>
+                    <h6><i class="fa fa-eye"></i> <?php echo $posts['total_views'] ?></h6>
                 <!--<h6><i class="fa fa-clock-o"></i><?php get_ago_time($posts['blog_created_date'], date("Y-m-d H:i:s")) ?></h6>-->
                 </div>
             </div>

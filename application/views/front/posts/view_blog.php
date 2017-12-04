@@ -96,15 +96,15 @@
                                 <div class="alert alert-danger"><?php echo $all_erros; ?></div>
 <?php } ?>
                             <label class="label-css">Add Comments </label>
-                            <textarea name="
+<!--                            <textarea name="
                             id  
                             comments    
                             placeholder 
                             Comments    
                             class   
                             form-css    
-                            /<textarea name="" id="" cols="30" rows="10"></textarea>" id="" cols="30" rows="10"></textarea>
-
+                            /" id="" cols="30" rows="10"></textarea>-->
+<textarea name="" id="" cols="30" rows="10"></textarea>
                             <div class="col-md-12 col-sm-12 col-xs-12 text-right register-btn">
                                 <button type="submit" class="btn-black"><i class="fa fa-check"></i> Add</button>
                             </div>
@@ -147,7 +147,7 @@
                     <h4><a href="<?php echo base_url() . 'video/' . $related['slug']; ?>"><?php echo $related['post_title'] ?></a></h4>
                         <?php }?>
                         <p><?php echo $related['username'] ?></p>
-                        <h6><?php echo $related['total_views'] ?> Views</h6>
+                        <h6><?php echo $related['total_views'] ?> <i class="fa fa-eye"></i></h6>
                     </div>
                 </li>
             <?php } }?>

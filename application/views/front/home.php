@@ -57,7 +57,7 @@
                     <a href="<?php echo base_url() . 'video/' . $like['slug']; ?>"><?php echo $like['post_title'] ?></a>
                     <?php } ?>
                   <p>By : <?php echo $like['username']?> <span></span></p>
-                  <h6><i class="fa fa-eye"></i><?php echo $like['total_views']?>  Views</h6>
+                  <h6><i class="fa fa-eye"></i><?php echo $like['total_views']?></h6>
                   <!--<h6><i class="fa fa-clock-o"></i> 5 Mon ago</h6>-->
               </div>
           </div>
@@ -77,13 +77,13 @@
           <div class="list-box">
               <div class="list-top"> 
                   <?php if($view['post_type'] == 'blog'){?>
-                  <a href="<?php echo base_url() . 'blog/' . $like['slug']; ?>"><img src="<?php echo $view['main_image']?>" alt="" /></a>  
+                  <a class="img-anchor" href="<?php echo base_url() . 'blog/' . $like['slug']; ?>"><img src="<?php echo $view['main_image']?>" alt="" /></a>  
                   <a href="" class="tag-a">A</a>
                     <?php } else if($view['post_type'] == 'gallery'){?>
-           <a href="<?php echo base_url() . 'gallery/' . $like['slug']; ?>"><img src="<?php echo $view['main_image']?>" alt="" /></a>         
+                  <a class="img-anchor" href="<?php echo base_url() . 'gallery/' . $like['slug']; ?>"><img src="<?php echo $view['main_image']?>" alt="" /></a>         
                   <a href="" class="tag-g">G</a>
                     <?php } else if($view['post_type'] == 'video'){?>
-                  <a href="<?php echo base_url() . 'video/' . $like['slug']; ?>"><img src="<?php echo $view['main_image']?>" alt="" /></a>  
+                  <a class="img-anchor" href="<?php echo base_url() . 'video/' . $like['slug']; ?>"><img src="<?php echo $view['main_image']?>" alt="" /></a>  
                   <a href="" class="tag-v">V</a>
                     <?php } ?>
                   <!--<span>10:53</span>-->
@@ -97,7 +97,7 @@
                     <a href="<?php echo base_url() . 'video/' . $view['slug']; ?>"><?php echo $view['post_title'] ?></a>
                     <?php } ?>
                   <p>By : <?php echo $view['username']?> <span></span></p>
-                  <h6><i class="fa fa-eye"></i><?php echo $view['total_views']?>  Views</h6>
+                  <h6><i class="fa fa-eye"></i><?php echo $view['total_views']?></h6>
                   <!--<h6><i class="fa fa-clock-o"></i> 5 Mon ago</h6>-->
               </div>
           </div>
