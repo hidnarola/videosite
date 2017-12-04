@@ -53,7 +53,7 @@ $all_cms_pages = $this->db->get_where('cms_page',['is_deleted'=>'0','is_blocked'
                             foreach ($sub_cat as $key => $sub) {
                         ?>                  
                             <li>
-                                <a href="<?php echo base_url() . 'home/category_detail_page/' . $cat['id']; ?>">
+                                <a href="<?php echo base_url() . 'home/category_detail_page/' . $cat['id']; ?>/sub">
                                     <i class="<?php echo $sub['icon']; ?>"></i>
                                     <?php echo $sub['category_name'] ?>
                                 </a>

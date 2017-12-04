@@ -48,7 +48,7 @@
                     if (isConfirm) {
                         window.location.href = "<?php echo base_url(); ?>user_channels/delete/" + id;
                     } else {
-                        swal("Cancelled", "Your user is safe :)", "error");
+                        swal("Cancelled", "Your channel is safe :)", "error");
                     }
                 });
     }
