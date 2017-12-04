@@ -30,7 +30,6 @@
 				<?php } ?>
 				// href="<?php echo base_url().'user_post/add_post'; ?>"
 			}
-
 		</script>
 	</body>
 

@@ -1,3 +1,8 @@
+<!-- include summernote css/js-->
+<!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script> -->
+
+
 <div class="form-element">    
     <?php 
         $all_erros = validation_errors(); 
@@ -6,8 +11,14 @@
         <div class="alert alert-danger"><?php echo $all_erros; ?></div>
     <?php } ?>
 
-    <h3 class="h3-title">Edit Video</h3>
+    <h3 class="h3-title">Edit <?php echo $post_type; ?></h3>
+
+    <a href="<?php echo base_url().'user_post/view_all_slides/'.$post_id; ?>" class="btn btn-primary">
+        View All Slides
+    </a>
+
     <form method="post" action="" id="frmblog" enctype="multipart/form-data">
+        
         <div class="input-wrap">
             <label class="label-css">Select Channel </label>
             <select class="form-css selectpicker_blog" data-placeholder="Select a Channel"  name="channel" id="channel" >                
@@ -72,16 +83,34 @@
         </div>
         
         <div class="input-wrap">
-            <label class="label-css">Video Title </label>
-            <?php if($_POST){$post_val = set_value('video_title'); }else{$post_val = $post_data['post_title']; } ?>
-            <input type="text" name="video_title" id ="video_title" placeholder="Blog Title" value="<?php echo $post_val; ?>" class="form-css" />
+            <label class="label-css">Title </label>
+            <?php if($_POST){$post_val = set_value('title'); }else{$post_val = $post_data['post_title']; } ?>
+            <input type="text" name="title" id ="title" placeholder="Title" value="<?php echo $post_val; ?>" class="form-css" />
         </div>
 
-        <div class="input-wrap full-width">
-            <label class="label-css">Comment</label>
-            <?php if($_POST){ $post_comm = set_value('video_desc'); }else{ $post_comm = $post_data['video']['description']; } ?>
-            <textarea class="textarea-css" name="video_desc"><?php echo $post_comm; ?></textarea>
+         
+
+        <div class="input-wrap">
+            <label class="label-css">Upload File</label>
+            <div class="input-file">
+                
+                <a data-fancybox href="<?php echo base_url().$post_data['main_image'] ?>">
+                    <img src="<?php echo base_url().$post_data['main_image'] ?>" alt="" width="100px" height="100px">
+                </a>
+
+                <input type="text" class="form-css browse_text" readonly >
+                <label class="input-group-btn">
+                    <span class="">
+                        Browse <input type="file" style="display: none;" name="img_path">
+                    </span>
+                </label>
+            </div>
         </div>
+
+        <!-- <div class="input-wrap full-width">
+            <label class="label-css">Comment</label>
+            <div id="summernote">Hello Summernote</div>
+        </div> -->
 
         <div class="btn-btm">
             <button class="common-btn btn-submit" type="submit">Submit</button>
@@ -94,6 +123,24 @@
 
 
 <script>
+
+    $(document).ready(function() {
+        // $('#summernote').summernote({
+        //     height:300
+        // });
+
+        $("[data-fancybox]").fancybox({
+            buttons : [
+                'slideShow',
+                'fullScreen',
+                'thumbs',
+                // 'share',
+                //'download',
+                'zoom',
+                'close'
+            ]
+        });
+    });
     
     $(document).ready(function () {                
         $('.selectpicker_blog').selectpicker();

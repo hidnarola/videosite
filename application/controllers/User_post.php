@@ -87,7 +87,7 @@ class User_post extends CI_Controller
                         ];
             $this->Post_model->insert_record('video',$video_data);
             $this->session->set_flashdata('success','Video has been uploaded successfully.');
-            redirect('user_post/add_video_post');
+            redirect('dashboard/view_my_posts');
         }
     }
 
@@ -96,8 +96,9 @@ class User_post extends CI_Controller
         $data['post_data'] = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
         if(empty($data['post_data'])){ show_404(); }
 
-        $data['post_data']['video'] = $this->db->get_where('video',['post_id'=>$post_id])->row_array();
-        
+        $data['post_data']['video'] = $this->db->get_where('video',['post_id'=>$post_id])->row_array();        
+
+        // pr($data['post_data']['video'],1);
         $sess_data = $this->session->userdata('client');
 
         // ------------------------------------------------------------------------
@@ -118,8 +119,12 @@ class User_post extends CI_Controller
             $data['all_category'] = $this->Post_model->get_result('categories', ['is_deleted' => '0', 'is_blocked' => '0']);
             $data['all_sub_cat'] = $this->Post_model->get_result('sub_categories', ['main_cat_id'=>$post_cat_id,'is_deleted' => '0', 'is_blocked' => '0']);
         }else{
+            $post_cat_id = $data['post_data']['category_id'];
             $data['all_category'] = $this->Post_model->get_result('categories', ['is_deleted' => '0', 'is_blocked' => '0']);
+            $data['all_sub_cat'] = $this->Post_model->get_result('sub_categories', ['main_cat_id'=>$post_cat_id,'is_deleted' => '0', 'is_blocked' => '0']);
         }
+
+        // pr($data['post_data'],1);
 
         $this->form_validation->set_rules('video_title', 'Video Title', 'required');
         $this->form_validation->set_rules('category', 'Category', 'required');        
@@ -129,6 +134,22 @@ class User_post extends CI_Controller
             $this->load->view('front/layouts/layout_main', $data);
         } else {
 
+            $ins_data = [
+                            'channel_id'=>$this->input->post('channel'),
+                            'category_id'=>$this->input->post('category'),
+                            'sub_category_id'=>$this->input->post('sub_category'),
+                            'post_title'=>$this->input->post('video_title'),                            
+                            'slug'=>slugify($this->input->post('video_title'))
+                        ];
+            $last_id = $this->Post_model->update_record('user_post',['id'=>$post_id],$ins_data);
+
+            $video_data = [
+                            'title'=>$this->input->post('video_title'),
+                            'description'=>$this->input->post('video_desc')
+                        ];
+            $this->Post_model->update_record('video',['id'=>$data['post_data']['video']['id']],$video_data);
+            $this->session->set_flashdata('success','Video has been uploaded successfully.');
+            redirect('dashboard/view_my_posts');
         }
     }
 
@@ -190,14 +211,89 @@ class User_post extends CI_Controller
                             'channel_id'=>$this->input->post('channel'),
                             'category_id'=>$this->input->post('category'),
                             'sub_category_id'=>$this->input->post('sub_category'),
+                            'post_type'=>$post_type,
                             'post_title'=>$this->input->post('title'),
                             'main_image'=>$file_path,
                             'slug'=>slugify($this->input->post('title')),
                             'created_at'=>date('Y-m-d H:i:s')
                         ];
             $last_id = $this->Post_model->insert_record('user_post',$ins_data);
-            $this->session->set_flashdata('success','User Post has been uploaded successfully.');
+            $this->session->set_flashdata('success','User Post has been added successfully.');
             redirect('user_post/add_post_slide/'.$last_id);
+        }
+    }
+
+    public function edit_post($post_id){
+
+        $data['post_data'] = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
+        $data['post_id'] = $post_id;
+        $post_type = $data['post_data']['post_type'];
+        $sess_data = $this->session->userdata('client');
+
+        if(in_array($post_type,['blog','gallery']) == false){ show_404(); }
+
+        $data['post_type'] = $post_type;
+        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
+        $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
+        
+        $data['all_category'] = [];
+        $data['all_sub_cat'] = [];
+
+        if($_POST){
+            $post_cat_id = $this->input->post('category');
+            $data['all_category'] = $this->Post_model->get_result('categories', ['is_deleted' => '0', 'is_blocked' => '0']);
+            $data['all_sub_cat'] = $this->Post_model->get_result('sub_categories', ['main_cat_id'=>$post_cat_id,'is_deleted' => '0', 'is_blocked' => '0']);
+        }else{
+            $post_cat_id = $data['post_data']['category_id'];
+            $data['all_category'] = $this->Post_model->get_result('categories', ['is_deleted' => '0', 'is_blocked' => '0']);
+            $data['all_sub_cat'] = $this->Post_model->get_result('sub_categories', ['main_cat_id'=>$post_cat_id,'is_deleted' => '0', 'is_blocked' => '0']);
+        }
+
+        $this->form_validation->set_rules('title', 'Title', 'required');
+        $this->form_validation->set_rules('category', 'Category', 'required');
+        
+        if ($this->form_validation->run() == FALSE)
+        {
+            $data['subview'] = 'front/posts/edit_post';
+            $this->load->view('front/layouts/layout_main', $data);
+        } else {
+            // ------------------------------------------------------------------------
+            
+            if($post_type == 'blog'){ $folder_name = 'blogs'; }else { $folder_name = 'gallery'; }
+            
+            $config['upload_path'] = './uploads/'.$folder_name.'/';
+            $config['allowed_types'] = 'gif|jpg|png';
+            $config['max_size']  = '100000000';
+            $config['encrypt_name'] = true;
+
+            $file_path = $data['post_data']['main_image'];
+            $this->load->library('upload', $config);
+            
+            if ( ! $this->upload->do_upload('img_path')){                
+                $error = $this->upload->display_errors();
+
+                if(strip_tags($error) != 'You did not select a file to upload.'){                
+                    $this->session->set_flashdata('error', $this->upload->display_errors());
+                    redirect('user_post/edit_post/'.$post_id);
+                }
+            } else {
+                $data = array('upload_data' => $this->upload->data());
+                $file_path = 'uploads/'.$folder_name.'/'.$data['upload_data']['file_name'];                
+            }
+
+            // ------------------------------------------------------------------------
+
+            $upd_data = [
+                            'channel_id'=>$this->input->post('channel'),
+                            'category_id'=>$this->input->post('category'),
+                            'sub_category_id'=>$this->input->post('sub_category'),                            
+                            'post_title'=>$this->input->post('title'),
+                            'main_image'=>$file_path,
+                            'slug'=>slugify($this->input->post('title'))                          
+                        ];
+            $last_id = $this->Post_model->update_record('user_post',['id'=>$post_id],$upd_data);
+            $this->session->set_flashdata('success','User Post has been updated successfully.');
+            redirect('dashboard/view_my_posts');
         }
     }
 
@@ -209,9 +305,11 @@ class User_post extends CI_Controller
 
         $post_data = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
         $data['post_type'] = $post_data['post_type'];
-        // if(in_array($post_data['channel_id'],$all_channel_id) == false){
-        //     die('Do not have access');
-        // }
+        $data['post_id'] = $post_id;
+
+        if(in_array($post_data['channel_id'],$all_channel_id) == false){
+            die('Do not have access');
+        }
 
         if($post_data['post_type'] == 'blog'){
             $data['all_slides'] = $this->db->get_where('blog',['post_id'=>$post_id])->result_array();
@@ -219,18 +317,10 @@ class User_post extends CI_Controller
             $data['all_slides'] = $this->db->get_where('gallery',['post_id'=>$post_id])->result_array();
         }
 
-        // pr($post_data);
-        // pr($data['all_slides'],1);
-
         $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
-        $this->form_validation->set_rules('blog_title', 'Blog Title', 'required');
 
-        if ($this->form_validation->run() == FALSE) {
-            $data['subview'] = 'front/posts/view_all_slides';
-            $this->load->view('front/layouts/layout_main', $data);
-        }else{
-
-        }
+        $data['subview'] = 'front/posts/view_all_slides';
+        $this->load->view('front/layouts/layout_main', $data);        
     }
 
     public function add_post_slide($post_id){
@@ -283,7 +373,7 @@ class User_post extends CI_Controller
                 
                 $insert_array = [
                     'post_id' => $post_id,
-                    'blog_title' => $blog_title,
+                    'blog_title' => $this->input->post('title'),
                     'blog_description' => htmlspecialchars($this->input->post('description')),
                     'img_path' => $file_path,
                     'created_at' => date("Y-m-d H:i:s"),
@@ -294,15 +384,30 @@ class User_post extends CI_Controller
             } else {
                 $insert_array = [
                     'post_id' => $post_id,
-                    'blog_title' => $blog_title,
-                    'blog_description' => htmlspecialchars($this->input->post('description')),
+                    'title' => $this->input->post('title'),
+                    'description' => htmlspecialchars($this->input->post('description')),
                     'img_path' => $file_path,
                     'created_at' => date("Y-m-d H:i:s"),
                 ];
                 $this->Post_model->insert_record('gallery',$insert_array);
             }
 
+            redirect('user_post/view_all_slides/'.$post_id);
         }
+    }
+
+    public function edit_post_slide($slide_id){
+
+    }
+
+    public function delete_post_slide($slide_id,$slide_type,$post_id){
+        if($slide_type == 'blog'){
+            $this->db->delete('blog',['id'=>$slide_id]);
+        }else{
+            $this->db->delete('gallery',['id'=>$slide_id]);
+        }        
+        $this->session->set_flashdata('success','Slide has been deleted successfully.');
+        redirect('user_post/view_all_slides/'.$post_id);
     }
 
     // ------------------------------------------------------------------------ 

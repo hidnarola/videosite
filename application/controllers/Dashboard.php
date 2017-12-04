@@ -218,11 +218,7 @@ class Dashboard extends CI_Controller {
         
         $data['subview'] = 'front/dashboard/my_posts';
         $this->load->view('front/layouts/layout_main', $data);
-    }
-    
-        
-
-    
+    }    
 
 }
 
