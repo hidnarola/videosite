@@ -33,7 +33,9 @@
                         </a>
                         <span><?php echo $key + 1; ?> <small>of <?php echo count($all_slides); ?></small></span>
                         <div class="option-02">
-                            <a  class="btn btn-success"><i class="fa fa-edit"></i></a>
+                            <a  class="btn btn-success" href="<?php echo base_url().'user_post/edit_post_slide/'.$slide['id'].'/'.$post_type; ?>">
+                                <i class="fa fa-edit"></i>
+                            </a>
                             <a data-id="<?php echo $slide['id']; ?>" data-type="<?php echo $post_type; ?>" data-post="<?php echo $post_id; ?>" 
                                onclick="delete_confirm(this)" class="btn btn-danger cursor_pointer"><i class="fa fa-trash"></i></a>
                         </div>

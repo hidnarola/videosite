@@ -370,7 +370,6 @@ class User_post extends CI_Controller
             // ------------------------------------------------------------------------
 
             if($post_data['post_type'] == 'blog'){
-                
                 $insert_array = [
                     'post_id' => $post_id,
                     'blog_title' => $this->input->post('title'),
@@ -380,7 +379,6 @@ class User_post extends CI_Controller
                 ];
 
                 $this->Post_model->insert_record('blog',$insert_array);
-
             } else {
                 $insert_array = [
                     'post_id' => $post_id,
@@ -396,8 +394,60 @@ class User_post extends CI_Controller
         }
     }
 
-    public function edit_post_slide($slide_id){
+    public function edit_post_slide($slide_id,$post_type){
 
+        if($post_type == 'blog'){
+            $data['slide_data'] = $this->Post_model->get_result('blog',['id'=>$slide_id],true);
+        }else{
+            $data['slide_data'] = $this->Post_model->get_result('gallery',['id'=>$slide_id],true);
+        }
+
+        $data['post_type'] = $post_type;
+
+        $post_id = $data['slide_data']['post_id'];
+
+        $sess_data = $this->session->userdata('client');
+        $all_channels = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
+        $all_channel_id = array_column($all_channels,'id');
+
+        $post_data = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
+
+        if(in_array($post_data['channel_id'],$all_channel_id) == false){
+            die('Do not have access');
+        }
+
+        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();        
+
+        $this->form_validation->set_rules('title', 'Title', 'required');
+        $this->form_validation->set_rules('description', 'Description', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $data['subview'] = 'front/posts/edit_slide';
+            $this->load->view('front/layouts/layout_main', $data);
+        }else{
+            
+            // ------------------------------------------------------------------------
+            if($post_data['post_type'] == 'blog'){ $folder_name = 'blogs'; }else { $folder_name = 'gallery'; }
+
+            $config['upload_path'] = './uploads/'.$folder_name.'/';
+            $config['allowed_types'] = 'gif|jpg|png';
+            $config['max_size']  = '10000000';
+            $config['encrypt_name'] = true;
+            
+            $this->load->library('upload', $config);
+            
+            if ( ! $this->upload->do_upload('img_path')){
+                $this->session->set_flashdata('error', $this->upload->display_errors());
+                redirect('user_post/add_post');
+            }
+            else{
+                $data = array('upload_data' => $this->upload->data());
+                $file_path = 'uploads/'.$folder_name.'/'.$data['upload_data']['file_name'];
+            }            
+            // ------------------------------------------------------------------------
+
+            
+        }
     }
 
     public function delete_post_slide($slide_id,$slide_type,$post_id){
