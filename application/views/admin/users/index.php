@@ -138,7 +138,7 @@
                         var action = '';
                         var id = encodeURIComponent(btoa(full.id));
                         if (full.is_blocked == '0') {
-                            action += '<a href="<?php echo base_url(); ?>admin/users/view_post/' + id + '" class="btn border-success text-success-600 btn-flat btn-icon btn-rounded btn-sm" title="View"><i class="icon-books"></i></a>&nbsp;&nbsp;';
+                            action += '<a href="<?php echo base_url(); ?>admin/users/view_post/' + id + '" class="btn border-success text-success-600 btn-flat btn-icon btn-rounded btn-sm" title="View Posts"><i class="icon-books"></i></a>&nbsp;&nbsp;';
 //                            action += '<a href="<?php echo base_url(); ?>admin/users/view_video/' + id + '" class="btn border-indigo text-indigo-600 btn-flat btn-icon btn-rounded btn-sm" title="View"><i class="icon-video-camera"></i></a>&nbsp;&nbsp;';
 //                            action += '<a href="<?php echo base_url(); ?>admin/users/view_gallery/' + id + '" class="btn border-teal text-teal-600 btn-flat btn-icon btn-rounded btn-sm" title="View"><i class="icon-images2"></i></a>&nbsp;&nbsp;';
                             action += '<a href="<?php echo base_url(); ?>admin/users/edit/' + id + '" class="btn border-primary text-primary-600 btn-flat btn-icon btn-rounded btn-sm" title="Edit"><i class="icon-pencil3"></i></a>';

@@ -6,10 +6,13 @@
             <div class="list-box">
                 <div class="list-top"><a href=""><img src="<?php echo base_url() . $post['main_image'] ?>" alt=""/></a>
                 <?php if($post['post_type'] == 'blog'){?>
+                    <a href="<?php echo base_url() . 'blog/' . $post['slug']; ?>"><img src="<?php echo base_url() . $post['main_image'] ?>" alt=""/></a>
                     <a href="" class="tag-a">A</a>
                     <?php } else if($post['post_type'] == 'gallery'){?>
+                     <a href="<?php echo base_url() . 'gallery/' . $post['slug']; ?>"><img src="<?php echo base_url() . $post['main_image'] ?>" alt=""/></a>
                     <a href="" class="tag-g">G</a>
                     <?php } else if($post['post_type'] == 'video'){?>
+                     <a href="<?php echo base_url() . 'video/' . $post['slug']; ?>"><img src="<?php echo base_url() . $post['main_image'] ?>" alt=""/></a>
                     <a href="" class="tag-v">V</a>
                     <?php } ?>
                 </div>

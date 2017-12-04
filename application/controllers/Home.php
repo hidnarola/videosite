@@ -298,17 +298,16 @@ class Home extends CI_Controller
         }
     }
 
-    public function category_detail_page($id,$is_sub = null)
+    public function category_detail_page($cat_id,$sub_id = null)
     {
-        if($is_sub == null)
+        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
+        if(is_null($sub_id))
         {
-            $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
-            $data['posts'] = $this->Post_model->get_posts_category_id($id);   
+            $data['posts'] = $this->Post_model->get_posts_category_id($cat_id);   
         }
         else
         {
-            $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
-            $data['posts'] = $this->Post_model->get_posts_category_id($id);    
+            $data['posts'] = $this->Post_model->get_posts_category_id($cat_id,$sub_id);    
         }
         $data['subview'] = 'front/categories/index';
         $this->load->view('front/layouts/layout_main', $data);

@@ -38,7 +38,7 @@ $all_cms_pages = $this->db->get_where('cms_page',['is_deleted'=>'0','is_blocked'
                     $sub_cat = $this->db->get_where('sub_categories', ['main_cat_id' => $cat['id']])->result_array();
             ?>
                 <li>
-                    <a href="<?php echo base_url() . 'home/category_detail_page/' . $cat['id']; ?>" class="ct-link">
+                    <a href="<?php echo base_url() . 'category_detail_page/' . $cat['id']; ?>" class="ct-link">
                         <i class="<?php echo $cat['icon']; ?>"></i>
                         <?php echo $cat['category_name'] ?></a> 
                         
@@ -53,7 +53,7 @@ $all_cms_pages = $this->db->get_where('cms_page',['is_deleted'=>'0','is_blocked'
                             foreach ($sub_cat as $key => $sub) {
                         ?>                  
                             <li>
-                                <a href="<?php echo base_url() . 'home/category_detail_page/' . $cat['id']; ?>/sub">
+                                <a href="<?php echo base_url() . 'category_detail_page/' . $cat['id']; ?>/sub/<?php echo $sub['id']?>">
                                     <i class="<?php echo $sub['icon']; ?>"></i>
                                     <?php echo $sub['category_name'] ?>
                                 </a>
