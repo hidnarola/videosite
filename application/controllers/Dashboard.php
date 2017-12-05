@@ -44,20 +44,22 @@ class Dashboard extends CI_Controller {
 			$fname = $this->input->post('fname');
 			$lname = $this->input->post('lname');	
                         $designation = $this->input->post('designation');
+                        $birth_date = $this->input->post('birth_date');
 
 			$upd_arr = [
 							'fname'=>$fname,
 							'lname'=>$lname,
 							'designation'=>$designation,
 							'username'=>$username,							
-							'avatar'=>$this->img_var
+							'avatar'=>$this->img_var,
+							'birth_date'=>$birth_date
 						];
 			$this->Users_model->update_user_data($client_data['id'],$upd_arr);
 			
 			$user_data = $this->Users_model->get_data(['id'=>$client_data['id']],true);
 			$this->session->set_userdata('client',$user_data);
 
-			$this->session->set_flashdata('success','Record has been updated successfully.');
+			$this->session->set_flashdata('success','Profile has been updated successfully.');
 			redirect('dashboard/edit_profile');
         }
 	}

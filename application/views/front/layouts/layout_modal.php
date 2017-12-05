@@ -135,6 +135,13 @@ $("#forgotpassword").validate({
                 url: "<?php echo base_url(); ?>/registration/ajax_forgot_password",
                 data: $(form).serialize(),
                 dataType:'JSON',
+                beforeSend: function(){
+                    dialog = bootbox.dialog({
+                        message: '<p class="text-center">Please wait while we process</p>',
+                        closeButton: false
+                    });                        
+                    // dialog.modal('hide');
+                },
                 success: function (data) {
 
                     if(data['success'] == false){

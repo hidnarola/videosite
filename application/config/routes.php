@@ -51,6 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   |		my-controller/my-method	-> my_controller/my_method
  */
 
+$route['reset_password/(:any)'] = "registration/reset_password/$1";
 $route['video/(:any)'] = 'home/post_detail/$1';
 $route['gallery/(:any)'] = 'home/post_detail/$1';
 $route['blog/(:any)'] = 'home/post_detail/$1';
