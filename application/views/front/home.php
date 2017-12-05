@@ -68,20 +68,17 @@
 
 </div>
 <div class="ad-01"><a href="">
-        <!--<link href="http://vjs.zencdn.net/6.4.0/video-js.css" rel="stylesheet">-->
-
-  <!-- If you'd like to support IE8 -->
-<!--  <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
-        <video id="my-video" class="video-js" controls preload="auto" poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
-            <source src="bb.mp4" type='video/mp4'>
-            <p class="vjs-no-js">
-                To view this video please enable JavaScript, and consider upgrading to a web browser that
-                <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-            </p>
-        </video>       
-<script src="http://vjs.zencdn.net/6.4.0/video.js"></script>-->
-<img src="public/front/images/ad-01.png" alt="" />
+        <div id="myDiv">This text will be replaced with a player.</div>
     </a></div>
+<script src="https://content.jwplatform.com/libraries/sJ4UhosD.js"></script>
+<script>
+jwplayer("myDiv").setup({
+    "file": "uploads/videos/mov_bbb.mp4",
+    "image": "uploads/videos/0aRUoyOKVxL93teQwidG.jpg",
+    "height": 360,
+    "width": 640
+});
+</script> 
 
 <div class="home-listing">
   <h2>Most Viewd Posts</h2>
