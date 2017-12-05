@@ -62,7 +62,7 @@
                     <div class="big-img">
                         <!--<img src="<?php echo base_url() . $posts['upload_path']; ?>" alt="" />-->
                         <a href="">
-                            <video controls>
+                            <video width="100%" controls>
                                 <source src="<?php echo base_url() . $posts['upload_path']; ?>" type="video/mp4">
                             </video>
                         </a>
@@ -112,23 +112,23 @@
                 </div>
                     <div role="tabpanel" class="tab-pane" id="data">
                         <p class="general-text">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                            <th>Channel</th>
-                            <th>Category</th>
-                            <th>Explore</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                            <!--<td><a href="<?php echo base_url(); ?>" target="_blank">Home Page</a></td>-->
-                            <td><a href="<?php echo base_url() . 'channel/' . $posts['channel_slug']; ?>" target="_blank"><?php echo $posts['channel_name'] ?></a></td>
-                            <td><a href="<?php echo base_url() . 'category_detail_page/' . $posts['category_id']; ?>" target="_blank"><?php echo $posts['category'] ?></a></td>
-                            <td><a href="<?php echo base_url() . 'category_detail_page/' . $posts['category_id']; ?>/sub/<?php echo $posts['sub_category_id']?>" target="_blank"><?php echo $posts['sub_category'] ?></a></td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <div class="Content-discovery d-flex flex-column flex-md-row justify-content-around">
+                            <div class="Content-channels"><h4>Channel</h4>
+                                <ul>
+                                    <li><a href="<?php echo base_url(); ?>">Home Page</a></li>
+                                    <li><a href="<?php echo base_url() . 'channel/' . $posts['channel_slug']; ?>" target="_blank"><?php echo $posts['channel_name'] ?></a></li>
+                                </ul>
+                            </div>
+                            <div class="Content-categories"><h4>Category</h4>
+                                <ul>
+                                    <li><a href="<?php echo base_url() . 'category_detail_page/' . $posts['category_id']; ?>" target="_blank"><?php echo $posts['category'] ?></a></li>
+                                </ul>
+                            </div>
+                            <div class="Content-tags"><h4>Explore</h4>
+				<span><a href="<?php echo base_url() . 'category_detail_page/' . $posts['category_id']; ?>/sub/<?php echo $posts['sub_category_id']?>" target="_blank"><?php echo $posts['sub_category'] ?></a></span>
+                            </div>
+
+			</div>
                         </p>
                     </div>
                 </div>

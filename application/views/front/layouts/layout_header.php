@@ -36,10 +36,7 @@
     <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'bootstrap-notify.min.js'; ?>"></script>    
     <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'owl.carousel.min.js'; ?>"></script>
 
-    <link href="http://vjs.zencdn.net/6.4.0/video-js.css" rel="stylesheet">
-
-  <!-- If you'd like to support IE8 -->
-  <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+    
     
     <!-- DEFAULT_JS_PATH
     DEFAULT_CSS_PATH -->
