@@ -127,9 +127,8 @@ class Registration extends CI_Controller {
                 $random_no=random_string('alnum',5);
                 $this->db->set('activation_code', $random_no);
                 $this->db->where('id',$user_data['id']);
-                $this->db->update('users');                
-                $html_content = '<h1> Hello World </h1> <a href="'.base_url().'admin/set_password/'.$random_no.'"> Click Here </a>';
-                
+                $this->db->update('users');
+                $html_content = '<h1> Hello World </h1> <a href="'.base_url().'registration/reset_password/'.$random_no.'"> Click Here </a>';
                 $email_config = mail_config();
                 $this->email->initialize($email_config);
                 $subject= config('site_name').' - Forgot Password Request';    
@@ -149,9 +148,6 @@ class Registration extends CI_Controller {
     }
 
     public function reset_password(){
-
-<<<<<<< HEAD
-=======
         $this->session->unset_userdata('client');
         $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $res = $this->Users_model->get_data(['activation_code'=>$rand_no],true);        
@@ -173,7 +169,6 @@ class Registration extends CI_Controller {
             $this->session->set_flashdata('success', 'Password has been successfully set.Try email and password to login.');
             redirect('home');
         }
->>>>>>> 446f3631448abe1c9034fd0e02e8fc99888c559f
     }
 
     public function verify_email($code){
