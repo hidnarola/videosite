@@ -1,5 +1,5 @@
 <div class="form-element">
-    <h3 class="h3-title">Change Password</h3>
+    <h3 class="h3-title">Reset Password</h3>
 
     <?php
     $all_erros = validation_errors();
@@ -9,10 +9,6 @@
         <div class="alert alert-danger"><?php echo $all_erros; ?></div>
 <?php } ?>
     <form method="post" action="" id="frmregister" enctype="multipart/form-data">
-        <div class="input-wrap">
-            <label class="label-css">Old Password </label>
-            <input type="password" name="old_password" id ="old_password" placeholder="Old Password" class="form-css" />
-        </div>
 
         <div class="input-wrap">
             <label class="label-css">Password </label>

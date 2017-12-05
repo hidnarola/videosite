@@ -130,7 +130,6 @@ class Registration extends CI_Controller {
                 $this->db->update('users');                
                 $html_content = '<h1> Hello World </h1> <a href="'.base_url().'admin/set_password/'.$random_no.'"> Click Here </a>';
                 
-
                 $email_config = mail_config();
                 $this->email->initialize($email_config);
                 $subject= config('site_name').' - Forgot Password Request';    
@@ -151,6 +150,30 @@ class Registration extends CI_Controller {
 
     public function reset_password(){
 
+<<<<<<< HEAD
+=======
+        $this->session->unset_userdata('client');
+        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
+        $res = $this->Users_model->get_data(['activation_code'=>$rand_no],true);        
+
+        if(empty($res)) { 
+            $this->session->set_flashdata('error', 'Password Reset link is either invalid or expired.');
+            redirect('home');
+         }
+        $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_rules('repeat_password', 'Re-type Password', 'required|matches[password]');
+
+        if($this->form_validation->run() == FALSE){
+             $data['subview']='front/registration/reset_password';            
+             $this->load->view('front/layouts/layout_main',$data);
+        }else{
+            $password = $this->input->post('password');
+            $encode_password = $this->encrypt->encode($password);
+            $this->Users_model->update_user_data($res['id'],['password'=>$encode_password,'is_verified'=>'1','activation_code'=>'']);
+            $this->session->set_flashdata('success', 'Password has been successfully set.Try email and password to login.');
+            redirect('home');
+        }
+>>>>>>> 446f3631448abe1c9034fd0e02e8fc99888c559f
     }
 
     public function verify_email($code){
