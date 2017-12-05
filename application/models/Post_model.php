@@ -501,7 +501,8 @@ class Post_model extends CI_Model
     
     public function get_comments_by_post_id($post_id)
     {
-        $this->db->select('message,user_id,post_id');
+        $this->db->select('message,user_id,post_id,u.username,u.avatar');
+        $this->db->join('users u','u.id = comments.user_id');
         $this->db->where('post_id',$post_id);
         $comments = $this->db->get('comments')->result_array();
         return $comments;

@@ -31,14 +31,14 @@
 //            ==================================Blogs========================================================
                      { foreach ($blog as $key => $blogs){ ?>
                             <div class="big-img">
-                                <a href=""><img src="<?php echo base_url() . $blogs['img_path'] ?>" alt="" /></a>
+                                <a href=""><img src="<?php echo base_url() . $blogs['img_path']; ?>" alt="" /></a>
                                 <?php if($count_blog > 1) { ?>
                                     <span><?php echo $key +1; ?> <small>of <?php echo $count_blog; ?></small></span>
                                 <?php } ?>
                             </div>
                         <div class="list-content">
-                            <h2><?php echo $blogs['blog_title'] ?></h2>
-                            <p><?php echo $blogs['blog_description'] ?></p>
+                            <h2><?php echo $blogs['blog_title']; ?></h2>
+                            <p><?php echo htmlspecialchars_decode($blogs['blog_description']); ?></p>
                         </div>
                         <?php } } 
 //          ==================================Blogs========================================================
@@ -52,19 +52,20 @@
                             <?php } ?>
                         </div>
                         <div class="list-content">
-                            <h2><?php echo $gal['title'] ?></h2>
-                            <p><?php echo $gal['description'] ?></p>
+                            <h2><?php echo $gal['title']; ?></h2>
+                            <p><?php echo htmlspecialchars_decode($gal['description']); ?></p>
                         </div>
                         <?php } } 
 //          ==================================Gallery========================================================
 //          ==================================Video========================================================
                         elseif ($posts['post_type'] == 'video') { ?>
                     <div class="big-img">
-                        <a href=""><img src="<?php echo base_url() . $posts['upload_path'] ?>" alt="" /></a>
+                        <a href=""><img src="<?php echo base_url() . $posts['upload_path']; ?>" alt="" /></a>
                     </div>
                     <div class="list-content">
-                        <h2><?php echo $posts['vtitle'] ?></h2>
-                        <p><?php echo $posts['description'] ?></p>
+                        <h2><?php echo $posts['vtitle']; ?></h2>
+                        <p><?php echo htmlspecialchars_decode($posts['description']); ?></p>
+                        
                     </div>
                     <?php } } ?>
  <!--==================================Video========================================================-->            
@@ -82,13 +83,14 @@
                             <li>
                                 <div class="list-ul-box">
                                         
-                                <span><a href="http://localhost/videosite/video/white-rabbit-read-out-at"><img src="http://localhost/videosite/uploads/videos/k9obPx8ULBdyJsO3IM5u.jpg" alt=""></a></span>
-                                <h4><?php echo $comm['message']; ?></h4>
-                                <p>janelle.hudson</p>                                
+                                <span><a class="cursor_pointer" href=""><img src="<?php echo base_url().$comm['avatar'];?>" alt=""></a></span>
+                                <h4><?php echo $comm['username']; ?></h4>                                
+                                <p><?php echo $comm['message']; ?></p>
                                 </div>
                             </li>
                             <?php } }?>
                         </ul>
+                        <?php if ($user_loggedin == true){?>
                         <div class="input-wrap comments">
                             <?php $all_erros = validation_errors();
                             if (!empty($all_erros))
@@ -96,19 +98,12 @@
                                 <div class="alert alert-danger"><?php echo $all_erros; ?></div>
 <?php } ?>
                             <label class="label-css">Add Comments </label>
-<!--                            <textarea name="
-                            id  
-                            comments    
-                            placeholder 
-                            Comments    
-                            class   
-                            form-css    
-                            /" id="" cols="30" rows="10"></textarea>-->
-<textarea name="" id="" cols="30" rows="10"></textarea>
+                            <textarea name="comments" id="comments" cols="30" rows="10"></textarea>
                             <div class="col-md-12 col-sm-12 col-xs-12 text-right register-btn">
                                 <button type="submit" class="btn-black"><i class="fa fa-check"></i> Add</button>
                             </div>
                         </div>
+                        <?php } ?>
                 </div>
                     <div role="tabpanel" class="tab-pane" id="data">
                         <p class="general-text">Has been the industry's standard dummy text ever since the is simply dummy text of the printing and typesetting industry been industry's standard dummy text eversince thehas survived not only five centuries but also the leap into electronic typesettwas popularised in the was popularised in the with the release of etraset sheets containing and more recently with desktop publishing software like aldus pageMaker including versions.</p>
@@ -117,7 +112,7 @@
             </div>
 
             
-            
+            <?php if ($user_loggedin == true){?>
             <div class="box_style_1 expose">
                 <h3 class="inner"> Share </h3>
                 <div class="row">
@@ -127,6 +122,7 @@
                     </div>
                 </div>
             </div>
+ <?php }?>
         </div>
     </div>
     <div class="listing-r"> 
@@ -155,5 +151,31 @@
         </ul>
     </div>    
 </form>
-
+<script>
+//    $('#frmblog').validate();
+$("#frmblog").validate({
+        errorClass: 'validation-error-label',
+        successClass: 'validation-valid-label',
+        highlight: function (element, errorClass) {
+            $(element).removeClass(errorClass);
+        },
+        unhighlight: function (element, errorClass) {
+            $(element).removeClass(errorClass);
+        },
+        validClass: "validation-valid-label",
+        success: function (label) {
+            label.addClass("validation-valid-label").text("Success.")
+        },
+        rules: {
+            comments: {
+                required: true,
+            }
+        },
+        messages: {
+            comments: {
+                required: "Please provide Comments",
+            }
+        }
+    });
+</script>
 
