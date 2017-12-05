@@ -129,7 +129,7 @@ class Registration extends CI_Controller {
                 $this->db->set('activation_code', $random_no);
                 $this->db->where('id',$user_data['id']);
                 $this->db->update('users');                
-                $html_content = '<h1> Hello World </h1> <a href="'.base_url().'admin/set_password/'.$random_no.'"> Click Here </a>';
+                $html_content = '<h1> Hello World </h1> <a href="'.base_url().'registation/reset_password/'.$random_no.'"> Click Here </a>';
                 
 
                 $email_config = mail_config();
@@ -145,13 +145,34 @@ class Registration extends CI_Controller {
             else{
                  $this->session->set_flashdata('error', 'Provided email address does not match with the system records.');
             }
+            $res['success'] = true;  
             echo json_encode($res);
         }
         
     }
 
-    public function reset_password(){
+    public function reset_password($rand_no){
 
+        $this->session->unset_userdata('client');
+        
+        $res = $this->Users_model->get_data(['activation_code'=>$rand_no],true);        
+
+        if(empty($res)) { 
+            $this->session->set_flashdata('error', 'Password Reset link is either invalid or expired.');
+            redirect('registration/ajax_login');
+         }
+        $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_rules('re_password', 'Re-type Password', 'required|matches[password]');
+
+        if($this->form_validation->run() == FALSE){
+            $this->load->view('registration/reset_password');
+        }else{
+            $password = $this->input->post('password');
+            $encode_password = $this->encrypt->encode($password);
+            $this->Users_model->update_user_data($res['id'],['password'=>$encode_password,'is_verified'=>'1','activation_code'=>'']);
+            $this->session->set_flashdata('success', 'Password has been successfully set.Try email and password to login.');
+            redirect('registration/ajax_login');
+        }
     }
 
     public function verify_email($code){
@@ -159,7 +180,7 @@ class Registration extends CI_Controller {
         $res = $this->Users_model->get_data(['activation_code'=>$code],true);
         if(!empty($res)){
             $this->Users_model->update_user_data($res['id'],['is_verified'=>'1','activation_code'=>'']);
-            redirect('registration/login');
+            redirect('home');
         }else{
             $this->session->set_flashdata('error','Verification code is Invalid.');
             // redirect here

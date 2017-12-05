@@ -189,7 +189,7 @@ $("#forgotpassword").validate({
                 dataType:'JSON',
                 beforeSend: function(){
                     dialog = bootbox.dialog({
-                        message: '<p class="text-center">Please while we process</p>',
+                        message: '<p class="text-center">Please wait while we process</p>',
                         closeButton: false
                     });                        
                     // dialog.modal('hide');
@@ -223,8 +223,7 @@ $("#forgotpassword").validate({
                                 $("#commentForm")[0].reset();
                                 $('#login-register').modal('hide');
                             },3000);
-
-                            window.location.href="<?php echo base_url().'dashboard'; ?>";
+                            window.location.href="<?php echo base_url().'home'; ?>";
                         }
                     },2000);
 
