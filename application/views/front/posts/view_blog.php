@@ -1,5 +1,5 @@
 <form method="post" action="" id="frmblog" enctype="multipart/form-data">
-    <?php // echo validation_errors(); ?>
+    <?php // pr($posts); ?>
     <div class="listing-l">
         <div class="head-bg-01">
             <h2><?php echo $posts['post_title'] ?></h2>
@@ -60,7 +60,12 @@
 //          ==================================Video========================================================
                         elseif ($posts['post_type'] == 'video') { ?>
                     <div class="big-img">
-                        <a href=""><img src="<?php echo base_url() . $posts['upload_path']; ?>" alt="" /></a>
+                        <!--<img src="<?php echo base_url() . $posts['upload_path']; ?>" alt="" />-->
+                        <a href="">
+                            <video controls>
+                                <source src="<?php echo base_url() . $posts['upload_path']; ?>" type="video/mp4">
+                            </video>
+                        </a>
                     </div>
                     <div class="list-content">
                         <h2><?php echo $posts['vtitle']; ?></h2>
@@ -73,7 +78,7 @@
             <div class="comman-tab">
                 <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#intro" aria-controls="home" role="tab" data-toggle="tab">Comments</a></li>
-                        <li role="presentation"><a href="#data" aria-controls="profile" role="tab" data-toggle="tab">Feedback</a></li>
+                        <li role="presentation"><a href="#data" aria-controls="profile" role="tab" data-toggle="tab">More Info</a></li>
                 </ul>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="intro">
@@ -100,13 +105,31 @@
                             <label class="label-css">Add Comments </label>
                             <textarea name="comments" id="comments" cols="30" rows="10"></textarea>
                             <div class="col-md-12 col-sm-12 col-xs-12 text-right register-btn">
-                                <button type="submit" class="btn-black"><i class="fa fa-check"></i> Add</button>
+                                <button type="submit" class="btn-black"> Add</button>
                             </div>
                         </div>
                         <?php } ?>
                 </div>
                     <div role="tabpanel" class="tab-pane" id="data">
-                        <p class="general-text">Has been the industry's standard dummy text ever since the is simply dummy text of the printing and typesetting industry been industry's standard dummy text eversince thehas survived not only five centuries but also the leap into electronic typesettwas popularised in the was popularised in the with the release of etraset sheets containing and more recently with desktop publishing software like aldus pageMaker including versions.</p>
+                        <p class="general-text">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                            <th>Channel</th>
+                            <th>Category</th>
+                            <th>Explore</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                            <!--<td><a href="<?php echo base_url(); ?>" target="_blank">Home Page</a></td>-->
+                            <td><a href="<?php echo base_url() . 'channel/' . $posts['channel_slug']; ?>" target="_blank"><?php echo $posts['channel_name'] ?></a></td>
+                            <td><a href="<?php echo base_url() . 'category_detail_page/' . $posts['category_id']; ?>" target="_blank"><?php echo $posts['category'] ?></a></td>
+                            <td><a href="<?php echo base_url() . 'category_detail_page/' . $posts['category_id']; ?>/sub/<?php echo $posts['sub_category_id']?>" target="_blank"><?php echo $posts['sub_category'] ?></a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        </p>
                     </div>
                 </div>
             </div>

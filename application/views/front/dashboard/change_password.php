@@ -25,7 +25,7 @@
         </div>				 		
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12 text-right register-btn">
-                <button type="submit" class="btn-black"><i class="fa fa-check"></i> Update</button>
+                <button type="submit" class="btn-black"> Update</button>
             </div>
         </div>
     </form>
