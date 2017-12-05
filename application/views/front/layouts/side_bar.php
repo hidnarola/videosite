@@ -1,10 +1,3 @@
-<?php
-//  $controller_name = $this->router->fetch_class();
-//  $method_name = $this->router->fetch_method();
-$all_cms_pages = $this->db->get_where('cms_page',['is_deleted'=>'0','is_blocked'=>'0'])->result_array();    
-
-?>
-
 <div class="left-panel">
     <div class="nav-div">
         <ul>
