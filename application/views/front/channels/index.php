@@ -1,5 +1,5 @@
 <h2>Channels</h2>
-<a href="<?php echo base_url() . 'user_channels/add'; ?>" class="btn btn-primary" title=""> Add Channel </a>
+<a href="<?php echo base_url() . 'user_channels/add'; ?>" class="btn-black" title=""> Add Channel </a>
 <table class="table">
     <thead>
         <tr>
