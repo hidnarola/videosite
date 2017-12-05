@@ -31,7 +31,12 @@
                         <a href="">
                             <img src="<?php echo base_url().$slide['img_path']; ?>" alt="" />
                         </a>
-                        <span><?php echo $key + 1; ?> <small>of <?php echo count($all_slides); ?></small></span>
+                        <span id="span_id_<?php echo $slide['id']; ?>">
+                            <?php echo $key + 1; ?>
+                            <small>of 
+                                <?php echo count($all_slides); ?>
+                            </small>
+                        </span>
                         <div class="option-02">
                             <a  class="btn btn-success" href="<?php echo base_url().'user_post/edit_post_slide/'.$slide['id'].'/'.$post_type; ?>">
                                 <i class="fa fa-edit"></i>
@@ -43,17 +48,7 @@
                     <div class="list-content">
                         <h2><?php echo $title; ?></h2>                        
                     </div>
-                </div>
-
-                <!-- <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample_<?php echo $key; ?>" aria-expanded="false" aria-controls="collapseExample_<?php echo $key; ?>">
-                    Slide <?php echo $key +1; ?> [ Drag Me ]
-                </a>
-                <div class="collapse" id="collapseExample_<?php echo $key; ?>">
-                    <div class="card card-body">
-                        <p><?php echo $title; ?></p>
-                    </div>
-                </div> -->
-                <!-- a.btn.btn-danger -->
+                </div>                
             </li>
             <?php } } ?>
         </ul>
@@ -67,8 +62,29 @@
     $( function() {
         $( "#sortable" ).sortable({
             update: function (event, ui) {
+                
                 var data =  $( "#sortable" ).sortable( "toArray" );
-                console.log(data);
+
+                for(var i=1; i<=data.length; i++ ){
+                    var new_str = i+'<small>of '+data.length+'</small>';
+                    $('#span_id_'+data[i-1]).html(new_str);
+                }
+
+                $.ajax({
+                    url:"<?php echo base_url().'user_post/sort_slide'; ?>",
+                    method:"post",
+                    dataType:"json",
+                    data:{all_order_ids:data,post_type:"<?php echo $post_type; ?>"},
+                    success:function(data){
+                        $.notify(data.success, {
+                            type: 'success',
+                            animate: {
+                                enter: 'animated lightSpeedIn',
+                                exit: 'animated lightSpeedOut'
+                            }
+                        });
+                    }
+                });
             }
         });        
     });

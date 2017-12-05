@@ -16,7 +16,7 @@
 			<?php $this->load->view('front/layouts/layout_modal'); ?>
 		</section>
 
-		<script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'custom.js'; ?>"></script>	
+		<script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'custom_new.js'; ?>"></script>	
 		<!-- Go to www.addthis.com/dashboard to customize your tools --> 
 		<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5948f4fb5a7fea54"></script>
 
@@ -38,6 +38,7 @@
 				if(!empty($success_msg)){
 			?>
 				$.notify("<?php echo $success_msg; ?>", {
+					type: 'success',
 					animate: {
 						enter: 'animated lightSpeedIn',
 						exit: 'animated lightSpeedOut'
@@ -50,6 +51,7 @@
 				if(!empty($error_msg)){
 			?>
 				$.notify("<?php echo $error_msg; ?>", {
+					type: 'danger',
 					animate: {
 						enter: 'animated lightSpeedIn',
 						exit: 'animated lightSpeedOut'
@@ -57,6 +59,12 @@
 				});
 			<?php } ?>
 
+			var window_height = parseInt($(window).height());
+			var header_height = parseInt($('header.header').height());
+
+			$('.for_height').css('min-height', window_height+header_height-40);
+			console.log(window_height);
+			console.log(header_height);
 
 		</script>
 	</body>

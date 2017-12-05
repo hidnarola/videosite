@@ -311,6 +311,7 @@ class User_post extends CI_Controller
             die('Do not have access');
         }
 
+        $this->db->order_by('order_no');
         if($post_data['post_type'] == 'blog'){
             $data['all_slides'] = $this->db->get_where('blog',['post_id'=>$post_id])->result_array();
         }else{
@@ -437,8 +438,12 @@ class User_post extends CI_Controller
             $this->load->library('upload', $config);
             
             if ( ! $this->upload->do_upload('img_path')){
-                $this->session->set_flashdata('error', $this->upload->display_errors());
-                redirect('user_post/add_post');
+                $error = $this->upload->display_errors();
+
+                if(strip_tags($error) != 'You did not select a file to upload.'){                
+                    $this->session->set_flashdata('error', $this->upload->display_errors());
+                    redirect('user_post/edit_post/'.$post_id);
+                }
             }
             else{
                 $data = array('upload_data' => $this->upload->data());
@@ -458,6 +463,22 @@ class User_post extends CI_Controller
         }        
         $this->session->set_flashdata('success','Slide has been deleted successfully.');
         redirect('user_post/view_all_slides/'.$post_id);
+    }
+
+    public function sort_slide(){
+        $all_order_ids = $this->input->post('all_order_ids');
+        $post_type = $this->input->post('post_type');
+        if(!empty($all_order_ids)){
+            foreach($all_order_ids as $key=>$a_id){
+                $k = $key + 1;
+                if($post_type == 'blog'){
+                    $this->db->update('blog',['order_no'=>$k],['id'=>$a_id]);
+                }else{
+                    $this->db->update('gallery',['order_no'=>$k],['id'=>$a_id]);
+                }
+            }
+        }
+        echo json_encode(['success'=>"Slides order has been updated successfully."]);
     }
 
     // ------------------------------------------------------------------------ 
