@@ -82,7 +82,7 @@ function getMimeType($filename)
 function qry($is_die = false)
 {
     $CI = & get_instance();
-    echo $CI->db->last_query();
+    print_r($CI->db->last_query());
     if ($is_die == true)
     {
         die();

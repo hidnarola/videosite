@@ -1,9 +1,12 @@
+<?php
+	$data['all_cms_pages'] = $this->db->get_where('cms_page',['is_deleted'=>'0','is_blocked'=>'0'])->result_array();
+?>
 <html> 
     <title>Videosite</title>
-	    <?php $this->load->view('front/layouts/layout_header'); ?>    
+	    <?php $this->load->view('front/layouts/layout_header',$data); ?>    
 	    
 	    <section class="content-wrap">
-		    <?php $this->load->view('front/layouts/side_bar'); ?>
+		    <?php $this->load->view('front/layouts/side_bar',$data); ?>
 		    <div class="right-panel">
 		    	<div class="for_height">		    		
 		    		<?php $this->load->view($subview); ?>
