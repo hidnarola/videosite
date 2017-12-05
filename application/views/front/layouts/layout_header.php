@@ -21,6 +21,7 @@
     <link href="<?php echo DEFAULT_CSS_PATH ?>icomoon.css" rel="stylesheet" />
     <link href="<?php echo DEFAULT_CSS_PATH ?>style.css" rel="stylesheet" />
     <link href="<?php echo DEFAULT_CSS_PATH ?>jquery.fancybox.min.css" rel="stylesheet" />        
+    <link href="<?php echo DEFAULT_CSS_PATH ?>animate.css" rel="stylesheet" />        
     <link href="<?php echo DEFAULT_CSS_PATH ?>pam_style.css" rel="stylesheet" />    
 
     <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'jquery.min.js'; ?>"></script>    

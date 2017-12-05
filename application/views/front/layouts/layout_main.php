@@ -24,7 +24,7 @@
 			function check_login(){
 				<?php 
 					$s_data = $this->session->userdata('client');
-					if(empty($s_data)){ 
+					if(empty($s_data)){
 				?>
 					$('.btn_sign_in, .btn_header_login').trigger('click');
 				<?php }else {  ?>
@@ -32,6 +32,32 @@
 				<?php } ?>
 				// href="<?php echo base_url().'user_post/add_post'; ?>"
 			}
+
+			<?php
+				$success_msg = $this->session->flashdata('success');
+				if(!empty($success_msg)){
+			?>
+				$.notify("<?php echo $success_msg; ?>", {
+					animate: {
+						enter: 'animated lightSpeedIn',
+						exit: 'animated lightSpeedOut'
+					}
+				});
+			<?php } ?>
+
+			<?php
+				$error_msg = $this->session->flashdata('error');
+				if(!empty($error_msg)){
+			?>
+				$.notify("<?php echo $error_msg; ?>", {
+					animate: {
+						enter: 'animated lightSpeedIn',
+						exit: 'animated lightSpeedOut'
+					}
+				});
+			<?php } ?>
+
+
 		</script>
 	</body>
 

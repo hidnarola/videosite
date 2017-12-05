@@ -142,30 +142,26 @@ class Home extends CI_Controller
         $cur_ip = $this->input->server('REMOTE_ADDR');
         $sess_data = $this->session->userdata('client');
 
-        if (!empty($sess_data))
+        $ins_data = [
+            'user_id' => $sess_data['id'],
+            'ip_address' => $this->input->server('REMOTE_ADDR'),
+            'post_id' => $post_id,
+            'server_meta' => $server_json,
+            'created_at' => date('Y-m-d')
+        ];
+
+        $total_per_day_cnt = $this->db->get_where('user_post_counts', ['ip_address' => $cur_ip, 'post_id' => $post_id, 'created_at' => date('Y-m-d')])
+                ->num_rows();
+
+        if ($total_per_day_cnt < 10)
         {
-
-            $ins_data = [
-                'user_id' => $sess_data['id'],
-                'ip_address' => $this->input->server('REMOTE_ADDR'),
-                'post_id' => $post_id,
-                'server_meta' => $server_json,
-                'created_at' => date('Y-m-d')
-            ];
-
-            $total_per_day_cnt = $this->db->get_where('user_post_counts', ['ip_address' => $cur_ip, 'post_id' => $post_id, 'created_at' => date('Y-m-d')])
-                    ->num_rows();
-
-            if ($total_per_day_cnt < 10)
-            {
-                $this->db->insert('user_post_counts', $ins_data);
-            }
+            $this->db->insert('user_post_counts', $ins_data);
         }
+        
     }
 
     public function like_post($post_id)
     {
-
         $sess_data = $this->session->userdata('client');
         $post_data = $this->db->get_where('user_post', ['id' => $post_id, 'is_deleted' => '0', 'is_blocked' => '0'])->row_array();
         if (empty($post_data))
