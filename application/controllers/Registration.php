@@ -47,6 +47,7 @@ class Registration extends CI_Controller {
 
             $this->session->set_userdata(['client' => $user_data]); // Start Loggedin User Session
             $this->Users_model->update_user_data($user_data['id'], ['last_login' => date('Y-m-d H:i:s')]); // update last login time            
+            $this->session->set_flashdata('success','Login Successful');
             $res['success'] = true;            
         }
         echo json_encode($res);
@@ -139,10 +140,10 @@ class Registration extends CI_Controller {
                             ->subject($subject)
                             ->message($html_content);
                 $this->email->send();
-                 $this->session->set_flashdata('message', ['message' => 'Forgot password request sent successfully, You will receive the confirmation mail', 'class' => 'alert alert-success']);
+                 $this->session->set_flashdata('success', 'Forgot password request sent successfully, You will receive the confirmation mail');
             }
             else{
-                 $this->session->set_flashdata('message', ['message' => 'Provided email address does not match with the system records.', 'class' => 'alert alert-danger']);
+                 $this->session->set_flashdata('error', 'Provided email address does not match with the system records.');
             }
             echo json_encode($res);
         }

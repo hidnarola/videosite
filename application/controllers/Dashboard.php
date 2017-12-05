@@ -194,9 +194,6 @@ class Dashboard extends CI_Controller {
         $data['subview'] = 'front/dashboard/bookmarks';
         $this->load->view('front/layouts/layout_main', $data);
     }
-    
-    // get_my_posts_count
-    // get_my_posts_data
 
     public function view_my_posts()
     {
