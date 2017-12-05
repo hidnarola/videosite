@@ -19,10 +19,11 @@
     <script src="<?php echo DEFAULT_ADMIN_JS_PATH . "sweetalert.min.js"; ?>"></script>
     <link rel="stylesheet" type="text/css" href="<?php echo DEFAULT_ADMIN_CSS_PATH . "sweetalert.css"; ?>">
     <link href="<?php echo DEFAULT_CSS_PATH ?>icomoon.css" rel="stylesheet" />
-    <link href="<?php echo DEFAULT_CSS_PATH ?>style.css" rel="stylesheet" />
     <link href="<?php echo DEFAULT_CSS_PATH ?>jquery.fancybox.min.css" rel="stylesheet" />        
     <link href="<?php echo DEFAULT_CSS_PATH ?>animate.css" rel="stylesheet" />        
-    <link href="<?php echo DEFAULT_CSS_PATH ?>pam_style.css" rel="stylesheet" />    
+    <link href="<?php echo DEFAULT_CSS_PATH ?>style.css" rel="stylesheet" />
+    <link href="<?php echo DEFAULT_CSS_PATH ?>pam_style.css" rel="stylesheet" /> 
+    <link href="<?php echo DEFAULT_CSS_PATH ?>responsive.css" rel="stylesheet" /> 
 
     <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'jquery.min.js'; ?>"></script>    
     <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'bootstrap.min.js'; ?>"></script>
