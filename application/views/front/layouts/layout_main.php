@@ -72,7 +72,7 @@
 		</script>
 	</body>
 
-<script src="http://vjs.zencdn.net/6.4.0/video.js"></script>
+
 
 
 </html>
