@@ -1,4 +1,5 @@
 <form method="post" action="" id="frmblog" enctype="multipart/form-data">
+    <?php if(!empty($posts)){?>
     <div class="listing-l">
         <div class="head-bg-01">
             <h2><?php echo $posts['post_title'] ?></h2>
@@ -64,8 +65,8 @@
 <!--                            <video width="100%" controls>
                                 <source src="<?php echo base_url() . $posts['upload_path']; ?>" type="video/mp4">
                             </video>-->
-                            <div id="myDiv">This text will be replaced with a player.</div>
                         </a>
+                            <div id="myDiv">This text will be replaced with a player.</div>
                         <script src="https://content.jwplatform.com/libraries/sJ4UhosD.js"></script>
                         <script>
                         jwplayer("myDiv").setup({
@@ -153,6 +154,7 @@
             </div>
         </div>
     </div>
+    <?php } ?>
     <div class="listing-r"> 
         <h3>Related <?php echo $new_var . 's'; ?></h3>
         <ul class="list-ul">
