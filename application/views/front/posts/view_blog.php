@@ -13,14 +13,14 @@
     <?php } } ?>
                 
                 
-                
                  <?php if ($user_loggedin == true){
-        if ($is_user_like == false){ ?>
+         if ($is_user_like == false){ ?>
             <a href="<?php echo base_url() . 'home/like_post/' . $posts['id']; ?>" class="like-btn"><i class="fa fa-thumbs-up"></i>like <small><?php echo $liked;?></small></a>
             <?php } else { ?>
             <a href="<?php echo base_url() . 'home/unlike_post/' . $posts['id']; ?>" class="like-btn"><i class="fa fa-thumbs-up"></i>Liked <small><?php echo $liked;?></small></a>
-    <?php } } ?>
-                
+    <?php } } else { ?>
+            <a class="like-btn"><i class="fa fa-thumbs-up"></i>likes <small><?php echo $liked;?></small></a>    
+    <?php } ?>
                 
                 
             </div>

@@ -21,7 +21,7 @@ class Home extends CI_Controller
         $data['most_views'] = $this->Post_model->get_most_viewed_post(10,0);
         $data['most_recent_video'] = $this->Post_model->get_recently_posted_videos(2,0);
         $data['most_recent_blog'] = $this->Post_model->get_recently_posted_blogs(1,0);
-        $data['most_recent_gallery'] = $this->Post_model->get_recently_posted_gallery(4,0);
+        $data['most_recent_gallery'] = $this->Post_model->get_recently_posted_gallery(1,0);
         $data['subview'] = "front/home";
         $this->load->view('front/layouts/layout_main', $data);
     }
@@ -41,22 +41,23 @@ class Home extends CI_Controller
         $data['is_user_like'] = false;
         $data['is_user_bookmark'] = false;
         $data['new_var'] = 'Video';
+        
+        if($res_post_data['post_type'] == 'blog' || $res_post_data['post_type'] == 'gallery'){
+            $this->db->order_by('order_no');
+            if ($res_post_data['post_type'] == 'gallery')
+            {
+                $data['new_var'] = 'Gallerie';
+                $data['gallery'] = $this->db->get_where('gallery', ['post_id' => $res_post_data['id']])->result_array();
+                $data['count_gallery'] = count($data['gallery']);
+            }
 
-        if ($res_post_data['post_type'] == 'gallery')
-        {
-            $data['new_var'] = 'Gallerie'; 
-            $data['gallery'] = $this->db->get_where('gallery', ['post_id' => $res_post_data['id']])->result_array();
-            $data['count_gallery'] = count($data['gallery']);
+            if ($res_post_data['post_type'] == 'blog')
+            {
+                $data['new_var'] = 'Blog';
+                $data['blog'] = $this->db->get_where('blog', ['post_id' => $res_post_data['id']])->result_array();
+                $data['count_blog'] = count($data['blog']);
+            }
         }
-
-        if ($res_post_data['post_type'] == 'blog')
-        {
-            $data['new_var'] = 'Blog'; 
-            $data['blog'] = $this->db->get_where('blog', ['post_id' => $res_post_data['id']])->result_array();
-            $data['count_blog'] = count($data['blog']);
-        }
-
-
         if (!empty($sess_data))
         {
 
@@ -142,14 +143,25 @@ class Home extends CI_Controller
         $cur_ip = $this->input->server('REMOTE_ADDR');
         $sess_data = $this->session->userdata('client');
 
-        $ins_data = [
-            'user_id' => $sess_data['id'],
-            'ip_address' => $this->input->server('REMOTE_ADDR'),
-            'post_id' => $post_id,
-            'server_meta' => $server_json,
-            'created_at' => date('Y-m-d')
-        ];
-
+        if(empty($sess_data)){
+            $ins_data = [
+                'user_id' => 0,
+                'ip_address' => $this->input->server('REMOTE_ADDR'),
+                'post_id' => $post_id,
+                'server_meta' => $server_json,
+                'created_at' => date('Y-m-d')
+            ];
+        }
+        else
+        {
+            $ins_data = [
+                'user_id' => $sess_data['id'],
+                'ip_address' => $this->input->server('REMOTE_ADDR'),
+                'post_id' => $post_id,
+                'server_meta' => $server_json,
+                'created_at' => date('Y-m-d')
+            ];
+        }
         $total_per_day_cnt = $this->db->get_where('user_post_counts', ['ip_address' => $cur_ip, 'post_id' => $post_id, 'created_at' => date('Y-m-d')])
                 ->num_rows();
 

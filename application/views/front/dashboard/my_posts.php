@@ -35,7 +35,7 @@
                         <?php } ?>
                         <a onclick="delete_confirm(this)" data-id="<?php echo $post['id']; ?>" class="cursor_pointer fa fa-trash"></a>
                     </div>
-                    <h6><i class="fa fa-eye"></i> <?php echo $post['total_views'] ?> Views</h6>
+                    <h6><i class="fa fa-eye"></i> <?php echo $post['total_views'] ?></h6>
                     <!--<h6><i class="fa fa-clock-o"></i><?php get_ago_time($post['blog_created_date'], date("Y-m-d H:i:s")) ?></h6>-->
                 </div>
             </div>

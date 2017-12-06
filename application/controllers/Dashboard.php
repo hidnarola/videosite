@@ -10,7 +10,7 @@ class Dashboard extends CI_Controller {
 		$this->load->model(['Users_model','Post_model']);
         $this->load->library('pagination');
         $this->config->set_item('language', 'english');
-		if(empty(is_client_loggedin())){ redirect('registration/login'); }
+		if(empty(is_client_loggedin())){ redirect('home'); }
 	}
 
 	public function index() {

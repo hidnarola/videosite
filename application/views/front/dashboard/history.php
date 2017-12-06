@@ -25,7 +25,7 @@
                     <a href="<?php echo base_url() . 'video/' . $his['slug']; ?>"><?php echo $his['post_title'] ?></a>
                     <?php } ?>
                     <p>By : <?php echo $his['username'] ?> <span></span></p>
-                    <h6><i class="fa fa-eye"></i> <?php echo $his['total_views'] ?> Views</h6>
+                    <h6><i class="fa fa-eye"></i> <?php echo $his['total_views'] ?></h6>
                 <!--<h6><i class="fa fa-clock-o"></i><?php get_ago_time($his['blog_created_date'], date("Y-m-d H:i:s")) ?></h6>-->
                 </div>
             </div>

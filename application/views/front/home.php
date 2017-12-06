@@ -82,7 +82,7 @@ jwplayer("myDiv").setup({
 </script> -->
 
 <div class="home-listing">
-  <h2>Most Viewd Posts</h2>
+  <h2>Most Viewed Posts</h2>
   <div class="owl-carousel owl-theme">
               <?php foreach($most_views as $key => $view){?>
       <div class="item">

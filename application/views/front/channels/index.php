@@ -1,5 +1,19 @@
 <h2>Channels</h2>
+<?php if (!empty($all_channels))
+        {
+     if(count($all_channels) == 3){
+         ?>
+<div class="alert alert-success">Maximum 3 Channels are allowed.</div>
+<?php
+     }
+     else{
+         ?>
 <a href="<?php echo base_url() . 'user_channels/add'; ?>" class="btn-black" title=""> Add Channel </a>
+         <?php
+     }
+}
+?>
+
 <table class="table">
     <thead>
         <tr>

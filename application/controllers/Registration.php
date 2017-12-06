@@ -120,7 +120,8 @@ class Registration extends CI_Controller {
                                          ['forgot_email_check'=>'OOPS !! Email does not exists.']);
        
         if($this->form_validation->run() == FALSE){   
-            $res['email_error'] = strip_tags(form_error('email_id'));         
+            $res['email_error'] = strip_tags(form_error('email_id')); 
+            $res['success'] = false;
         }else{
             $user_data=$this->Users_model->check_if_user_exist(['email_id' => $this->input->post('email_id')], false, true,['1','2','3']);
             if($user_data){
@@ -143,12 +144,13 @@ class Registration extends CI_Controller {
             else{
                  $this->session->set_flashdata('message', ['message' => 'Provided email address does not match with the system records.', 'class' => 'alert alert-danger']);
             }
+                 $res['success'] = true;
             echo json_encode($res);
         }
         
     }
 
-    public function reset_password(){
+    public function reset_password($rand_no){
         $this->session->unset_userdata('client');
         $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $res = $this->Users_model->get_data(['activation_code'=>$rand_no],true);        
@@ -177,7 +179,8 @@ class Registration extends CI_Controller {
         $res = $this->Users_model->get_data(['activation_code'=>$code],true);
         if(!empty($res)){
             $this->Users_model->update_user_data($res['id'],['is_verified'=>'1','activation_code'=>'']);
-            redirect('registration/login');
+//            redirect('registration/login');
+            redirect('home');
         }else{
             $this->session->set_flashdata('error','Verification code is Invalid.');
             // redirect here
