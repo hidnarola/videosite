@@ -121,7 +121,7 @@ class Admin_video_model extends CI_Model
 
     public function get_all_video_by_user($id)
     {
-        $this->db->select('v.id,post_id,title,DATE_FORMAT(v.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,username,u.is_blocked', false);
+        $this->db->select('v.id,post_id,title,up.slug,DATE_FORMAT(v.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,username,u.is_blocked', false);
         $this->db->join('user_post up', 'up.id = v.post_id', 'left');
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');

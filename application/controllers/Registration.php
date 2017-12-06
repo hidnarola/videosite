@@ -102,8 +102,8 @@ class Registration extends CI_Controller {
 
             $email_config = mail_config();
             $this->email->initialize($email_config);
-            $subject='Thank you for your registration';
-            $this->email->from('test@mail.com')
+            $subject=config('site_name'). ' - Thank you for your registration';
+            $this->email->from(config('contact_email'), config('sender_name'))
                         ->to('vpa@narola.email,nik@narola.email,'.$email_id)
                         ->subject($subject)
                         ->message($html_content);
