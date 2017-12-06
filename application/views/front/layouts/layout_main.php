@@ -72,18 +72,5 @@
 			console.log(header_height);
 
 		</script>
-
-		<script type="text/javascript">
-    $(window).scroll(function() {   
-       if($(window).scrollTop() + $(window).height() == $(document).height()) {
-           alert("bottom!");
-       }
-    });   
-</script>
-
 	</body>
-
-<script src="http://vjs.zencdn.net/6.4.0/video.js"></script>
-
-
 </html>
