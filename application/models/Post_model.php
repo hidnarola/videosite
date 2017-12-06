@@ -543,21 +543,30 @@ class Post_model extends CI_Model
     }
     
     
-    public function get_all_posts_by_channel_id($id)
+    public function get_all_posts_by_channel_id($channel_id,$limit)
     {
-        $this->db->select('uc.id,uc.user_id as ucuserid,channel_name,channel_slug,up.channel_id,up.post_type,up.slug,b.id as blogid,b.post_id as blogpostid,b.blog_title,b.blog_description,b.img_path as bimg,DATE_FORMAT(b.created_at,"%d %b %Y <br> %l:%i %p") AS blogcreated_date,g.id as galleryid,g.post_id as gallerypost_id,g.title as gtitle,g.description as gdesc,g.img_path as gimg,DATE_FORMAT(g.created_at,"%d %b %Y <br> %l:%i %p") AS gallerycreated_date,v.id as videoid,v.post_id as videopostid,v.title as vtitle,v.description as vdesc,v.upload_path,DATE_FORMAT(v.created_at,"%d %b %Y <br> %l:%i %p") AS videocreated_date,count(distinct upc.id) as total_views');
-        $this->db->join('user_post up','up.channel_id = uc.id');
-        $this->db->join('blog b', 'b.post_id = up.id', 'left');
-        $this->db->join('video v', 'v.post_id = up.id', 'left');
-        $this->db->join('gallery g', 'g.post_id = up.id', 'left');
-        $this->db->join('user_post_counts upc','upc.post_id = up.id');
-        $this->db->where('uc.id',$id);
-        $channels = $this->db->get('user_channels uc')->result_array();
-        
+        $this->db->select('up.id,up.channel_id,up.post_type,up.slug,up.category_id,up.sub_category_id,up.post_title,up.main_image,uc.id as channelid,uc.user_id as chaneeluserid,uc.channel_name,uc.channel_slug,u.id as userid,u.fname,u.lname,u.username,u.avatar,upc.post_id as upcpostid, COUNT(distinct upc.id) as total_views');
+        $this->db->join('user_channels uc', 'uc.id = up.channel_id', 'left');
+        $this->db->join('users u', 'u.id = uc.user_id', 'left');
+        $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
+        $this->db->where('uc.id = ', $channel_id);
+        $this->db->group_by('up.id');
+        $this->db->order_by('uc.id', 'desc');
+        $this->db->limit($limit);
+        $channels = $this->db->get('user_post up')->result_array();
         return $channels;
     }
     
-    public function get_total_likes($id)
+    public function get_user_channel($slug)
+    {
+        $this->db->select('c.id,c.channel_name,channel_slug,c.user_id,u.id as userid,u.fname,u.lname,u.username,u.avatar,u.designation');
+        $this->db->join('users u','u.id = c.user_id');
+        $this->db->where('c.channel_slug',$slug);
+        $user = $this->db->get('user_channels c')->row_array();
+        return $user;
+    }
+
+        public function get_total_likes($id)
     {
         $this->db->select('COUNT(distinct uk.id)');
         $this->db->join('user_post up','up.id = uk.post_id');

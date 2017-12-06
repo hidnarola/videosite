@@ -5,8 +5,7 @@ class User_channels extends CI_Controller {
 
 	public function __construct(){
 		parent::__construct();
-                $this->load->model(['Users_model','Post_model','admin/Admin_users_model']);
-		
+        $this->load->model(['Users_model','Post_model','admin/Admin_users_model']);		
 	}
 
 	public function index() {
@@ -92,57 +91,39 @@ class User_channels extends CI_Controller {
 	// ------------------------------------------------------------------------
 
 	public function channel_detail($channel_name){
-            $sess_data = $this->session->userdata('client');
-            $data['session_info'] = $sess_data;
-		$data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
-		$data['res_channel'] = $this->db->get_where('user_channels',['channel_slug'=>$channel_name])->row_array();
-		$data['res_posts'] = $this->db->get_where('user_post',['channel_id' => $data['res_channel']['id']])->row_array();
-                $data['posts'] = $this->Post_model->get_all_posts_by_user_id($sess_data['id'],5);
-                $data['post'] = $this->Post_model->get_all_posts_by_user_id($sess_data['id'],12);
-                $data['channel_post'] = $this->Post_model->get_all_posts_by_channel_id($data['res_channel']['id']);
-                $data['comments'] = $this->Post_model->get_comments_by_post_id($data['res_posts']['id']);
-		if(empty($data['res_channel'])){ show_404(); }
+        
+        $sess_data = $this->session->userdata('client');
+        $data['session_info'] = $sess_data;
+        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
+        $data['res_channel'] = $this->db->get_where('user_channels',['channel_slug'=>$channel_name])->row_array();
+        $data['res_posts'] = $this->db->get_where('user_post',['channel_id' => $data['res_channel']['id']])->row_array();
+//        $data['post'] = $this->Post_model->get_all_posts_by_user_id($sess_data['id'],12);
+        $data['channel_post'] = $this->Post_model->get_all_posts_by_channel_id($data['res_channel']['id'],12);
+        $data['channel_user'] = $this->Post_model->get_user_channel($channel_name);
+        $data['comments'] = $this->Post_model->get_comments_by_post_id($data['res_posts']['id']);
+        if(empty($data['res_channel'])){ show_404(); }
 
-//		$sess_data = $this->session->userdata('client');
-		$data['user_loggedin'] = false;
-		$data['is_user_subscribe'] = false;
-		$data['is_this_users_channel'] = false;
-		$data['total_subscriber'] = $this->db->get_where('user_subscribers',['channel_id'=>$data['res_channel']['id']])->num_rows();
-//		$data['total_likes'] = $this->db->get_where('user_likes',['post_id'=>$data['res_posts']['id']])->num_rows();
-//		$data['total_views'] = $this->db->get_where('user_post_counts',['post_id'=>$data['res_posts']['id']])->num_rows();
-                
+        $data['is_user_subscribe'] = false;
+        $data['is_this_users_channel'] = false;
+        $data['total_subscriber'] = $this->db->get_where('user_subscribers',['channel_id'=>$data['res_channel']['id']])->num_rows();
+        
+        $all_userchannel = $this->db->select('id')->get_where('user_channels',['user_id'=>$sess_data['id'],'is_deleted'=>'0','is_blocked'=>'0'])->result_array();
+        // put validation check - if logged in user try to subscribe own channel 
+        if(!empty($all_userchannel)){
+            $all_ids = array_column($all_userchannel,'id');
+            if(in_array($data['res_channel']['id'],$all_ids)){
+                    $data['is_this_users_channel'] = true;
+            }
+        }
 
-		// pr($data['total_subscriber'],1);
+        $user_subscribe_data =  $this->db->get_where('user_subscribers',['user_id'=>$sess_data['id'],'channel_id'=>$data['res_channel']['id']])->row_array();
 
-		if(!empty($sess_data)){
-			
-			$data['user_loggedin'] = true;
-			
-			$all_userchannel = $this->db->select('id')->get_where('user_channels',
-															['user_id'=>$sess_data['id'],'is_deleted'=>'0','is_blocked'=>'0'])
-												  ->result_array();
+        if(!empty($user_subscribe_data)){
+                $data['is_user_subscribe'] = true;
+        }
 
-			// put validation check - if logged in user try to subscribe own channel 
-			if(!empty($all_userchannel)){
-				$all_ids = array_column($all_userchannel,'id');
-				if(in_array($data['res_channel']['id'],$all_ids)){
-					$data['is_this_users_channel'] = true;
-				}
-			}
-
-			$user_subscribe_data =  $this->db->get_where('user_subscribers',['user_id'=>$sess_data['id'],'channel_id'=>$data['res_channel']['id']])
-											 ->row_array();
-			
-			if(!empty($user_subscribe_data)){
-				$data['is_user_subscribe'] = true;
-			}
-		}
-
-		// pr($data['is_user_subscribe'],1);
-		// pr($data['is_this_users_channel'],1);
-                $data['subview']='front/channels/channel_details';
-        	$this->load->view('front/layouts/layout_main',$data);
-//		$this->load->view('front/channels/channel_details',$data);
+        $data['subview']='front/channels/channel_details';
+    	$this->load->view('front/layouts/layout_main',$data);
 	}
 
 	public function subscribe_channel($channel_id){

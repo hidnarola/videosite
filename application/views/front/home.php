@@ -68,9 +68,10 @@
 
 </div>
 <div class="ad-01"><a href="">
-        <div id="myDiv">This text will be replaced with a player.</div>
+        <img src="public/front/images/ad-01.png" alt="" />
+        <!--<div id="myDiv">This text will be replaced with a player.</div>-->
     </a></div>
-<script src="https://content.jwplatform.com/libraries/sJ4UhosD.js"></script>
+<!--<script src="https://content.jwplatform.com/libraries/sJ4UhosD.js"></script>
 <script>
 jwplayer("myDiv").setup({
     "file": "uploads/videos/mov_bbb.mp4",
@@ -78,7 +79,7 @@ jwplayer("myDiv").setup({
     "height": 360,
     "width": 640
 });
-</script> 
+</script> -->
 
 <div class="home-listing">
   <h2>Most Viewd Posts</h2>
@@ -88,13 +89,13 @@ jwplayer("myDiv").setup({
           <div class="list-box">
               <div class="list-top"> 
                   <?php if($view['post_type'] == 'blog'){?>
-                  <a class="img-anchor" href="<?php echo base_url() . 'blog/' . $like['slug']; ?>"><img src="<?php echo $view['main_image']?>" alt="" /></a>  
+                  <a class="img-anchor" href="<?php echo base_url() . 'blog/' . $view['slug']; ?>"><img src="<?php echo $view['main_image']?>" alt="" /></a>  
                   <a href="" class="tag-a">A</a>
                     <?php } else if($view['post_type'] == 'gallery'){?>
-                  <a class="img-anchor" href="<?php echo base_url() . 'gallery/' . $like['slug']; ?>"><img src="<?php echo $view['main_image']?>" alt="" /></a>         
+                  <a class="img-anchor" href="<?php echo base_url() . 'gallery/' . $view['slug']; ?>"><img src="<?php echo $view['main_image']?>" alt="" /></a>         
                   <a href="" class="tag-g">G</a>
                     <?php } else if($view['post_type'] == 'video'){?>
-                  <a class="img-anchor" href="<?php echo base_url() . 'video/' . $like['slug']; ?>"><img src="<?php echo $view['main_image']?>" alt="" /></a>  
+                  <a class="img-anchor" href="<?php echo base_url() . 'video/' . $view['slug']; ?>"><img src="<?php echo $view['main_image']?>" alt="" /></a>  
                   <a href="" class="tag-v">V</a>
                     <?php } ?>
                   <!--<span>10:53</span>-->

@@ -1,5 +1,4 @@
 <form method="post" action="" id="frmblog" enctype="multipart/form-data">
-    <?php // pr($posts); ?>
     <div class="listing-l">
         <div class="head-bg-01">
             <h2><?php echo $posts['post_title'] ?></h2>
@@ -62,10 +61,20 @@
                     <div class="big-img">
                         <!--<img src="<?php echo base_url() . $posts['upload_path']; ?>" alt="" />-->
                         <a href="">
-                            <video width="100%" controls>
+<!--                            <video width="100%" controls>
                                 <source src="<?php echo base_url() . $posts['upload_path']; ?>" type="video/mp4">
-                            </video>
+                            </video>-->
+                            <div id="myDiv">This text will be replaced with a player.</div>
                         </a>
+                        <script src="https://content.jwplatform.com/libraries/sJ4UhosD.js"></script>
+                        <script>
+                        jwplayer("myDiv").setup({
+                            "file": "<?php echo base_url() . $posts['upload_path']; ?>",
+                            "image": "<?php echo base_url() . $posts['main_image']; ?>",
+                            "height": 360,
+                            "width": 640
+                        });
+                        </script>
                     </div>
                     <div class="list-content">
                         <h2><?php echo $posts['vtitle']; ?></h2>
@@ -84,7 +93,6 @@
                     <div role="tabpanel" class="tab-pane active" id="intro">
                         <ul class="list-ul comment-ul ">
                             <?php if(isset($comments)){ foreach ($comments as $key =>$comm){?>
-                            <!-- <li><?php echo $comm['message'];?></li> -->
                             <li>
                                 <div class="list-ul-box">
                                         
@@ -172,7 +180,6 @@
     </div>    
 </form>
 <script>
-//    $('#frmblog').validate();
 $("#frmblog").validate({
         errorClass: 'validation-error-label',
         successClass: 'validation-valid-label',
