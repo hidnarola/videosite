@@ -21,24 +21,24 @@
     <link href="<?php echo DEFAULT_CSS_PATH ?>icomoon.css" rel="stylesheet" />
     <link href="<?php echo DEFAULT_CSS_PATH ?>jquery.fancybox.min.css" rel="stylesheet" />        
     <link href="<?php echo DEFAULT_CSS_PATH ?>animate.css" rel="stylesheet" />        
+    <link href="<?php echo DEFAULT_CSS_PATH ?>jquery.loading.min.css" rel="stylesheet" />            
     <link href="<?php echo DEFAULT_CSS_PATH ?>style.css" rel="stylesheet" />
     <link href="<?php echo DEFAULT_CSS_PATH ?>pam_style.css" rel="stylesheet" /> 
     <link href="<?php echo DEFAULT_CSS_PATH ?>responsive.css" rel="stylesheet" /> 
 
     <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'jquery.min.js'; ?>"></script>    
     <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'bootstrap.min.js'; ?>"></script>
+    <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'jquery.loading.min.js'; ?>"></script>
     <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'bootstrap-datepicker.js'; ?>"></script>    
     <script src="<?php echo DEFAULT_JS_PATH.'jquery_validation.js'; ?>"></script>
     <script src="<?php echo DEFAULT_JS_PATH.'bootstrap-select.min.js'; ?>"></script>    
     <script src="<?php echo DEFAULT_JS_PATH.'jquery.fancybox.min.js'; ?>"></script>        
     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-    
+        
     <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'bootbox.min.js'; ?>"></script>
     <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'bootstrap-notify.min.js'; ?>"></script>    
     <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'owl.carousel.min.js'; ?>"></script>
 
-    
-    
     <!-- DEFAULT_JS_PATH
     DEFAULT_CSS_PATH -->
 

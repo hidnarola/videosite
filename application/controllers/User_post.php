@@ -391,6 +391,7 @@ class User_post extends CI_Controller
                 $this->Post_model->insert_record('gallery',$insert_array);
             }
 
+            $this->session->set_flashdata('success','Slide has been saved successfully.');
             redirect('user_post/view_all_slides/'.$post_id);
         }
     }
@@ -427,6 +428,8 @@ class User_post extends CI_Controller
             $this->load->view('front/layouts/layout_main', $data);
         }else{
             
+            $file_path = $data['slide_data']['img_path'];
+
             // ------------------------------------------------------------------------
             if($post_data['post_type'] == 'blog'){ $folder_name = 'blogs'; }else { $folder_name = 'gallery'; }
 
@@ -442,7 +445,8 @@ class User_post extends CI_Controller
 
                 if(strip_tags($error) != 'You did not select a file to upload.'){                
                     $this->session->set_flashdata('error', $this->upload->display_errors());
-                    redirect('user_post/edit_post/'.$post_id);
+                    // redirect('user_post/edit_post/'.$post_id);
+                    redirect($_SERVER['HTTP_REFERER']);
                 }
             }
             else{
@@ -451,7 +455,25 @@ class User_post extends CI_Controller
             }            
             // ------------------------------------------------------------------------
 
-            
+            if($post_data['post_type'] == 'blog'){
+                $upd_array = [
+                    'blog_title' => $this->input->post('title'),
+                    'blog_description' => htmlspecialchars($this->input->post('description')),
+                    'img_path' => $file_path                    
+                ];
+
+                $this->Post_model->update_record('blog',['id'=>$slide_id],$upd_array);
+            } else {
+                $upd_array = [                    
+                    'title' => $this->input->post('title'),
+                    'description' => htmlspecialchars($this->input->post('description')),
+                    'img_path' => $file_path                    
+                ];
+                $this->Post_model->update_record('gallery',['id'=>$slide_id],$upd_array);
+            }
+
+            $this->session->set_flashdata('success','Slide has been updated successfully.');
+            redirect('user_post/view_all_slides/'.$post_id);            
         }
     }
 

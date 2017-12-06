@@ -29,7 +29,9 @@
 					$s_data = $this->session->userdata('client');
 					if(empty($s_data)){
 				?>
-					$('.btn_sign_in, .btn_header_login').trigger('click');
+					$('.sign-up').addClass('hide');
+					$('.sign-in').removeClass('hide');
+					$('#login-register').modal('show');
 				<?php }else {  ?>
 					window.location.href="<?php echo base_url().'user_post/add_video_post'; ?>";
 				<?php } ?>
@@ -65,14 +67,23 @@
 			var window_height = parseInt($(window).height());
 			var header_height = parseInt($('header.header').height());
 
-			$('.for_height').css('min-height', window_height+header_height-40);
+			// $('.for_height').css('min-height', window_height+header_height-40);
 			console.log(window_height);
 			console.log(header_height);
 
 		</script>
+
+		<script type="text/javascript">
+    $(window).scroll(function() {   
+       if($(window).scrollTop() + $(window).height() == $(document).height()) {
+           alert("bottom!");
+       }
+    });   
+</script>
+
 	</body>
 
-
+<script src="http://vjs.zencdn.net/6.4.0/video.js"></script>
 
 
 </html>

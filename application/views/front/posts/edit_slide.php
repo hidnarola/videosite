@@ -1,8 +1,6 @@
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 
-
-
 <div class="form-element">
     <h3 class="h3-title">Add Blog</h3>
     <?php 

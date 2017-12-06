@@ -313,6 +313,38 @@ class Post_model extends CI_Model
         $posts = $this->db->get('user_post up')->result_array();
         return $posts;
     }
+
+    // ------------------------------------------------------------------------
+    // Get all posts from the category and sub category
+    // ------------------------------------------------------------------------
+    public function get_posts_from_category($cat_id,$sub_id = null,$limit,$offset="0")
+    {
+        $this->db->select('up.id,up.channel_id,up.post_type,up.slug,up.category_id,up.sub_category_id,up.post_title,up.main_image,
+                           c.id as channelid,c.user_id as chaneeluserid,c.channel_name,c.channel_slug,u.id as userid,u.username,
+                           upc.post_id as upcpostid, COUNT(distinct upc.id) as total_views');
+        $this->db->join('user_channels c', 'c.id = up.channel_id');
+        $this->db->join('users u', 'u.id = c.user_id');
+        $this->db->join('categories cat', 'cat.id = up.category_id', 'left');
+        $this->db->join('sub_categories sub_cat', 'sub_cat.id = up.sub_category_id', 'left');
+        $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
+        
+        if(is_null($sub_id)){
+            $this->db->where('up.category_id = ', $cat_id);
+        } else {
+            $this->db->where('up.sub_category_id = ', $sub_id);
+        }
+
+        $this->db->limit($limit,$offset);
+        $this->db->group_by('up.id');
+
+        $posts = $this->db->get('user_post up')->result_array();
+        return $posts;
+    }
+
+    // ------------------------------------------------------------------------
+    // ################################ END ###################################
+    // ------------------------------------------------------------------------
+
     public function get_related_posts_category_id($id,$post_id,$limit)
     {
         $this->db->select('up.id,up.channel_id,up.post_type,up.slug,up.category_id,up.sub_category_id,up.post_title,up.main_image,c.id as channelid,c.user_id as chaneeluserid,c.channel_name,c.channel_slug,u.id as userid,u.username,upc.post_id as upcpostid, COUNT(distinct upc.id) as total_views');
