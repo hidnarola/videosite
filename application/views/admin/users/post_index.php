@@ -69,7 +69,7 @@
                 </tr>
             <?php foreach ($channels as $key => $channel) {?>
                 <tr>
-                   <td><?php echo $channel['channel_name'] ; ?> </td><td>All Posts (<?php echo array_sum([$channel['blogs'], $channel['videos'], $channel['gallery']]); ?>)</td><td> Videos (<?php echo $channel['videos']; ?>)</td> <td>Blogs (<?php echo $channel['blogs']; ?>)</td><td> Galleries (<?php echo $channel['gallery']; ?>) </td> <td> Subscribers (<?php echo $channel['subscribers']; ?>) </td> <td> Likes (<?php echo $channel['likes']; ?>) </td> <td> Views (<?php echo $channel['views']; ?>) </td>
+                   <td><?php echo $channel['channel_name'] ; ?> </td><td>All Posts (<?php echo array_sum([$channel['blogs'], $channel['videos'], $channel['gallery']]); ?>)</td><td> Videos (<?php echo $channel['videos']; ?>)</td> <td>Blogs (<?php echo $channel['blogs']; ?>)</td><td> Galleries (<?php echo $channel['gallery']; ?>) </td> <td> Subscribers (<?php echo $channel['subscribers']; ?>) </td> <td> Likes (<?php // echo $channel['likes']; ?>) </td> <td> Views (<?php // echo $channel['views']; ?>) </td>
                 </tr>
             <?php } ?>
             </thead>

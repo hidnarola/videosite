@@ -13,7 +13,7 @@
     <h3 class="h3-title">Add Video</h3>
     
     <a href="<?php echo base_url().'user_post/add_post/blog'; ?>" class="btn-black">
-        <i class="fa fa-user"></i>
+        <i class="fa fa-rss"></i>
         Add Blog
     </a>
     <a href="<?php echo base_url().'user_post/add_post/gallery'; ?>" class="btn-red">
@@ -73,7 +73,7 @@
         
         <div class="input-wrap">
             <label class="label-css">Video Title </label>
-            <input type="text" name="video_title" id ="video_title" placeholder="Blog Title" value="<?php echo set_value('video_title'); ?>" class="form-css" />
+            <input type="text" name="video_title" id ="video_title" placeholder="Video Title" value="<?php echo set_value('video_title'); ?>" class="form-css" />
         </div>
 
         <div class="input-wrap">

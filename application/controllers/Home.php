@@ -21,7 +21,7 @@ class Home extends CI_Controller
         $data['most_views'] = $this->Post_model->get_most_viewed_post(10,0);
         $data['most_recent_video'] = $this->Post_model->get_recently_posted_videos(2,0);
         $data['most_recent_blog'] = $this->Post_model->get_recently_posted_blogs(1,0);
-        $data['most_recent_gallery'] = $this->Post_model->get_recently_posted_gallery(1,0);
+        $data['most_recent_gallery'] = $this->Post_model->get_recently_posted_gallery(4,0);
         $data['subview'] = "front/home";
         $this->load->view('front/layouts/layout_main', $data);
     }

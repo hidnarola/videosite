@@ -59,14 +59,14 @@
 //          ==================================Gallery========================================================
 //          ==================================Video========================================================
                         elseif ($posts['post_type'] == 'video') { ?>
-                    <div class="big-img">
+                    <!--<div class="big-img">-->
                         <!--<img src="<?php echo base_url() . $posts['upload_path']; ?>" alt="" />-->
-                        <a href="">
+                        <!--<a href="">-->
 <!--                            <video width="100%" controls>
                                 <source src="<?php echo base_url() . $posts['upload_path']; ?>" type="video/mp4">
                             </video>-->
-                        </a>
-                            <div id="myDiv">This text will be replaced with a player.</div>
+                        <!--</a>-->
+                        <div id="myDiv" style="width:100%">This text will be replaced with a player.</div>
                         <script src="https://content.jwplatform.com/libraries/sJ4UhosD.js"></script>
                         <script>
                         jwplayer("myDiv").setup({
@@ -76,7 +76,7 @@
                             "width": 640
                         });
                         </script>
-                    </div>
+                    <!--</div>-->
                     <div class="list-content">
                         <h2><?php echo $posts['vtitle']; ?></h2>
                         <p><?php echo htmlspecialchars_decode($posts['description']); ?></p>

@@ -163,16 +163,17 @@ class Admin_users_model extends CI_Model
     
     public function get_channels_by_user_id($user_id)
     {   
-        $this->db->select('uc.id,uc.user_id,channel_name,channel_slug,COUNT(DISTINCT us.id) AS subscribers,COUNT(DISTINCT b.id) AS blogs,COUNT(DISTINCT v.id) AS videos,COUNT(DISTINCT g.id) AS gallery,COUNT(DISTINCT uk.id) AS likes,COUNT(DISTINCT upc.id) AS views');
+        $this->db->select('uc.id,uc.user_id,channel_name,channel_slug,COUNT(DISTINCT us.id) AS subscribers,COUNT(DISTINCT b.id) AS blogs,COUNT(DISTINCT v.id) AS videos,COUNT(DISTINCT g.id) AS gallery');
+//        COUNT(DISTINCT uk.id) AS likes,COUNT(DISTINCT upc.id) AS views
         $this->db->where('uc.user_id',$user_id);
         $this->db->join('user_subscribers us', 'us.channel_id = uc.id', 'left');
         $this->db->join('user_post up', 'up.channel_id = uc.id', 'left');
         $this->db->join('user_post b', 'b.channel_id = uc.id and b.post_type = "blog"', 'left');
         $this->db->join('user_post v', 'v.channel_id = uc.id and v.post_type = "video"', 'left');
         $this->db->join('user_post g', 'g.channel_id = uc.id and g.post_type = "gallery"', 'left');
-        $this->db->join('user_likes uk','up.id = uk.post_id');
-        $this->db->join('user_post up1', 'up1.channel_id = uc.id', 'left');
-        $this->db->join('user_post_counts upc','up1.id = upc.post_id');
+//        $this->db->join('user_likes uk','up.id = uk.post_id');
+//        $this->db->join('user_post up1', 'up1.channel_id = uc.id', 'left');
+//        $this->db->join('user_post_counts upc','up1.id = upc.post_id');
         $this->db->group_by('uc.id');
         $users = $this->db->get('user_channels uc')->result_array();
         return $users;
@@ -181,10 +182,23 @@ class Admin_users_model extends CI_Model
     
     public function get_likes($user_id)
     {
-        $this->db->select('count(distinct uk.id)');
-        $this->db->join('users u','u.id = uk.user_id');
-        $this->db->join('user_channels uc','u.id = uc.user_id');
+        $this->db->select('count(distinct uk.id) as total_likes');
         $this->db->join('user_post up','up.id = uk.post_id','left');
+        $this->db->join('users u','u.id = uk.user_id');
+        $this->db->where('uk.user_id',$user_id);
+        $this->db->group_by('u.id');
+        $likes = $this->db->get('user_likes uk')->num_rows();
+        qry();
+        return $likes;
+        
+    }
+    
+    
+     public function get_views($user_id)
+    {
+        $this->db->select('count(distinct upc.id) as total_likes');
+        $this->db->join('user_post up','up.id = uk.post_id','left');
+        $this->db->join('users u','u.id = uk.user_id');
         $this->db->where('uk.user_id',$user_id);
         $this->db->group_by('u.id');
         $likes = $this->db->get('user_likes uk')->num_rows();

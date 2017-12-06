@@ -19,7 +19,7 @@
       <?php } } ?>
       </li>
       <li>
-      <?php if(!empty($most_recent_blog)) { foreach($most_recent_gallery as $key => $recent_gallery){?>
+      <?php if(!empty($most_recent_gallery)) { foreach($most_recent_gallery as $key => $recent_gallery){?>
           <div class="gallery-type">
               <a href="" class="tag">G</a>
               <a href="<?php echo base_url() . 'gallery/' . $recent_gallery['slug']; ?>"><img src="<?php echo $recent_gallery['main_image']?>" alt="" /></a>
