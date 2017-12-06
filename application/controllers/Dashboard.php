@@ -207,7 +207,7 @@ class Dashboard extends CI_Controller {
         $config['total_rows'] = $this->Post_model->get_my_posts_count($sess_data['id']);
         $config['per_page'] = 3;
         $offset = $this->input->get('per_page');
-        $config = array_merge($config,pagination_front_config());        
+        $config = array_merge($config,pagination_front_config());
         
         $this->pagination->initialize($config);
         

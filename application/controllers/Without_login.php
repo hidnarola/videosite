@@ -16,6 +16,21 @@ class Without_login extends CI_Controller {
 
 		$data['posts'] = $this->Other_model->search_query_count($search_q);
 
+		// ------------------------------------------------------------------------
+		$config['base_url'] = base_url().'search?q='.$search_q;
+        $config['total_rows'] = $this->Other_model->search_query_count($search_q);
+        $config['per_page'] = 30;
+        $offset = $this->input->get('per_page');
+        $config = array_merge($config,pagination_front_config());
+        
+        $this->pagination->initialize($config);
+		// ------------------------------------------------------------------------
+
+        $str_links = $this->pagination->create_links();
+        $data["links"] = explode('&nbsp;',$str_links );
+
+		$data['posts'] = $this->Other_model->search_query($search_q,$config['per_page'],$offset);
+		
         $data['subview'] = 'front/without_login/search';
         $this->load->view('front/layouts/layout_main', $data);
 	}

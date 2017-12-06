@@ -188,7 +188,7 @@ class Admin_users_model extends CI_Model
         $this->db->where('uk.user_id',$user_id);
         $this->db->group_by('u.id');
         $likes = $this->db->get('user_likes uk')->num_rows();
-        qry();
+        qry(1);
         return $likes;
         
     }

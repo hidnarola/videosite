@@ -1,6 +1,6 @@
-<div class="home-listing">
+<div class="home-listing" id="content-1">
     <h2>Suggested</h2>
-    <ul class="ul-list">
+    <ul class="ul-list" id="new_ids">
         <?php foreach ($posts as $key => $post){?>
         <li>
             <div class="list-box">
@@ -35,5 +35,23 @@
     </ul>
 </div>
 
+<script type="text/javascript">
+
+    // $("body").mCustomScrollbar({
+    //     theme:"minimal",
+    //     callbacks:{
+    //         onTotalScroll:function(){
+    //             alert('Here');
+    //         }                    ,
+    //         onTotalScrollOffset:1000,
+    //         alwaysTriggerOffsets:true
+    //     }
+    // });
+
+   // $(window).on('scrollend', 250, function() {
+   //  // ...
+   //      alert('bujgk');
+   //  });
 
 
+</script>

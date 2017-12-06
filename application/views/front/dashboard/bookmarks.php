@@ -1,3 +1,7 @@
+<div class="white-box">
+    <h3 class="h3-title"></h3>
+</div>
+
 <div class="home-listing">
     <h2>User Bookmarks</h2>
     <ul class="ul-list">

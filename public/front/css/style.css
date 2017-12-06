@@ -73,7 +73,7 @@ font-family: 'Comfortaa', cursive;
 .carousel-type ul li{width:33.33%;padding:0;float:left;}
 .carousel-type ul li img{width:100%;}
 
-.carousel-type h4{margin:0;padding:20px;line-height:100%;position:absolute; bottom:0;}
+.carousel-type h4{margin:0;padding:20px;line-height:100%;position:absolute; bottom:0;display:block;width:100%;background:rgba(0,0,0,.5);}
 .carousel-type h4 a{color:#f4f4f4;text-transform:uppercase;font-size:15px;text-decoration:none;}
 .carousel-type h4 a:hover{opacity:.6;}
 
@@ -88,12 +88,8 @@ font-family: 'Comfortaa', cursive;
 .artical-type{display:block;position:relative;}
 .artical-type .tag{background:#69c0c2;}
 
-.gallery-type{float:left;width:50%;position:relative;}
 .gallery-type .tag{background:#fab319;}
-.gallery-type:nth-child(2n+2){float:right;}
 .gallery-type:nth-child(2n+2) a.tag{left:0;}
-.gallery-type:nth-child(3),
-.gallery-type:nth-child(4){padding-bottom:0;}
 
 .home-listing:after,
 .list-btm:after{content:'';clear:both;display:block;}
@@ -187,8 +183,7 @@ a.img-anchor > img{width:100%;  min-height:210px;}
 #login-register  h3{display:block;color:#fff;font-size:20px;text-transform:uppercase;letter-spacing:0.03em;margin:0 0 25px;}
 #login-register  p{color:#fff;font-size:14px;line-height:20px;display:block;font-weight:400;margin:0 0 25px;padding:0;font-family:'Roboto';font-weight:400;}
 
-.input-css{background:#e9e9e9;border:0;padding:12px 20px;line-height:30px;font-size:15px;width:100%;margin:0 0 20px;border-radius:0;font-family:'Roboto';color:#7f7f7f;font-weight:400;}
-
+.input-css{background:#e9e9e9;border:0;padding:12px 20px;line-height:30px;font-size:15px;width:100%;margin:0;border-radius:0;font-family:'Roboto';color:#7f7f7f;font-weight:400;}
 .remember-forgat{display:inline-block;vertical-align:top;width:100%;}
 .checkbox{float:left;margin:0;}
 .remember-forgat{display:inline-block;width:100%;vertical-align:top;margin:0 0 20px;}
@@ -219,10 +214,8 @@ a.img-anchor > img{width:100%;  min-height:210px;}
 .sign-in-r{ width:340px; top: 50%; position: absolute;right:30px; -webkit-transform:translateY(-50%); -moz-transform:translateY(-50%); transform:translateY(-50%); }
 .sign-in-r a{width:144px;padding:10px;border:0;background:#fff;color:#333;font-size:16px;text-transform:uppercase;letter-spacing:0.04em;line-height:24px;text-decoration:none;display:block;text-align:center;border:2px solid #fff;}
 .sign-in-r a:hover{background:transparent;color:#fff;}
-
 .sign-up .sign-in-l{float:right;}
 .sign-up .sign-in-r{right:auto;left:45px;}
-.sign-up .input-css{margin-bottom:25px;}
 .sign-up h2{margin-bottom:25px;}
 
 /**** Forgate-password *****/
@@ -234,7 +227,7 @@ a.img-anchor > img{width:100%;  min-height:210px;}
 #login-register  .re-password h2{margin:0;padding:0;font-size:20px;text-transform:uppercase;letter-spacing:0.03em;display:block;color:#f0351c;}
 #login-register .re-password p{margin:0 0 20px;padding:0;font-family:'Roboto';font-size:14px;color:#666;font-weight:400;display:block;}
 .re-password form {margin:0;padding:0;}
-.re-password  input{background:#e9e9e9;padding:15px;line-height:24px;font-family:'Roboto';font-size:16px;font-weight:400;color:#7f7f7f;width:100%;margin:0 0 20px;border:0;}
+.re-password  input{background:#e9e9e9;padding:15px;line-height:24px;font-family:'Roboto';font-size:16px;font-weight:400;color:#7f7f7f;width:100%;margin:0;border:0;}
 .re-password  button{width:120px;height:44px;border:0;color:#fff;font-size:15px;letter-spacing:0.04em;text-transform:uppercase;}
 .re-password  button[type="submit"]{float:left;background:#333;margin-right:20px;}
 .re-password  button[type="reset"]{float:left;background:#999;}
@@ -245,10 +238,10 @@ a.img-anchor > img{width:100%;  min-height:210px;}
 /***** Full width *****/
 .form-element{background:#fff;padding:30px;}
 .label-css{display:block;font-size:14px;color:#999;line-height:20px;margin:0 0 5px;}
-input.form-css {background: #e9e9e9; padding: 15px; line-height: 24px; font-family: 'Roboto'; font-size: 16px; font-weight: 400; color: #666; width: 100%; margin: 0 0 20px; border:0;}
-textarea.textarea-css {background: #e9e9e9; padding: 15px; line-height: 24px; font-family: 'Roboto'; font-size: 16px; font-weight: 400; color: #7f7f7f; width: 100%; margin: 0 0 20px; border:0;height:160px;}
+input.form-css {background: #e9e9e9; padding: 15px; line-height: 24px; font-family: 'Roboto'; font-size: 16px; font-weight: 400; color: #666; width: 100%; margin:0; border:0;}
+textarea.textarea-css {background: #e9e9e9; padding: 15px; line-height: 24px; font-family: 'Roboto'; font-size: 16px; font-weight: 400; color: #7f7f7f; width: 100%; margin:0; border:0;height:160px;}
 .form-element form{display:inline-block;width:100%;vertical-align:top;}
-.input-wrap{display:block;width:49%;float:left;}
+.input-wrap{display:block;width:49%;float:left;margin:0 0 25px;}
 .input-wrap:nth-child(2n+2){float:right;}
 .full-width{width:100%;}
 
@@ -346,13 +339,41 @@ span.verify-user {background: url(../images/check.png) no-repeat 0 0;width: 16px
 .list-ul.comment-ul .list-ul-box p{font-size: 14px;line-height: 20px;color: #666;display: block;text-transform: initial;font-family: 'Roboto';font-weight: 400;}
 
 .comments.input-wrap:nth-child(2n+2) {float: none;width: 100%;margin: 40px 0 0;}
-.comments.input-wrap textarea{height:160px;width:100%;    background: #e9e9e9;padding: 15px;line-height: 24px;font-family: 'Roboto';font-size: 16px;
+.comments.input-wrap textarea{height:160px;width:100%; background:#e9e9e9;padding:15px;line-height:24px;font-family:'Roboto';font-size:16px;
 font-weight: 400;color: #666;margin: 0 0 20px;border: 0;}
-
-
+.gallery-type{position:relative;}
+.carousel-type ul li a{display:block;}
 .video-type + .video-type{display:none;}
 .video-type a img,
+.gallery-type a img,
 .artical-type a img{height:300px;}
-.gallery-type a img{height:150px;}
+.pagination {display:block;text-align:center;}
+.pagination>li>a, .pagination>li>span {padding:10px 18px;line-height:24px;color:#333;}
+.pagination>li >a, 
+.pagination>li >span {border-radius:0 !important;}
+.pagination>li {display:inline-block;}
+.pagination> a:hover,
+.pagination> span:hover,
+.pagination>.active>a, 
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span, 
+.pagination>.active>span:focus,
+.pagination>.active>span:hover{background:#f0351c;border-color:#f0351c;}
 
-#myDiv{width: 100% !important;}
+.white-box{background:#fff;padding:30px;}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus
+input:-webkit-autofill, 
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {	
+  -webkit-text-fill-color:#666;
+  -webkit-box-shadow: 0 0 0px 1000px #e9e9e9 inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
