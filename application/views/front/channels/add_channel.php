@@ -6,7 +6,6 @@
             <div class="alert alert-danger"><?php echo $all_erros; ?></div>
         <?php } ?>
 				
-        <?php echo validation_errors(); ?>
     <form method="post" action="" id="frmeditprofile" enctype="multipart/form-data">		
         <div class="input-wrap">
             <label class="label-css">Channel Name: </label>

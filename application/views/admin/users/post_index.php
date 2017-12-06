@@ -53,7 +53,6 @@
         </table>
     </div>    
 </div>
-<?php // pr($channels);?>
 <div class="content">
     <?php
     $message = $this->session->flashdata('message');

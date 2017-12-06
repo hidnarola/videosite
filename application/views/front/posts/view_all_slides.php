@@ -5,9 +5,9 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <div class="form-element">
-    <h3 class="h3-title">Add Blog</h3>
+    <h3 class="h3-title">All Slides</h3>
     
-    <a href="<?php echo base_url().'user_post/add_post_slide/'.$post_id; ?>" class="btn btn-primary"> Add Slide </a>
+    <a href="<?php echo base_url().'user_post/add_post_slide/'.$post_id; ?>" class="btn-black"> Add Slide </a>
     <br>
     <br>
     <form method="post" action="" id="frmblog" enctype="multipart/form-data">

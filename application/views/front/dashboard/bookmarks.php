@@ -29,7 +29,7 @@
                     <a href="<?php echo base_url() . 'video/' . $books['slug']; ?>"><?php echo $books['post_title'] ?></a>
                     <?php } ?>
                     <p>By : <?php echo $books['username'] ?> <span></span></p>
-                    <h6><i class="fa fa-eye"></i> <?php echo $books['total_views'] ?> Views</h6>
+                    <h6><i class="fa fa-eye"></i> <?php echo $books['total_views'] ?> </h6>
                 <!--<h6><i class="fa fa-clock-o"></i><?php get_ago_time($books['blog_created_date'], date("Y-m-d H:i:s")) ?></h6>-->
                 </div>
             </div>

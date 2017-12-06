@@ -92,12 +92,20 @@ class Admin_users_model extends CI_Model
 
     public function get_all_blogs_by_user($id)
     {
-        $this->db->select('b.id,post_id,blog_title,u.id as userid,u.username,DATE_FORMAT(b.created_at,"%d %b %Y <br> %l:%i %p") AS created_date', false);
+//        $this->db->select('b.id,post_id,blog_title,u.id as userid,u.username,u.isblocked,DATE_FORMAT(b.created_at,"%d %b %Y <br> %l:%i %p") AS created_date', false);
+//        $this->db->join('user_post up', 'up.id = b.post_id', 'left');
+//        $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
+//        $this->db->join('users u', 'u.id = c.user_id', 'left');
+//        $this->db->where('c.user_id', $id);
+        
+        $this->db->select('b.id,post_id,b.blog_title,up.slug,DATE_FORMAT(b.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,username,u.is_blocked', false);
         $this->db->join('user_post up', 'up.id = b.post_id', 'left');
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
+        $this->db->where('u.is_deleted !=', 1);
         $this->db->where('c.user_id', $id);
-
+        
+        
         $keyword = $this->input->get('search');
         $keyword = str_replace('"', '', $keyword);
 
@@ -182,8 +190,7 @@ class Admin_users_model extends CI_Model
     
     public function get_likes($user_id)
     {
-        $this->db->select('count(distinct uk.id) as total_likes');
-        $this->db->join('user_post up','up.id = uk.post_id','left');
+        $this->db->select('count(distinct uk.id)');
         $this->db->join('users u','u.id = uk.user_id');
         $this->db->where('uk.user_id',$user_id);
         $this->db->group_by('u.id');
@@ -197,8 +204,8 @@ class Admin_users_model extends CI_Model
      public function get_views($user_id)
     {
         $this->db->select('count(distinct upc.id) as total_likes');
+        $this->db->join('user_channels uc','u.id = uc.user_id');
         $this->db->join('user_post up','up.id = uk.post_id','left');
-        $this->db->join('users u','u.id = uk.user_id');
         $this->db->where('uk.user_id',$user_id);
         $this->db->group_by('u.id');
         $likes = $this->db->get('user_likes uk')->num_rows();

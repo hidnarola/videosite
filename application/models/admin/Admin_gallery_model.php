@@ -120,11 +120,11 @@ class Admin_gallery_model extends CI_Model
 
     public function get_all_gallery_by_user($id)
     {
-        $this->db->select('g.id,user_id,title,u.id as userid,u.username,DATE_FORMAT(g.created_at,"%d %b %Y <br> %l:%i %p") AS created_date', false);
+        $this->db->select('g.id,post_id,title,up.slug,DATE_FORMAT(g.created_at,"%d %b %Y <br> %l:%i %p") AS created_date,username,u.is_blocked', false);
         $this->db->join('user_post up', 'up.id = g.post_id', 'left');
         $this->db->join('user_channels c', 'c.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = c.user_id', 'left');
-//        $this->db->where('g.is_deleted !=', 1);
+        $this->db->where('u.is_deleted !=', 1);
         $this->db->where('c.user_id', $id);
 
         $keyword = $this->input->get('search');

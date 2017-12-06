@@ -2,7 +2,11 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
 
 <div class="form-element">
-    <h3 class="h3-title">Add Blog</h3>
+    <?php if($post_type == 'blog'){?>
+    <h3 class="h3-title">Edit Blog</h3>
+    <?php } else if ($post_type == 'gallery'){ ?>
+    <h3 class="h3-title">Edit Gallery</h3>
+    <?php } ?>
     <?php 
         $all_erros = validation_errors(); 
         if(!empty($all_erros)){

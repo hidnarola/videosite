@@ -47,7 +47,9 @@
             <div class="input-wrap">
                 <label class="label-css">Upload File</label>
                 <div class="input-file">
-                    <img src="<?php echo base_url().$user_data['avatar'] ?>" alt="" width="100px" height="100px">
+                    <a data-fancybox href="<?php echo base_url().$user_data['avatar'] ?>">
+                        <img src="<?php echo base_url().$user_data['avatar'] ?>" alt="" width="100px" height="100px">
+                    </a>
                     <input type="text" class="form-css browse_text" readonly >
                     <label class="input-group-btn">
                         <span class="">
@@ -66,4 +68,26 @@
         </form>
     </div>
 
+<script>
+$(document).ready(function() {
+        // $('#summernote').summernote({
+        //     height:300
+        // });
 
+        $("[data-fancybox]").fancybox({
+            buttons : [
+                'slideShow',
+                'fullScreen',
+                'thumbs',
+                // 'share',
+                //'download',
+                'zoom',
+                'close'
+            ]
+        });
+    });
+    
+    $(document).ready(function () {                
+        $('.selectpicker_blog').selectpicker();
+    });
+</script>
