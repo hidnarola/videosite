@@ -1,5 +1,7 @@
+<div class="white-box">
+    <h3 class="h3-title">Search result for</h3>
+</div>
 <div class="home-listing">
-    <h2>Search result for </h2>
     <ul class="ul-list">
         <?php 
             if (!empty($posts)){ foreach ($posts as $post) {

@@ -1,5 +1,8 @@
+<div class="white-box">
+    <h3 class="h3-title">User Posts</h3>
+</div>
+
 <div class="home-listing">
-    <h2>User Posts</h2>
     <ul class="ul-list">
     <?php 
         if (!empty($posts)){ foreach ($posts as $post) {            

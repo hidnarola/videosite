@@ -1,9 +1,8 @@
 <div class="white-box">
-    <h3 class="h3-title"></h3>
+    <h3 class="h3-title">User Bookmarks</h3>
 </div>
 
 <div class="home-listing">
-    <h2>User Bookmarks</h2>
     <ul class="ul-list">
     <?php if (!empty($book)) { foreach ($book as $books) {?>
         <li>

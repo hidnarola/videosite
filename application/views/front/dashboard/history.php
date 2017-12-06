@@ -1,5 +1,8 @@
+<div class="white-box">
+    <h3 class="h3-title">User History</h3>
+</div>
+
 <div class="home-listing">
-    <h2>User History</h2>
     <ul class="ul-list">
     <?php if (!empty($history)) { foreach ($history as $his) {?>
         <li>
