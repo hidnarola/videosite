@@ -8,7 +8,18 @@
             <?php } ?>
         </div>
         <div class="chanelle-head-r">
-            <a href="" class="bookmark-btn"><i class="fa fa-folder-open"></i>Subscribers  <span>(<?php echo $total_subscriber?>) </span></a>
+            <?php if($user_loggedin == true && $is_this_users_channel == false) { ?>
+            <?php if($is_user_subscribe == false) { ?>
+                <a href="<?php echo base_url().'user_channels/subscribe_channel/'.$res_channel['id']; ?>" class="bookmark-btn"><i class="fa fa-folder-open"></i>Subscribers  <span>(<?php echo $total_subscriber?>) </span></a>
+            <?php } else { ?>
+                <a href="<?php echo base_url().'user_channels/subscribe_channel/'.$res_channel['id']; ?>" class="bookmark-btn"><i class="fa fa-folder-open"></i>Subscribed  <span>(<?php echo $total_subscriber?>) </span></a>
+            <?php } ?>
+        <?php } else if($is_this_users_channel == true){
+            ?>
+                <a class="bookmark-btn"><i class="fa fa-folder-open"></i>Subscribers  <span>(<?php echo $total_subscriber?>) </span></a>
+                <?php
+        } ?>  
+            
             <a href="" class="like-btn"><i class="fa fa-eye"></i> Views  <span>(<?php echo array_sum(array_column($channel_post,'total_views'))?>) </span></a>
         </div>
         </div>

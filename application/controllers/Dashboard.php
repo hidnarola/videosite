@@ -77,7 +77,7 @@ class Dashboard extends CI_Controller {
         	$encrypt_pass = $this->encrypt->encode($password);
         	$this->Users_model->update_user_data($user_data['id'],['password'=>$encrypt_pass]);
         	$this->session->set_flashdata('success','Password successfully changed.');
-        	redirect('dashboard');
+        	redirect('home');
         }
 	}
 	

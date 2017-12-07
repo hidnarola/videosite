@@ -325,7 +325,7 @@ class User_post extends CI_Controller
         $all_channel_id = array_column($all_channels,'id');
 
         $post_data = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
-
+        $data['post_type'] = $post_data['post_type'];
         if(in_array($post_data['channel_id'],$all_channel_id) == false){
             die('Do not have access');
         }

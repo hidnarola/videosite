@@ -105,25 +105,31 @@ class User_channels extends CI_Controller {
         $data['comments'] = $this->Post_model->get_comments_by_post_id();
         if(empty($data['res_channel'])){ show_404(); }
 
+        $data['user_loggedin'] = false;
         $data['is_user_subscribe'] = false;
         $data['is_this_users_channel'] = false;
         $data['total_subscriber'] = $this->db->get_where('user_subscribers',['channel_id'=>$data['res_channel']['id']])->num_rows();
-        
-        $all_userchannel = $this->db->select('id')->get_where('user_channels',['user_id'=>$sess_data['id'],'is_deleted'=>'0','is_blocked'=>'0'])->result_array();
-        // put validation check - if logged in user try to subscribe own channel 
-        if(!empty($all_userchannel)){
-            $all_ids = array_column($all_userchannel,'id');
-            if(in_array($data['res_channel']['id'],$all_ids)){
+        if(!empty($sess_data)){
+			
+			$data['user_loggedin'] = true;
+            $all_userchannel = $this->db->select('id')->get_where('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0'])->result_array();
+            // put validation check - if logged in user try to subscribe own channel 
+            if (!empty($all_userchannel))
+            {
+                $all_ids = array_column($all_userchannel, 'id');
+                if (in_array($data['res_channel']['id'], $all_ids))
+                {
                     $data['is_this_users_channel'] = true;
+                }
+            }
+
+            $user_subscribe_data = $this->db->get_where('user_subscribers', ['user_id' => $sess_data['id'], 'channel_id' => $data['res_channel']['id']])->row_array();
+
+            if (!empty($user_subscribe_data))
+            {
+                $data['is_user_subscribe'] = true;
             }
         }
-
-        $user_subscribe_data =  $this->db->get_where('user_subscribers',['user_id'=>$sess_data['id'],'channel_id'=>$data['res_channel']['id']])->row_array();
-
-        if(!empty($user_subscribe_data)){
-                $data['is_user_subscribe'] = true;
-        }
-
         $data['subview']='front/channels/channel_details';
     	$this->load->view('front/layouts/layout_main',$data);
 	}

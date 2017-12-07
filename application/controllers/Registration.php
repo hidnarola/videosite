@@ -74,6 +74,7 @@ class Registration extends CI_Controller {
             $email_id = $this->input->post('email_id');
             $password = $this->input->post('password');
             $encrypt_pass = $this->encrypt->encode($password);
+            $birth_date = $this->input->post('birth_date');
             $random_no = random_string('alnum',5);
 
             $ins_data = [
@@ -81,6 +82,7 @@ class Registration extends CI_Controller {
                             'email_id'=>$email_id,
                             'username'=>$username,
                             'password'=>$encrypt_pass,
+                            'birth_date' => $birth_date,
                             'activation_code'  => $random_no,
                             'created_at'=>date('Y-m-d H:i:s')
                         ];
