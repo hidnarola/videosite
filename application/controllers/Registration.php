@@ -100,7 +100,12 @@ class Registration extends CI_Controller {
                             ];
             $this->Cms_model->insert_record('user_channels',$ins_channel);
 
-            $html_content = '<h1> Hello World </h1> <a href="'.base_url().'registration/verify_email/'.$random_no.'"> Click Here </a>';
+            // $html_content = $this->load->view('front/email_template',true);
+            
+            $data['my_link'] = '<a href="'.base_url().'registration/verify_email/'.$random_no.'"> Click Here </a>';
+            $html_content = $this->load->view('front/dashboard/email_test',$data,true);
+
+            // $html_content = '<h1> Hello World </h1> <a href="'.base_url().'registration/verify_email/'.$random_no.'"> Click Here </a>';
 
             $email_config = mail_config();
             $this->email->initialize($email_config);
@@ -132,7 +137,12 @@ class Registration extends CI_Controller {
                 $this->db->set('activation_code', $random_no);
                 $this->db->where('id',$user_data['id']);
                 $this->db->update('users');
-                $html_content = '<h1> Hello World </h1> <a href="'.base_url().'registration/reset_password/'.$random_no.'"> Click Here </a>';
+                
+                $data['my_link'] = '<a href="'.base_url().'registration/verify_email/'.$random_no.'"> Click Here </a>';
+                $html_content = $this->load->view('front/dashboard/email_test',$data,true);
+
+                // $html_content = '<h1> Hello World </h1> <a href="'.base_url().'registration/reset_password/'.$random_no.'"> Click Here </a>';
+                
                 $email_config = mail_config();
                 $this->email->initialize($email_config);
                 $subject= config('site_name').' - Forgot Password Request';    
@@ -175,17 +185,15 @@ class Registration extends CI_Controller {
             redirect('home');
         }
     }
-
+    
     public function verify_email($code){
         
         $res = $this->Users_model->get_data(['activation_code'=>$code],true);
         if(!empty($res)){
             $this->Users_model->update_user_data($res['id'],['is_verified'=>'1','activation_code'=>'']);
-//            redirect('registration/login');
             redirect('home');
         }else{
-            $this->session->set_flashdata('error','Verification code is Invalid.');
-            // redirect here
+            $this->session->set_flashdata('error','Verification code is Invalid.');            
         }
     }
 

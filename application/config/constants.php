@@ -6,7 +6,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 
-define('FFMPEG_PATH', 'C:\wamp64\www\ffmpeg\bin\ffmpeg.exe');
+if($_SERVER['HTTP_HOST'] == 'clientapp.narola.online'){
+  define('FFMPEG_PATH', $_SERVER['DOCUMENT_ROOT'].'\ffmpeg\bin\ffmpeg.exe');
+}else{
+  define('FFMPEG_PATH', 'C:\wamp64\www\ffmpeg\bin\ffmpeg.exe');
+}
 
 
 /*
@@ -98,7 +102,12 @@ defined('TRAVEL_MIN_PRICE_PER_KM') OR define('TRAVEL_MIN_PRICE_PER_KM', 0.04); /
 // ---------------------------------------------------------------------------------------------
 
 // defined('Asset_path') OR define('Asset_path', 'http://test.yourtoothfairy.com/');
-defined('Asset_path') OR define('Asset_path', 'http://localhost/videosite/');
+
+if($_SERVER['HTTP_HOST'] == 'clientapp.narola.online'){
+  defined('Asset_path') OR define('Asset_path', 'http://clientapp.narola.online/HD/videosite/');
+}else{
+  defined('Asset_path') OR define('Asset_path', 'http://localhost/videosite/');
+}
 
 defined('GOOGLE_MAP_API') OR define('GOOGLE_MAP_API', 'AIzaSyBrAT6XIzO4FSwU1_iXBgvvOkAqqx8GRBw');
 
@@ -119,4 +128,3 @@ defined('DEFAULT_MOBILE_CSS_PATH') OR define('DEFAULT_MOBILE_CSS_PATH', Asset_pa
 defined('DEFAULT_BLOG_IMAGE_PATH') OR define('DEFAULT_BLOG_IMAGE_PATH', Asset_path . 'uploads/blogs/'); // highest automatically-assigned error code
 defined('DEFAULT_USER_IMAGE_PATH') OR define('DEFAULT_USER_IMAGE_PATH', Asset_path . 'uploads/avatars/'); // highest automatically-assigned error code
 defined('DEFAULT_VIDEO_PATH') OR define('DEFAULT_VIDEO_PATH', Asset_path . 'uploads/videos/'); // highest automatically-assigned error code
-defined('DEFAULT_GALLERY_PATH') OR define('DEFAULT_GALLERY_PATH', Asset_path . 'uploads/gallery/'); // highest automatically-assigned error code
