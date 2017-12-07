@@ -13,7 +13,6 @@ class Dashboard extends CI_Controller {
 	}
 
 	public function index() {
-        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         
 		$data['all_channels'] = $this->db->get_where('user_channels',['is_deleted'=>'0','is_blocked'=>'0'])->result_array();		
 		$this->load->view('front/dashboard/index', $data);
@@ -22,7 +21,6 @@ class Dashboard extends CI_Controller {
 	public function edit_profile(){
 		
 		$client_data = $this->session->userdata('client');
-                 $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
 		$data['user_data'] = $this->Users_model->get_data(['id'=>$client_data['id']],true);
 
 		$this->img_var = $data['user_data']['avatar'];
@@ -31,7 +29,6 @@ class Dashboard extends CI_Controller {
                                           ['username_check'=>'Username should be unique.']);
 		$this->form_validation->set_rules('fname', 'fname', 'trim');
 		$this->form_validation->set_rules('lname', 'lname', 'trim');
-		// $this->form_validation->set_rules('birth_date', 'birth_date', 'trim');
 		$this->form_validation->set_rules('file_upload', 'File Upload', 'callback_file_upload');
 
         if($this->form_validation->run() == FALSE){
@@ -64,7 +61,6 @@ class Dashboard extends CI_Controller {
 	}
 
 	public function change_password(){
-                $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
 		$this->form_validation->set_rules('old_password', 'Old Password', 'trim|required|callback_verify_password',
 										  ['verify_password'=>'Old password doen not match with current one.']);
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
@@ -154,7 +150,6 @@ class Dashboard extends CI_Controller {
     public function view_history()
     {
         $sess_data = $this->session->userdata('client');
-        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         
         $config['base_url'] = base_url().'dashboard/view_history';
         $config['total_rows'] = $this->Post_model->get_history_count(['user_id' => $sess_data['id']]);
@@ -177,7 +172,6 @@ class Dashboard extends CI_Controller {
     public function view_bookmarked_post()
     {
         $sess_data = $this->session->userdata('client');
-        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         
         $config['base_url'] = base_url().'dashboard/view_bookmarked_post';
         $config['total_rows'] = $this->Post_model->get_bookmarked_post_count(['user_id' => $sess_data['id']]);
@@ -200,7 +194,6 @@ class Dashboard extends CI_Controller {
     {
         $sess_data = $this->session->userdata('client');
         $data['session_info'] = $sess_data;
-        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         
         $config['base_url'] = base_url().'dashboard/view_my_posts';
         $config['total_rows'] = $this->Post_model->get_my_posts_count($sess_data['id']);

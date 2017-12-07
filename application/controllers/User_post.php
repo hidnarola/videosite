@@ -15,7 +15,6 @@ class User_post extends CI_Controller
         
         $sess_data = $this->session->userdata('client');
 
-        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
         
         $data['all_category'] = [];
@@ -99,7 +98,6 @@ class User_post extends CI_Controller
 
         $data['post_data']['video'] = $this->db->get_where('video',['post_id'=>$post_id])->row_array();        
 
-        // pr($data['post_data']['video'],1);
         $sess_data = $this->session->userdata('client');
 
         // ------------------------------------------------------------------------
@@ -108,7 +106,6 @@ class User_post extends CI_Controller
         if(in_array($data['post_data']['channel_id'],$all_channel_ids) == false){ show_404(); }
         // ------------------------------------------------------------------------
 
-        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
         
         $data['all_category'] = [];
@@ -125,7 +122,6 @@ class User_post extends CI_Controller
             $data['all_sub_cat'] = $this->Post_model->get_result('sub_categories', ['main_cat_id'=>$post_cat_id,'is_deleted' => '0', 'is_blocked' => '0']);
         }
 
-        // pr($data['post_data'],1);
 
         $this->form_validation->set_rules('video_title', 'Video Title', 'required');
         $this->form_validation->set_rules('category', 'Category', 'required');        
@@ -164,7 +160,6 @@ class User_post extends CI_Controller
         if(in_array($post_type,['blog','gallery']) == false){ show_404(); }
 
         $data['post_type'] = $post_type;
-        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
         
         $data['all_category'] = [];
@@ -234,7 +229,6 @@ class User_post extends CI_Controller
         if(in_array($post_type,['blog','gallery']) == false){ show_404(); }
 
         $data['post_type'] = $post_type;
-        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
         
         $data['all_category'] = [];
@@ -319,7 +313,6 @@ class User_post extends CI_Controller
             $data['all_slides'] = $this->db->get_where('gallery',['post_id'=>$post_id])->result_array();
         }
 
-        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
 
         $data['subview'] = 'front/posts/view_all_slides';
         $this->load->view('front/layouts/layout_main', $data);        
@@ -337,7 +330,6 @@ class User_post extends CI_Controller
             die('Do not have access');
         }
 
-        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();        
 
         $this->form_validation->set_rules('title', 'Title', 'required');
         $this->form_validation->set_rules('description', 'Description', 'required');
@@ -419,7 +411,6 @@ class User_post extends CI_Controller
             die('Do not have access');
         }
 
-        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();        
 
         $this->form_validation->set_rules('title', 'Title', 'required');
         $this->form_validation->set_rules('description', 'Description', 'required');
