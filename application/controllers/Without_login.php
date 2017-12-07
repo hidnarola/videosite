@@ -19,7 +19,7 @@ class Without_login extends CI_Controller {
 		// ------------------------------------------------------------------------
 		$config['base_url'] = base_url().'search?q='.$search_q;
         $config['total_rows'] = $this->Other_model->search_query_count($search_q);
-        $config['per_page'] = 30;
+        $config['per_page'] = 12;
         $offset = $this->input->get('per_page');
         $config = array_merge($config,pagination_front_config());
         

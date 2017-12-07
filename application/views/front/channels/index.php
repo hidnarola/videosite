@@ -1,48 +1,49 @@
-<div class="white-box"><h3 class="h3-title">Channels</h3></div>
-<?php if (!empty($all_channels))
-        {
-     if(count($all_channels) == 3){
-         ?>
-<div class="alert alert-success">Maximum 3 Channels are allowed.</div>
-<?php
-     }
-     else{
-         ?>
-<a href="<?php echo base_url() . 'user_channels/add'; ?>" class="btn-black" title=""> Add Channel </a>
-         <?php
-     }
-}
-?>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Channel Name</th>
-            <th>Channel Slug</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        if (!empty($all_channels))
-        {
-            foreach ($all_channels as $channel)
+<div class="white-box">
+    <h3 class="h3-title">Channels</h3>
+    <?php if (!empty($all_channels))
             {
-                ?>
-                <tr>
-                    <td><?php echo $channel['channel_name']; ?></td>
-                    <td><?php echo $channel['channel_slug']; ?></td>
-                    <td>
-                        <a href="<?php echo base_url() . 'user_channels/edit/' . $channel['id']; ?>" title="" class="btn btn-success">  Edit </a>
-                        <!--<a href="<?php // echo base_url() . 'user_channels/delete/' . $channel['id']; ?>" title="" class="btn btn-danger"> Delete </a>-->                               <a href="javascript:void(0)" onclick="delete_channel(this)" data-id="<?php echo $channel['id']; ?>" title="delete" class="btn btn-danger">Delete</a>
-                        <!--<a href="javascript:void(0)" onclick="delete_channel(<?php echo $channel['id'];?>)" title="delete" class="btn btn-danger"> Delete </a>-->                            
-                    </td>
-                </tr>
-    <?php }
-} ?>
-    </tbody>
-</table>
+         if(count($all_channels) == 3){
+             ?>
+    <div class="alert alert-success">Maximum 3 Channels are allowed.</div>
+    <?php
+         }
+         else{
+             ?>
+    <a href="<?php echo base_url() . 'user_channels/add'; ?>" class="btn-black" title=""> Add Channel </a>
+             <?php
+         }
+    }
+    ?>
 
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Channel Name</th>
+                <th>Channel Slug</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            if (!empty($all_channels))
+            {
+                foreach ($all_channels as $channel)
+                {
+                    ?>
+                    <tr>
+                        <td><?php echo $channel['channel_name']; ?></td>
+                        <td><?php echo $channel['channel_slug']; ?></td>
+                        <td>
+                            <a href="<?php echo base_url() . 'user_channels/edit/' . $channel['id']; ?>" title="" class="btn btn-success">  Edit </a>
+                            <!--<a href="<?php // echo base_url() . 'user_channels/delete/' . $channel['id']; ?>" title="" class="btn btn-danger"> Delete </a>-->                               <a href="javascript:void(0)" onclick="delete_channel(this)" data-id="<?php echo $channel['id']; ?>" title="delete" class="btn btn-danger">Delete</a>
+                            <!--<a href="javascript:void(0)" onclick="delete_channel(<?php echo $channel['id'];?>)" title="delete" class="btn btn-danger"> Delete </a>-->                            
+                        </td>
+                    </tr>
+        <?php }
+    } ?>
+        </tbody>
+    </table>
+</div>
 <script>
     function delete_channel(obj){
         var channel_id = $(obj).data('id');
