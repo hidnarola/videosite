@@ -308,16 +308,37 @@ class Home extends CI_Controller
 
     public function category_detail_page($cat_id,$sub_id = null) {
 
+        $data['cat_id'] = $cat_id;
+        $data['sub_id'] = $sub_id;
         $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
 
         if(is_null($sub_id)) {
             $data['posts'] = $this->Post_model->get_posts_from_category($cat_id,null,12);   
+            $data['total_count_listing'] = $this->Post_model->get_posts_from_category_count($cat_id,null);
         } else {
             $data['posts'] = $this->Post_model->get_posts_from_category($cat_id,$sub_id,12);    
+            $data['total_count_listing'] = $this->Post_model->get_posts_from_category_count($cat_id,$sub_id);
         }
 
         $data['subview'] = 'front/categories/index';
         $this->load->view('front/layouts/layout_main', $data);
+    }
+
+    public function ajax_category_listing_fetch(){
+        $offset_listing = $this->input->post('offset_listing');
+        $cat_id = $this->input->post('cat_id');
+        $sub_id = $this->input->post('sub_id');
+        
+        if($sub_id == '') {        
+            $data['posts'] = $this->Post_model->get_posts_from_category($cat_id,null,12,$offset_listing);
+        }else{
+            $data['posts'] = $this->Post_model->get_posts_from_category($cat_id,$sub_id,12,$offset_listing);
+        }
+        
+        $res['html_str'] = $this->load->view('front/categories/ajax_listing',$data,true);
+        $res['offset_listing'] = $offset_listing + 12;
+        $res['success'] = true;
+        echo json_encode($res);
     }
 
     public function new_test(){

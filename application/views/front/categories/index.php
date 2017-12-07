@@ -33,25 +33,39 @@
         </li>
         <?php } ?>
     </ul>
+    
+    <input type="hidden" name="offset_listing" value="12" id="offset_listing">
+    <input type="hidden" name="total_records" value="<?php echo $total_count_listing; ?>" id="total_records">
+    
+    <input type="hidden" name="cat_id" id="cat_id" value="<?php echo $cat_id; ?>">
+    <input type="hidden" name="sub_id" id="sub_id" value="<?php echo $sub_id; ?>">
+
 </div>
 
 <script type="text/javascript">
+    var is_many_posts = true;
+    $(window).scroll(function() {
+        if($(window).scrollTop() + $(window).height() == $(document).height()) {
+            
+            var offset_listing = $('#offset_listing').val();
+            var total_records = $('#total_records').val();
+            var cat_id = $('#cat_id').val();
+            var sub_id = $('#sub_id').val();
 
-    // $("body").mCustomScrollbar({
-    //     theme:"minimal",
-    //     callbacks:{
-    //         onTotalScroll:function(){
-    //             alert('Here');
-    //         }                    ,
-    //         onTotalScrollOffset:1000,
-    //         alwaysTriggerOffsets:true
-    //     }
-    // });
+            if(offset_listing < total_records){
 
-   // $(window).on('scrollend', 250, function() {
-   //  // ...
-   //      alert('bujgk');
-   //  });
-
-
+                $.ajax({
+                    url:"<?php echo base_url().'home/ajax_category_listing_fetch'; ?>",
+                    method:"POST",
+                    data:{offset_listing:offset_listing,cat_id:cat_id,sub_id:sub_id},
+                    dataType:"JSON",
+                    success:function(data){
+                        console.log(data);
+                        $('#new_ids').append(data['html_str']);
+                        $('#offset_listing').val(data['offset_listing']);
+                    }
+                });
+            }
+        }
+    });
 </script>
