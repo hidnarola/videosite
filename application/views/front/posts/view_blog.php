@@ -97,7 +97,7 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="intro">
                         <ul class="list-ul comment-ul " id="post_comment_id">
-                            <?php if(isset($comments)){pr($comments); foreach ($comments as $key =>$comm){?>
+                            <?php if(isset($comments)){ foreach ($comments as $key =>$comm){?>
                             <li>
                                 <div class="list-ul-box">
                                 <span><a class="cursor_pointer" href="">
@@ -196,35 +196,77 @@
     </div>    
 </form>
 <script>
-$('.show_more').on('click', function () {
-
-    var offset_comment = $('#offset_comment').val();
-    // var total_comments = $('#total_comments').val();    
+ 
+ $(document).ready(function() {
+//    ================================================Read More==========================================
+    // Configure/customize these variables.
+    var showChar = 100;  // How many characters are shown by default
+    var ellipsestext = "...";
+    var moretext = "Show more >";
+    var lesstext = "Show less";
     
-    var post_id = '<?php echo $posts['id']; ?>';
-    $.ajax({
-        url: '<?php echo base_url();?>home/ajax_load_comments/' + post_id,
-        data:{offset_comment:offset_comment},
-        dataType:"JSON",
-        method: 'post',
-        success: function (resp) {
 
-            if (resp.status == 1) {
-                $('#post_comment_id').append(resp['all_html']);
-                $('#offset_comment').val(resp['offset_comment']);
-            } else {
-                $('.show_more_btn').hide();
-                $.notify("No more comments found.", {
-                    type: 'danger',
-                    animate: {
-                        enter: 'animated lightSpeedIn',
-                        exit: 'animated lightSpeedOut'
-                    }
-                });
-            }
-                
+    $('.more').each(function() {
+        var content = $(this).html();
+ 
+        if(content.length > showChar) {
+ 
+            var c = content.substr(0, showChar);
+            var h = content.substr(showChar, content.length - showChar);
+ 
+            var html = c + '<span class="moreellipses">' + ellipsestext+ '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">' + moretext + '</a></span>';
+ 
+            $(this).html(html);
         }
+ 
+    });
+ 
+    $(".morelink").click(function(){
+        if($(this).hasClass("less")) {
+            $(this).removeClass("less");
+            $(this).html(moretext);
+        } else {
+            $(this).addClass("less");
+            $(this).html(lesstext);
+        }
+        $(this).parent().prev().toggle();
+        $(this).prev().toggle();
+        return false;
+    });
+    
+//    ===========================================================Comments======================================
+        $('.show_more').on('click', function () {
+
+        var offset_comment = $('#offset_comment').val();
+        // var total_comments = $('#total_comments').val();    
+
+        var post_id = '<?php echo $posts['id']; ?>';
+        $.ajax({
+            url: '<?php echo base_url(); ?>home/ajax_load_comments/' + post_id,
+            data:{offset_comment:offset_comment},
+            dataType:"JSON",
+            method: 'post',
+            success: function (resp) {
+
+                if (resp.status == 1) {
+                    $('#post_comment_id').append(resp['all_html']);
+                    $('#offset_comment').val(resp['offset_comment']);
+                } else {
+                    $('.show_more_btn').hide();
+                    $.notify("No more comments found.", {
+                        type: 'danger',
+                        animate: {
+                            enter: 'animated lightSpeedIn',
+                            exit: 'animated lightSpeedOut'
+                        }
+                    });
+                }
+
+            }
+        });
     });
 });
+    
+
 </script>
 
