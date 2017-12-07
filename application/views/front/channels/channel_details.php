@@ -13,11 +13,15 @@
             <?php } else { ?>
                 <a href="<?php echo base_url().'user_channels/unsubscribe_channel/'.$res_channel['id']; ?>" class="bookmark-btn"><i class="fa fa-folder-open"></i>Subscribed  <span>(<?php echo $total_subscriber?>) </span></a>
             <?php } ?>
-        <?php } else if($is_this_users_channel == true){
+        <?php } else if($user_loggedin == false){
             ?>
                 <a class="bookmark-btn"><i class="fa fa-folder-open"></i>Subscribers  <span>(<?php echo $total_subscriber?>) </span></a>
                 <?php
-        } ?>  
+        }
+        else if ($user_loggedin == true && $is_this_users_channel == true)
+{ ?>
+        <a class="bookmark-btn"><i class="fa fa-folder-open"></i>Subscribers  <span>(<?php echo $total_subscriber?>) </span></a>
+<?php } ?>  
             
             <a href="" class="like-btn"><i class="fa fa-eye"></i> Views  <span>(<?php echo array_sum(array_column($channel_post,'total_views'))?>) </span></a>
         </div>
@@ -34,7 +38,6 @@
                             </a></span>
                         <h4><?php echo $comm['username']; ?></h4>                                
                         <p class="less" id="less_<?php echo $comm['id'];?>"><?php echo character_limiter($comm['message'],50); ?></p>
-                       
                         <p class="more" id="more_<?php echo $comm['id'];?>" style="display:none;"><?php echo $comm['message']; ?></p>
                         <a class="link_less" href="javascript:;" style="display:none;">Read Less</a>
                             <?php

@@ -104,11 +104,19 @@
                                 <span><a class="cursor_pointer" href="">
                                         <img src="<?php echo base_url().$comm['avatar'];?>" alt="" onerror="this.src='<?php echo base_url().'uploads/avatars/user-icon-image-download.jpg'; ?>'"></a></span>
                                 <h4><?php echo $comm['username']; ?></h4>                                
-                                <p><?php echo word_limiter($comm['message'],10); ?></p>
-                                </div>
-                            </li>
-                            <?php } }?>
+                                <p class="less" id="less_<?php echo $comm['id'];?>"><?php echo character_limiter($comm['message'],50); ?></p>
+                        <p class="more" id="more_<?php echo $comm['id'];?>" style="display:none;"><?php echo $comm['message']; ?></p>
+                        <a class="link_less" href="javascript:;" style="display:none;">Read Less</a>
+                            <?php
+                            if(strlen($comm['message']) > 50) {
+                                echo "<a class='link_more' href='javascript:;'>Read More</a>";
+                            } else { echo '';   }
+                       ?>
+                        </div>
+                    </li>
+                    <?php } }?>
                         </ul>
+                        
                         <br>
                         <div class="col-md-12 col-sm-12 col-xs-12 text-left show_more_btn">
                             <a class="btn-black show_more cursor_pointer"> Show More</a>
@@ -196,14 +204,7 @@
         </ul>
     </div>    
 </form>
-<style>
-.morecontent span {
-    display: none;
-}
-.morelink {
-    display: block;
-}
-</style>
+
 <script>
  
  $(document).ready(function() {
@@ -272,6 +273,25 @@
 
             }
         });
+    });
+    
+    
+    
+    
+    $('.link_more').on('click', function(){
+        $(this).siblings('.less').hide();
+        $(this).hide();
+        $(this).siblings('.more').show();
+        $(this).siblings('.link_less').show();
+        
+    });
+    
+    $('.link_less').on('click', function(){
+        $(this).siblings('.more').hide();
+        $(this).hide();
+        $(this).siblings('.less').show();
+        $(this).siblings('.link_more').show();
+        
     });
 });
     
