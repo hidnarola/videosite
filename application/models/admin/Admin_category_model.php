@@ -189,7 +189,6 @@ class Admin_category_model extends CI_Model
         $this->db->select('id,category_name');
         $this->db->where('id', $id);
         return $this->db->get('categories')->result_array();
-        qry();
     }
 
 }

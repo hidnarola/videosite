@@ -1,6 +1,6 @@
 <?php
 	$data['all_cms_pages'] = $this->db->get_where('cms_page',['is_deleted'=>'0','is_blocked'=>'0'])->result_array();
-	$data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
+	$data['categories'] = $this->db->get_where('categories', ['is_deleted' =>'0', 'is_blocked' =>'0'])->result_array();
 	$this->load->view('front/layouts/layout_header',$data); ?>    
 	    
     <section class="content-wrap">
@@ -11,7 +11,13 @@
 	    	</div>
 	    	<div class="cleafix"></div>
 	    	<footer class="footer">
-               <p>©Copyright 2017 <a href="<?php echo base_url()?>home"><span>Videosite.com</span></a>, All Right Reserved</p>
+                     <?php 
+                        $str = config('copy_right');
+                        $str1 = substr($str,0,16);
+                        $str2 = substr($str,30,21);
+                        $new_str = substr($str,16,14);
+                     ?> 
+               <p><?php echo $str1; ?> <a href="<?php echo base_url()?>home"><span><?php echo $new_str;?></span></a><?php echo $str2; ?></p>
             </footer>
 	    </div>
 	</section>

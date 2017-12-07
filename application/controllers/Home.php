@@ -10,12 +10,10 @@ class Home extends CI_Controller
         parent::__construct();
         $this->load->model(['Users_model', 'Post_model']);
         $this->load->helper('paypal_helper');
-        // pr($_SESSION,1);
     }
 
     public function index()
     {        
-        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $data['sub_categories'] = $this->Post_model->get_sub_cat();
         $data['most_likes'] = $this->Post_model->get_most_liked_post(10,0);
         $data['most_views'] = $this->Post_model->get_most_viewed_post(10,0);
@@ -31,9 +29,7 @@ class Home extends CI_Controller
 
         $sess_data = $this->session->userdata('client');
         $post_type = $this->uri->segment(1);
-        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $data['posts'] = $this->Post_model->get_all_posts_by_slug($post_slug);        
-         // pr($data['total_comment_count'],1);
         $data['liked'] = $this->db->get_where('user_likes', ['post_id' => $data['posts']['id']])->num_rows();
         $res_post_data = $this->db->get_where('user_post', ['slug' => $post_slug, 'post_type' => $post_type])->row_array();
         $data['comments'] = $this->Post_model->get_comments_by_post($res_post_data['id'],5,0);
@@ -330,7 +326,6 @@ class Home extends CI_Controller
 
         $data['cat_id'] = $cat_id;
         $data['sub_id'] = $sub_id;
-        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
 
         if(is_null($sub_id)) {
             $data['posts'] = $this->Post_model->get_posts_from_category($cat_id,null,12);   
@@ -368,7 +363,6 @@ class Home extends CI_Controller
     
     public function display_cms($slug = null)
     {
-        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $data['slug'] = $this->Post_model->get_slug($slug);
         $data['html'] = $this->Post_model->get_content_by_slug($slug);
         $data['subview'] = "front/cms_pages";

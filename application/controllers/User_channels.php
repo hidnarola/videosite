@@ -11,13 +11,11 @@ class User_channels extends CI_Controller {
 	public function index() {
 		$sess_data = $this->session->userdata('client');
 		$data['all_channels'] = $this->Cms_model->get_result('user_channels',['user_id'=>$sess_data['id'],'is_deleted'=>'0','is_blocked'=>'0']);
-                $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
 		$data['subview']='front/channels/index';
     	$this->load->view('front/layouts/layout_main',$data);
 	}
 
 	public function add(){
-		$data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
 		$this->form_validation->set_rules('channel_name', 'Channel Name', 'required|callback_check_maximum_channel|callback_check_unique_channel',
 											[
 												'check_maximum_channel'=>'Can not add more than 3 Channels.',
@@ -47,7 +45,6 @@ class User_channels extends CI_Controller {
 
 	public function edit($channel_id){
 
-            $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
 		$this->form_validation->set_rules('channel_name', 'Channel Name', 'required|callback_check_unique_channel_edit['.$channel_id.']',
 										 ['check_unique_channel_edit'=>'Channel name must be unique.']);
 
@@ -74,7 +71,6 @@ class User_channels extends CI_Controller {
 	}
 
 	public function delete($id){
-            $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
 		$sess_data = $this->session->userdata('client');
 		$res = $this->Cms_model->get_result('user_channels',['user_id'=>$sess_data['id'],'id'=>$id]);
 		
@@ -94,13 +90,11 @@ class User_channels extends CI_Controller {
         
         $sess_data = $this->session->userdata('client');
         $data['session_info'] = $sess_data;
-        $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $data['res_channel'] = $this->db->get_where('user_channels',['channel_slug'=>$channel_name])->row_array();
         $data['res_posts'] = $this->db->get_where('user_post',['channel_id' => $data['res_channel']['id']])->row_array();
-//        $data['post'] = $this->Post_model->get_all_posts_by_user_id($sess_data['id'],12);
         $data['channel_post'] = $this->Post_model->get_all_posts_by_channel_id($data['res_channel']['id'],12);
         $data['channel_user'] = $this->Post_model->get_user_channel($channel_name);
-        $data['comments'] = $this->Post_model->get_comments_by_post_id($data['res_posts']['id']);
+        $data['comments'] = $this->Post_model->get_comments_by_post_id();
         if(empty($data['res_channel'])){ show_404(); }
 
         $data['is_user_subscribe'] = false;
@@ -166,8 +160,6 @@ class User_channels extends CI_Controller {
 		$channel_data = $this->db->get_where('user_channels',['id'=>$channel_id,'is_deleted'=>'0','is_blocked'=>'0'])->row_array();
 		$sess_u_data = $this->session->userdata('client');
 		$this->db->delete('user_subscribers',['user_id'=>$sess_u_data['id'],'channel_id'=>$channel_id]);
-		// $this->session->set_flashdata('error','');
-		// redirect('dashboard');
 		redirect('channel/'.$channel_data['channel_slug']);
 	}
 

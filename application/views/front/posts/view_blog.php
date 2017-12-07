@@ -5,7 +5,7 @@
     <div class="listing-l">
         <div class="head-bg-01">
             <h2><?php echo $posts['post_title'] ?></h2>
-            <p>By : <a href="<?php echo base_url() . 'channel/' . $posts['channel_slug']; ?>" target="_blank"><?php echo $posts['channel_name'] ?></a> <span class="verify-user"></span> </p> <p><i class="fa fa-eye"></i> <?php echo $posts['total_views'] ?> Views</p>
+            <p>Channel : <a href="<?php echo base_url() . 'channel/' . $posts['channel_slug']; ?>" target="_blank"><?php echo $posts['channel_name'] ?></a> <span class="verify-user"></span> </p> <p><i class="fa fa-eye"></i> <?php echo $posts['total_views'] ?> Views</p>
             <div class="r-links">
                 <?php if ($user_loggedin == true){
         if ($is_user_bookmark == false){ ?>
@@ -95,11 +95,9 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="intro">
                         <ul class="list-ul comment-ul " id="post_comment_id">
-                            <?php if(isset($comments)){ foreach ($comments as $key =>$comm){?>
+                            <?php if(isset($comments)){pr($comments); foreach ($comments as $key =>$comm){?>
                             <li>
                                 <div class="list-ul-box">
-                                        <!--<img src="<?php echo base_url().$u_data['avatar']; ?>" alt=""--> 
-                         <!--onerror="this.src='<?php echo base_url().'uploads/avatars/user-icon-image-download.jpg'; ?>'" />-->
                                 <span><a class="cursor_pointer" href="">
                                         <img src="<?php echo base_url().$comm['avatar'];?>" alt="" onerror="this.src='<?php echo base_url().'uploads/avatars/user-icon-image-download.jpg'; ?>'"></a></span>
                                 <h4><?php echo $comm['username']; ?></h4>                                
@@ -196,33 +194,6 @@
     </div>    
 </form>
 <script>
-//$("#frmblog").validate({
-//        errorClass: 'validation-error-label',
-//        successClass: 'validation-valid-label',
-//        highlight: function (element, errorClass) {
-//            $(element).removeClass(errorClass);
-//        },
-//        unhighlight: function (element, errorClass) {
-//            $(element).removeClass(errorClass);
-//        },
-//        validClass: "validation-valid-label",
-//        success: function (label) {
-//            label.addClass("validation-valid-label").text("Success.")
-//        },
-//        rules: {
-//            comments: {
-//                required: true,
-//            }
-//        },
-//        messages: {
-//            comments: {
-//                required: "Please provide Comments",
-//            }
-//        }
-//    });
-
-
-
 $('.show_more').on('click', function () {
 
     var offset_comment = $('#offset_comment').val();

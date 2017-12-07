@@ -556,21 +556,24 @@ class Post_model extends CI_Model
         return $pages;
     }
     
-    public function get_comments_by_post_id($post_id)
+    public function get_comments_by_post_id()
     {
-        $this->db->select('message,user_id,post_id,u.username,u.avatar');
+        $this->db->select('comments.id,message,user_id,post_id,comments.created_at,u.username,u.avatar');
         $this->db->join('users u','u.id = comments.user_id');
-        $this->db->where('post_id',$post_id);
+//        $this->db->where('post_id',$post_id);
+        $this->db->order_by('comments.created_at','desc');
+        $this->db->limit(20);
         $comments = $this->db->get('comments')->result_array();
         return $comments;
     }
     
     public function get_comments_by_post($post_id,$limit,$offset)
     {
-        $this->db->select('message,user_id,post_id,u.username,u.avatar');
+        $this->db->select('comments.id,message,user_id,post_id,comments.created_at,u.username,u.avatar');
         $this->db->join('users u','u.id = comments.user_id');
         $this->db->where('post_id',$post_id);
         $this->db->limit($limit,$offset);
+        $this->db->order_by('comments.created_at','desc');
         $comments = $this->db->get('comments')->result_array();
         return $comments;
     }
