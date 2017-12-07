@@ -43,26 +43,44 @@
 		<?php
 			$success_msg = $this->session->flashdata('success');
 			if(!empty($success_msg)){
-		?>
-			$.notify("<?php echo $success_msg; ?>", {
-				type: 'success',
+		?>		
+			$.notify({				
+				message: '<?php echo $success_msg; ?>',						
+			},{
+				// settings
+				allow_dismiss: true,
+				newest_on_top: false,
 				animate: {
 					enter: 'animated lightSpeedIn',
 					exit: 'animated lightSpeedOut'
-				}
+				},
+				template: '<div data-notify="container" class="success-msg col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+					'<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+					'<span data-notify="message">{2}</span>' +					
+				'</div>' 
 			});
+
 		<?php } ?>
 
 		<?php
 			$error_msg = $this->session->flashdata('error');
 			if(!empty($error_msg)){
 		?>
-			$.notify("<?php echo $error_msg; ?>", {
-				type: 'danger',
+			
+			$.notify({				
+				message: '<?php echo $error_msg; ?>',						
+			},{
+				// settings
+				allow_dismiss: true,
+				newest_on_top: false,
 				animate: {
 					enter: 'animated lightSpeedIn',
 					exit: 'animated lightSpeedOut'
-				}
+				},
+				template: '<div data-notify="container" class="error-msg col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+					'<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+					'<span data-notify="message">{2}</span>' +					
+				'</div>' 
 			});
 		<?php } ?>
 

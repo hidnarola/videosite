@@ -35,7 +35,7 @@ font-family: 'Comfortaa', cursive;
 
 /***** left-content *****/
 .content-wrap:after{content:'';display:block;clear:both;}
-.content-wrap{display:block;background:#f0f0f0;}
+.content-wrap{display:block;}
 .left-panel{float:left;width:280px;background:#fff;height:100%;padding:20px;    box-shadow: 0 -20px 40px 0px rgba(0,0,0,.1);}
 .nav-div{width:100%;margin:0 0 30px;}
 .nav-div ul{list-style:none;margin:0;padding:0;}
@@ -299,7 +299,7 @@ p.general-text {margin:0 0 15px; padding:0; color:#666; font-size: 15px; line-he
 .chanelle-head-r a:last-child{background:#999;border:2px solid #999;margin-left:10px;}
 .chanelle-head-r a:last-child:hover{background:transparent;color:#999;}*/
 
-.chanelle-page{display:inline-block;vertical-align:top;width:100%;background:#fff;padding:30px;}
+.chanelle-page{display:inline-block;vertical-align:top;width:100%;background:#fff;padding:20px;}
 .chanelle-body-l{background:#eee;width:28%;float:left;min-height:920px;}
 .chanelle-body-r{width:70%;float:right;}
 .chanelle-body-r .ul-list{margin:0 -12px;}
@@ -371,11 +371,18 @@ textarea:-webkit-autofill:hover
 textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {	
-  -webkit-text-fill-color:#666;
-  -webkit-box-shadow: 0 0 0px 1000px #e9e9e9 inset;
-  transition: background-color 5000s ease-in-out 0s;
-}
-
+select:-webkit-autofill:focus {-webkit-text-fill-color:#666;-webkit-box-shadow: 0 0 0px 1000px #e9e9e9 inset;transition: background-color 5000s ease-in-out 0s;}
 .sub-category li a:after{display:none;}
 .category-nav.nav-div{margin-bottom:0;}
+.chanelle-body-l {background:#eee;padding:15px;}
+.chanelle-body-l .list-ul.comment-ul .list-ul-box h4{margin:0;}
+
+table.table{border: 1px solid #eee;margin:0;}
+table.table thead{background:#eee;}
+table.table>thead>tr>th,
+table.table>tbody>tr>td{padding:15px;vertical-align:middle;}
+
+
+.success-msg{background:rgba(32,218,155,1);border:1px solid rgba(32,218,155,.7); padding:15px 25px; border-radius:4px; color:#fff; position:fixed; top:15px; right:15px; width:300px; color:#fff; z-index:1; font-weight:500;box-shadow: 0 0px 40px 0 rgba(0,0,0,.2);}
+	{background:rgba(242,96,81,.9);border:1px solid rgba(242,96,81.9);padding:15px 25px;border-radius:4px;color:#fff;position:fixed;top:15px;right:15px;
+width: 300px; color: #fff; z-index: 1; font-weight: 500;box-shadow: 0 0px 40px 0 rgba(0,0,0,.2);}

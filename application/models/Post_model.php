@@ -396,6 +396,7 @@ class Post_model extends CI_Model
 
     public function get_bookmarked_post($id, $limit, $offset)
     {
+        $q = $this->input->get('q');
         $this->db->select('ub.user_id,ub.post_id,u.username,post_type,slug,post_title,main_image,COUNT(distinct upc.id) as total_views');
         $this->db->join('users u', 'u.id = ub.user_id');
         $this->db->join('user_post up', 'up.id = ub.post_id');
@@ -403,6 +404,7 @@ class Post_model extends CI_Model
         $this->db->where('ub.user_id',$id);
         $this->db->group_by('ub.post_id');
         $this->db->order_by('ub.id', 'desc');
+        $this->db->like('post_title',$q);
         $this->db->limit($limit, $offset);
         $bookmarks = $this->db->get('user_bookmarks ub')->result_array();
         return $bookmarks;
@@ -410,12 +412,14 @@ class Post_model extends CI_Model
     
     public function get_bookmarked_post_count($id)
     {
+        $q = $this->input->get('q');
         $this->db->select('ub.user_id,ub.post_id,u.username,post_type,slug,post_title,main_image,COUNT(distinct upc.id) as total_views');
         $this->db->join('users u', 'u.id = ub.user_id');
         $this->db->join('user_post up', 'up.id = ub.post_id');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
         $this->db->where('ub.user_id',$id['user_id']);
         $this->db->group_by('ub.post_id');
+        $this->db->like('post_title',$q);
         $this->db->order_by('ub.id', 'desc');        
         $bookmarks = $this->db->get('user_bookmarks ub')->num_rows();
         return $bookmarks;
@@ -423,13 +427,15 @@ class Post_model extends CI_Model
     
     public function get_history($id, $limit, $offset)
     {
+        $q = $this->input->get('q');
         $this->db->select('uh.user_id,uh.post_id,u.username,post_type,slug,post_title,main_image,COUNT(distinct upc.id) as total_views');
         $this->db->join('users u', 'u.id = uh.user_id');
         $this->db->join('user_post up', 'up.id = uh.post_id');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
         $this->db->where('uh.user_id',$id);
         $this->db->group_by('uh.post_id');
-        $this->db->order_by('uh.id', 'desc');
+        $this->db->order_by('uh.id', 'desc');        
+        $this->db->like('post_title',$q);
         $this->db->limit($limit, $offset);
         $history = $this->db->get('user_history uh')->result_array();
         return $history;
@@ -437,12 +443,14 @@ class Post_model extends CI_Model
     
     public function get_history_count($id)
     {        
+        $q = $this->input->get('q');
         $this->db->select('uh.user_id,uh.post_id,u.username,post_type,slug,post_title,main_image,COUNT(distinct upc.id) as total_views');
         $this->db->join('users u', 'u.id = uh.user_id');
         $this->db->join('user_post up', 'up.id = uh.post_id');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
         $this->db->where('uh.user_id',$id['user_id']);
         $this->db->group_by('uh.post_id');
+        $this->db->like('post_title',$q);
         $this->db->order_by('uh.id', 'desc');        
         $history = $this->db->get('user_history uh')->num_rows();
         return $history;
