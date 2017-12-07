@@ -32,7 +32,8 @@ class Home extends CI_Controller
         $sess_data = $this->session->userdata('client');
         $post_type = $this->uri->segment(1);
         $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
-        $data['posts'] = $this->Post_model->get_all_posts_by_slug($post_slug);
+        $data['posts'] = $this->Post_model->get_all_posts_by_slug($post_slug);        
+         // pr($data['total_comment_count'],1);
         $data['liked'] = $this->db->get_where('user_likes', ['post_id' => $data['posts']['id']])->num_rows();
         $res_post_data = $this->db->get_where('user_post', ['slug' => $post_slug, 'post_type' => $post_type])->row_array();
         $data['comments'] = $this->Post_model->get_comments_by_post($res_post_data['id'],5,0);
@@ -132,17 +133,17 @@ class Home extends CI_Controller
     
     public function ajax_load_comments($post_id)
     {
-        $res_post_data = $this->db->get_where('user_post', ['id' => $post_id])->row_array();
-        $res_comments_data = $this->db->get_where('comments',['post_id' => $post_id])->row_array();
-        $data['comments'] = $this->Post_model->get_comments_by_post($res_post_data['id'],5,5);
-        if ($data['comments'])
-        {
-            qry();
-            pr($data['comments']);
+
+        $offset_comment = $this->input->post('offset_comment');        
+        $total_comment_count = $this->db->get_where('comments',['post_id'=>$post_id])->num_rows();
+        $data['comments'] = $this->Post_model->get_comments_by_post($post_id,5,$offset_comment);        
+
+        if ($data['comments']) {
+            $resp['all_html'] = $this->load->view('front/posts/ajax_commment_page',$data,true);
+            $resp['offset_comment'] = $offset_comment + 5;
             $resp['status'] = 1;
-        }
-        else
-        {
+        } else {
+            $resp['all_html'] = '';
             $resp['status'] = 0;
         }
         echo json_encode($resp);

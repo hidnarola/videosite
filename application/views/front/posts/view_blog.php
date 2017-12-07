@@ -92,7 +92,7 @@
                 </ul>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="intro">
-                        <ul class="list-ul comment-ul ">
+                        <ul class="list-ul comment-ul " id="post_comment_id">
                             <?php if(isset($comments)){ foreach ($comments as $key =>$comm){?>
                             <li>
                                 <div class="list-ul-box">
@@ -105,11 +105,11 @@
                                 </div>
                             </li>
                             <?php } }?>
-                            <div class="col-md-12 col-sm-12 col-xs-12 text-left show_more">
-                                <a href="javascript:;" class="btn-black"> Show More</a>
-                            </div>
-                        <br>
                         </ul>
+                        <div class="col-md-12 col-sm-12 col-xs-12 text-left show_more_btn">
+                            <a class="btn-black show_more cursor_pointer"> Show More</a>
+                        </div>
+                        <br>
                         <?php if ($user_loggedin == true){?>
                         <div class="input-wrap comments">
                             <?php $all_erros = validation_errors();
@@ -161,6 +161,10 @@
         </div>
     </div>
     <?php } ?>
+
+    <input type="hidden" name="offset_comment" value="5" id="offset_comment">
+    
+
     <div class="listing-r"> 
         <h3>Related <?php echo $new_var . 's'; ?></h3>
         <ul class="list-ul">
@@ -216,24 +220,34 @@
 
 
 $('.show_more').on('click', function () {
-    console.log('more called');
-            var post_id = '<?php echo $posts['id']; ?>';
-            $.ajax({
-                url: '<?php echo base_url();?>home/ajax_load_comments/' + post_id,
-                method: 'post',
-                success: function (resp) {
-                    resp = JSON.parse(resp);
-                    if (resp.status == 1)
-                    {
-                        
-                    } 
-                    else
-                    {
-                        
+
+    var offset_comment = $('#offset_comment').val();
+    // var total_comments = $('#total_comments').val();    
+    
+    var post_id = '<?php echo $posts['id']; ?>';
+    $.ajax({
+        url: '<?php echo base_url();?>home/ajax_load_comments/' + post_id,
+        data:{offset_comment:offset_comment},
+        dataType:"JSON",
+        method: 'post',
+        success: function (resp) {
+
+            if (resp.status == 1) {
+                $('#post_comment_id').append(resp['all_html']);
+                $('#offset_comment').val(resp['offset_comment']);
+            } else {
+                $('.show_more_btn').hide();
+                $.notify("No more comments found.", {
+                    type: 'danger',
+                    animate: {
+                        enter: 'animated lightSpeedIn',
+                        exit: 'animated lightSpeedOut'
                     }
-                    
-                }
-            });
-        });
+                });
+            }
+                
+        }
+    });
+});
 </script>
 
