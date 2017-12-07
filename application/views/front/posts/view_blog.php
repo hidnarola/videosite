@@ -105,6 +105,10 @@
                                 </div>
                             </li>
                             <?php } }?>
+                            <div class="col-md-12 col-sm-12 col-xs-12 text-left show_more">
+                                <a href="javascript:;" class="btn-black"> Show More</a>
+                            </div>
+                        <br>
                         </ul>
                         <?php if ($user_loggedin == true){?>
                         <div class="input-wrap comments">
@@ -184,29 +188,52 @@
     </div>    
 </form>
 <script>
-$("#frmblog").validate({
-        errorClass: 'validation-error-label',
-        successClass: 'validation-valid-label',
-        highlight: function (element, errorClass) {
-            $(element).removeClass(errorClass);
-        },
-        unhighlight: function (element, errorClass) {
-            $(element).removeClass(errorClass);
-        },
-        validClass: "validation-valid-label",
-        success: function (label) {
-            label.addClass("validation-valid-label").text("Success.")
-        },
-        rules: {
-            comments: {
-                required: true,
-            }
-        },
-        messages: {
-            comments: {
-                required: "Please provide Comments",
-            }
-        }
-    });
+//$("#frmblog").validate({
+//        errorClass: 'validation-error-label',
+//        successClass: 'validation-valid-label',
+//        highlight: function (element, errorClass) {
+//            $(element).removeClass(errorClass);
+//        },
+//        unhighlight: function (element, errorClass) {
+//            $(element).removeClass(errorClass);
+//        },
+//        validClass: "validation-valid-label",
+//        success: function (label) {
+//            label.addClass("validation-valid-label").text("Success.")
+//        },
+//        rules: {
+//            comments: {
+//                required: true,
+//            }
+//        },
+//        messages: {
+//            comments: {
+//                required: "Please provide Comments",
+//            }
+//        }
+//    });
+
+
+
+$('.show_more').on('click', function () {
+    console.log('more called');
+            var post_id = '<?php echo $posts['id']; ?>';
+            $.ajax({
+                url: '<?php echo base_url();?>home/ajax_load_comments/' + post_id,
+                method: 'post',
+                success: function (resp) {
+                    resp = JSON.parse(resp);
+                    if (resp.status == 1)
+                    {
+                        
+                    } 
+                    else
+                    {
+                        
+                    }
+                    
+                }
+            });
+        });
 </script>
 

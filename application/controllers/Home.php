@@ -17,7 +17,7 @@ class Home extends CI_Controller
     {        
         $data['categories'] = $this->db->get_where('categories', ['is_deleted' => 0, 'is_blocked' => 0])->result_array();
         $data['sub_categories'] = $this->Post_model->get_sub_cat();
-    $data['most_likes'] = $this->Post_model->get_most_liked_post(10,0);
+        $data['most_likes'] = $this->Post_model->get_most_liked_post(10,0);
         $data['most_views'] = $this->Post_model->get_most_viewed_post(10,0);
         $data['most_recent_video'] = $this->Post_model->get_recently_posted_videos(2,0);
         $data['most_recent_blog'] = $this->Post_model->get_recently_posted_blogs(1,0);
@@ -35,7 +35,7 @@ class Home extends CI_Controller
         $data['posts'] = $this->Post_model->get_all_posts_by_slug($post_slug);
         $data['liked'] = $this->db->get_where('user_likes', ['post_id' => $data['posts']['id']])->num_rows();
         $res_post_data = $this->db->get_where('user_post', ['slug' => $post_slug, 'post_type' => $post_type])->row_array();
-        $data['comments'] = $this->Post_model->get_comments_by_post_id($res_post_data['id']);
+        $data['comments'] = $this->Post_model->get_comments_by_post($res_post_data['id'],5,0);
         $data['related_posts'] = $this->Post_model->get_related_posts_category_id($res_post_data['category_id'],$res_post_data['id'],4);
         $data['user_loggedin'] = false;
         $data['is_user_like'] = false;
@@ -128,6 +128,25 @@ class Home extends CI_Controller
         $this->increase_post_views($res_post_data['id']);
 
         $this->history_add($res_post_data);
+    }
+    
+    public function ajax_load_comments($post_id)
+    {
+        $res_post_data = $this->db->get_where('user_post', ['id' => $post_id])->row_array();
+        $res_comments_data = $this->db->get_where('comments',['post_id' => $post_id])->row_array();
+        $data['comments'] = $this->Post_model->get_comments_by_post($res_post_data['id'],5,5);
+        if ($data['comments'])
+        {
+            qry();
+            pr($data['comments']);
+            $resp['status'] = 1;
+        }
+        else
+        {
+            $resp['status'] = 0;
+        }
+        echo json_encode($resp);
+    
     }
 
     /* ============================================================================

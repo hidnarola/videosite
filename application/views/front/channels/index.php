@@ -1,4 +1,4 @@
-<h2>Channels</h2>
+<div class="white-box"><h3 class="h3-title">Channels</h3></div>
 <?php if (!empty($all_channels))
         {
      if(count($all_channels) == 3){
