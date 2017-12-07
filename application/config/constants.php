@@ -6,11 +6,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 
-// if($_SERVER['HTTP_HOST'] == 'clientapp.narola.online'){
-//   define('FFMPEG_PATH', $_SERVER['DOCUMENT_ROOT'].'\ffmpeg\bin\ffmpeg.exe');
-// }else{
-// }
+if($_SERVER['HTTP_HOST'] == 'clientapp.narola.online'){
+  define('FFMPEG_PATH', $_SERVER['DOCUMENT_ROOT'].'\ffmpeg\bin\ffmpeg.exe');
+}else{
   define('FFMPEG_PATH', 'C:\wamp64\www\ffmpeg\bin\ffmpeg.exe');
+}
 
 
 /*
@@ -102,7 +102,12 @@ defined('TRAVEL_MIN_PRICE_PER_KM') OR define('TRAVEL_MIN_PRICE_PER_KM', 0.04); /
 // ---------------------------------------------------------------------------------------------
 
 // defined('Asset_path') OR define('Asset_path', 'http://test.yourtoothfairy.com/');
-defined('Asset_path') OR define('Asset_path', 'http://clientapp.narola.online/HD/videosite/');
+
+if($_SERVER['HTTP_HOST'] == 'clientapp.narola.online'){
+  defined('Asset_path') OR define('Asset_path', 'http://clientapp.narola.online/HD/videosite/');
+}else{
+  defined('Asset_path') OR define('Asset_path', 'http://localhost/videosite/');
+}
 
 defined('GOOGLE_MAP_API') OR define('GOOGLE_MAP_API', 'AIzaSyBrAT6XIzO4FSwU1_iXBgvvOkAqqx8GRBw');
 
