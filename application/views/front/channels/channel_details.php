@@ -12,7 +12,7 @@
             <?php if($is_user_subscribe == false) { ?>
                 <a href="<?php echo base_url().'user_channels/subscribe_channel/'.$res_channel['id']; ?>" class="bookmark-btn"><i class="fa fa-folder-open"></i>Subscribers  <span>(<?php echo $total_subscriber?>) </span></a>
             <?php } else { ?>
-                <a href="<?php echo base_url().'user_channels/subscribe_channel/'.$res_channel['id']; ?>" class="bookmark-btn"><i class="fa fa-folder-open"></i>Subscribed  <span>(<?php echo $total_subscriber?>) </span></a>
+                <a href="<?php echo base_url().'user_channels/unsubscribe_channel/'.$res_channel['id']; ?>" class="bookmark-btn"><i class="fa fa-folder-open"></i>Subscribed  <span>(<?php echo $total_subscriber?>) </span></a>
             <?php } ?>
         <?php } else if($is_this_users_channel == true){
             ?>
@@ -35,7 +35,7 @@
                                 <img src="<?php echo base_url().$comm['avatar'];?>" alt="" onerror="this.src='<?php echo base_url().'uploads/avatars/user-icon-image-download.jpg'; ?>'"></a></span>
                             </a></span>
                         <h4><?php echo $comm['username']; ?></h4>                                
-                        <p><?php echo $comm['message']; ?></p>
+                        <p><?php echo word_limiter($comm['message'],10); ?></p>
                         </div>
                     </li>
                     <?php } }?>
