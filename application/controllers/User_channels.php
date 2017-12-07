@@ -6,6 +6,14 @@ class User_channels extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
         $this->load->model(['Users_model','Post_model','admin/Admin_users_model']);		
+        
+		$method_name = $this->router->fetch_method();		
+		$exception_arr = ['channel_detail'];
+
+		if(in_array($method_name, $exception_arr) == false){
+        	if(empty(is_client_loggedin())){ redirect('home'); }
+		}
+
 	}
 
 	public function index() {

@@ -31,5 +31,8 @@ text-align: center;display: inline-block;padding: 6px 0;}
 .btn-black:hover{color:#282424;background:transparent;text-decoration:none; }
 .btn-black i{padding-right:6px;}
 .btn-red {color: #fff;background-color: #f0351c;border-color:#f0351c;display:inline-block;padding:8px 20px;vertical-align:top;border:2px solid #f0351c;}
-.btn-red:hover{color:#f035c1;background:transparent;text-decoration:none;}
+.btn-red:hover{color:#f0351c;background:transparent;text-decoration:none;}
 .btn-red i{padding-right:6px;}
+.for_height{display:inline-block;vertical-align:top;width:100%;}
+.black-bg-video{background:#000;width:100%;margin-bottom:15px; }
+.black-bg-video .jw-reset{margin:0 auto;}

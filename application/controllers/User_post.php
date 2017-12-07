@@ -8,6 +8,7 @@ class User_post extends CI_Controller
     public function __construct(){
         parent::__construct();
         $this->load->model(['Post_model']);
+        if(empty(is_client_loggedin())){ redirect('home'); }
     }    
 
     public function add_video_post(){

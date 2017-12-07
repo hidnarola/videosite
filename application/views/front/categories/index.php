@@ -60,9 +60,15 @@
                     data:{offset_listing:offset_listing,cat_id:cat_id,sub_id:sub_id},
                     dataType:"JSON",
                     success:function(data){
-                        console.log(data);
-                        $('#new_ids').append(data['html_str']);
-                        $('#offset_listing').val(data['offset_listing']);
+                        
+                        $('body').loading({theme:'dark'});
+
+                        setTimeout(function() {
+                            $('#new_ids').append(data['html_str']);
+                            $('#offset_listing').val(data['offset_listing']);
+                            $('body').loading('stop');
+                        },2000);
+                        
                     }
                 });
             }

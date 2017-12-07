@@ -68,7 +68,9 @@
                                 <source src="<?php echo base_url() . $posts['upload_path']; ?>" type="video/mp4">
                             </video>-->
                         <!--</a>-->
-                        <div id="myDiv" style="width:100%">This text will be replaced with a player.</div>
+                        <div class="black-bg-video">
+                            <div id="myDiv" style="width:100%">This text will be replaced with a player.</div>
+                        </div>
                         <script src="https://content.jwplatform.com/libraries/sJ4UhosD.js"></script>
                         <script>
                         jwplayer("myDiv").setup({
