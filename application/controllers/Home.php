@@ -357,7 +357,7 @@ class Home extends CI_Controller
     }
 
     public function new_test(){
-        $this->load->view('front/categories/new_1');
+        $this->load->view('front\dashboard\email_test');
     }
     
     

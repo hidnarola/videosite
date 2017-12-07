@@ -65,8 +65,7 @@
 		<?php
 			$error_msg = $this->session->flashdata('error');
 			if(!empty($error_msg)){
-		?>
-			
+		?>			
 			$.notify({				
 				message: '<?php echo $error_msg; ?>',						
 			},{
