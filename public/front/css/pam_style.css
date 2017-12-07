@@ -36,3 +36,9 @@ text-align: center;display: inline-block;padding: 6px 0;}
 .for_height{display:inline-block;vertical-align:top;width:100%;}
 .black-bg-video{background:#000;width:100%;margin-bottom:15px; }
 .black-bg-video .jw-reset{margin:0 auto;}
+
+.white-box{position:relative;}
+.user-srh{background:#f0f0f0;padding:10px 36px 10px 10px;line-height:20px;border:0;position:absolute;    top: 13px;right: 30px;min-width: 270px;}
+.user-srh input{background:transparent;border:0;width:100%;}
+.user-srh button{position:absolute;top:0;right:0;width:40px;height:40px; background:transparent;border:0;}
+.user-srh button svg{width:18px; height:18px;fill:#777370;vertical-align:top; }

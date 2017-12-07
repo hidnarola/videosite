@@ -46,7 +46,7 @@
 .mobile-nav-ul ul li a.arrow-down {position: absolute;right:0;top:0;border:0;text-decoration:none;cursor:pointer;}
 .info_div h4{background: #c02a16;padding:18px 24px 16px;color: #fff;line-height:24px;margin: 0;display: block;font-size: 16px;}
 .mobile-nav-ul .open > .dropdown-menu {display: block;width: 100%;border-radius: 0;position: relative;background: #333;}
-.sub-category li a::after{display:none;}
+
 
 
 }

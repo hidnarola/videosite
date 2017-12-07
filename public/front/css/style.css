@@ -35,7 +35,7 @@ font-family: 'Comfortaa', cursive;
 
 /***** left-content *****/
 .content-wrap:after{content:'';display:block;clear:both;}
-.content-wrap{display:block;}
+.content-wrap{display:block;background:#f0f0f0;}
 .left-panel{float:left;width:280px;background:#fff;height:100%;padding:20px;    box-shadow: 0 -20px 40px 0px rgba(0,0,0,.1);}
 .nav-div{width:100%;margin:0 0 30px;}
 .nav-div ul{list-style:none;margin:0;padding:0;}
@@ -307,7 +307,7 @@ p.general-text {margin:0 0 15px; padding:0; color:#666; font-size: 15px; line-he
 
 .category-nav .sub-category{position:absolute;top:0;left:100%;display:none;list-style:none;margin:0;box-shadow:0 0 60px 0 rgba(0,0,0,.1);min-width:220px;z-index:10;background:#fff;}
 .sub-category li{display:block;}
-.category-nav  .sub-category li a{display:block;padding:13px 14px 11px 30px;position:relative;}
+.category-nav  .sub-category li a{display:block;padding:13px 11px 11px;position:relative;}
 .sub-category li a:after{content:'\f105';font-family:'FontAwesome';font-size:14px;position:absolute;top:50%;left:14px; margin:-2px 0 0;
 -webkit-transform:translateY(-50%); -moz-transform:translateY(-50%); transform:translateY(-50%);}
 .category-nav ul li:hover .sub-category{display:block;border:8px solid #fff;}
@@ -377,3 +377,5 @@ select:-webkit-autofill:focus {
   transition: background-color 5000s ease-in-out 0s;
 }
 
+.sub-category li a:after{display:none;}
+.category-nav.nav-div{margin-bottom:0;}
