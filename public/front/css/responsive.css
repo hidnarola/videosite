@@ -1,5 +1,17 @@
 .owl-item{width:306px !important; }
 
+
+@media(min-width:1025px) and (max-width:1349px){
+.chanelle-body-r .ul-list li {width: 50%;}
+.chanelle-body-l{width:38%;}
+.chanelle-body-r {width:60%;}
+.chanelle-head-l span {width:70px;height:70px;margin:0 10px 0 0;}
+.chanelle-head-l big {font-size: 20px;padding: 12px 0 6px;}
+.list-btm > a {height:20px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;}
+
+
+}
+
 @media(min-width:992px) and (max-width:1024px){
 .video-type a img, .artical-type a img {height:auto;}
 .gallery-type a img {height:83px;}
@@ -29,10 +41,8 @@
 .menu-nav .nav-icon span {background-color: transparent;}
 .menu-nav .nav-icon span:before {transform: rotate(45deg) translate(5px, 5px);}
 .menu-nav .nav-icon span:after {transform: rotate(-45deg) translate(7px, -8px);}
-
 .footer{margin:0;}
 .footer p {text-align:center;}
-
 .mobile-nav-ul{display:block;}
 .mobile-nav-ul:after{content:'';width:280px;position:fixed;top: 0;right: 0;background: rgba(0,0,0,.8);z-index:-1;height:100%;}
 .mobile-nav-ul:before{content: '';position: fixed;top: 0;left: 0;width: 100%;background: rgba(0,0,0,.8);display: block;height: 100%;z-index:-1;}
@@ -46,7 +56,7 @@
 .mobile-nav-ul ul li a.arrow-down {position: absolute;right:0;top:0;border:0;text-decoration:none;cursor:pointer;}
 .info_div h4{background: #c02a16;padding:18px 24px 16px;color: #fff;line-height:24px;margin: 0;display: block;font-size: 16px;}
 .mobile-nav-ul .open > .dropdown-menu {display: block;width: 100%;border-radius: 0;position: relative;background: #333;}
-
+.chanelle-body-r .ul-list li {width: 50%;}
 
 
 }
@@ -110,10 +120,19 @@
 .ul-list li {width:50%;}
 .re-password{padding:20px;}
 input:-webkit-autofill {-webkit-box-shadow:0 0 0px 1000px #e9e9e9 inset;}
-
+.chanelle-body-r,
+.chanelle-body-l{width:100%;margin-bottom:15px;}
+.chanelle-head-l span {width:70px;height:70px;margin:0 10px 0 0;}
+.chanelle-head-l {width: 100%;}
+.chanelle-head-l big {font-size: 20px;padding: 13px 0 6px;}
+.chanelle-head-r{padding:0;margin:0;}
+.chanelle-head-r a {margin-top: 15px;}
+.list-btm > a {margin:0 0 10px;font-size: 12px;line-height: 14px;height: 28px;overflow: hidden;}
 
 }
 
 @media(max-width:499px){
 .ul-list li {width: 100%;}
+.chanelle-body-r .ul-list li {width:100%;}
+.list-btm > a {margin:0 0 10px;font-size: 12px;line-height:14px;height:auto;overflow: hidden;}
 }

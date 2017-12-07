@@ -5,7 +5,7 @@
 .user-nav .dropdown-menu{right:0;left:auto;width:auto;}
 .user-nav .dropdown-menu li{white-space:nowrap;}
 .datepicker{ z-index:10000;}
-label.error {font-size: 12px;color: red;margin-top: -20px;position:absolute;bottom:0;left:0;line-height:18px;}
+label.error { font-size: 12px; color: red; margin-top: 0; position: relative; bottom: 0; left: 5px; line-height: 18px; font-weight: 400; }
 .input-wrap-div{position:relative;margin:0 0 20px;}
 .re-password a{background:#999;border:2px solid #999;padding:10px 15px;line-height:20px; color:#fff;font-size: 15px;float:left;}
 .re-password a:hover{background:transparent;color:#999;text-decoration:none;  }
