@@ -1,3 +1,5 @@
+<!-- Go to www.addthis.com/dashboard to customize your tools --> 
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5948f4fb5a7fea54"></script>
 <form method="post" action="" id="frmblog" enctype="multipart/form-data">
     <?php if(!empty($posts)){?>
     <div class="listing-l">
@@ -106,9 +108,11 @@
                             </li>
                             <?php } }?>
                         </ul>
+                        <br>
                         <div class="col-md-12 col-sm-12 col-xs-12 text-left show_more_btn">
                             <a class="btn-black show_more cursor_pointer"> Show More</a>
                         </div>
+                        <br>
                         <br>
                         <?php if ($user_loggedin == true){?>
                         <div class="input-wrap comments">
