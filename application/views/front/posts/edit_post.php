@@ -16,7 +16,9 @@
     <a href="<?php echo base_url().'user_post/view_all_slides/'.$post_id; ?>" class="btn-black">
         View All Slides
     </a>
-
+<br>
+    <br>
+    <br>
     <form method="post" action="" id="frmblog" enctype="multipart/form-data">
         
         <div class="input-wrap">

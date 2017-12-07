@@ -35,17 +35,17 @@
                 <ul class="dropdown-menu">                    
                     <li>
                         <a href="<?php echo base_url().'dashboard/view_bookmarked_post';?>">
-                            View Bookmark Posts
+                             Bookmarked Posts
                         </a>
                     </li>
                     <li>
                         <a href="<?php echo base_url().'dashboard/view_history';?>">
-                            View History
+                             History
                         </a>
                     </li>
                      <li>
                         <a href="<?php echo base_url().'dashboard/view_my_posts';?>">
-                            View My Posts
+                             My Posts
                         </a>
                     </li>
                     <li>

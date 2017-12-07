@@ -23,6 +23,7 @@
           <div class="gallery-type">
               <a href="" class="tag">G</a>
               <a href="<?php echo base_url() . 'gallery/' . $recent_gallery['slug']; ?>"><img src="<?php echo $recent_gallery['main_image']?>" alt="" /></a>
+              <h4><a href="<?php echo base_url() . 'gallery/' . $recent_gallery['slug']; ?>"><?php echo $recent_gallery['post_title']?></a></h4>
           </div>
       <?php  } } ?>
       </li>
@@ -57,7 +58,7 @@
                     <a href="<?php echo base_url() . 'video/' . $like['slug']; ?>"><?php echo $like['post_title'] ?></a>
                     <?php } ?>
                   <p>By : <?php echo $like['username']?> <span></span></p>
-                  <h6><i class="fa fa-eye"></i><?php echo $like['total_views']?></h6>
+                  <h6><i class="fa fa-eye"></i> <?php echo $like['total_views']?></h6>
                   <!--<h6><i class="fa fa-clock-o"></i> 5 Mon ago</h6>-->
               </div>
           </div>
@@ -109,7 +110,7 @@ jwplayer("myDiv").setup({
                     <a href="<?php echo base_url() . 'video/' . $view['slug']; ?>"><?php echo $view['post_title'] ?></a>
                     <?php } ?>
                   <p>By : <?php echo $view['username']?> <span></span></p>
-                  <h6><i class="fa fa-eye"></i><?php echo $view['total_views']?></h6>
+                  <h6><i class="fa fa-eye"></i> <?php echo $view['total_views']?></h6>
                   <!--<h6><i class="fa fa-clock-o"></i> 5 Mon ago</h6>-->
               </div>
           </div>

@@ -542,6 +542,16 @@ class Post_model extends CI_Model
         return $comments;
     }
     
+    public function get_comments_by_post($post_id,$limit,$offset)
+    {
+        $this->db->select('message,user_id,post_id,u.username,u.avatar');
+        $this->db->join('users u','u.id = comments.user_id');
+        $this->db->where('post_id',$post_id);
+        $this->db->limit($limit,$offset);
+        $comments = $this->db->get('comments')->result_array();
+        return $comments;
+    }
+    
     
     public function get_all_posts_by_channel_id($channel_id,$limit)
     {
