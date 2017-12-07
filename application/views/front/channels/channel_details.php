@@ -1,4 +1,3 @@
-
 <div class="chanelle-page">
     <div class="chanelle-head">
         <div class="chanelle-head-l">
@@ -31,11 +30,18 @@
                         <div class="list-ul-box">
 
                         <span><a class="cursor_pointer" href="">
-                                <!--<img src="<?php echo base_url().$comm['avatar'];?>" alt="">-->
                                 <img src="<?php echo base_url().$comm['avatar'];?>" alt="" onerror="this.src='<?php echo base_url().'uploads/avatars/user-icon-image-download.jpg'; ?>'"></a></span>
                             </a></span>
                         <h4><?php echo $comm['username']; ?></h4>                                
-                        <p><?php echo word_limiter($comm['message'],10); ?></p>
+                        <p class="less" id="less_<?php echo $comm['id'];?>"><?php echo character_limiter($comm['message'],50); ?></p>
+                       
+                        <p class="more" id="more_<?php echo $comm['id'];?>" style="display:none;"><?php echo $comm['message']; ?></p>
+                        <a class="link_less" href="javascript:;" style="display:none;">Read Less</a>
+                            <?php
+                            if(strlen($comm['message']) > 50) {
+                                echo "<a class='link_more' href='javascript:;'>Read More</a>";
+                            } else { echo '';   }
+                       ?>
                         </div>
                     </li>
                     <?php } }?>
@@ -83,3 +89,20 @@
 
     </div>
 
+<script>
+    $('.link_more').on('click', function(){
+        $(this).siblings('.less').hide();
+        $(this).hide();
+        $(this).siblings('.more').show();
+        $(this).siblings('.link_less').show();
+        
+    });
+    
+    $('.link_less').on('click', function(){
+        $(this).siblings('.more').hide();
+        $(this).hide();
+        $(this).siblings('.less').show();
+        $(this).siblings('.link_more').show();
+        
+    });
+</script>
