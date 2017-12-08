@@ -118,7 +118,8 @@
                         </ul>
                         
                         <br>
-                        <?php if(isset($comments) && count($comments) > 5){?>
+
+                        <?php if($total_comments > 5){?>
                         <div class="col-md-12 col-sm-12 col-xs-12 text-left show_more_btn">
                             <a class="btn-black show_more cursor_pointer"> Show More</a>
                         </div>
@@ -231,12 +232,20 @@
                     $('#offset_comment').val(resp['offset_comment']);
                 } else {
                     $('.show_more_btn').hide();
-                    $.notify("No more comments found.", {
-                        type: 'danger',
+                    $.notify({              
+                        message: 'No more comments found.',
+                    },{
+                        // settings
+                        allow_dismiss: true,
+                        newest_on_top: false,
                         animate: {
                             enter: 'animated lightSpeedIn',
                             exit: 'animated lightSpeedOut'
-                        }
+                        },
+                        template: '<div data-notify="container" class="error-msg col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+                            '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                            '<span data-notify="message">{2}</span>' +                  
+                        '</div>' 
                     });
                 }
 

@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 if($_SERVER['HTTP_HOST'] == 'clientapp.narola.online'){
-  define('FFMPEG_PATH', $_SERVER['DOCUMENT_ROOT'].'\ffmpeg\bin\ffmpeg.exe');
+  define('FFMPEG_PATH', 'D:/wamp64/www/HD/ffmpeg/bin/ffmpeg.exe');
 }else{
   define('FFMPEG_PATH', 'C:\wamp64\www\ffmpeg\bin\ffmpeg.exe');
 }

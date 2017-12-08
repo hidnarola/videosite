@@ -585,6 +585,15 @@ class Post_model extends CI_Model
         $comments = $this->db->get('comments')->result_array();
         return $comments;
     }
+     public function get_comments_by_post_count($post_id)
+    {
+        $this->db->select('comments.id,message,user_id,post_id,comments.created_at,u.username,u.avatar');
+        $this->db->join('users u','u.id = comments.user_id');
+        $this->db->where('post_id',$post_id);        
+        $this->db->order_by('comments.created_at','desc');
+        $comments = $this->db->get('comments')->num_rows();
+        return $comments;
+    }
     
     
     public function get_all_posts_by_channel_id($channel_id,$limit)

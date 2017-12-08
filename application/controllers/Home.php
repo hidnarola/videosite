@@ -33,6 +33,8 @@ class Home extends CI_Controller
         $data['liked'] = $this->db->get_where('user_likes', ['post_id' => $data['posts']['id']])->num_rows();
         $res_post_data = $this->db->get_where('user_post', ['slug' => $post_slug, 'post_type' => $post_type])->row_array();
         $data['comments'] = $this->Post_model->get_comments_by_post($res_post_data['id'],5,0);
+        $data['total_comments'] = $this->Post_model->get_comments_by_post_count($res_post_data['id']);
+        // pr($data['total_comments'],1);
         $data['related_posts'] = $this->Post_model->get_related_posts_category_id($res_post_data['category_id'],$res_post_data['id'],4);
         $data['user_loggedin'] = false;
         $data['is_user_like'] = false;

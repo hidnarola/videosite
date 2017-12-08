@@ -102,10 +102,8 @@ class Registration extends CI_Controller {
 
             // $html_content = $this->load->view('front/email_template',true);
             
-            $data['my_link'] = '<a href="'.base_url().'registration/verify_email/'.$random_no.'"> Click Here </a>';
+            $data['my_link'] = base_url().'registration/verify_email/'.$random_no;
             $html_content = $this->load->view('front/dashboard/email_test',$data,true);
-
-            // $html_content = '<h1> Hello World </h1> <a href="'.base_url().'registration/verify_email/'.$random_no.'"> Click Here </a>';
 
             $email_config = mail_config();
             $this->email->initialize($email_config);
@@ -137,8 +135,8 @@ class Registration extends CI_Controller {
                 $this->db->set('activation_code', $random_no);
                 $this->db->where('id',$user_data['id']);
                 $this->db->update('users');
-                
-                $data['my_link'] = '<a href="'.base_url().'registration/verify_email/'.$random_no.'"> Click Here </a>';
+
+                $data['my_link'] = base_url().'registration/reset_password/'.$random_no;
                 $html_content = $this->load->view('front/dashboard/email_test',$data,true);
 
                 // $html_content = '<h1> Hello World </h1> <a href="'.base_url().'registration/reset_password/'.$random_no.'"> Click Here </a>';
@@ -190,6 +188,7 @@ class Registration extends CI_Controller {
         
         $res = $this->Users_model->get_data(['activation_code'=>$code],true);
         if(!empty($res)){
+            $this->session->set_flashdata('success','Your Email Has been verified. You can now Login to the site.'); 
             $this->Users_model->update_user_data($res['id'],['is_verified'=>'1','activation_code'=>'']);
             redirect('home');
         }else{
