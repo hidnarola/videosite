@@ -39,7 +39,10 @@
                     </div>
                 </div>
             </li>
-        <?php } } ?>
+        <?php } } else if(empty($book))
+         {
+             echo"<div class='alert alert-success'>No Posts Found.</div>";
+         } ?>
         </ul>
         <div id="pagination">
             <?php

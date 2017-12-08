@@ -41,7 +41,10 @@
                     </div>
                 </div>
             </li>
-        <?php } } ?>
+        <?php } } else if(empty($posts))
+         {
+             echo"<div class='alert alert-success'>No Posts Found.</div>";
+         } ?>
         </ul>
         <div id="pagination">
             <?php

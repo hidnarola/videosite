@@ -13,7 +13,7 @@
          }
          if(empty($all_channels))
          {
-             echo"<div class='alert alert-success'>No Records Found.</div>";
+             echo"<div class='alert alert-success'>No Channels Found.</div>";
          }
     
     ?>
