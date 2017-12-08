@@ -170,7 +170,7 @@ class Registration extends CI_Controller {
             redirect('home');
          }
         $this->form_validation->set_rules('password', 'Password', 'required');
-        $this->form_validation->set_rules('repeat_password', 'Re-type Password', 'required|matches[password]');
+        $this->form_validation->set_rules('repeat_password', 'Repeat Password', 'required|matches[password]');
 
         if($this->form_validation->run() == FALSE){
              $data['subview']='front/registration/reset_password';            
@@ -179,7 +179,7 @@ class Registration extends CI_Controller {
             $password = $this->input->post('password');
             $encode_password = $this->encrypt->encode($password);
             $this->Users_model->update_user_data($res['id'],['password'=>$encode_password,'is_verified'=>'1','activation_code'=>'']);
-            $this->session->set_flashdata('success', 'Password has been successfully set.Try email and password to login.');
+            $this->session->set_flashdata('success', 'Password has been set successfully . Try email and password to login.');
             redirect('home');
         }
     }
