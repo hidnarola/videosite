@@ -120,4 +120,43 @@ jwplayer("myDiv").setup({
   </div>
 </div>
 
+
+<div class="home-listing">
+  <h2>Most Popular Posts</h2>
+  <div class="owl-carousel owl-theme">
+              <?php foreach($most_popular as $key => $popular){?>
+      <div class="item">
+          <div class="list-box">
+              <div class="list-top"> 
+                  <?php if($popular['post_type'] == 'blog'){?>
+                  <a class="img-anchor" href="<?php echo base_url() . 'blog/' . $popular['slug']; ?>"><img src="<?php echo $popular['main_image']?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>  
+                  <a href="" class="tag-a">A</a>
+                    <?php } else if($popular['post_type'] == 'gallery'){?>
+                  <a class="img-anchor" href="<?php echo base_url() . 'gallery/' . $popular['slug']; ?>"><img src="<?php echo $popular['main_image']?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>         
+                  <a href="" class="tag-g">G</a>
+                    <?php } else if($popular['post_type'] == 'video'){?>
+                  <a class="img-anchor" href="<?php echo base_url() . 'video/' . $popular['slug']; ?>"><img src="<?php echo $popular['main_image']?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>  
+                  <a href="" class="tag-v">V</a>
+                    <?php } ?>
+                  <!--<span>10:53</span>-->
+              </div>
+              <div class="list-btm">
+                 <?php if($popular['post_type'] == 'blog') {?>
+                    <a href="<?php echo base_url() . 'blog/' . $popular['slug']; ?>"><?php echo $popular['post_title'] ?></a>
+                    <?php } else if($popular['post_type'] == 'gallery') {?>
+                    <a href="<?php echo base_url() . 'gallery/' . $popular['slug']; ?>"><?php echo $popular['post_title'] ?></a>
+                    <?php } else if($popular['post_type'] == 'video') {?>
+                    <a href="<?php echo base_url() . 'video/' . $popular['slug']; ?>"><?php echo $popular['post_title'] ?></a>
+                    <?php } ?>
+                  <p>By : <?php echo $popular['username']?> <span></span></p>
+                  <h6><i class="fa fa-eye"></i> <?php echo $popular['total_views']?></h6>
+                  <!--<h6><i class="fa fa-clock-o"></i> 5 Mon ago</h6>-->
+              </div>
+          </div>
+      </div>  
+              <?php } ?>
+
+  </div>
+</div>
+
     
