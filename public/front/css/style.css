@@ -384,5 +384,5 @@ table.table>tbody>tr>td{padding:15px;vertical-align:middle;}
 
 
 .success-msg{background:rgba(32,218,155,1);border:1px solid rgba(32,218,155,.7); padding:15px 25px; border-radius:4px; color:#fff; position:fixed; top:15px; right:15px; width:300px; color:#fff; z-index:1; font-weight:500;box-shadow: 0 0px 40px 0 rgba(0,0,0,.2);}
-	{background:rgba(242,96,81,.9);border:1px solid rgba(242,96,81.9);padding:15px 25px;border-radius:4px;color:#fff;position:fixed;top:15px;right:15px;
+.error-msg{background:rgba(242,96,81,.9);border:1px solid rgba(242,96,81.9);padding:15px 25px;border-radius:4px;color:#fff;position:fixed;top:15px;right:15px;
 width: 300px; color: #fff; z-index: 1; font-weight: 500;box-shadow: 0 0px 40px 0 rgba(0,0,0,.2);}
