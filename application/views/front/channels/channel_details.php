@@ -59,13 +59,13 @@
             <div class="list-box">
                 <div class="list-top">
                 <?php if($channel['post_type'] == 'blog'){?>
-                    <a class="img-anchor" href="<?php echo base_url() . 'blog/' . $channel['slug']; ?>"><img src="<?php echo base_url() . $channel['main_image'] ?>" alt=""/></a>
+                    <a class="img-anchor" href="<?php echo base_url() . 'blog/' . $channel['slug']; ?>"><img src="<?php echo base_url() . $channel['main_image'] ?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>
                     <a href="" class="tag-a">A</a>
                     <?php } else if($channel['post_type'] == 'gallery'){?>
-                    <a class="img-anchor" href="<?php echo base_url() . 'gallery/' . $channel['slug']; ?>"><img src="<?php echo base_url() . $channel['main_image'] ?>" alt=""/></a>
+                    <a class="img-anchor" href="<?php echo base_url() . 'gallery/' . $channel['slug']; ?>"><img src="<?php echo base_url() . $channel['main_image'] ?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>
                     <a href="" class="tag-g">G</a>
                     <?php } else if($channel['post_type'] == 'video'){?>
-                    <a class="img-anchor" href="<?php echo base_url() . 'video/' . $channel['slug']; ?>"><img src="<?php echo base_url() . $channel['main_image'] ?>" alt=""/></a>
+                    <a class="img-anchor" href="<?php echo base_url() . 'video/' . $channel['slug']; ?>"><img src="<?php echo base_url() . $channel['main_image'] ?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>
                     <a href="" class="tag-v">V</a>
                     <?php } ?>
                 </div>

@@ -1,6 +1,6 @@
 <div class="white-box">
     <h3 class="h3-title">Search result for</h3>
-</div>
+
 <div class="home-listing">
     <ul class="ul-list">
         <?php 
@@ -33,7 +33,10 @@
                     </div>
                 </div>
             </li>
-        <?php } } ?>
+        <?php } } else if(empty($posts))
+         {
+             echo"<div class='alert alert-success'>No Posts Found.</div>";
+         } ?>
     </ul>
     <div id="pagination">
         <?php
@@ -42,4 +45,5 @@
             }
         ?>
     </div>
+</div>
 </div>
