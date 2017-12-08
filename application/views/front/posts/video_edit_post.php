@@ -74,7 +74,7 @@
         <div class="input-wrap">
             <label class="label-css">Video Title </label>
             <?php if($_POST){$post_val = set_value('video_title'); }else{$post_val = $post_data['post_title']; } ?>
-            <input type="text" name="video_title" id ="video_title" placeholder="Blog Title" value="<?php echo $post_val; ?>" class="form-css" />
+            <input type="text" name="video_title" id ="video_title" placeholder="Video Title" value="<?php echo $post_val; ?>" class="form-css" />
         </div>
 
         <div class="input-wrap full-width">

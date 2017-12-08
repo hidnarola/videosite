@@ -29,7 +29,7 @@
                 <div class="listing-l-div cursor_pointer">
                     <div class="big-img">
                         <a href="">
-                            <img src="<?php echo base_url().$slide['img_path']; ?>" alt="" />
+                            <img src="<?php echo base_url().$slide['img_path']; ?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/>
                         </a>
                         <span id="span_id_<?php echo $slide['id']; ?>">
                             <?php echo $key + 1; ?>

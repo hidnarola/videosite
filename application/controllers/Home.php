@@ -329,6 +329,9 @@ class Home extends CI_Controller
         $data['cat_id'] = $cat_id;
         $data['sub_id'] = $sub_id;
 
+        $data['categories_name'] = $this->db->get_where('categories', ['id' => $cat_id,'is_deleted' =>'0', 'is_blocked' =>'0'])->row_array();
+        $data['sub_categories_name'] = $this->db->get_where('sub_categories', ['id' => $sub_id,'is_deleted' =>'0', 'is_blocked' =>'0'])->row_array();
+        
         if(is_null($sub_id)) {
             $data['posts'] = $this->Post_model->get_posts_from_category($cat_id,null,12);   
             $data['total_count_listing'] = $this->Post_model->get_posts_from_category_count($cat_id,null);

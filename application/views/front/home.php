@@ -4,7 +4,7 @@
       <?php if(!empty($most_recent_video)) { foreach($most_recent_video as $key => $recent_video){?>
           <div class="video-type">
               <a href="" class="tag">V</a>
-              <a href="<?php echo base_url() . 'video/' . $recent_video['slug']; ?>" class="img"><img src="<?php echo $recent_video['main_image']?>" alt="" /></a>
+              <a href="<?php echo base_url() . 'video/' . $recent_video['slug']; ?>" class="img"><img src="<?php echo $recent_video['main_image']?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>
               <h4><a href="<?php echo base_url() . 'video/' . $recent_video['slug']; ?>"><?php echo $recent_video['post_title']?></a></h4>
           </div>
       <?php } } ?>
@@ -13,7 +13,7 @@
       <?php if(!empty($most_recent_blog)) { foreach($most_recent_blog as $key => $recent_blog){?>
           <div class="artical-type">
               <a href="" class="tag">A</a>
-              <a href="<?php echo base_url() . 'blog/' . $recent_blog['slug']; ?>" class="img"><img src="<?php echo $recent_blog['main_image']?>" alt="" /></a>
+              <a href="<?php echo base_url() . 'blog/' . $recent_blog['slug']; ?>" class="img"><img src="<?php echo $recent_blog['main_image']?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>
               <h4><a href="<?php echo base_url() . 'blog/' . $recent_blog['slug']; ?>"><?php echo $recent_blog['post_title']?></a></h4>
           </div>
       <?php } } ?>
@@ -22,7 +22,7 @@
       <?php if(!empty($most_recent_gallery)) { foreach($most_recent_gallery as $key => $recent_gallery){?>
           <div class="gallery-type">
               <a href="" class="tag">G</a>
-              <a href="<?php echo base_url() . 'gallery/' . $recent_gallery['slug']; ?>"><img src="<?php echo $recent_gallery['main_image']?>" alt="" /></a>
+              <a href="<?php echo base_url() . 'gallery/' . $recent_gallery['slug']; ?>"><img src="<?php echo $recent_gallery['main_image']?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>
               <h4><a href="<?php echo base_url() . 'gallery/' . $recent_gallery['slug']; ?>"><?php echo $recent_gallery['post_title']?></a></h4>
           </div>
       <?php  } } ?>
@@ -90,13 +90,13 @@ jwplayer("myDiv").setup({
           <div class="list-box">
               <div class="list-top"> 
                   <?php if($view['post_type'] == 'blog'){?>
-                  <a class="img-anchor" href="<?php echo base_url() . 'blog/' . $view['slug']; ?>"><img src="<?php echo $view['main_image']?>" alt="" /></a>  
+                  <a class="img-anchor" href="<?php echo base_url() . 'blog/' . $view['slug']; ?>"><img src="<?php echo $view['main_image']?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>  
                   <a href="" class="tag-a">A</a>
                     <?php } else if($view['post_type'] == 'gallery'){?>
-                  <a class="img-anchor" href="<?php echo base_url() . 'gallery/' . $view['slug']; ?>"><img src="<?php echo $view['main_image']?>" alt="" /></a>         
+                  <a class="img-anchor" href="<?php echo base_url() . 'gallery/' . $view['slug']; ?>"><img src="<?php echo $view['main_image']?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>         
                   <a href="" class="tag-g">G</a>
                     <?php } else if($view['post_type'] == 'video'){?>
-                  <a class="img-anchor" href="<?php echo base_url() . 'video/' . $view['slug']; ?>"><img src="<?php echo $view['main_image']?>" alt="" /></a>  
+                  <a class="img-anchor" href="<?php echo base_url() . 'video/' . $view['slug']; ?>"><img src="<?php echo $view['main_image']?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>  
                   <a href="" class="tag-v">V</a>
                     <?php } ?>
                   <!--<span>10:53</span>-->

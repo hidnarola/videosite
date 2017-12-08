@@ -34,7 +34,7 @@
 //            ==================================Blogs========================================================
                      { foreach ($blog as $key => $blogs){ ?>
                             <div class="big-img">
-                                <a href=""><img src="<?php echo base_url() . $blogs['img_path']; ?>" alt="" /></a>
+                                <a href=""><img src="<?php echo base_url() . $blogs['img_path']; ?>" alt=""  onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>
                                 <?php if($count_blog > 1) { ?>
                                     <span><?php echo $key +1; ?> <small>of <?php echo $count_blog; ?></small></span>
                                 <?php } ?>
@@ -49,7 +49,7 @@
 //          ==================================Gallery========================================================
                         elseif ($posts['post_type'] == 'gallery') { foreach ($gallery as $key => $gal) { ?>
                         <div class="big-img">
-                            <a href=""><img src="<?php echo base_url() . $gal['img_path'] ?>" alt="" /></a>
+                            <a href=""><img src="<?php echo base_url() . $gal['img_path'] ?>" alt=""  onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>
                             <?php if($count_gallery > 1) { ?>
                             <span><?php echo $key +1; ?> <small>of <?php echo $count_gallery?></small></span>
                             <?php } ?>
@@ -189,13 +189,13 @@
                 <div class="list-ul-box">
                         
                         <?php if ($related['post_type'] == 'blog') { ?>
-                    <span><a href="<?php echo base_url() . 'blog/' . $related['slug']; ?>"><img src="<?php echo base_url() . $related['main_image'] ?>" alt="" /></a></span>    
+                    <span><a href="<?php echo base_url() . 'blog/' . $related['slug']; ?>"><img src="<?php echo base_url() . $related['main_image'] ?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a></span>    
                     <h4><a href="<?php echo base_url() . 'blog/' . $related['slug']; ?>"><?php echo $related['post_title'] ?></a></h4>
                         <?php } else if($related['post_type'] == 'gallery') { ?>
-                    <span><a href="<?php echo base_url() . 'gallery/' . $related['slug']; ?>"><img src="<?php echo base_url() . $related['main_image'] ?>" alt="" /></a></span>        
+                    <span><a href="<?php echo base_url() . 'gallery/' . $related['slug']; ?>"><img src="<?php echo base_url() . $related['main_image'] ?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a></span>        
                     <h4><a href="<?php echo base_url() . 'gallery/' . $related['slug']; ?>"><?php echo $related['post_title'] ?></a></h4>
                         <?php } else if($related['post_type'] == 'video') {?>
-                    <span><a href="<?php echo base_url() . 'video/' . $related['slug']; ?>"><img src="<?php echo base_url() . $related['main_image'] ?>" alt="" /></a></span>        
+                    <span><a href="<?php echo base_url() . 'video/' . $related['slug']; ?>"><img src="<?php echo base_url() . $related['main_image'] ?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a></span>        
                     <h4><a href="<?php echo base_url() . 'video/' . $related['slug']; ?>"><?php echo $related['post_title'] ?></a></h4>
                         <?php }?>
                         <p><?php echo $related['username'] ?></p>

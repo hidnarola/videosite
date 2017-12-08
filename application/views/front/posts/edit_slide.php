@@ -31,7 +31,7 @@
             <label class="label-css">Upload File</label>
             <div class="input-file">
                 <a data-fancybox class="cursor_pointer" href="<?php echo base_url().$slide_data['img_path'] ?>">
-                    <img src="<?php echo base_url().$slide_data['img_path'] ?>" alt="" width="100px" height="100px">
+                    <img src="<?php echo base_url().$slide_data['img_path'] ?>" alt="" width="100px" height="100px" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'">
                 </a>
                 <input type="text" class="form-css browse_text" readonly >
                 <label class="input-group-btn">

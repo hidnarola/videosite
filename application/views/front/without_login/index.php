@@ -7,7 +7,7 @@
                 <div class="list-box">
                     <div class="list-top">
                         <a href="">
-                            <img src="<?php echo base_url() . $post['bimg'] ?>" alt=""/>
+                            <img src="<?php echo base_url() . $post['bimg'] ?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/>
                         </a>
                     </div>
                     <div class="list-btm">

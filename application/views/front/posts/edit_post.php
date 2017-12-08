@@ -97,7 +97,7 @@
             <div class="input-file">
                 
                 <a data-fancybox href="<?php echo base_url().$post_data['main_image'] ?>">
-                    <img src="<?php echo base_url().$post_data['main_image'] ?>" alt="" width="100px" height="100px">
+                    <img src="<?php echo base_url().$post_data['main_image'] ?>" alt="" width="100px" height="100px" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'">
                 </a>
 
                 <input type="text" class="form-css browse_text" readonly >

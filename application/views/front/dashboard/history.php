@@ -15,13 +15,13 @@
                 <div class="list-box">
                     <div class="list-top">
                     <?php if($his['post_type'] == 'blog'){?>
-                        <a class="img-anchor" href="<?php echo base_url() . 'blog/' . $his['slug']; ?>"><img src="<?php echo base_url() . $his['main_image'] ?>" alt=""/></a>
+                        <a class="img-anchor" href="<?php echo base_url() . 'blog/' . $his['slug']; ?>"><img src="<?php echo base_url() . $his['main_image'] ?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>
                         <a href="" class="tag-a">A</a>
                         <?php } else if($his['post_type'] == 'gallery'){?>
-                        <a class="img-anchor" href="<?php echo base_url() . 'gallery/' . $his['slug']; ?>"><img src="<?php echo base_url() . $his['main_image'] ?>" alt=""/></a>
+                        <a class="img-anchor" href="<?php echo base_url() . 'gallery/' . $his['slug']; ?>"><img src="<?php echo base_url() . $his['main_image'] ?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>
                         <a href="" class="tag-g">G</a>
                         <?php } else if($his['post_type'] == 'video'){?>
-                        <a class="img-anchor" href="<?php echo base_url() . 'video/' . $his['slug']; ?>"><img src="<?php echo base_url() . $his['main_image'] ?>" alt=""/></a>
+                        <a class="img-anchor" href="<?php echo base_url() . 'video/' . $his['slug']; ?>"><img src="<?php echo base_url() . $his['main_image'] ?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>
                         <a href="" class="tag-v">V</a>
                         <?php } ?>
                     </div>
