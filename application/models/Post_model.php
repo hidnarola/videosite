@@ -495,11 +495,14 @@ class Post_model extends CI_Model
     // ------------------------------------------------------------------------
 
     public function get_my_posts_count($user_id) {
-        
+
+        $q = $this->input->get('q');
+
         $all_channel_data = $this->db->select('id')->get_where('user_channels',['user_id'=>$user_id,'is_deleted'=>'0','is_blocked'=>'0'])->result_array();
         $all_channel_id = array_column($all_channel_data,'id');        
         // ------------------------------------------------------------------------
         $this->db->where_in('channel_id',$all_channel_id);
+        $this->db->like('post_title',$q);
         $all_u_posts_cnt = $this->db->get_where('user_post',['is_deleted'=>'0','is_blocked'=>'0'])->num_rows();
         return $all_u_posts_cnt;
     }
@@ -508,10 +511,13 @@ class Post_model extends CI_Model
         $all_channel_data = $this->db->select('id')->get_where('user_channels',['user_id'=>$user_id,'is_deleted'=>'0','is_blocked'=>'0'])->result_array();
         $all_channel_id = array_column($all_channel_data,'id');        
         // ------------------------------------------------------------------------
+        $q = $this->input->get('q');
+
         $this->db->select('user_post.id,user_post.channel_id,user_post.slug,user_post.post_type,user_post.post_title,user_post.main_image,COUNT(distinct upc.id) as total_views');
         $this->db->join('user_post_counts upc', 'user_post.id = upc.post_id', 'left');
         $this->db->group_by('user_post.id');
         $this->db->limit($limit,$offset);
+        $this->db->like('post_title',$q);
         $this->db->where_in('channel_id',$all_channel_id);
         $all_u_posts_cnt = $this->db->get_where('user_post',['is_deleted'=>'0','is_blocked'=>'0'])->result_array();
         return $all_u_posts_cnt;        

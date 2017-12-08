@@ -117,15 +117,14 @@
                     <?php } }?>
                         </ul>
                         
-                        <br>
+                        
 
                         <?php if($total_comments > 5){?>
                         <div class="col-md-12 col-sm-12 col-xs-12 text-left show_more_btn">
                             <a class="btn-black show_more cursor_pointer"> Show More</a>
                         </div>
                         <?php } ?>
-                        <br>
-                        <br>
+                        
                         <?php if ($user_loggedin == true){?>
                         <div class="input-wrap comments">
                             <?php $all_erros = validation_errors();
