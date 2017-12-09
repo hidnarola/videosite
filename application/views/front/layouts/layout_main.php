@@ -89,5 +89,6 @@
 		$('.for_height').css('min-height', window_height+header_height-40);
 
 	</script>		
+
 	</body>
 </html>

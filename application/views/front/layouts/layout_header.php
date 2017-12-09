@@ -21,8 +21,7 @@
         <link href="<?php echo DEFAULT_CSS_PATH ?>font.css" rel="stylesheet">
         <link href="<?php echo DEFAULT_ADMIN_CSS_PATH . "font.css"; ?>" rel="stylesheet" type="text/css">
         <link href="<?php echo DEFAULT_ADMIN_CSS_PATH . "icons/icomoon/styles.css"; ?>" rel="stylesheet" type="text/css">
-        <script src="<?php echo DEFAULT_ADMIN_JS_PATH . "sweetalert.min.js"; ?>"></script>
-        <link rel="stylesheet" type="text/css" href="<?php echo DEFAULT_ADMIN_CSS_PATH . "sweetalert.css"; ?>">
+        
         <link href="<?php echo DEFAULT_CSS_PATH ?>icomoon.css" rel="stylesheet" />
         <link href="<?php echo DEFAULT_CSS_PATH ?>jquery.fancybox.min.css" rel="stylesheet" />        
         <link href="<?php echo DEFAULT_CSS_PATH ?>animate.css" rel="stylesheet" />        

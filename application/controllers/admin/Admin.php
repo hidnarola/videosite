@@ -29,13 +29,7 @@ class Admin extends CI_Controller {
             {
 
                 $db_pass = $this->encrypt->decode($user_data['password']);
-                if($user_data['is_verified'] == 1) 
-                {
-                    $this->session->set_flashdata('message', ['message'=>"Thank you for visiting us. In order to use your account, please check your emails for our Welcome message and click on the activation link to use your account with us. If you haven’t received the email, please, find in our <a href='".base_url('faq')."'>FAQ </a> (Account Activation) for help.",'class'=>'alert alert-danger']);
-                    redirect('admin/login');
-                }
-                else
-                {
+                 
                     if ($db_pass == $password) {   
                         if($user_data['is_blocked'] == 1){
                             $this->session->set_flashdata('message', ['message'=>'Your Account is Deactivated, Please contact to admin','class'=>'alert alert-danger']);
@@ -55,7 +49,7 @@ class Admin extends CI_Controller {
                         $this->session->set_flashdata('message', ['message' => 'Password is incorrect.', 'class' => 'alert alert-danger']);
                         redirect('admin/login');
                     } // End of else for if($db_pass == $password) condition
-                }  
+                
             }     
             else 
             {

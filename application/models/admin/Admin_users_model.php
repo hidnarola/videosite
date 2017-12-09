@@ -171,21 +171,36 @@ class Admin_users_model extends CI_Model
     
     public function get_channels_by_user_id($user_id)
     {   
-        $this->db->select('uc.id,uc.user_id,channel_name,channel_slug,COUNT(DISTINCT us.id) AS subscribers,COUNT(DISTINCT b.id) AS blogs,COUNT(DISTINCT v.id) AS videos,COUNT(DISTINCT g.id) AS gallery');
-//        COUNT(DISTINCT uk.id) AS likes,COUNT(DISTINCT upc.id) AS views
-        $this->db->where('uc.user_id',$user_id);
-        $this->db->join('user_subscribers us', 'us.channel_id = uc.id', 'left');
-        $this->db->join('user_post up', 'up.channel_id = uc.id', 'left');
-        $this->db->join('user_post b', 'b.channel_id = uc.id and b.post_type = "blog"', 'left');
-        $this->db->join('user_post v', 'v.channel_id = uc.id and v.post_type = "video"', 'left');
-        $this->db->join('user_post g', 'g.channel_id = uc.id and g.post_type = "gallery"', 'left');
-//        $this->db->join('user_likes uk','up.id = uk.post_id');
-//        $this->db->join('user_post up1', 'up1.channel_id = uc.id', 'left');
-//        $this->db->join('user_post_counts upc','up1.id = upc.post_id');
-        $this->db->group_by('uc.id');
-        $users = $this->db->get('user_channels uc')->result_array();
-        return $users;
-//                
+        $all_channels = $this->db->select('id')->get_where('user_channels',['user_id'=>$user_id,'is_deleted'=>'0','is_blocked'=>'0'])->result_array();
+        $all_channels_arr = array_column($all_channels,'id');
+        $my_arr = [];
+
+        if(!empty($all_channels_arr)){
+
+            foreach($all_channels_arr as $arr){
+                $all_posts = $this->db->select('id')->get_where('user_post',['channel_id'=>$arr])->result_array();
+
+                $total_subscriber = $this->db->get_where('user_subscribers',['channel_id'=>$arr])->num_rows();
+
+                $my_arr[$arr]['total_subscriber'] = $total_subscriber;
+
+                if(!empty($all_posts)){
+                    $all_posts_arr = array_column($all_posts,'id');
+                    $this->db->where_in('post_id',$all_posts_arr);
+                    $total_cnt = $this->db->get('user_post_counts')->num_rows();
+
+                    $this->db->where_in('post_id',$all_posts_arr);
+                    $total_cnt_likes = $this->db->get('user_likes')->num_rows();
+
+                    $my_arr[$arr]['total_view_cnt'] = $total_cnt;
+                    $my_arr[$arr]['total_view_cnt_likes'] = $total_cnt_likes;
+                    $my_arr[$arr]['total_posts'] = count($all_posts);                    
+                }
+            }
+
+        }        
+        pr($my_arr,1);
+        return $my_arr;
     }
     
     public function get_likes($user_id)

@@ -53,8 +53,13 @@
 <script type="text/javascript">
     var is_many_posts = true;
     $(window).scroll(function() {
-        if($(window).scrollTop() + $(window).height() == $(document).height()) {
+
+        if(is_many_posts == true){
+
+
+        if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
             
+            is_many_posts = false;
             var offset_listing = $('#offset_listing').val();
             var total_records = $('#total_records').val();
             var cat_id = $('#cat_id').val();
@@ -67,6 +72,7 @@
                     method:"POST",
                     data:{offset_listing:offset_listing,cat_id:cat_id,sub_id:sub_id},
                     dataType:"JSON",
+                    async:true,
                     success:function(data){
                         
                         $('body').loading({theme:'dark'});
@@ -75,11 +81,13 @@
                             $('#new_ids').append(data['html_str']);
                             $('#offset_listing').val(data['offset_listing']);
                             $('body').loading('stop');
+                            is_many_posts = true;
                         },2000);
                         
                     }
                 });
             }
         }
+       } 
     });
 </script>
