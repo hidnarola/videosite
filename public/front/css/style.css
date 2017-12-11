@@ -106,7 +106,8 @@ a.img-anchor > img{width:100%;  min-height:210px;}
 .list-top > span{position:absolute;bottom:15px;right:15px;background:#68ac9f;border-radius:4px;width:48px;height:24px;color:#fff;font-size:13px;text-transform:uppercase;text-align:center;line-height:24px;}
 
 .list-btm{display:block;width:100%;margin:0;padding:0 10px 5px 18px;}
-.list-btm > a{margin:0 0 12px;font-size:13px;text-transform:capitalize;color:#333;line-height:20px;letter-spacing:.02em;display:block;}
+.list-btm > a{margin:0 0 12px;font-size:13px;text-transform:capitalize;color:#333;line-height:20px;letter-spacing:.02em;display:block;text-overflow: ellipsis;
+height: 20px;overflow: hidden;white-space: nowrap;}
 .list-btm > a:hover{opacity:.6;text-decoration:none;}
 .list-btm p{display:block;font-size:12px;color:#666;display:block;width:100%;line-height:16px;margin:0 0 20px;padding:0;float:left;width:80%;}
 .list-btm p span{background:url(../images/check.png) no-repeat 0 0;width:16px;height:16px;    margin-left: 2px;display: inline-block;vertical-align: middle;margin-top:-2px;}
@@ -289,6 +290,7 @@ p.general-text {margin:0 0 15px; padding:0; color:#666; font-size: 15px; line-he
 .chanelle-head{display:inline-block;vertical-align:top;width:100%;background:#fff;margin:0 0 15px;}
 .chanelle-head-l{float:left;width:40%;}
 .chanelle-head-l span{width:100px;height:100px;border-radius:80px;overflow:hidden;float:left;margin:0 20px 0 0;}
+.chanelle-head-l span img{width:100%;min-height:100px;}
 .chanelle-head-l big{font-size:30px;text-transform:uppercase;display:block;color:#282424;line-height:normal;font-weight:700;padding:23px 0 6px;}
 .chanelle-head-l small{font-size:12px;font-weight:700;text-transform:uppercase;color:#666;display:block;padding-left:2px;}
 .chanelle-head-r{float:right;padding:25px 0 0;}
