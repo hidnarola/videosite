@@ -89,13 +89,13 @@
                     width: 200,
                     render: function (data, type, full, meta) {
                         var action = '';
-                        var id= encodeURIComponent(btoa(full.id));
+//                        var id= encodeURIComponent(btoa(full.id));
                         if (full.is_blocked == '0') {
-                            action += '<a href="<?php echo base_url(); ?>admin/cms/edit/' + id + '" class="btn border-primary text-primary-600 btn-flat btn-icon btn-rounded btn-sm" title="Edit"><i class="icon-pencil3"></i></a>';
-                            action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/cms/action/block/' + id + '" class="btn border-warning text-warning-600 btn-flat btn-icon btn-rounded"  title="Block"><i class="icon-blocked"></i></a>'
+                            action += '<a href="<?php echo base_url(); ?>admin/cms/edit/' + full.id + '" class="btn border-primary text-primary-600 btn-flat btn-icon btn-rounded btn-sm" title="Edit"><i class="icon-pencil3"></i></a>';
+                            action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/cms/action/block/' + full.id + '" class="btn border-warning text-warning-600 btn-flat btn-icon btn-rounded"  title="Block"><i class="icon-blocked"></i></a>'
                             //action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/cms/action/delete/' + id + '" class="btn border-danger text-danger-600 btn-flat btn-icon btn-rounded btn_delete" title="Delete"><i class="icon-cross2"></i></a>'
                         } else if (full.is_blocked == 1) {
-                            action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/cms/action/activate/' + id + '" class="btn border-success text-success-600 btn-flat btn-icon btn-rounded"  title="Unblock"><i class="icon-checkmark-circle"></i></a>'
+                            action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/cms/action/activate/' + full.id + '" class="btn border-success text-success-600 btn-flat btn-icon btn-rounded"  title="Unblock"><i class="icon-checkmark-circle"></i></a>'
                             //action += '&nbsp;&nbsp;<a href="<?php echo base_url(); ?>admin/cms/action/delete/' + id + '" class="btn border-danger text-danger-600 btn-flat btn-icon btn-rounded btn_delete" title="Delete"><i class="icon-cross2"></i></a>'
                         }
                         return action;

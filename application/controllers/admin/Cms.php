@@ -39,7 +39,7 @@ class Cms extends CI_Controller {
      */
     public function action($action, $cms_id) {
 
-        $where = 'id = ' . decode($this->db->escape($cms_id));
+        $where = 'id = ' . $this->db->escape($cms_id);
         $check_cms = $this->Cms_model->get_result('cms_page', $where);
         if ($check_cms) {
             if ($action == 'delete') {
@@ -74,7 +74,7 @@ class Cms extends CI_Controller {
      * */
     public function edit() {
 
-        $cms_id = decode($this->uri->segment(4));
+        $cms_id = $this->uri->segment(4);
         if (is_numeric($cms_id)) {
             $where = 'id = ' . $this->db->escape($cms_id);
             $check_cms = $this->Cms_model->get_result('cms_page', $where);

@@ -10,7 +10,7 @@
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li><a href="<?php echo base_url() . "admin/dashboard" ?>"><i class="icon-home2 position-left"></i> Admin</a></li>
-            <li><a href="<?php echo base_url() . "admin/users" ?>"><i class="icon-users4 position-left"></i>Sub Users</a></li>
+            <li><a href="<?php echo base_url() . "admin/users" ?>"><i class="position-left"></i>Sub Users</a></li>
             <li>User's Video</li>
         </ul>
     </div>

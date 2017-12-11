@@ -163,7 +163,7 @@
                     </div>
                 </div>
             </div>
-
+<?php if ($user_loggedin == true){?>
             <div class="box_style_1 expose">
                 <h3 class="inner"> Share </h3>
                 <div class="row">
@@ -173,6 +173,7 @@
                     </div>
                 </div>
             </div>
+<?php } ?>
         </div>
     </div>
     <?php } ?>

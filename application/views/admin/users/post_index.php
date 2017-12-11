@@ -67,7 +67,7 @@
                    <td>User Channel's List</td>
                 </tr>
                 <?php 
-                if(isset($channels) && empty($channels)){   
+                if(isset($channels)){   
                     foreach ($channels as $key => $channel) {
                 ?>
                     <tr>

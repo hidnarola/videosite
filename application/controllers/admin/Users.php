@@ -38,7 +38,7 @@ class Users extends CI_Controller
     public function action($action, $user_id)
     {
 
-        $where = 'id = ' . decode($this->db->escape($user_id));
+        $where = 'id = ' . $this->db->escape($user_id);
         $check_user = $this->Admin_users_model->get_result('users', $where);
         if ($check_user)
         {
@@ -145,7 +145,7 @@ class Users extends CI_Controller
      * */
     public function edit($id = '')
     {
-        $user_id = decode($id);
+        $user_id = $id;
         $data['heading'] = 'Edit User';
         $data['user_data'] = $this->Users_model->get_data(['id' => $user_id], true);
 
@@ -234,7 +234,7 @@ class Users extends CI_Controller
     public function view_post($id = null)
     {
         $data['id'] = $id;
-        $user_id = decode($id);
+        $user_id = $id;
         $data['post'] = $this->Admin_users_model->get_user_by_id($user_id);
         $data['channels'] = $this->Admin_users_model->get_channels_by_user_id($user_id);
         $data['subview'] = 'admin/users/post_index';
@@ -243,7 +243,7 @@ class Users extends CI_Controller
 
     public function view_blog($id = null)
     {
-        $data['id'] = decode($id);
+        $data['id'] = $id;
         $data['subview'] = 'admin/users/blog_index';
         $this->load->view('admin/layouts/layout_main', $data);
     }
@@ -262,7 +262,7 @@ class Users extends CI_Controller
 
     public function view_video($id = null)
     {
-        $data['id'] = decode($id);
+        $data['id'] = $id;
         $data['subview'] = 'admin/users/video_index';
         $this->load->view('admin/layouts/layout_main', $data);
     }
@@ -281,7 +281,7 @@ class Users extends CI_Controller
 
     public function view_gallery($id = null)
     {
-        $data['id'] = decode($id);
+        $data['id'] = $id;
         $data['subview'] = 'admin/users/gallery_index';
         $this->load->view('admin/layouts/layout_main', $data);
     }

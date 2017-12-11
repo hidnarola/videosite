@@ -39,7 +39,7 @@ class Sub_categories extends CI_Controller
     public function action($action, $user_id)
     {
 
-        $where = 'id = ' . decode($this->db->escape($user_id));
+        $where = 'id = ' . $this->db->escape($user_id);
         $check_user = $this->Admin_category_model->get_result('sub_categories', $where);
         if ($check_user)
         {
@@ -78,7 +78,7 @@ class Sub_categories extends CI_Controller
      * */
     public function edit()
     {
-        $category_id = decode($this->uri->segment(4));
+        $category_id = $this->uri->segment(4);
         if (is_numeric($category_id))
         {
             $where = 'id = ' . $this->db->escape($category_id);
@@ -157,7 +157,7 @@ class Sub_categories extends CI_Controller
 
     public function block($id)
     {
-        $id = decode($id);
+//        $id = $id;
         $this->Admin_category_model->update_record('sub_categories', ['id' => $id], ['is_blocked' => '1']);
         $this->session->set_flashdata('message', ['message' => 'Category Successfully blocked.', 'class' => 'success']);
         redirect('admin/sub_categories');
@@ -165,7 +165,7 @@ class Sub_categories extends CI_Controller
 
     public function activate($id)
     {
-        $id = decode($id);
+//        $id = $id;
         $this->Admin_category_model->update_record('sub_categories', ['id' => $id], ['is_blocked' => '0']);
         $this->session->set_flashdata('message', ['message' => 'Category Successfully activated.', 'class' => 'success']);
         redirect('admin/sub_categories');
@@ -173,7 +173,7 @@ class Sub_categories extends CI_Controller
 
     public function delete($id)
     {
-        $id = decode($id);
+//        $id = $id;
         $this->Admin_category_model->update_record('sub_categories', ['id' => $id], ['is_deleted' => '1']);
         $this->session->set_flashdata('message', ['message' => 'Category Successfully deleted.', 'class' => 'success']);
         redirect('admin/sub_categories');
