@@ -189,6 +189,8 @@ class User_post extends CI_Controller
             $config['upload_path'] = './uploads/'.$folder_name.'/';
             $config['allowed_types'] = 'gif|jpg|png';
             $config['max_size']  = '100000000';
+            $config['min_height'] = '350px';
+            $config['min_width'] = '500px';
             $config['encrypt_name'] = true;
 
             $this->load->library('upload', $config);
@@ -259,6 +261,8 @@ class User_post extends CI_Controller
             $config['upload_path'] = './uploads/'.$folder_name.'/';
             $config['allowed_types'] = 'gif|jpg|png';
             $config['max_size']  = '100000000';
+            $config['min_height'] = '350px';
+            $config['min_width'] = '500px';
             $config['encrypt_name'] = true;
 
             $file_path = $data['post_data']['main_image'];

@@ -165,7 +165,7 @@ class User_channels extends CI_Controller {
 							'channel_id'=>$channel_id
 						];
 			$this->db->insert('user_subscribers',$ins_data);
-			$this->session->set_flashdata('success','You have subscribed this user successfully.');
+			$this->session->set_flashdata('success','You have Subscribed this user successfully.');
 			redirect('channel/'.$channel_data['channel_slug']);
 		}
 	}
@@ -174,6 +174,7 @@ class User_channels extends CI_Controller {
 		$channel_data = $this->db->get_where('user_channels',['id'=>$channel_id,'is_deleted'=>'0','is_blocked'=>'0'])->row_array();
 		$sess_u_data = $this->session->userdata('client');
 		$this->db->delete('user_subscribers',['user_id'=>$sess_u_data['id'],'channel_id'=>$channel_id]);
+                $this->session->set_flashdata('success','You have Unsubscribed this user successfully.');
 		redirect('channel/'.$channel_data['channel_slug']);
 	}
 

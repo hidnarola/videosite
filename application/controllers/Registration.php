@@ -120,14 +120,16 @@ class Registration extends CI_Controller {
     }   
 
     public function ajax_forgot_password(){
-        
         $this->form_validation->set_rules('email_id', 'Email Id', 'trim|required|valid_email|callback_forgot_email_check',
                                          ['forgot_email_check'=>'OOPS !! Email does not exists.']);
-       
+       $res = [];
         if($this->form_validation->run() == FALSE){   
             $res['email_error'] = strip_tags(form_error('email_id')); 
+            $res['all_erros'] = validation_errors();
             $res['success'] = false;
+
         }else{
+
             $user_data=$this->Users_model->check_if_user_exist(['email_id' => $this->input->post('email_id')], false, true,['1','2','3']);
             if($user_data){
 
@@ -154,10 +156,10 @@ class Registration extends CI_Controller {
             else{
                  $this->session->set_flashdata('message', ['message' => 'Provided email address does not match with the system records.', 'class' => 'alert alert-danger']);
             }
-                 $res['success'] = true;
-            echo json_encode($res);
+            
+        $res['success'] = true;
         }
-        
+        echo json_encode($res);
     }
 
     public function reset_password($rand_no){

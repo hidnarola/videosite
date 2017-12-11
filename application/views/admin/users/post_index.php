@@ -67,20 +67,19 @@
                    <td>User Channel's List</td>
                 </tr>
                 <?php 
+                if(isset($channels) && empty($channels)){   
                     foreach ($channels as $key => $channel) {
-                        $all_posts = $this->db->get_where('user_post',['channel_id'=>$channel['id']])->result_array();
-                        pr($all_posts);
                 ?>
                     <tr>
-                       <td><?php echo $channel['channel_name'] ; ?> </td>
-                       <td>All Posts (<?php echo array_sum([$channel['blogs'], $channel['videos'], $channel['gallery']]); ?>)</td>
-                       <td> Videos (<?php echo $channel['videos']; ?>)</td> <td>Blogs (<?php echo $channel['blogs']; ?>)</td>
-                       <td> Galleries (<?php echo $channel['gallery']; ?>) </td> 
-                       <td> Subscribers (<?php echo $channel['subscribers']; ?>) </td> 
-                       <td> Likes (<?php // echo $channel['likes']; ?>) </td> 
-                       <td> Views (<?php // echo $channel['views']; ?>) </td>
+                       <td><?php echo $channel['channels']['channel_name'] ; ?> </td>
+                       <td>All Posts (<?php echo $channel['total_posts']; ?>)</td>
+                       <td> Subscribers (<?php echo $channel['total_subscriber']; ?>) </td> 
+                       <td> Likes (<?php echo $channel['total_view_cnt_likes']; ?>) </td> 
+                       <td> Views (<?php echo $channel['total_view_cnt']; ?>) </td>
                     </tr>
-                <?php } ?>
+                <?php } } else {
+                    echo"<div class='alert alert-success'>No Channels Found.</div>";
+                } ?>
             </thead>
         </table>
     </div>    

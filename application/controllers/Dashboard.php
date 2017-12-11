@@ -62,7 +62,7 @@ class Dashboard extends CI_Controller {
 
 	public function change_password(){
 		$this->form_validation->set_rules('old_password', 'Old Password', 'trim|required|callback_verify_password',
-										  ['verify_password'=>'Old password doen not match with current one.']);
+										  ['verify_password'=>'Old password does not match with current one.']);
 		$this->form_validation->set_rules('password', 'Password', 'trim|required');
         $this->form_validation->set_rules('repeat_password', 'Repeat Password', 'trim|required|matches[password]');
 

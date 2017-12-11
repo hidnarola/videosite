@@ -1,5 +1,5 @@
 <div class="white-box">
-    <h3 class="h3-title">User Bookmarks</h3>
+    <h3 class="h3-title"> Bookmarks</h3>
     <div class="user-srh">
         <form>
             <input type="text" name="q" value="<?php echo $this->input->get('q'); ?>" placeholder="Search">

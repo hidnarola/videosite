@@ -93,7 +93,7 @@
                     <ul class="dropdown-menu">                    
                         <li>
                             <a href="<?php echo base_url().'dashboard/view_bookmarked_post';?>">
-                                Bookmark Posts
+                                Bookmarked Posts
                             </a>
                         </li>
                         <li>

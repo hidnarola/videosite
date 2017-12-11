@@ -209,7 +209,7 @@ class Home extends CI_Controller
                 'post_id' => $post_id
             ];
             $this->db->insert('user_likes', $ins_data);
-            $this->session->set_flashdata('success', 'You have liked this post successfully.');
+            $this->session->set_flashdata('success', 'You have Liked this post successfully.');
             if ($post_data['post_type'] == 'video')
             {
                 redirect('video/' . $post_data['slug']);
@@ -230,6 +230,7 @@ class Home extends CI_Controller
         $post_data = $this->db->get_where('user_post', ['id' => $post_id, 'is_deleted' => '0', 'is_blocked' => '0'])->row_array();
         $sess_data = $this->session->userdata('client');
         $this->db->delete('user_likes', ['user_id' => $sess_data['id'], 'post_id' => $post_id]);
+        $this->session->set_flashdata('success', 'You have Unliked this post successfully.');
         if ($post_data['post_type'] == 'video')
         {
             redirect('video/' . $post_data['slug']);
@@ -284,6 +285,7 @@ class Home extends CI_Controller
     {
         $post_data = $this->db->get_where('user_post', ['id' => $post_id, 'is_deleted' => '0', 'is_blocked' => '0'])->row_array();
         $sess_data = $this->session->userdata('client');
+        $this->session->set_flashdata('success', 'You have Unbookmarked this post successfully.');
         $this->db->delete('user_bookmarks', ['user_id' => $sess_data['id'], 'post_id' => $post_id]);
         if ($post_data['post_type'] == 'video')
         {

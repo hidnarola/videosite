@@ -12,12 +12,12 @@
 
         <div class="input-wrap">
             <label class="label-css">Password </label>
-            <input type="password" name="password" id="password" class="form-css" placeholder="Password *"  >
+            <input type="password" name="password" id="password" class="form-css" placeholder="Password"  >
         </div>
 
         <div class="input-wrap">
             <label class="label-css">Repeat Password </label>
-            <input type="password" name="repeat_password" id="" class="form-css" placeholder="Repeat Password *" >
+            <input type="password" name="repeat_password" id="" class="form-css" placeholder="Repeat Password" >
         </div>				 		
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12 text-right register-btn">

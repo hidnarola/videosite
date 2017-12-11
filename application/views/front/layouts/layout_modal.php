@@ -1,3 +1,9 @@
+<?php 
+            $all_erros = validation_errors(); 
+            if(!empty($all_erros)){
+        ?>
+            <div class="alert alert-danger"><?php echo $all_erros; ?></div>
+        <?php } ?>
 <div class="modal fade" id="login-register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     
     <div class="modal-dialog" role="document">
@@ -128,7 +134,14 @@
         }
     });
     
+
 $("#forgotpassword").validate({
+        rules: {
+            email_id : {
+                required: true,
+                email: true
+            }
+        },
         submitHandler:function(form){
             $.ajax({
                 type: "POST",
@@ -143,31 +156,46 @@ $("#forgotpassword").validate({
                     // dialog.modal('hide');
                 },
                 success: function (data) {
+                    
+                    setTimeout(function(){
+                        dialog.modal('hide');
+                    },1500);
 
-                    if(data['success'] == false){
-                        var new_str = '';                               
-                        new_str += '<p>'+data['email_error']+'</p>';
-                        // bootbox.alert(new_str);
+                    setTimeout(function(){                            
+                        if(data['success'] == false){
+                            
+                            var dialog_new = bootbox.dialog({
+                                message: '<p class="text-center">'+data['all_erros']+'</p>',
+                                closeButton: false
+                            });
 
-                        dialog = bootbox.dialog({
-                            message: '<p class="text-center">'+new_str+'</p>',
-                            closeButton: false
-                        });
-                        
-                        // do something in the background
-                        setTimeout(function(){
-                            dialog.modal('hide');
-                        },2000);                                
+                            setTimeout(function(){
+                                dialog_new.modal('hide');
+                            },2000);
+                        }else{
+                            var dialog_new = bootbox.dialog({
+                                message: "<p class='text-center'>  Forgot password request has been sent successfully, You will receive the confirmation mail.</p>",
+                                closeButton: false
+                            });
 
-                    }else{
-                        window.location.href="<?php echo base_url().'home'; ?>";
-                    }
-                    return false;
+                            setTimeout(function(){
+                                dialog_new.modal('hide');
+                                $("#sign_up_form")[0].reset();
+                                $("#commentForm")[0].reset();
+                                $("#forgotpassword")[0].reset();
+                                $('#login-register').modal('hide');
+                            },3000);
+                            window.location.href="<?php echo base_url().'home'; ?>";
+                        }
+                    },2000);
+
+
                 }
             });
             return false; // required to block normal submit since you used ajax
         }
     });
+
     $("#sign_up_form").validate({
         rules: {
             username: {

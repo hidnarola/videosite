@@ -179,10 +179,19 @@ class Admin_users_model extends CI_Model
 
             foreach($all_channels_arr as $arr){
                 $all_posts = $this->db->select('id')->get_where('user_post',['channel_id'=>$arr])->result_array();
-
+                
+                //==========================Get Channel Name==============================
+                $channels = $this->db->select('channel_name')->get_where('user_channels',['id'=>$arr,'is_deleted'=>'0','is_blocked'=>'0'])->row_array();
+                
+                $my_arr[$arr]['channels'] = $channels;
+                //==========================Get Channel Name==============================
+                
+                
+                //==========================Get Subscribers==============================
                 $total_subscriber = $this->db->get_where('user_subscribers',['channel_id'=>$arr])->num_rows();
 
                 $my_arr[$arr]['total_subscriber'] = $total_subscriber;
+                //==========================Get Subscribers==============================
 
                 if(!empty($all_posts)){
                     $all_posts_arr = array_column($all_posts,'id');
@@ -198,8 +207,7 @@ class Admin_users_model extends CI_Model
                 }
             }
 
-        }        
-        pr($my_arr,1);
+        }
         return $my_arr;
     }
     
