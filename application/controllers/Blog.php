@@ -21,10 +21,6 @@ class Blog extends CI_Controller {
 		$data['blog_list']=$this->Blogs_model->get_front_result('blog',$where,$config['per_page'],$offset);	
 		$data['subview']="front/blog/blog_list";
 		$this->load->view('front/layouts/layout_main',$data);
-
-		// if(){
-			
-		// }
 	}
 
 	public function blog_details($slug=''){

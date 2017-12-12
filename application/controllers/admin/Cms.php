@@ -83,7 +83,7 @@ class Cms extends CI_Controller {
                 $data['title'] = 'Admin Edit Cms Page';
                 $data['heading'] = 'Edit Cms Page';                
             } else {
-                show_404();
+                custom_admin_show_404();
             }
         }
         if ($this->input->post()) {

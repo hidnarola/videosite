@@ -94,7 +94,7 @@ class User_post extends CI_Controller
     public function edit_video_post($post_id){
         custom_show_404();die;
         $data['post_data'] = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
-        if(empty($data['post_data'])){ show_404(); }
+        if(empty($data['post_data'])){ custom_front_show_404(); }
 
         $data['post_data']['video'] = $this->db->get_where('video',['post_id'=>$post_id])->row_array();        
 
@@ -103,7 +103,7 @@ class User_post extends CI_Controller
         // ------------------------------------------------------------------------
         $all_ids_arr = $this->db->select('id')->get_where('user_channels',['user_id'=>$sess_data['id']])->result_array();
         $all_channel_ids = array_column($all_ids_arr,'id');
-        if(in_array($data['post_data']['channel_id'],$all_channel_ids) == false){ show_404(); }
+        if(in_array($data['post_data']['channel_id'],$all_channel_ids) == false){ custom_front_show_404(); }
         // ------------------------------------------------------------------------
 
         $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
@@ -154,10 +154,10 @@ class User_post extends CI_Controller
 
     public function add_post($post_type="blog"){
         
-        if(empty($post_type)){ show_404(); }
+        if(empty($post_type)){ custom_front_show_404(); }
         $sess_data = $this->session->userdata('client');
 
-        if(in_array($post_type,['blog','gallery']) == false){ show_404(); }
+        if(in_array($post_type,['blog','gallery']) == false){ custom_front_show_404(); }
 
         $data['post_type'] = $post_type;
         $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
@@ -228,7 +228,7 @@ class User_post extends CI_Controller
         $post_type = $data['post_data']['post_type'];
         $sess_data = $this->session->userdata('client');
 
-        if(in_array($post_type,['blog','gallery']) == false){ show_404(); }
+        if(in_array($post_type,['blog','gallery']) == false){ custom_front_show_404(); }
 
         $data['post_type'] = $post_type;
         $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
@@ -511,7 +511,7 @@ class User_post extends CI_Controller
         $all_channel_ids = array_column($all_ids_arr,'id');
 
         $post_data = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
-        if(in_array($post_data['channel_id'],$all_channel_ids) == false){ show_404(); }
+        if(in_array($post_data['channel_id'],$all_channel_ids) == false){ custom_front_show_404(); }
 
         $this->db->update('user_post',['is_deleted'=>'1'],['id'=>$post_id]);
         $this->session->set_flashdata('success','Post has been deleted successfully.');

@@ -45,12 +45,12 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown dropdown-user">
                             <a class="dropdown-toggle" data-toggle="dropdown">
-                                <?php if ($this->session->userdata('admin')['profile_image'] != '') { ?>
-                                        <!--<img src="<?php echo base_url(USER_IMAGES . $this->session->userdata('remalways_admin')['profile_image']) ?>" alt="">-->
+                                <?php if ($this->session->userdata('admin')['avatar'] != '') { ?>
+                                        <img src="<?php echo DEFAULT_USER_IMAGE_PATH. $this->session->userdata('admin')['avatar']?>" alt="">
                                 <?php } else { ?>
                                     <img src="<?php echo base_url('assets/admin/images/placeholder.jpg') ?>" alt="">
                                 <?php } ?>
-                                <span><?php echo $this->session->userdata('admin')['firstname'] . ' ' . $this->session->userdata('admin')['lastname'] ?></span>
+                                <span><?php echo $this->session->userdata('admin')['fname'] . ' ' . $this->session->userdata('admin')['lname'] ?></span>
                                 <i class="caret"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
@@ -83,7 +83,7 @@
                                 <form action="#" class="main-search">
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
-                                            <a href="<?php echo site_url('home') ?>" class="btn btn-primary btn-block content-group"><i class="icon-circle-left2 position-left"></i> Go to home</a>
+                                            <a href="<?php echo site_url('admin/dashboard') ?>" class="btn btn-primary btn-block content-group"><i class="icon-circle-left2 position-left"></i> Go to Dashboard</a>
                                         </div>
                                     </div>
                                 </form>
@@ -92,7 +92,7 @@
                         <!-- /error wrapper -->
                         <!-- Footer -->
                         <div class="footer text-muted text-center">
-                            &copy;Copyright 2017. <a href="<?php echo site_url()?>">VideoSite.com</a>, All Rights Reserved
+                            &copy;Copyright 2017. <a href="<?php echo site_url('admin/dashboard')?>">VideoSite.com</a>, All Rights Reserved
                         </div>
                         <!-- /footer -->
                     </div>

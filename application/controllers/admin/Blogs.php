@@ -93,7 +93,7 @@ class Blogs extends CI_Controller
             }
             else
             {
-                show_404();
+                custom_admin_show_404();
             }
         }
         if ($this->input->post())

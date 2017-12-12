@@ -78,7 +78,7 @@ class Home extends CI_Controller
 
         if (empty($res_post_data))
         {
-            show_404();
+            custom_front_show_404();
         }
 
         $this->form_validation->set_rules('comments', 'Comment', 'required');
@@ -196,7 +196,7 @@ class Home extends CI_Controller
         $post_data = $this->db->get_where('user_post', ['id' => $post_id, 'is_deleted' => '0', 'is_blocked' => '0'])->row_array();
         if (empty($post_data))
         {
-            show_404();
+            custom_front_show_404();
         }
 
         $is_post_liked = $this->db->get_where('user_likes', ['user_id' => $sess_data['id'], 'post_id' => $post_id])->num_rows();
@@ -252,7 +252,7 @@ class Home extends CI_Controller
         $post_data = $this->db->get_where('user_post', ['id' => $post_id, 'is_deleted' => '0', 'is_blocked' => '0'])->row_array();
         if (empty($post_data))
         {
-            show_404();
+            custom_front_show_404();
         }
 
         $is_post_bookmarked = $this->db->get_where('user_bookmarks', ['user_id' => $sess_data['id'], 'post_id' => $post_id])->num_rows();

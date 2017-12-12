@@ -103,7 +103,7 @@ class User_channels extends CI_Controller {
         $data['channel_post'] = $this->Post_model->get_all_posts_by_channel_id($data['res_channel']['id'],12);
         $data['channel_user'] = $this->Post_model->get_user_channel($channel_name);
         $data['comments'] = $this->Post_model->get_comments_by_post_id();
-        if(empty($data['res_channel'])){ show_404(); }
+        if(empty($data['res_channel'])){ custom_front_show_404(); }
 
         $data['user_loggedin'] = false;
         $data['is_user_subscribe'] = false;
@@ -140,7 +140,7 @@ class User_channels extends CI_Controller {
 		// fetch channel data
 		$channel_data = $this->db->get_where('user_channels',['id'=>$channel_id,'is_deleted'=>'0','is_blocked'=>'0'])->row_array();
 		
-		if(empty($channel_data)){ show_404(); }
+		if(empty($channel_data)){ custom_front_show_404(); }
 
 		// fetch all channel of loggedin user
 		$all_userchannel = $this->db->select('id')->get_where('user_channels',
