@@ -193,6 +193,33 @@ function mail_config()
     return $configs;
 }
 
+
+function send_mail($to = '', $template = '', $data = []) {
+    if (empty($to) || empty($template) || empty($data)) {
+        return false;
+    }
+    $ci = &get_instance();
+    $ci->load->library('email');
+
+    $config['protocol'] = 'smtp';
+    $config['smtp_host'] = 'ssl://smtp.gmail.com';
+    $config['smtp_port'] = '465';
+    $config['smtp_user'] = 'demo.narola@gmail.com';
+    $config['smtp_pass'] = 'Narola21#';
+    $config['charset'] = 'utf-8';
+    $config['newline'] = "\r\n";
+    $config['mailtype'] = 'html';
+    $config['validation'] = TRUE;
+
+    $ci->email->initialize($config);
+
+    $ci->email->to($to);
+    $ci->email->from('no-reply@videosite.com');
+    $ci->email->subject($data['subject']);
+    $view = $ci->load->view('email_templates/' . $template, $data, TRUE);
+    $ci->email->message($view);
+    $ci->email->send();
+}
 /* For Encode ID  (DHK)
   /* Param 1 : ID
  */
@@ -429,4 +456,18 @@ function get_ago_time($start_date, $end_date)
 //    echo $since_start->h . ' hours<br>';
 //    echo $since_start->i . ' minutes<br>';
 //    echo $since_start->s . ' seconds<br>';
+}
+
+function custom_admin_show_404($page = '', $log_error = TRUE) {
+    $CI = & get_instance();
+    $CI->load->view('admin/layouts/show_404');
+    echo $CI->output->get_output();
+    exit; // EXIT_UNKNOWN_FILE
+}
+
+function custom_front_show_404($page = '', $log_error = TRUE) {
+    $CI = & get_instance();
+    $CI->load->view('front/layouts/show_404');
+    echo $CI->output->get_output();
+    exit; // EXIT_UNKNOWN_FILE
 }

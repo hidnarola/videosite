@@ -1,12 +1,11 @@
 <div class="form-element">    
+    <h3 class="h3-title">Edit Video</h3>
     <?php 
         $all_erros = validation_errors(); 
         if(!empty($all_erros)){
     ?>
         <div class="alert alert-danger"><?php echo $all_erros; ?></div>
     <?php } ?>
-
-    <h3 class="h3-title">Edit Video</h3>
     <form method="post" action="" id="frmblog" enctype="multipart/form-data">
         <div class="input-wrap">
             <label class="label-css">Select Channel </label>

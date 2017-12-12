@@ -9,7 +9,7 @@ class Registration extends CI_Controller {
         $this->load->model(array('Users_model'));
 
         if(!empty(is_client_loggedin())){
-            redirect('dashboard');
+            redirect('home');
         }
     }
 
@@ -29,7 +29,7 @@ class Registration extends CI_Controller {
             $this->session->set_userdata(['client' => $user_data]); // Start Loggedin User Session
             $this->session->set_flashdata('success','Login Successfull');
             $this->Users_model->update_user_data($user_data['id'], ['last_login' => date('Y-m-d H:i:s')]); // update last login time
-            redirect('dashboard');
+            redirect('home');
         }
     }
 
@@ -64,8 +64,6 @@ class Registration extends CI_Controller {
         $this->form_validation->set_rules('i_agree', 'I Agree', 'trim|required');
 
         if($this->form_validation->run() == FALSE){
-            // $data['subview']='front/registration/registration_user_1';            
-            // $this->load->view('front/layouts/layout_main',$data);
             $res['all_erros'] = validation_errors();
             $res['success'] = false;
         }else{
@@ -86,7 +84,7 @@ class Registration extends CI_Controller {
                             'activation_code'  => $random_no,
                             'created_at'=>date('Y-m-d H:i:s')
                         ];
-
+            
             $ins_id = $this->Users_model->insert_user_data($ins_data);
 
             $channel_name = $username.' '.random_string('alnum',10);
@@ -98,21 +96,27 @@ class Registration extends CI_Controller {
                                 'channel_slug'=>$channel_slug,
                                 'created_at'=>date('Y-m-d H:i:s')
                             ];
-            $this->Cms_model->insert_record('user_channels',$ins_channel);
-
-            // $html_content = $this->load->view('front/email_template',true);
             
-            $data['my_link'] = base_url().'registration/verify_email/'.$random_no;
-            $html_content = $this->load->view('front/dashboard/email_test',$data,true);
-
-            $email_config = mail_config();
-            $this->email->initialize($email_config);
-            $subject=config('site_name'). ' - Thank you for your registration';
-            $this->email->from(config('contact_email'), config('sender_name'))
-                        ->to('vpa@narola.email,nik@narola.email,'.$email_id)
-                        ->subject($subject)
-                        ->message($html_content);
-            $this->email->send();
+            $this->Cms_model->insert_record('user_channels',$ins_channel);
+            
+//           $data['my_link'] = base_url().'registration/verify_email/'.$random_no;
+//           $html_content = $this->load->view('front/dashboard/email_test',$data,true);
+//
+//            $email_config = mail_config();
+//            $this->email->initialize($email_config);
+//            $subject=config('site_name'). ' - Thank you for your registration';
+//            $this->email->from(config('contact_email'), config('sender_name'))
+//                        ->to('vpa@narola.email,nik@narola.email,'.$email_id)
+//                        ->subject($subject)
+//                        ->message($html_content);
+//            $this->email->send();
+            
+            $email_data = [];
+            $email_data['url'] = base_url() . 'registration/verify_email/' . $random_no;
+            $email_data['email'] = trim($email_id);
+            $email_data['password'] = trim($this->encrypt->decode($encrypt_pass));
+            $email_data['subject'] = 'Verify Email | An Amazing Site';
+            send_mail(trim($email_id), 'verify_email', $email_data);
 
             $res['success'] = true; // Set final variable whether it is true or not
         } 
@@ -134,29 +138,32 @@ class Registration extends CI_Controller {
             if($user_data){
 
                 $random_no=random_string('alnum',5);
+                $email_id = $this->input->post('email_id');
                 $this->db->set('activation_code', $random_no);
                 $this->db->where('id',$user_data['id']);
                 $this->db->update('users');
 
-                $data['my_link'] = base_url().'registration/reset_password/'.$random_no;
-                $html_content = $this->load->view('front/dashboard/email_test',$data,true);
+//                $data['my_link'] = base_url().'registration/reset_password/'.$random_no;
+//                $html_content = $this->load->view('front/dashboard/email_test',$data,true);
 
                 // $html_content = '<h1> Hello World </h1> <a href="'.base_url().'registration/reset_password/'.$random_no.'"> Click Here </a>';
                 
-                $email_config = mail_config();
-                $this->email->initialize($email_config);
-                $subject= config('site_name').' - Forgot Password Request';    
-                $this->email->from(config('contact_email'), config('sender_name'))
-                            ->to($this->input->post('email_id'),'nik@narola.email')
-                            ->subject($subject)
-                            ->message($html_content);
-                $this->email->send();
-                 $this->session->set_flashdata('message', ['message' => 'Forgot password request sent successfully, You will receive the confirmation mail', 'class' => 'alert alert-success']);
+//                $email_config = mail_config();
+//                $this->email->initialize($email_config);
+//                $subject= config('site_name').' - Forgot Password Request';    
+//                $this->email->from(config('contact_email'), config('sender_name'))
+//                            ->to($this->input->post('email_id'),'nik@narola.email')
+//                            ->subject($subject)
+//                            ->message($html_content);
+//                $this->email->send();
+//                 $this->session->set_flashdata('message', ['message' => 'Forgot password request sent successfully, You will receive the confirmation mail', 'class' => 'alert alert-success']);
+                
+            $email_data = [];
+            $email_data['url'] = base_url() . 'registration/reset_password/' . $random_no;
+            $email_data['email'] = trim($email_id);
+            $email_data['subject'] = 'Reset Password | An Amazing Site';
+            send_mail(trim($email_id), 'forgot_password', $email_data);
             }
-            else{
-                 $this->session->set_flashdata('message', ['message' => 'Provided email address does not match with the system records.', 'class' => 'alert alert-danger']);
-            }
-            
         $res['success'] = true;
         }
         echo json_encode($res);

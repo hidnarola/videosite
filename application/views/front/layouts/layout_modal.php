@@ -1,9 +1,9 @@
 <?php 
-            $all_erros = validation_errors(); 
-            if(!empty($all_erros)){
+//            $all_erros = validation_errors(); 
+//            if(!empty($all_erros)){
         ?>
-            <div class="alert alert-danger"><?php echo $all_erros; ?></div>
-        <?php } ?>
+            <!--<div class="alert alert-danger"><?php // echo $all_erros; ?></div>-->
+        <?php // } ?>
 <div class="modal fade" id="login-register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     
     <div class="modal-dialog" role="document">

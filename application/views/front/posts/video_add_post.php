@@ -1,16 +1,11 @@
-
-
 <div class="form-element">    
+    <h3 class="h3-title">Add Video</h3>
     <?php 
         $all_erros = validation_errors(); 
         if(!empty($all_erros)){
     ?>
         <div class="alert alert-danger"><?php echo $all_erros; ?></div>
     <?php } ?>
-
-
-
-    <h3 class="h3-title">Add Video</h3>
     
     <a href="<?php echo base_url().'user_post/add_post/blog'; ?>" class="btn-black">
         <i class="fa fa-rss"></i>

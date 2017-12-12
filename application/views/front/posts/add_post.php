@@ -1,17 +1,11 @@
-<!-- include summernote css/js-->
-<!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script> -->
-
-
 <div class="form-element">    
+    <h3 class="h3-title">Add <?php echo $post_type; ?></h3>
     <?php 
         $all_erros = validation_errors(); 
         if(!empty($all_erros)){
     ?>
         <div class="alert alert-danger"><?php echo $all_erros; ?></div>
     <?php } ?>
-
-    <h3 class="h3-title">Add <?php echo $post_type; ?></h3>
     <form method="post" action="" id="frmblog" enctype="multipart/form-data">
         <div class="input-wrap">
             <label class="label-css">Select Channel </label>

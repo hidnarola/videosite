@@ -4,14 +4,14 @@
 
 
 <div class="form-element">    
+
+    <h3 class="h3-title">Edit <?php echo $post_type; ?></h3>
     <?php 
         $all_erros = validation_errors(); 
         if(!empty($all_erros)){
     ?>
         <div class="alert alert-danger"><?php echo $all_erros; ?></div>
     <?php } ?>
-
-    <h3 class="h3-title">Edit <?php echo $post_type; ?></h3>
 
     <a href="<?php echo base_url().'user_post/view_all_slides/'.$post_id; ?>" class="btn-black">
         View All Slides
