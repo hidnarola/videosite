@@ -77,7 +77,7 @@
                     <?php } else if($channel['post_type'] == 'video') {?>
                     <a href="<?php echo base_url() . 'video/' . $channel['slug']; ?>"><?php echo $channel['post_title'] ?></a>
                     <?php } ?>
-                    <p>By : <?php echo $channel['username'] ?> <span></span></p>
+                    <p> <small> By : <?php echo $channel['username'] ?> </small> <span></span></p>
                     <h6><i class="fa fa-eye"></i> <?php echo $channel['total_views'] ?></h6>
                 <!--<h6><i class="fa fa-clock-o"></i><?php get_ago_time($channel['blog_created_date'], date("Y-m-d H:i:s")) ?></h6>-->
                 </div>

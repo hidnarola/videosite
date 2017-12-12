@@ -170,7 +170,7 @@ class Admin_users_model extends CI_Model
     }
     
     public function get_channels_by_user_id($user_id)
-    {   
+    {           
         $all_channels = $this->db->select('id')->get_where('user_channels',['user_id'=>$user_id,'is_deleted'=>'0','is_blocked'=>'0'])->result_array();
         $all_channels_arr = array_column($all_channels,'id');
         $my_arr = [];
@@ -179,13 +179,20 @@ class Admin_users_model extends CI_Model
 
             foreach($all_channels_arr as $arr){
                 $all_posts = $this->db->select('id')->get_where('user_post',['channel_id'=>$arr])->result_array();
-                
                 //==========================Get Channel Name==============================
                 $channels = $this->db->select('channel_name')->get_where('user_channels',['id'=>$arr,'is_deleted'=>'0','is_blocked'=>'0'])->row_array();
                 
                 $my_arr[$arr]['channels'] = $channels;
                 //==========================Get Channel Name==============================
                 
+                $total_blogs = $this->db->get_where('user_post',['post_type' => 'blog','channel_id' => $arr])->num_rows();
+                $my_arr[$arr]['total_blogs'] = $total_blogs;
+
+                $total_video = $this->db->get_where('user_post',['post_type' => 'video', 'channel_id' => $arr])->num_rows();
+                $my_arr[$arr]['total_video'] = $total_video;
+
+                $total_gallery = $this->db->get_where('user_post', ['post_type' => 'gallery', 'channel_id' => $arr])->num_rows();
+                $my_arr[$arr]['total_gallery'] = $total_gallery;
                 
                 //==========================Get Subscribers==============================
                 $total_subscriber = $this->db->get_where('user_subscribers',['channel_id'=>$arr])->num_rows();
@@ -208,6 +215,8 @@ class Admin_users_model extends CI_Model
             }
 
         }
+        
+//        pr($my_arr,1);
         return $my_arr;
     }
     

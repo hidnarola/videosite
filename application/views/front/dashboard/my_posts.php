@@ -36,7 +36,7 @@
                             <a href="<?php echo base_url() . 'video/' . $post['slug']; ?>"><?php echo $post['post_title'] ?></a>
                         <?php }?>
                         <div class="edit-dlt">
-                            <p>By : <?php echo $session_info['username'] ?> <span></span></p>
+                            <p> <small> By : <?php echo $session_info['username'] ?> </small><span></span></p>
                             <?php if($post['post_type'] == 'video') { ?>
                                 <a href="<?php echo base_url().'user_post/edit_video_post/'.$post['id']; ?>" class="fa fa-edit"></a>
                             <?php } else { ?>

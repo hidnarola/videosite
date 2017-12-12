@@ -72,7 +72,10 @@
                 ?>
                     <tr>
                        <td><?php echo $channel['channels']['channel_name'] ; ?> </td>
-                       <td>All Posts (<?php echo $channel['total_posts']; ?>)</td>
+                       <td> All Posts (<?php echo $channel['total_posts']; ?>)</td>
+                       <td> Videos (<?php echo $channel['total_video']; ?>)</td>
+                       <td> Blogs (<?php echo $channel['total_blogs']; ?>)</td>
+                       <td> Galleries (<?php echo $channel['total_gallery']; ?>)</td>
                        <td> Subscribers (<?php echo $channel['total_subscriber']; ?>) </td> 
                        <td> Likes (<?php echo $channel['total_view_cnt_likes']; ?>) </td> 
                        <td> Views (<?php echo $channel['total_view_cnt']; ?>) </td>

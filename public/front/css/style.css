@@ -109,8 +109,10 @@ a.img-anchor > img{width:100%;  min-height:210px;}
 .list-btm > a{margin:0 0 12px;font-size:13px;text-transform:capitalize;color:#333;line-height:20px;letter-spacing:.02em;display:block;text-overflow: ellipsis;
 height: 20px;overflow: hidden;white-space: nowrap;}
 .list-btm > a:hover{opacity:.6;text-decoration:none;}
-.list-btm p{display:block;font-size:12px;color:#666;display:block;width:100%;line-height:16px;margin:0 0 20px;padding:0;float:left;width:80%;}
-.list-btm p span{background:url(../images/check.png) no-repeat 0 0;width:16px;height:16px;    margin-left: 2px;display: inline-block;vertical-align: middle;margin-top:-2px;}
+.list-btm p{margin:0 0 20px;padding:0;float:left;width:80%;}
+.list-btm p small{font-size:12px;color:#666;display:block;line-height:16px;margin:0;padding:0;float:left;max-width:80%;float:left;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;height:16px;}
+.list-btm p span{background:url(../images/check.png) no-repeat 0 0;width:16px;height:16px; margin-left: 2px;display: inline-block;vertical-align: middle;margin-top:-2px;}
+
 .list-btm h6{width:18%;float:left;font-size:12px;color:#999;line-height:16px;margin:0 0 15px;text-align:right; }
 .list-btm h6:last-child{float:right;}
 .ad-01{display:block;width:100%;margin:0 0 30px;}

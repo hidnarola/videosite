@@ -33,7 +33,7 @@
                             <?php } else if($post['post_type'] == 'video'){  ?>
                         <a href="<?php echo base_url() . 'video/' . $post['slug']; ?>"><?php echo $post['post_title'] ?></a>
                             <?php }?>
-                         <p>By : <?php echo $post['username'] ?> <span></span></p>
+                         <p> <small> By : <?php echo $post['username'] ?> </small> <span></span></p>
                          <h6><i class="fa fa-eye"></i> <?php echo $post['total_views'] ?></h6>
                          <!--<h6><i class="fa fa-clock-o"></i><?php get_ago_time($post['blog_created_date'], date("Y-m-d H:i:s")) ?></h6>-->
                     </div>
