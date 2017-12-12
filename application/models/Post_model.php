@@ -462,7 +462,7 @@ class Post_model extends CI_Model
     {
         $q = $this->input->get('q');
         $this->db->select('uh.user_id,uh.post_id,u.username,post_type,slug,post_title,main_image,COUNT(distinct upc.id) as total_views');
-        $this->db->join('user_post up', 'up.id = ub.post_id');
+        $this->db->join('user_post up', 'up.id = uh.post_id');
         $this->db->join('user_channels uc', 'uc.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = uc.user_id');
 //        $this->db->join('users u', 'u.id = uh.user_id');
@@ -485,7 +485,7 @@ class Post_model extends CI_Model
         $this->db->select('uh.user_id,uh.post_id,u.username,post_type,slug,post_title,main_image,COUNT(distinct upc.id) as total_views');
 //        $this->db->join('users u', 'u.id = uh.user_id');
 //        $this->db->join('user_post up', 'up.id = uh.post_id');
-        $this->db->join('user_post up', 'up.id = ub.post_id');
+        $this->db->join('user_post up', 'up.id = uh.post_id');
         $this->db->join('user_channels uc', 'uc.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = uc.user_id');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
