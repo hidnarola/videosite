@@ -469,7 +469,9 @@ function custom_admin_show_404($page = '', $log_error = TRUE) {
 
 function custom_front_show_404($page = '', $log_error = TRUE) {
     $CI = & get_instance();
-    $CI->load->view('front/layouts/show_404');
+    $data['subview']='front/dashboard/show_404';
+    $CI->load->view('front/layouts/layout_main',$data);
+//    $CI->load->view('front/dashboard/show_404');
     echo $CI->output->get_output();
     exit; // EXIT_UNKNOWN_FILE
 }
