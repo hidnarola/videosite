@@ -421,8 +421,9 @@ class Post_model extends CI_Model
     {
         $q = $this->input->get('q');
         $this->db->select('ub.user_id,ub.post_id,u.username,post_type,slug,post_title,main_image,COUNT(distinct upc.id) as total_views');
-        $this->db->join('users u', 'u.id = ub.user_id');
         $this->db->join('user_post up', 'up.id = ub.post_id');
+        $this->db->join('user_channels uc', 'uc.id = up.channel_id', 'left');
+        $this->db->join('users u', 'u.id = uc.user_id');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
         $this->db->where('ub.user_id', $id);
         $this->db->where('up.is_deleted != 1');
@@ -432,6 +433,8 @@ class Post_model extends CI_Model
         $this->db->like('post_title', $q);
         $this->db->limit($limit, $offset);
         $bookmarks = $this->db->get('user_bookmarks ub')->result_array();
+//        qry(1);
+        
         return $bookmarks;
     }
 
@@ -439,8 +442,11 @@ class Post_model extends CI_Model
     {
         $q = $this->input->get('q');
         $this->db->select('ub.user_id,ub.post_id,u.username,post_type,slug,post_title,main_image,COUNT(distinct upc.id) as total_views');
-        $this->db->join('users u', 'u.id = ub.user_id');
-        $this->db->join('user_post up', 'up.id = ub.post_id');
+//        $this->db->join('users u', 'u.id = ub.user_id');
+//        $this->db->join('user_post up', 'up.id = ub.post_id');
+         $this->db->join('user_post up', 'up.id = ub.post_id');
+        $this->db->join('user_channels uc', 'uc.id = up.channel_id', 'left');
+        $this->db->join('users u', 'u.id = uc.user_id');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
         $this->db->where('ub.user_id', $id['user_id']);
         $this->db->where('up.is_deleted != 1');
@@ -456,8 +462,11 @@ class Post_model extends CI_Model
     {
         $q = $this->input->get('q');
         $this->db->select('uh.user_id,uh.post_id,u.username,post_type,slug,post_title,main_image,COUNT(distinct upc.id) as total_views');
-        $this->db->join('users u', 'u.id = uh.user_id');
-        $this->db->join('user_post up', 'up.id = uh.post_id');
+        $this->db->join('user_post up', 'up.id = ub.post_id');
+        $this->db->join('user_channels uc', 'uc.id = up.channel_id', 'left');
+        $this->db->join('users u', 'u.id = uc.user_id');
+//        $this->db->join('users u', 'u.id = uh.user_id');
+//        $this->db->join('user_post up', 'up.id = uh.post_id');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
         $this->db->where('uh.user_id', $id);
         $this->db->where('up.is_deleted != 1');
@@ -474,8 +483,11 @@ class Post_model extends CI_Model
     {
         $q = $this->input->get('q');
         $this->db->select('uh.user_id,uh.post_id,u.username,post_type,slug,post_title,main_image,COUNT(distinct upc.id) as total_views');
-        $this->db->join('users u', 'u.id = uh.user_id');
-        $this->db->join('user_post up', 'up.id = uh.post_id');
+//        $this->db->join('users u', 'u.id = uh.user_id');
+//        $this->db->join('user_post up', 'up.id = uh.post_id');
+        $this->db->join('user_post up', 'up.id = ub.post_id');
+        $this->db->join('user_channels uc', 'uc.id = up.channel_id', 'left');
+        $this->db->join('users u', 'u.id = uc.user_id');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
         $this->db->where('uh.user_id', $id['user_id']);
         $this->db->where('up.is_deleted != 1');
@@ -714,7 +726,8 @@ class Post_model extends CI_Model
         $this->db->where('up.is_deleted != 1');
         $this->db->where('up.is_blocked != 1');
         $this->db->join('user_likes uk', 'uk.post_id = up.id', 'left');
-        $this->db->join('users u', 'u.id = uk.user_id');
+        $this->db->join('user_channels uc','uc.id = up.channel_id');
+        $this->db->join('users u', 'u.id = uc.user_id');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id');
         $this->db->group_by('uk.post_id');
         $this->db->order_by('total_likes', 'desc');
@@ -729,7 +742,8 @@ class Post_model extends CI_Model
         $this->db->where('up.is_deleted != 1');
         $this->db->where('up.is_blocked != 1');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
-        $this->db->join('users u', 'u.id = upc.user_id', 'left');
+        $this->db->join('user_channels uc','uc.id = up.channel_id');
+        $this->db->join('users u', 'u.id = uc.user_id', 'left');
         $this->db->group_by('upc.post_id');
         $this->db->order_by('total_views', 'desc');
         $this->db->limit($limit, $offset);
@@ -742,7 +756,8 @@ class Post_model extends CI_Model
         $date = date('Y-m-d', strtotime(date('Y-m-d') . " -1 month"));
         $this->db->select('up.id as userpostid,up.channel_id,up.post_type,up.post_title,up.main_image,up.slug,up.created_at,upc.id as upcid,upc.user_id as upcuserid,upc.post_id as upcpostid,u.id as userid,u.username,count(distinct upc.id) as total_views');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
-        $this->db->join('users u', 'u.id = upc.user_id', 'left');
+        $this->db->join('user_channels uc','uc.id = up.channel_id');
+        $this->db->join('users u', 'u.id = uc.user_id', 'left');
         $this->db->where('up.created_at >=', $date);
         $this->db->where('up.is_deleted != 1');
         $this->db->where('up.is_blocked != 1');

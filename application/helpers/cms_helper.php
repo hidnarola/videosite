@@ -205,6 +205,8 @@ function send_mail($to = '', $template = '', $data = []) {
     $config['smtp_host'] = 'ssl://smtp.gmail.com';
     $config['smtp_port'] = '465';
     $config['smtp_user'] = 'demo.narola@gmail.com';
+//    $config['smtp_user'] = 'hpa.narola1111@gmail.com';
+//    $config['smtp_pass'] = 'narola21';
     $config['smtp_pass'] = 'Narola21#';
     $config['charset'] = 'utf-8';
     $config['newline'] = "\r\n";
