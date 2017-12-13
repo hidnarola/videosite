@@ -129,7 +129,7 @@ class User_post extends CI_Controller
             $data['subview'] = 'front/posts/video_edit_post';
             $this->load->view('front/layouts/layout_main', $data);
         } else {
-                    $config['upload_path'] = './uploads/videos/';
+            $config['upload_path'] = './uploads/videos/';
             $config['allowed_types'] = '*';
             $config['max_size']  = '10000000000';       
             $config['encrypt_name'] = true;
@@ -151,8 +151,8 @@ class User_post extends CI_Controller
                 $file_name = $random_name.$file_ext;
                 $img_file_name = $random_name.'.jpg';            
 
-                exec(FFMPEG_PATH . ' -i ' . $data['upload_data']['full_path']. ' -vcodec libx264 -crf 20 '.$data['upload_data']['file_path'].$file_name);
-                exec(FFMPEG_PATH . ' -i ' . $data['upload_data']['full_path'] . ' -ss 00:00:01.000 -vframes 1 ' . $data['upload_data']['file_path'].$img_file_name);
+                exec(FFMPEG_PATH . ' -i ' . $data1['upload_data']['full_path']. ' -vcodec libx264 -crf 20 '.$data1['upload_data']['file_path'].$file_name);
+                exec(FFMPEG_PATH . ' -i ' . $data1['upload_data']['full_path'] . ' -ss 00:00:01.000 -vframes 1 ' . $data1['upload_data']['file_path'].$img_file_name);
 
                 unlink($data1['upload_data']['full_path']);
             }
