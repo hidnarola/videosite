@@ -1,6 +1,9 @@
 .owl-item{width:306px !important; }
 
 
+@media(max-width:1399px){
+.black-bg-video .jw-reset {width:100% !important;}
+}
 @media(min-width:1025px) and (max-width:1349px){
 .chanelle-body-r .ul-list li {width: 50%;}
 .chanelle-body-l{width:38%;}
@@ -15,6 +18,7 @@
 .video-type a img,
 .gallery-type a img, .artical-type a img { height:200px;}
 
+
 }
 
 @media(min-width:992px) and (max-width:1024px){
@@ -25,6 +29,7 @@
 
 @media(min-width:992px){
 .mobile-nav{display:none;}
+
 }
 
 @media(max-width:1024px){
@@ -62,7 +67,6 @@
 .info_div h4{background: #c02a16;padding:18px 24px 16px;color: #fff;line-height:24px;margin: 0;display: block;font-size: 16px;}
 .mobile-nav-ul .open > .dropdown-menu {display: block;width: 100%;border-radius: 0;position: relative;background: #333;}
 .chanelle-body-r .ul-list li {width: 50%;}
-
 
 }
 
