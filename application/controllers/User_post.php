@@ -92,7 +92,6 @@ class User_post extends CI_Controller
     }
 
     public function edit_video_post($post_id){
-        custom_show_404();die;
         $data['post_data'] = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
         if(empty($data['post_data'])){ custom_front_show_404(); }
 
