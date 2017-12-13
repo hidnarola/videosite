@@ -129,19 +129,47 @@ class User_post extends CI_Controller
             $data['subview'] = 'front/posts/video_edit_post';
             $this->load->view('front/layouts/layout_main', $data);
         } else {
+                    $config['upload_path'] = './uploads/videos/';
+            $config['allowed_types'] = '*';
+            $config['max_size']  = '10000000000';       
+            $config['encrypt_name'] = true;
 
+            $this->load->library('upload', $config);
+            
+            if ( ! $this->upload->do_upload('vid_path')){
+                
+                $this->session->set_flashdata('error', $this->upload->display_errors());
+                redirect('user_post/edit_video_post/'.$post_id);
+            } else {
+                $data1 = array('upload_data' => $this->upload->data());            
+
+                $video_path = 'uploads/videos/'.$data['upload_data']['file_name'];
+
+                $file_ext = $data['upload_data']['file_ext'];
+                $random_name = random_string('alnum', 16);
+
+                $file_name = $random_name.$file_ext;
+                $img_file_name = $random_name.'.jpg';            
+
+                exec(FFMPEG_PATH . ' -i ' . $data['upload_data']['full_path']. ' -vcodec libx264 -crf 20 '.$data['upload_data']['file_path'].$file_name);
+                exec(FFMPEG_PATH . ' -i ' . $data['upload_data']['full_path'] . ' -ss 00:00:01.000 -vframes 1 ' . $data['upload_data']['file_path'].$img_file_name);
+
+                unlink($data1['upload_data']['full_path']);
+            }
             $ins_data = [
                             'channel_id'=>$this->input->post('channel'),
                             'category_id'=>$this->input->post('category'),
                             'sub_category_id'=>$this->input->post('sub_category'),
-                            'post_title'=>$this->input->post('video_title'),                            
+                            'post_title'=>$this->input->post('video_title'),                        
+                            'main_image'=>'uploads/videos/'.$img_file_name,
                             'slug'=>slugify($this->input->post('video_title'))
                         ];
             $last_id = $this->Post_model->update_record('user_post',['id'=>$post_id],$ins_data);
 
             $video_data = [
                             'title'=>$this->input->post('video_title'),
-                            'description'=>$this->input->post('video_desc')
+                            'description'=>$this->input->post('video_desc'),
+                            'upload_path'=>'uploads/videos/'.$file_name,
                         ];
             $this->Post_model->update_record('video',['id'=>$data['post_data']['video']['id']],$video_data);
             $this->session->set_flashdata('success','Video has been uploaded successfully.');

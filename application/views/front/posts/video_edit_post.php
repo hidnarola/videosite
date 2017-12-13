@@ -75,7 +75,23 @@
             <?php if($_POST){$post_val = set_value('video_title'); }else{$post_val = $post_data['post_title']; } ?>
             <input type="text" name="video_title" id ="video_title" placeholder="Video Title" value="<?php echo $post_val; ?>" class="form-css" />
         </div>
-
+        
+        <div class="input-wrap">
+            <label class="label-css">Upload File</label>
+            <div class="input-file">
+                
+                <a data-fancybox href="<?php echo base_url().$post_data['main_image'] ?>">
+                    <img src="<?php echo base_url().$post_data['main_image'] ?>" alt="" width="100px" height="100px" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'">
+                </a>
+                
+                <input type="text" class="form-css" browse_text name="video_path" readonly >
+                <label class="input-group-btn">
+                    <span class="">
+                        Browse <input type="file" name="vid_path" style="display: none;">
+                    </span>
+                </label>
+            </div>
+        </div>  
         <div class="input-wrap full-width">
             <label class="label-css">Comment</label>
             <?php if($_POST){ $post_comm = set_value('video_desc'); }else{ $post_comm = $post_data['video']['description']; } ?>
