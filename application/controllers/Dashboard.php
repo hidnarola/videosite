@@ -209,7 +209,36 @@ class Dashboard extends CI_Controller {
         
         $data['subview'] = 'front/dashboard/my_posts';
         $this->load->view('front/layouts/layout_main', $data);
-    }    
+    } 
+    
+    
+    public function view_recommended()
+    {
+        $sess_data = $this->session->userdata('client');
+        
+        $config['base_url'] = base_url().'dashboard/view_recommended';
+        $config['total_rows'] = $this->Post_model->get_recommended_post_count(['user_id' => $sess_data['id']]);
+        $config['per_page'] = 12;
+        $offset = $this->input->get('per_page');
+        $config = array_merge($config,pagination_front_config());
+        
+        $this->pagination->initialize($config);
+        
+        $data['recommended'] = $recommended = $this->Post_model->get_recommended_post($sess_data['id']);
+        usort($recommended, function($a, $b)
+        {
+            return $b['total_views'] - $a['total_views'];
+        });
+
+        $data['recommend'] = array_slice($recommended,$offset, $config['per_page']);
+        $str_links = $this->pagination->create_links();
+        $data["links"] = explode('&nbsp;',$str_links );
+        
+        $data['subview'] = 'front/dashboard/recommended';
+        $this->load->view('front/layouts/layout_main', $data);
+    } 
+
+    
 
 }
 

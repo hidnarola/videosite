@@ -475,3 +475,52 @@ function custom_front_show_404($page = '', $log_error = TRUE) {
     echo $CI->output->get_output();
     exit; // EXIT_UNKNOWN_FILE
 }
+
+function bubbleSort(array $array) {
+    $array_size = count($array);
+    for($i = 0; $i < $array_size; $i ++) {
+        for($j = 0; $j < $array_size; $j ++) {
+            if ($array[$i] < $array[$j]) {
+                $tem = $array[$i];
+                $array[$i] = $array[$j];
+                $array[$j] = $tem;
+            }
+        }
+    }
+    return $array;
+}
+
+function array_sort($array, $on, $order=SORT_ASC){
+
+    $new_array = array();
+    $sortable_array = array();
+
+    if (count($array) > 0) {
+        foreach ($array as $k => $v) {
+            if (is_array($v)) {
+                foreach ($v as $k2 => $v2) {
+                    if ($k2 == $on) {
+                        $sortable_array[$k] = $v2;
+                    }
+                }
+            } else {
+                $sortable_array[$k] = $v;
+            }
+        }
+
+        switch ($order) {
+            case SORT_ASC:
+                asort($sortable_array);
+                break;
+            case SORT_DESC:
+                arsort($sortable_array);
+                break;
+        }
+
+        foreach ($sortable_array as $k => $v) {
+            $new_array[$k] = $array[$k];
+        }
+    }
+
+    return $new_array;
+}

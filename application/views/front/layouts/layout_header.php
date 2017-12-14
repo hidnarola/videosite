@@ -121,6 +121,12 @@
                                 Channels
                             </a>
                         </li>
+                        
+                        <li>
+                            <a href="<?php echo base_url().'dashboard/view_recommended';?>">
+                                Recommended Posts
+                            </a>
+                        </li>
                         <li>
                             <a href="<?php echo base_url().'dashboard/logout'; ?>">Log Out</a>
                         </li>

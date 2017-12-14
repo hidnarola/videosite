@@ -465,8 +465,6 @@ class Post_model extends CI_Model
         $this->db->join('user_post up', 'up.id = uh.post_id');
         $this->db->join('user_channels uc', 'uc.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = uc.user_id');
-//        $this->db->join('users u', 'u.id = uh.user_id');
-//        $this->db->join('user_post up', 'up.id = uh.post_id');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
         $this->db->where('uh.user_id', $id);
         $this->db->where('up.is_deleted != 1');
@@ -483,8 +481,6 @@ class Post_model extends CI_Model
     {
         $q = $this->input->get('q');
         $this->db->select('uh.user_id,uh.post_id,u.username,post_type,slug,post_title,main_image,COUNT(distinct upc.id) as total_views');
-//        $this->db->join('users u', 'u.id = uh.user_id');
-//        $this->db->join('user_post up', 'up.id = uh.post_id');
         $this->db->join('user_post up', 'up.id = uh.post_id');
         $this->db->join('user_channels uc', 'uc.id = up.channel_id', 'left');
         $this->db->join('users u', 'u.id = uc.user_id');
@@ -803,6 +799,96 @@ class Post_model extends CI_Model
         $recent_gallery = $this->db->get('user_post up')->result_array();
         return $recent_gallery;
     }
+    
+    public function get_recommended_post_count($id)
+    {
+        $q = $this->input->get('q');
+//step -1
+        $cat = $this->db->get_where('categories',['is_deleted' => '0', 'is_blocked' => '0'])->result_array();
+        $cat_id = array_column($cat,'id');
+        $this->db->select('up.*,upc.post_id,u.username,upc.user_id,count(distinct upc.id) as total_views');
+        $this->db->join('user_post_counts upc','upc.post_id = up.id');
+        $this->db->join('user_channels  uc','uc.id = up.channel_id');
+        $this->db->join('users u','u.id = uc.user_id');
+        $this->db->where('up.is_deleted = 0');
+        $this->db->where('up.is_blocked = 0');
+        $this->db->like('post_title', $q);
+        $this->db->where_in('category_id',$cat_id);
+        $this->db->group_by('up.id');
+        $this->db->order_by('total_views','desc');
+        $cat_post = $this->db->get('user_post up')->result_array();
+        $cat_post_id = array_column($cat_post,'id');
+//step -1 over
+
+//step -2
+        $channel = $this->db->get_where('user_channels',['is_deleted' => '0', 'is_blocked' => '0'])->result_array();
+        $channel_id = array_column($channel,'id');
+        $this->db->select('up.*,upc.post_id,u.username,upc.user_id,count(distinct upc.id) as total_views');
+        $this->db->join('user_post_counts upc','upc.post_id = up.id');
+        $this->db->join('user_channels  uc','uc.id = up.channel_id');
+        $this->db->join('users u','u.id = uc.user_id');
+        $this->db->where('up.is_deleted = 0');
+        $this->db->where('up.is_blocked = 0');
+        $this->db->like('post_title', $q);
+        $this->db->where_in('channel_id',$cat_id);
+        $this->db->where_not_in('up.id',$cat_post_id);
+        $this->db->group_by('up.id');
+        $this->db->order_by('total_views','desc');
+        $channel_post = $this->db->get('user_post up')->result_array();
+//step -2 over
+         
+        $posts = array_merge($cat_post,$channel_post);
+        
+        $recommended = bubbleSort($posts);
+        $rec_count = count($posts);
+        
+        return $rec_count;
+    }
+    
+    
+    public function get_recommended_post($id)
+    {
+        $q = $this->input->get('q');
+//step -1
+        $cat = $this->db->get_where('categories',['is_deleted' => '0', 'is_blocked' => '0'])->result_array();
+        $cat_id = array_column($cat,'id');
+        $this->db->select('up.*,upc.post_id,u.username,upc.user_id,count(distinct upc.id) as total_views');
+        $this->db->join('user_post_counts upc','upc.post_id = up.id');
+        $this->db->join('user_channels  uc','uc.id = up.channel_id');
+        $this->db->join('users u','u.id = uc.user_id');
+        $this->db->where('up.is_deleted = 0');
+        $this->db->where('up.is_blocked = 0');
+        $this->db->like('post_title', $q);
+        $this->db->where_in('category_id',$cat_id);
+        $this->db->group_by('up.id');
+        $this->db->order_by('total_views','desc');
+        $cat_post = $this->db->get('user_post up')->result_array();
+        $cat_post_id = array_column($cat_post,'id');
+//step -1 over
+
+//step -2
+        $channel = $this->db->get_where('user_channels',['is_deleted' => '0', 'is_blocked' => '0'])->result_array();
+        $channel_id = array_column($channel,'id');
+        $this->db->select('up.*,upc.post_id,u.username,upc.user_id,count(distinct upc.id) as total_views');
+        $this->db->join('user_post_counts upc','upc.post_id = up.id');
+        $this->db->join('user_channels  uc','uc.id = up.channel_id');
+        $this->db->join('users u','u.id = uc.user_id');
+        $this->db->where('up.is_deleted = 0');
+        $this->db->where('up.is_blocked = 0');
+        $this->db->like('post_title', $q);
+        $this->db->where_in('channel_id',$cat_id);
+        $this->db->where_not_in('up.id',$cat_post_id);
+        $this->db->group_by('up.id');
+        $this->db->order_by('total_views','desc');
+        $channel_post = $this->db->get('user_post up')->result_array();
+//step -2 over
+         
+        $posts = array_merge($cat_post,$channel_post);
+       
+        $recommended = bubbleSort($posts);
+        return $recommended;
+    }
+   
 
 }
 
