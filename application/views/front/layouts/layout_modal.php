@@ -50,7 +50,7 @@
                                 <input type="text" name="email_id" class="input-css" placeholder="E-mail"/>
                             </div>
                             <div class="input-wrap-div">
-                                <input type="text" name="birth_date" class="form-css datepicker" placeholder="Birth Date" data-date-format="yyyy-mm-dd"/>
+                                <input type="date" name="birth_date" class="form-css" placeholder="Birth Date" data-date-format="yyyy-mm-dd"/>
                             </div>
                             <div class="input-wrap-div">
                                 <input type="password" name="password" class="input-css" placeholder="Password" id="password"/>

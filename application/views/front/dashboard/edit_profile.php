@@ -39,7 +39,7 @@
             <div class="input-wrap">
                 <label class="label-css">Birth Date </label>
                 <?php $post_birth_date = ($_POST) ? set_value('birth_date') : $user_data['birth_date']; ?>
-                <input type="text" name="birth_date" id="birth_date" placeholder="Birth Date" value="<?php echo $post_birth_date; ?>" class="form-css datepicker"
+                <input type="date" name="birth_date" id="birth_date" placeholder="Birth Date" value="<?php echo $post_birth_date; ?>" class="form-css"
                         data-date-format="yyyy-mm-dd"  />
             </div>
             
