@@ -951,7 +951,6 @@ class Post_model extends CI_Model
         $cat_id = array_column($category,'category_id');
         
         if(empty($cat_id)){
-        
             //Popular Posts
             $date = date('Y-m-d', strtotime(date('Y-m-d') . " -1 month"));
             $this->db->select('up.id as userpostid,up.channel_id,up.post_type,up.post_title,up.main_image,up.slug,up.created_at,upc.id as upcid,upc.user_id as upcuserid,upc.post_id as upcpostid,u.id as userid,u.username,count(distinct upc.id) as total_views');
@@ -967,11 +966,10 @@ class Post_model extends CI_Model
             $cat_post = $this->db->get('user_post up')->result_array();
             //Popular Posts
         } else {
-            
             $this->db->select('up.*,u.username,count(upc.id) as total_views');
             $this->db->join('user_post_counts upc','up.id = upc.post_id');
-            $this->db->join('user_channels uc','uc.id = up.channel_id');
-            $this->db->join('users u','u.id = uc.user_id');
+//            $this->db->join('user_channels uc','uc.id = up.channel_id');
+            $this->db->join('users u','u.id = upc.user_id');
             $this->db->where_in('up.category_id',$cat_id);
             $this->db->group_by('up.id');
             $this->db->order_by('total_views','desc');
