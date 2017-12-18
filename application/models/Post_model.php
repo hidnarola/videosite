@@ -718,7 +718,7 @@ class Post_model extends CI_Model
 
     public function get_most_liked_post($limit, $offset)
     {
-        $this->db->select('up.id as userpostid,up.channel_id,up.post_type,up.post_title,up.main_image,up.slug,uk.id as userlikeid,uk.user_id,uk.post_id,u.id as userid,u.username,count(distinct uk.id) as total_likes,count(distinct upc.id) as total_views');
+        $this->db->select('up.id,up.channel_id,up.post_type,up.post_title,up.main_image,up.slug,u.username,count(distinct upc.id) as total_views, count(distinct uk.id) as total_likes');
         $this->db->where('up.is_deleted != 1');
         $this->db->where('up.is_blocked != 1');
         $this->db->join('user_likes uk', 'uk.post_id = up.id', 'left');
@@ -726,7 +726,7 @@ class Post_model extends CI_Model
         $this->db->join('users u', 'u.id = uc.user_id');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id');
         $this->db->group_by('uk.post_id');
-        $this->db->order_by('total_likes', 'desc');
+        $this->db->order_by('total_views', 'desc');
         $this->db->limit($limit, $offset);
         $likes = $this->db->get('user_post up')->result_array();
         return $likes;
@@ -734,12 +734,13 @@ class Post_model extends CI_Model
 
     public function get_most_viewed_post($limit, $offset)
     {
-        $this->db->select('up.id as userpostid,up.channel_id,up.post_type,up.post_title,up.main_image,up.slug,upc.id as upcid,upc.user_id as upcuserid,upc.post_id as upcpostid,u.id as userid,u.username,count(distinct upc.id) as total_views');
+        $this->db->select('up.id,up.channel_id,up.post_type,up.post_title,up.main_image,up.slug,u.username,count(distinct upc.id) as total_views');
         $this->db->where('up.is_deleted != 1');
         $this->db->where('up.is_blocked != 1');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
         $this->db->join('user_channels uc','uc.id = up.channel_id');
         $this->db->join('users u', 'u.id = uc.user_id', 'left');
+        $this->db->join('user_likes uk', 'uk.post_id = up.id', 'left');
         $this->db->group_by('upc.post_id');
         $this->db->order_by('total_views', 'desc');
         $this->db->limit($limit, $offset);
@@ -763,14 +764,26 @@ class Post_model extends CI_Model
 //        $views = $this->db->get('user_post up')->result_array();
 //        return $views;
         
-        $likes = $this->get_most_liked_post($limit,$offset);
-        $views = $this->get_most_viewed_post($limit,$offset);
-        
-        $popular = array_merge($likes,$views);
-        return $popular;
+//        $likes = $this->get_most_liked_post($limit,$offset);
+//        $views = $this->get_most_viewed_post($limit,$offset);
+//        
+//        $popular = array_merge($likes,$views);
+//        return $popular;
+        $this->db->select('up.id,up.channel_id,up.post_type,up.post_title,up.main_image,up.slug,u.username,count(distinct upc.id) as total_views, count(distinct uk.id) as total_likes');
+        $this->db->where('up.is_deleted != 1');
+        $this->db->where('up.is_blocked != 1');
+        $this->db->join('user_likes uk', 'uk.post_id = up.id', 'left');
+        $this->db->join('user_channels uc','uc.id = up.channel_id');
+        $this->db->join('users u', 'u.id = uc.user_id');
+        $this->db->join('user_post_counts upc', 'up.id = upc.post_id');
+        $this->db->group_by('uk.post_id');
+        $this->db->order_by('total_views', 'desc');
+        $this->db->limit($limit, $offset);
+        $likes = $this->db->get('user_post up')->result_array();
+        return $likes;
     }
 
-    public function get_most_recent_posts($limit,$offset)
+    public function get_most_recent_posts($limit = null,$offset = null)
     {
         $this->db->select('up.id as userpostid,up.channel_id,up.post_type,up.post_title,up.main_image,up.slug,up.created_at,upc.id as upcid,upc.user_id as upcuserid,upc.post_id as upcpostid,u.id as userid,u.username,count(distinct upc.id) as total_views');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
@@ -832,250 +845,177 @@ class Post_model extends CI_Model
     public function get_recommended_post_count($id = null,$limit = null, $offset = null)
     {
         $q = $this->input->get('q');
-//step -1
+        //category id
         $this->db->select('c.id');
-        $this->db->join('user_post up','c.id = up.category_id');
-        $this->db->join('user_post_counts upc','up.id = upc.post_id AND upc.user_id = '.$id['user_id']);
+        $this->db->join('user_post up', 'c.id = up.category_id');
+        $this->db->join('user_post_counts upc', 'up.id = upc.post_id AND upc.user_id = ' . $id['user_id']);
         $this->db->where('up.is_deleted != 1');
         $this->db->where('up.is_blocked != 1');
         $this->db->like('post_title', $q);
+        $this->db->limit($limit,$offset);
         $category = $this->db->get('categories c')->result_array();
-        $cat_id = array_column($category,'category_id');
-        
-        if(empty($cat_id)){
-        
-            //Popular Posts
-            $date = date('Y-m-d', strtotime(date('Y-m-d') . " -1 month"));
-            $this->db->select('up.id as userpostid,up.channel_id,up.post_type,up.post_title,up.main_image,up.slug,up.created_at,upc.id as upcid,upc.user_id as upcuserid,upc.post_id as upcpostid,u.id as userid,u.username,count(distinct upc.id) as total_views');
+
+        $cat_id = array_column($category, 'id');
+        //category id
+        $cat_post = [];
+        $cat_post_id = [];
+        if (!empty($cat_id))
+        {
+            $this->db->select('up.*,u.username,count(upc.id) as total_views');
             $this->db->join('user_post_counts upc', 'up.id = upc.post_id');
-            $this->db->join('user_channels uc','uc.id = up.channel_id');
-            $this->db->join('users u', 'u.id = uc.user_id', 'left');
-            $this->db->where('up.created_at >=', $date);
-            $this->db->where('up.is_deleted != 1');
-            $this->db->where('up.is_blocked != 1');
-            $this->db->group_by('upc.post_id');
+            $this->db->join('users u', 'u.id = upc.user_id');
+            $this->db->where_in('up.category_id', $cat_id);
+            $this->db->group_by('up.id');
             $this->db->order_by('total_views', 'desc');
             $this->db->like('post_title', $q);
+            $this->db->limit($limit,$offset);
             $cat_post = $this->db->get('user_post up')->result_array();
-            //Popular Posts
-        } else {
-            
-            $this->db->select('up.*,u.username,count(upc.id) as total_views');
-            $this->db->join('user_post_counts upc','up.id = upc.post_id');
-            $this->db->join('user_channels uc','uc.id = up.channel_id');
-            $this->db->join('users u','u.id = uc.user_id');
-            $this->db->where_in('up.category_id',$cat_id);
-            $this->db->group_by('up.id');
-            $this->db->order_by('total_views','desc');
-            $this->db->like('post_title', $q);
-            $cat_post = $this->db->get('user_post up')->result_array();
-            
-            $cat_post_id = array_column($cat_post,'category_id');
+
+            $cat_post_id = array_column($cat_post, 'category_id');
         }
-//step -1 over
+        //channel id
+        $this->db->select('uc.id');
+        $this->db->join('user_post up', 'uc.id = up.channel_id');
+        $this->db->join('user_post_counts upc', 'up.id = upc.post_id AND upc.user_id = ' . $id['user_id']);
+        $this->db->where('up.is_deleted != 1');
+        $this->db->where('up.is_blocked != 1');
+        $this->db->like('post_title', $q);
+        $this->db->limit($limit,$offset);
+        $channel = $this->db->get('user_channels uc')->result_array();
 
-//step -2
-        if(empty($cat_post_id)){
-            
-            $this->db->select('uc.id');
-            $this->db->join('user_post up','uc.id = up.channel_id');
-            $this->db->join('user_post_counts upc','up.id = upc.post_id AND upc.user_id = '.$id['user_id']);
-            $this->db->where('up.is_deleted != 1');
-            $this->db->where('up.is_blocked != 1');
-            $this->db->like('post_title', $q);
-            $channel = $this->db->get('user_channels uc')->result_array();
-            
-            $channel_id = array_column($channel,'category_id');
-            
-            if(empty($channel_id)){
-                
-                $this->db->select('up.*,u.username,count(upc.id) as total_views');
-                $this->db->join('user_post_counts upc','up.id = upc.post_id');
-                $this->db->join('user_channels uc','uc.id = up.channel_id');
-                $this->db->join('users u','u.id = uc.user_id');
-                $this->db->group_by('up.id');
-                $this->db->order_by('total_views','desc');
-                $this->db->like('post_title', $q);
-                $chl_post = $this->db->get('user_post up')->result_array();
-                //Recent Posts
-//                $this->db->select('up.id as userpostid,up.channel_id,up.post_type,up.post_title,up.main_image,up.slug,up.created_at,upc.id as upcid,upc.user_id as upcuserid,upc.post_id as upcpostid,u.id as userid,u.username,count(distinct upc.id) as total_views');
-//                $this->db->join('user_post_counts upc', 'up.id = upc.post_id');
-//                $this->db->join('user_channels uc','uc.id = up.channel_id');
-//                $this->db->join('users u', 'u.id = uc.user_id', 'left');
-//                $this->db->where('up.is_deleted != 1');
-//                $this->db->where('up.is_blocked != 1');
-//                $this->db->order_by('created_at', 'desc');
-//                $this->db->like('up.post_title',$q);
-//                $chl_post = $this->db->get('user_post up')->result_array();
-                //Recent Posts
-            } else {
-                
-                $this->db->select('up.*,u.username,count(upc.id) as total_views');
-                $this->db->join('user_post_counts upc','up.id = upc.post_id');
-                $this->db->join('user_channels uc','uc.id = up.channel_id');
-                $this->db->join('users u','u.id = uc.user_id');
-                $this->db->where_in('up.channel_id',$channel_id);
-                $this->db->group_by('up.id');
-                $this->db->order_by('total_views','desc');
-                $this->db->like('post_title', $q);
-                $chl_post = $this->db->get('user_post up')->result_array();
-            }
-            $posts = array_merge($cat_post, $chl_post);
-            
-            $recommended = bubbleSort($posts);
-            
-            $rec_count = count($posts);
-        
-            return $rec_count;
-            
-        } else {
-            if(empty($channel_id)){
-                
-                $this->db->select('up.*,u.username,count(upc.id) as total_views');
-                $this->db->join('user_post_counts upc','up.id = upc.post_id');
-                $this->db->join('user_channels uc','uc.id = up.channel_id');
-                $this->db->join('users u','u.id = uc.user_id');
-                $this->db->where_not_in('up.category_id',$cat_post_id);
-                $this->db->group_by('up.id');
-                $this->db->order_by('total_views','desc');
-                $this->db->like('post_title', $q);
-                $chl_post = $this->db->get('user_post up')->result_array();
-                
-            } else {
-                
-                $this->db->select('up.*,u.username,count(upc.id) as total_views');
-                $this->db->join('user_post_counts upc', 'up.id = upc.post_id');
-                $this->db->join('user_channels uc', 'uc.id = up.channel_id');
-                $this->db->join('users u', 'u.id = uc.user_id');
-                $this->db->where_in('up.channel_id', $channel_id);
+        $channel_id = array_column($channel, 'category_id');
+        //channel id
+        $chl_post = [];
+
+        if (!empty($channel_id))
+        {
+            $this->db->select('up.*,u.username,count(upc.id) as total_views');
+            $this->db->join('user_post_counts upc', 'up.id = upc.post_id');
+            $this->db->join('user_channels uc', 'uc.id = up.channel_id');
+            $this->db->join('users u', 'u.id = uc.user_id');
+            $this->db->where_in('up.channel_id', $channel_id);
+
+            if (!empty($cat_post_id))
+            {
                 $this->db->where_not_in('up.category_id', $cat_post_id);
-                $this->db->group_by('up.id');
-                $this->db->order_by('total_views', 'desc');
-                $this->db->like('post_title', $q);
-                $chl_post = $this->db->get('user_post up')->result_array();
             }
-            
-            $posts = array_merge($cat_post, $chl_post);
+            $this->db->group_by('up.id');
+            $this->db->order_by('total_views', 'desc');
+            $this->db->like('post_title', $q);
+            $this->db->limit($limit,$offset);
+            $chl_post = $this->db->get('user_post up')->result_array();
+        }
 
-            $recommended = bubbleSort($posts);
-            
-            $rec_count = count($posts);
-        
-            return $rec_count;
+        $recommended = array_merge($chl_post, $cat_post);
+        $post = count($recommended);
+
+        if (empty($recommended))
+        {
+            $popular = $this->get_most_popular_post();
+            $popular_post = count($popular);
+            if (empty($popular))
+            {
+                $recent = $this->get_most_recent_posts();
+                $recent_post = count($recent);
+                return $recent_post;
+            }
+            else
+            {
+                return $popular_post;
+            }
+        }
+        else
+        {
+            return $post;
         }
     }
     
     public function get_recommended_post($id = null,$limit = null, $offset = null)
     {
         $q = $this->input->get('q');
-//step -1
+        //category id
         $this->db->select('c.id');
-        $this->db->join('user_post up','c.id = up.category_id');
-        $this->db->join('user_post_counts upc','up.id = upc.post_id AND upc.user_id = '.$id);
+        $this->db->join('user_post up', 'c.id = up.category_id');
+        $this->db->join('user_post_counts upc', 'up.id = upc.post_id AND upc.user_id = ' . $id);
         $this->db->where('up.is_deleted != 1');
         $this->db->where('up.is_blocked != 1');
         $this->db->like('post_title', $q);
+        $this->db->limit($limit,$offset);
         $category = $this->db->get('categories c')->result_array();
-        echo"category";pr($category);
-        $cat_id = array_column($category,'id');
-        echo "cat_id";pr($cat_id);
-        if(empty($cat_id)){
-            echo "in if empty catid";
-            //Popular Posts
-            $cat_post = $this->get_most_popular_post();
-            pr($cat_post);
-            //Popular Posts
-        } else {
+
+        $cat_id = array_column($category, 'id');
+        //category id
+        $cat_post = [];
+        $cat_post_id = [];
+        if (!empty($cat_id))
+        {
             $this->db->select('up.*,u.username,count(upc.id) as total_views');
-            $this->db->join('user_post_counts upc','up.id = upc.post_id');
-//            $this->db->join('user_channels uc','uc.id = up.channel_id');
-            $this->db->join('users u','u.id = upc.user_id');
-            $this->db->where_in('up.category_id',$cat_id);
+            $this->db->join('user_post_counts upc', 'up.id = upc.post_id');
+            $this->db->join('users u', 'u.id = upc.user_id');
+            $this->db->where_in('up.category_id', $cat_id);
             $this->db->group_by('up.id');
-            $this->db->order_by('total_views','desc');
+            $this->db->order_by('total_views', 'desc');
             $this->db->like('post_title', $q);
+            $this->db->limit($limit,$offset);
             $cat_post = $this->db->get('user_post up')->result_array();
-            
-            $cat_post_id = array_column($cat_post,'category_id');
+
+            $cat_post_id = array_column($cat_post, 'category_id');
         }
-//step -1 over
+        //channel id
+        $this->db->select('uc.id');
+        $this->db->join('user_post up', 'uc.id = up.channel_id');
+        $this->db->join('user_post_counts upc', 'up.id = upc.post_id AND upc.user_id = ' . $id);
+        $this->db->where('up.is_deleted != 1');
+        $this->db->where('up.is_blocked != 1');
+        $this->db->like('post_title', $q);
+        $this->db->limit($limit,$offset);
+        $channel = $this->db->get('user_channels uc')->result_array();
 
-//step -2
-        if(empty($cat_post_id)){
-            
-            $this->db->select('uc.id');
-            $this->db->join('user_post up','uc.id = up.channel_id');
-            $this->db->join('user_post_counts upc','up.id = upc.post_id AND upc.user_id = '.$id);
-            $this->db->where('up.is_deleted != 1');
-            $this->db->where('up.is_blocked != 1');
-            $this->db->like('post_title', $q);
-            $channel = $this->db->get('user_channels uc')->result_array();
-            
-            $channel_id = array_column($channel,'category_id');
-            
-            if(empty($channel_id)){
-                
-                $this->db->select('up.*,u.username,count(upc.id) as total_views');
-                $this->db->join('user_post_counts upc','up.id = upc.post_id');
-                $this->db->join('user_channels uc','uc.id = up.channel_id');
-                $this->db->join('users u','u.id = uc.user_id');
-                $this->db->group_by('up.id');
-                $this->db->order_by('total_views','desc');
-                $this->db->like('post_title', $q);
-                $chl_post = $this->db->get('user_post up')->result_array();
-            } else {
-                
-                $this->db->select('up.*,u.username,count(upc.id) as total_views');
-                $this->db->join('user_post_counts upc','up.id = upc.post_id');
-                $this->db->join('user_channels uc','uc.id = up.channel_id');
-                $this->db->join('users u','u.id = uc.user_id');
-                $this->db->where_in('up.channel_id',$channel_id);
-                $this->db->group_by('up.id');
-                $this->db->order_by('total_views','desc');
-                $this->db->like('post_title', $q);
-                $chl_post = $this->db->get('user_post up')->result_array();
-            }
-            $posts = array_merge($cat_post, $chl_post);
-            
-            $recommended = bubbleSort($posts);
-            
-            return $recommended;
-            
-        } else {
-            if(empty($channel_id)){
-                
-                $this->db->select('up.*,u.username,count(upc.id) as total_views');
-                $this->db->join('user_post_counts upc','up.id = upc.post_id');
-                $this->db->join('user_channels uc','uc.id = up.channel_id');
-                $this->db->join('users u','u.id = uc.user_id');
-                $this->db->where_not_in('up.category_id',$cat_post_id);
-                $this->db->group_by('up.id');
-                $this->db->order_by('total_views','desc');
-                $this->db->like('post_title', $q);
-                $chl_post = $this->db->get('user_post up')->result_array();
-                
-            } else {
-                
-                $this->db->select('up.*,u.username,count(upc.id) as total_views');
-                $this->db->join('user_post_counts upc', 'up.id = upc.post_id');
-                $this->db->join('user_channels uc', 'uc.id = up.channel_id');
-                $this->db->join('users u', 'u.id = uc.user_id');
-                $this->db->where_in('up.channel_id', $channel_id);
+        $channel_id = array_column($channel, 'category_id');
+        //channel id
+        $chl_post = [];
+
+        if (!empty($channel_id))
+        {
+            $this->db->select('up.*,u.username,count(upc.id) as total_views');
+            $this->db->join('user_post_counts upc', 'up.id = upc.post_id');
+            $this->db->join('user_channels uc', 'uc.id = up.channel_id');
+            $this->db->join('users u', 'u.id = uc.user_id');
+            $this->db->where_in('up.channel_id', $channel_id);
+
+            if (!empty($cat_post_id))
+            {
                 $this->db->where_not_in('up.category_id', $cat_post_id);
-                $this->db->group_by('up.id');
-                $this->db->order_by('total_views', 'desc');
-                $this->db->like('post_title', $q);
-                $chl_post = $this->db->get('user_post up')->result_array();
             }
-            
-            $posts = array_merge($cat_post, $chl_post);
+            $this->db->group_by('up.id');
+            $this->db->order_by('total_views', 'desc');
+            $this->db->like('post_title', $q);
+            $this->db->limit($limit,$offset);
+            $chl_post = $this->db->get('user_post up')->result_array();
+        }
 
-            $recommended = bubbleSort($posts);
-            
+        $recommended = array_merge($chl_post, $cat_post);
+
+
+        if (empty($recommended))
+        {
+            $popular = $this->get_most_popular_post();
+            if (empty($popular))
+            {
+                $recent = $this->get_most_recent_posts();
+                return $recent;
+            }
+            else
+            {
+                return $popular;
+            }
+        }
+        else
+        {
             return $recommended;
         }
     }
-            
+
 }
 
 ?> 

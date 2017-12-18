@@ -4,14 +4,22 @@
     <?php if(!empty($posts)){ ?>
     <div class="listing-l">
         <div class="head-bg-01">
-            <h2><?php echo $posts['post_title'] ?></h2>
-            <p>Channel : <a href="<?php echo base_url() . 'channel/' . $posts['channel_slug']; ?>" target="_blank"><?php echo $posts['channel_name'] ?></a> <span class="verify-user"></span> </p> <p><i class="fa fa-eye"></i> <?php echo $posts['total_views'] ?> Views  <br>Username : <?php echo $posts['username'] ?> </p>
+            <h2>
+                <?php if($posts['post_type'] == 'blog') {?>
+                <a href="" class="tag artical-tag">A</a>
+                <?php } else if($posts['post_type'] == 'video') {?>
+                <a href="" class="tag video-tag">V</a>
+                <?php } else if($posts['post_type'] == 'gallery') {?>
+                <a href="" class="tag gallery-tag">G</a>
+                <?php } ?>
+                    <?php echo $posts['post_title'] ?></h2>
+            <p><span class="user-pic-01"><img src="<?php echo base_url() . $posts['main_image'];?>"></span>Channel : <a href="<?php echo base_url() . 'channel/' . $posts['channel_slug']; ?>" target="_blank"><?php echo $posts['channel_name'] ?></a> <span class="verify-user"></span> Username : <?php echo $posts['username'] ?></p> <p><i class="fa fa-eye"></i> <?php echo $posts['total_views'] ?> Views   </p>
             <div class="r-links">
                 <?php if ($user_loggedin == true){
         if ($is_user_bookmark == false){ ?>
-      <a href="<?php echo base_url() . 'home/bookmark_post/' . $posts['id']; ?>" class="bookmark-btn"><i class="fa fa-folder-open"></i>Bookmark<small></small></a>
+      <a href="<?php echo base_url() . 'home/bookmark_post/' . $posts['id']; ?>" class="bookmark-btn"><i class="fa fa-star"></i>Bookmark<small></small></a>
         <?php } else { ?>
-        <a href="<?php echo base_url() . 'home/unbookmark_post/' . $posts['id']; ?>" class="bookmark-btn"><i class="fa fa-folder-open"></i>Bookmarked<small></small></a>
+        <a href="<?php echo base_url() . 'home/unbookmark_post/' . $posts['id']; ?>" class="bookmark-btn"><i class="fa fa-star"></i>Bookmarked<small></small></a>
     <?php } } ?>
                 
                 
