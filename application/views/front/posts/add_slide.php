@@ -1,8 +1,10 @@
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
-
-
-
+<style type="text/css">
+    .note-group-select-from-files {
+      display: none;
+    }
+</style>
 <div class="form-element">
 <?php if($post_type == 'blog'){?>
     <h3 class="h3-title">Add Blog</h3>
@@ -51,8 +53,19 @@
     $(document).ready(function () {                
         // $('.selectpicker_blog').selectpicker();
 
-        $('#summernote').summernote({
-            height:300
+        $("#summernote").summernote({
+            height: 300,
+            toolbar: [
+                [ 'style', [ 'style' ] ],
+                [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear'] ],
+                [ 'fontname', [ 'fontname' ] ],
+                [ 'fontsize', [ 'fontsize' ] ],
+                [ 'color', [ 'color' ] ],
+                [ 'para', [ 'ol', 'ul', 'paragraph', 'height' ] ],
+                [ 'table', [ '' ] ],
+                [ 'insert', [ 'link'] ],
+                [ 'view', [ 'undo', 'redo', 'fullscreen', 'codeview', 'help' ] ]
+            ]
         });
     });
 
