@@ -2,8 +2,10 @@
     <div class="chanelle-head">
         <div class="chanelle-head-l">
             <?php if(!empty($channel_user)) { ?>
-            <span><img src="<?php echo base_url().$channel_user['avatar']?>" alt=""/></span>
-            <big><?php echo $channel_user['fname'].' '. $channel_user['lname']?> </big><small><?php echo $channel_user['designation']?></small>
+            <span><img src="<?php echo base_url().$channel_user['avatar'];?>" alt=""/></span>
+            <big><?php echo $channel_user['fname'].' '. $channel_user['lname'];?> </big>
+            <?php echo $channel_user['channel_name'];?>
+            <small><?php echo $channel_user['designation'];?></small>
             <?php } ?>
         </div>
         <div class="chanelle-head-r">
@@ -77,7 +79,7 @@
                     <?php } else if($channel['post_type'] == 'video') {?>
                     <a href="<?php echo base_url() . 'video/' . $channel['slug']; ?>"><?php echo $channel['post_title'] ?></a>
                     <?php } ?>
-                    <p> <small> By : <?php echo $channel['username'] ?> </small> <span></span></p>
+                    <p> <small><?php echo $channel['username'] ?> </small> <span></span></p>
                     <h6><i class="fa fa-eye"></i> <?php echo $channel['total_views'] ?></h6>
                 <!--<h6><i class="fa fa-clock-o"></i><?php get_ago_time($channel['blog_created_date'], date("Y-m-d H:i:s")) ?></h6>-->
                 </div>

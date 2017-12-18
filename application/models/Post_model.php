@@ -747,30 +747,54 @@ class Post_model extends CI_Model
         return $views;
     }
 
-    public function get_most_popular_post($limit, $offset)
+    public function get_most_popular_post($limit = null, $offset = null)
     {
-        $date = date('Y-m-d', strtotime(date('Y-m-d') . " -1 month"));
+//        $date = date('Y-m-d', strtotime(date('Y-m-d') . " -1 month"));
+//        $this->db->select('up.id as userpostid,up.channel_id,up.post_type,up.post_title,up.main_image,up.slug,up.created_at,upc.id as upcid,upc.user_id as upcuserid,upc.post_id as upcpostid,u.id as userid,u.username,count(distinct upc.id) as total_views');
+//        $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
+//        $this->db->join('user_channels uc','uc.id = up.channel_id');
+//        $this->db->join('users u', 'u.id = uc.user_id', 'left');
+//        $this->db->where('up.created_at >=', $date);
+//        $this->db->where('up.is_deleted != 1');
+//        $this->db->where('up.is_blocked != 1');
+//        $this->db->group_by('upc.post_id');
+//        $this->db->order_by('total_views', 'desc');
+//        $this->db->limit($limit, $offset);
+//        $views = $this->db->get('user_post up')->result_array();
+//        return $views;
+        
+        $likes = $this->get_most_liked_post($limit,$offset);
+        $views = $this->get_most_viewed_post($limit,$offset);
+        
+        $popular = array_merge($likes,$views);
+        return $popular;
+    }
+
+    public function get_most_recent_posts($limit,$offset)
+    {
         $this->db->select('up.id as userpostid,up.channel_id,up.post_type,up.post_title,up.main_image,up.slug,up.created_at,upc.id as upcid,upc.user_id as upcuserid,upc.post_id as upcpostid,u.id as userid,u.username,count(distinct upc.id) as total_views');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
         $this->db->join('user_channels uc','uc.id = up.channel_id');
         $this->db->join('users u', 'u.id = uc.user_id', 'left');
-        $this->db->where('up.created_at >=', $date);
         $this->db->where('up.is_deleted != 1');
         $this->db->where('up.is_blocked != 1');
         $this->db->group_by('upc.post_id');
-        $this->db->order_by('total_views', 'desc');
+        $this->db->order_by('up.created_at', 'desc');
         $this->db->limit($limit, $offset);
-        $views = $this->db->get('user_post up')->result_array();
-        return $views;
+        $recent = $this->db->get('user_post up')->result_array();
+        return $recent;
+  
     }
 
-    public function get_recently_posted_videos($limit, $offset)
+        public function get_recently_posted_videos($limit, $offset)
     {
-        $this->db->select('id,post_title,main_image,slug,post_type');
+        $this->db->select('post_title,main_image,slug,post_type,u.username,count(distinct upc.id) as total_views');
+        $this->db->join('user_post_counts upc','up.id = upc.post_id');
+        $this->db->join('users u','u.id = upc.user_id');
         $this->db->where('post_type', 'video');
         $this->db->where('up.is_deleted != 1');
         $this->db->where('up.is_blocked != 1');
-        $this->db->order_by('created_at', 'desc');
+        $this->db->order_by('up.created_at', 'desc');
         $this->db->limit($limit, $offset);
         $recent_video = $this->db->get('user_post up')->result_array();
         return $recent_video;
@@ -778,11 +802,13 @@ class Post_model extends CI_Model
 
     public function get_recently_posted_blogs($limit, $offset)
     {
-        $this->db->select('id,post_title,main_image,slug,post_type');
+        $this->db->select('post_title,main_image,slug,post_type,u.username,count(distinct upc.id) as total_views');
+        $this->db->join('user_post_counts upc','up.id = upc.post_id');
+        $this->db->join('users u','u.id = upc.user_id');
         $this->db->where('post_type', 'blog');
         $this->db->where('up.is_deleted != 1');
         $this->db->where('up.is_blocked != 1');
-        $this->db->order_by('created_at', 'desc');
+        $this->db->order_by('up.created_at', 'desc');
         $this->db->limit($limit, $offset);
         $recent_blog = $this->db->get('user_post up')->result_array();
         return $recent_blog;
@@ -790,18 +816,20 @@ class Post_model extends CI_Model
 
     public function get_recently_posted_gallery($limit, $offset)
     {
-        $this->db->select('id,post_title,main_image,slug,post_type');
+        $this->db->select('post_title,main_image,slug,post_type,u.username,count(distinct upc.id) as total_views');
+        $this->db->join('user_post_counts upc','up.id = upc.post_id');
+        $this->db->join('users u','u.id = upc.user_id');
         $this->db->where('post_type', 'gallery');
         $this->db->where('up.is_deleted != 1');
         $this->db->where('up.is_blocked != 1');
-        $this->db->order_by('created_at', 'desc');
+        $this->db->order_by('up.created_at', 'desc');
         $this->db->limit($limit, $offset);
         $recent_gallery = $this->db->get('user_post up')->result_array();
         return $recent_gallery;
     }
     
 
-    public function get_recommended_post_count($id)
+    public function get_recommended_post_count($id = null,$limit = null, $offset = null)
     {
         $q = $this->input->get('q');
 //step -1
@@ -937,7 +965,7 @@ class Post_model extends CI_Model
         }
     }
     
-    public function get_recommended_post($id)
+    public function get_recommended_post($id = null,$limit = null, $offset = null)
     {
         $q = $this->input->get('q');
 //step -1
@@ -948,22 +976,14 @@ class Post_model extends CI_Model
         $this->db->where('up.is_blocked != 1');
         $this->db->like('post_title', $q);
         $category = $this->db->get('categories c')->result_array();
-        $cat_id = array_column($category,'category_id');
-        
+        echo"category";pr($category);
+        $cat_id = array_column($category,'id');
+        echo "cat_id";pr($cat_id);
         if(empty($cat_id)){
+            echo "in if empty catid";
             //Popular Posts
-            $date = date('Y-m-d', strtotime(date('Y-m-d') . " -1 month"));
-            $this->db->select('up.id as userpostid,up.channel_id,up.post_type,up.post_title,up.main_image,up.slug,up.created_at,upc.id as upcid,upc.user_id as upcuserid,upc.post_id as upcpostid,u.id as userid,u.username,count(distinct upc.id) as total_views');
-            $this->db->join('user_post_counts upc', 'up.id = upc.post_id');
-            $this->db->join('user_channels uc','uc.id = up.channel_id');
-            $this->db->join('users u', 'u.id = uc.user_id', 'left');
-            $this->db->where('up.created_at >=', $date);
-            $this->db->where('up.is_deleted != 1');
-            $this->db->where('up.is_blocked != 1');
-            $this->db->group_by('upc.post_id');
-            $this->db->order_by('total_views', 'desc');
-            $this->db->like('post_title', $q);
-            $cat_post = $this->db->get('user_post up')->result_array();
+            $cat_post = $this->get_most_popular_post();
+            pr($cat_post);
             //Popular Posts
         } else {
             $this->db->select('up.*,u.username,count(upc.id) as total_views');
@@ -1003,17 +1023,6 @@ class Post_model extends CI_Model
                 $this->db->order_by('total_views','desc');
                 $this->db->like('post_title', $q);
                 $chl_post = $this->db->get('user_post up')->result_array();
-                //Recent Posts
-//                $this->db->select('up.id as userpostid,up.channel_id,up.post_type,up.post_title,up.main_image,up.slug,up.created_at,upc.id as upcid,upc.user_id as upcuserid,upc.post_id as upcpostid,u.id as userid,u.username,count(distinct upc.id) as total_views');
-//                $this->db->join('user_post_counts upc', 'up.id = upc.post_id');
-//                $this->db->join('user_channels uc','uc.id = up.channel_id');
-//                $this->db->join('users u', 'u.id = uc.user_id', 'left');
-//                $this->db->where('up.is_deleted != 1');
-//                $this->db->where('up.is_blocked != 1');
-//                $this->db->order_by('created_at', 'desc');
-//                $this->db->like('up.post_title',$q);
-//                $chl_post = $this->db->get('user_post up')->result_array();
-                //Recent Posts
             } else {
                 
                 $this->db->select('up.*,u.username,count(upc.id) as total_views');

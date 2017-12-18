@@ -31,34 +31,34 @@
 </div>
 
 <div class="home-listing">
-  <h2>Most Liked Posts</h2>
+  <h2>Recommended</h2>
   <div class="owl-carousel owl-theme">
-              <?php foreach($most_likes as $key => $like){?>
+              <?php foreach($recommended as $key => $recommend){?>
       <div class="item">
           <div class="list-box">
               <div class="list-top"> 
-                  <?php if($like['post_type'] == 'blog'){?>
-                  <a  class="img-anchor" href="<?php echo base_url() . 'blog/' . $like['slug']; ?>"><img src="<?php echo $like['main_image']?>" alt="" /></a>  
+                  <?php if($recommend['post_type'] == 'blog'){?>
+                  <a  class="img-anchor" href="<?php echo base_url() . 'blog/' . $recommend['slug']; ?>"><img src="<?php echo $recommend['main_image']?>" alt="" /></a>  
                   <a href="" class="tag-a">A</a>
-                    <?php } else if($like['post_type'] == 'gallery'){?>
-                  <a class="img-anchor" href="<?php echo base_url() . 'gallery/' . $like['slug']; ?>"><img src="<?php echo $like['main_image']?>" alt="" /></a>  
+                    <?php } else if($recommend['post_type'] == 'gallery'){?>
+                  <a class="img-anchor" href="<?php echo base_url() . 'gallery/' . $recommend['slug']; ?>"><img src="<?php echo $recommend['main_image']?>" alt="" /></a>  
                   <a href="" class="tag-g">G</a>
-                    <?php } else if($like['post_type'] == 'video'){?>
-                  <a class="img-anchor" href="<?php echo base_url() . 'video/' . $like['slug']; ?>"><img src="<?php echo $like['main_image']?>" alt="" /></a>  
+                    <?php } else if($recommend['post_type'] == 'video'){?>
+                  <a class="img-anchor" href="<?php echo base_url() . 'video/' . $recommend['slug']; ?>"><img src="<?php echo $recommend['main_image']?>" alt="" /></a>  
                   <a href="" class="tag-v">V</a>
                     <?php } ?>
                   <!--<span>10:53</span>-->
               </div>
               <div class="list-btm">
-                 <?php if($like['post_type'] == 'blog') {?>
-                    <a href="<?php echo base_url() . 'blog/' . $like['slug']; ?>"><?php echo $like['post_title'] ?></a>
-                    <?php } else if($like['post_type'] == 'gallery') {?>
-                    <a href="<?php echo base_url() . 'gallery/' . $like['slug']; ?>"><?php echo $like['post_title'] ?></a>
-                    <?php } else if($like['post_type'] == 'video') {?>
-                    <a href="<?php echo base_url() . 'video/' . $like['slug']; ?>"><?php echo $like['post_title'] ?></a>
+                 <?php if($recommend['post_type'] == 'blog') {?>
+                    <a href="<?php echo base_url() . 'blog/' . $recommend['slug']; ?>"><?php echo $recommend['post_title'] ?></a>
+                    <?php } else if($recommend['post_type'] == 'gallery') {?>
+                    <a href="<?php echo base_url() . 'gallery/' . $recommend['slug']; ?>"><?php echo $recommend['post_title'] ?></a>
+                    <?php } else if($recommend['post_type'] == 'video') {?>
+                    <a href="<?php echo base_url() . 'video/' . $recommend['slug']; ?>"><?php echo $recommend['post_title'] ?></a>
                     <?php } ?>
-                  <p>By : <?php echo $like['username']?> <span></span></p>
-                  <h6><i class="fa fa-eye"></i> <?php echo $like['total_views']?></h6>
+                  <p><?php echo $recommend['username']?> <span></span></p>
+                  <h6><i class="fa fa-eye"></i> <?php echo $recommend['total_views']?></h6>
                   <!--<h6><i class="fa fa-clock-o"></i> 5 Mon ago</h6>-->
               </div>
           </div>
@@ -81,45 +81,6 @@ jwplayer("myDiv").setup({
     "width": 640
 });
 </script> -->
-
-<div class="home-listing">
-  <h2>Most Viewed Posts</h2>
-  <div class="owl-carousel owl-theme">
-              <?php foreach($most_views as $key => $view){?>
-      <div class="item">
-          <div class="list-box">
-              <div class="list-top"> 
-                  <?php if($view['post_type'] == 'blog'){?>
-                  <a class="img-anchor" href="<?php echo base_url() . 'blog/' . $view['slug']; ?>"><img src="<?php echo $view['main_image']?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>  
-                  <a href="" class="tag-a">A</a>
-                    <?php } else if($view['post_type'] == 'gallery'){?>
-                  <a class="img-anchor" href="<?php echo base_url() . 'gallery/' . $view['slug']; ?>"><img src="<?php echo $view['main_image']?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>         
-                  <a href="" class="tag-g">G</a>
-                    <?php } else if($view['post_type'] == 'video'){?>
-                  <a class="img-anchor" href="<?php echo base_url() . 'video/' . $view['slug']; ?>"><img src="<?php echo $view['main_image']?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>  
-                  <a href="" class="tag-v">V</a>
-                    <?php } ?>
-                  <!--<span>10:53</span>-->
-              </div>
-              <div class="list-btm">
-                 <?php if($view['post_type'] == 'blog') {?>
-                    <a href="<?php echo base_url() . 'blog/' . $view['slug']; ?>"><?php echo $view['post_title'] ?></a>
-                    <?php } else if($view['post_type'] == 'gallery') {?>
-                    <a href="<?php echo base_url() . 'gallery/' . $view['slug']; ?>"><?php echo $view['post_title'] ?></a>
-                    <?php } else if($view['post_type'] == 'video') {?>
-                    <a href="<?php echo base_url() . 'video/' . $view['slug']; ?>"><?php echo $view['post_title'] ?></a>
-                    <?php } ?>
-                  <p>By : <?php echo $view['username']?> <span></span></p>
-                  <h6><i class="fa fa-eye"></i> <?php echo $view['total_views']?></h6>
-                  <!--<h6><i class="fa fa-clock-o"></i> 5 Mon ago</h6>-->
-              </div>
-          </div>
-      </div>  
-              <?php } ?>
-
-  </div>
-</div>
-
 
 <div class="home-listing">
   <h2>Most Popular Posts</h2>
@@ -148,8 +109,47 @@ jwplayer("myDiv").setup({
                     <?php } else if($popular['post_type'] == 'video') {?>
                     <a href="<?php echo base_url() . 'video/' . $popular['slug']; ?>"><?php echo $popular['post_title'] ?></a>
                     <?php } ?>
-                  <p>By : <?php echo $popular['username']?> <span></span></p>
+                  <p><?php echo $popular['username']?> <span></span></p>
                   <h6><i class="fa fa-eye"></i> <?php echo $popular['total_views']?></h6>
+                  <!--<h6><i class="fa fa-clock-o"></i> 5 Mon ago</h6>-->
+              </div>
+          </div>
+      </div>  
+              <?php } ?>
+
+  </div>
+</div>
+
+
+<div class="home-listing">
+  <h2>Most Recent Posts</h2>
+  <div class="owl-carousel owl-theme">
+              <?php foreach($most_recent as $key => $recent){?>
+      <div class="item">
+          <div class="list-box">
+              <div class="list-top"> 
+                  <?php if($recent['post_type'] == 'blog'){?>
+                  <a class="img-anchor" href="<?php echo base_url() . 'blog/' . $recent['slug']; ?>"><img src="<?php echo $recent['main_image']?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>  
+                  <a href="" class="tag-a">A</a>
+                    <?php } else if($recent['post_type'] == 'gallery'){?>
+                  <a class="img-anchor" href="<?php echo base_url() . 'gallery/' . $recent['slug']; ?>"><img src="<?php echo $recent['main_image']?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>         
+                  <a href="" class="tag-g">G</a>
+                    <?php } else if($recent['post_type'] == 'video'){?>
+                  <a class="img-anchor" href="<?php echo base_url() . 'video/' . $recent['slug']; ?>"><img src="<?php echo $recent['main_image']?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>  
+                  <a href="" class="tag-v">V</a>
+                    <?php } ?>
+                  <!--<span>10:53</span>-->
+              </div>
+              <div class="list-btm">
+                 <?php if($recent['post_type'] == 'blog') {?>
+                    <a href="<?php echo base_url() . 'blog/' . $recent['slug']; ?>"><?php echo $recent['post_title'] ?></a>
+                    <?php } else if($recent['post_type'] == 'gallery') {?>
+                    <a href="<?php echo base_url() . 'gallery/' . $recent['slug']; ?>"><?php echo $recent['post_title'] ?></a>
+                    <?php } else if($recent['post_type'] == 'video') {?>
+                    <a href="<?php echo base_url() . 'video/' . $recent['slug']; ?>"><?php echo $recent['post_title'] ?></a>
+                    <?php } ?>
+                  <p><?php echo $recent['username']?> <span></span></p>
+                  <h6><i class="fa fa-eye"></i> <?php echo $recent['total_views']?></h6>
                   <!--<h6><i class="fa fa-clock-o"></i> 5 Mon ago</h6>-->
               </div>
           </div>

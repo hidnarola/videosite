@@ -217,7 +217,7 @@ class Dashboard extends CI_Controller {
         $sess_data = $this->session->userdata('client');
         
         $config['base_url'] = base_url().'dashboard/view_recommended';
-        $config['total_rows'] = $this->Post_model->get_recommended_post_count(['user_id' => $sess_data['id']]);
+//        $config['total_rows'] = $this->Post_model->get_recommended_post_count(['user_id' => $sess_data['id']]);
         $config['per_page'] = 12;
         $offset = $this->input->get('per_page');
         $config = array_merge($config,pagination_front_config());

@@ -33,7 +33,7 @@
                         <?php } else if($rec['post_type'] == 'video') {?>
                         <a href="<?php echo base_url() . 'video/' . $rec['slug']; ?>"><?php echo $rec['post_title'] ?></a>
                         <?php } ?>
-                        <p> <small> By : <?php echo $rec['username'] ?> </small> <span></span></p>
+                        <p> <small><?php echo $rec['username'] ?> </small> <span></span></p>
                         <h6><i class="fa fa-eye"></i> <?php echo $rec['total_views'] ?> </h6>
                     <!--<h6><i class="fa fa-clock-o"></i><?php get_ago_time($rec['blog_created_date'], date("Y-m-d H:i:s")) ?></h6>-->
                     </div>

@@ -16,7 +16,7 @@
                 <input type="text" name="username" id ="username" placeholder="User Name" value="<?php echo $post_uname; ?>" class="form-css" />
             </div>
             <div class="input-wrap">
-                <label class="label-css">E-mail </label>
+                <label class="label-css">Email </label>
                 <?php $post_email = ($_POST) ? set_value('email_id') : $user_data['email_id']; ?>
                 <input type="text" name="email_id" id="email_id" placeholder="E-mail" value="<?php echo $post_email; ?>" class="form-css" disabled />
             </div>
@@ -45,7 +45,7 @@
             
             
             <div class="input-wrap">
-                <label class="label-css">Upload File</label>
+                <label class="label-css">Upload Profile Image</label>
                 <div class="input-file">
                     <a data-fancybox href="<?php echo base_url().$user_data['avatar'] ?>">
                         <img src="<?php echo base_url().$user_data['avatar'] ?>" alt="" width="100px" height="100px">

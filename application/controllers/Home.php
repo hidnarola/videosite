@@ -15,9 +15,9 @@ class Home extends CI_Controller
     public function index()
     {        
         $data['sub_categories'] = $this->Post_model->get_sub_cat();
-        $data['most_likes'] = $this->Post_model->get_most_liked_post(10,0);
-        $data['most_views'] = $this->Post_model->get_most_viewed_post(10,0);
+        $data['recommended'] = $this->Post_model->get_recommended_post(10,0);
         $data['most_popular'] = $this->Post_model->get_most_popular_post(10,0);
+        $data['most_recent'] = $this->Post_model->get_most_recent_posts(10,0);
         $data['most_recent_video'] = $this->Post_model->get_recently_posted_videos(2,0);
         $data['most_recent_blog'] = $this->Post_model->get_recently_posted_blogs(1,0);
         $data['most_recent_gallery'] = $this->Post_model->get_recently_posted_gallery(1,0);
