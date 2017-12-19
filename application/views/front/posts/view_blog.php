@@ -14,7 +14,12 @@
                 <?php } ?>
                     <?php echo $posts['post_title'] ?></h2>
                 <div class="head-bg-btm">
-                    <div class="user-pic-01"><img src="<?php echo base_url() . $posts['main_image'];?>"></div>
+                    <div class="user-pic-01">
+                        <a data-fancybox href="<?php echo base_url() . $posts['main_image'];?>">                            
+                            <img src="<?php echo base_url() . $posts['main_image'];?>" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'">
+                        </a>
+                        
+                    </div>
                     <div class="head-bg-btm-l">
                         <h6><strong>Channel : </strong> 
                             <a href="<?php echo base_url() . 'channel/' . $posts['channel_slug']; ?>" target="_blank"><?php echo $posts['channel_name'] ?></a> <span class="verify-user"></span>

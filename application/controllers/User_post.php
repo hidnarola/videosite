@@ -39,7 +39,7 @@ class User_post extends CI_Controller
 
             // ------------------------------------------------------------------------
             $config['upload_path'] = './uploads/videos/';
-            $config['allowed_types'] = '*';
+            $config['allowed_types'] = 'wmv|mp4|avi|mov';
             $config['max_size']  = '10000000000';       
             $config['encrypt_name'] = true;
 
@@ -130,7 +130,7 @@ class User_post extends CI_Controller
             $this->load->view('front/layouts/layout_main', $data);
         } else {
             $config['upload_path'] = './uploads/videos/';
-            $config['allowed_types'] = '*';
+            $config['allowed_types'] = 'wmv|mp4|avi|mov';
             $config['max_size']  = '10000000000';       
             $config['encrypt_name'] = true;
 
@@ -214,7 +214,7 @@ class User_post extends CI_Controller
             if($post_type == 'blog'){ $folder_name = 'blogs'; }else { $folder_name = 'gallery'; }
             
             $config['upload_path'] = './uploads/'.$folder_name.'/';
-            $config['allowed_types'] = 'gif|jpg|png';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $config['max_size']  = '100000000';
             $config['min_height'] = '350px';
             $config['min_width'] = '500px';
@@ -227,7 +227,14 @@ class User_post extends CI_Controller
                 redirect('user_post/add_post');
             } else {
                 $data = array('upload_data' => $this->upload->data());
-                $file_path = 'uploads/'.$folder_name.'/'.$data['upload_data']['file_name'];                
+
+                $old_path = $data['upload_data']['full_path'];
+                $file_name = random_string('alnum', 16).'.jpg';            
+                $new_path = $data['upload_data']['file_path'].$file_name;
+                exec(FFMPEG_PATH . ' -i '.$old_path.' -vf scale=500:-1 '.$new_path);
+                unlink($data['upload_data']['full_path']);
+
+                $file_path = 'uploads/'.$folder_name.'/'.$file_name;
             }
 
             // ------------------------------------------------------------------------
@@ -286,7 +293,7 @@ class User_post extends CI_Controller
             if($post_type == 'blog'){ $folder_name = 'blogs'; }else { $folder_name = 'gallery'; }
             
             $config['upload_path'] = './uploads/'.$folder_name.'/';
-            $config['allowed_types'] = 'gif|jpg|png';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $config['max_size']  = '100000000';
             $config['min_height'] = '350px';
             $config['min_width'] = '500px';
@@ -304,7 +311,14 @@ class User_post extends CI_Controller
                 }
             } else {
                 $data = array('upload_data' => $this->upload->data());
-                $file_path = 'uploads/'.$folder_name.'/'.$data['upload_data']['file_name'];                
+
+                $old_path = $data['upload_data']['full_path'];
+                $file_name = random_string('alnum', 16).'.jpg';            
+                $new_path = $data['upload_data']['file_path'].$file_name;
+                exec(FFMPEG_PATH . ' -i '.$old_path.' -vf scale=500:-1 '.$new_path);
+                unlink($data['upload_data']['full_path']);
+
+                $file_path = 'uploads/'.$folder_name.'/'.$file_name;
             }
 
             // ------------------------------------------------------------------------
@@ -357,10 +371,10 @@ class User_post extends CI_Controller
 
         $post_data = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
         $data['post_type'] = $post_data['post_type'];
+        
         if(in_array($post_data['channel_id'],$all_channel_id) == false){
             die('Do not have access');
         }
-
 
         $this->form_validation->set_rules('title', 'Title', 'required');
         $this->form_validation->set_rules('description', 'Description', 'required');
@@ -377,7 +391,7 @@ class User_post extends CI_Controller
             if($post_data['post_type'] == 'blog'){ $folder_name = 'blogs'; }else { $folder_name = 'gallery'; }
 
             $config['upload_path'] = './uploads/'.$folder_name.'/';
-            $config['allowed_types'] = 'gif|jpg|png';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $config['max_size']  = '10000000';
             $config['min_height'] = '350px';
             $config['min_width'] = '500px';
@@ -391,7 +405,14 @@ class User_post extends CI_Controller
             }
             else{
                 $data = array('upload_data' => $this->upload->data());
-                $file_path = 'uploads/'.$folder_name.'/'.$data['upload_data']['file_name'];
+
+                $old_path = $data['upload_data']['full_path'];
+                $file_name = random_string('alnum', 16).'.jpg';            
+                $new_path = $data['upload_data']['file_path'].$file_name;
+                exec(FFMPEG_PATH . ' -i '.$old_path.' -vf scale=500:-1 '.$new_path);
+                unlink($data['upload_data']['full_path']);
+
+                $file_path = 'uploads/'.$folder_name.'/'.$file_name;
             }
             
             // ------------------------------------------------------------------------
@@ -459,7 +480,7 @@ class User_post extends CI_Controller
             if($post_data['post_type'] == 'blog'){ $folder_name = 'blogs'; }else { $folder_name = 'gallery'; }
 
             $config['upload_path'] = './uploads/'.$folder_name.'/';
-            $config['allowed_types'] = 'gif|jpg|png';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
             $config['max_size']  = '10000000';
             $config['min_height'] = '350px';
             $config['min_width'] = '500px';
@@ -478,7 +499,14 @@ class User_post extends CI_Controller
             }
             else{
                 $data = array('upload_data' => $this->upload->data());
-                $file_path = 'uploads/'.$folder_name.'/'.$data['upload_data']['file_name'];
+
+                $old_path = $data['upload_data']['full_path'];
+                $file_name = random_string('alnum', 16).'.jpg';            
+                $new_path = $data['upload_data']['file_path'].$file_name;
+                exec(FFMPEG_PATH . ' -i '.$old_path.' -vf scale=500:-1 '.$new_path);
+                unlink($data['upload_data']['full_path']);
+
+                $file_path = 'uploads/'.$folder_name.'/'.$file_name;
             }            
             // ------------------------------------------------------------------------
 

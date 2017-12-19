@@ -76,13 +76,23 @@
                     dataType:"json",
                     data:{all_order_ids:data,post_type:"<?php echo $post_type; ?>"},
                     success:function(data){
-                        $.notify(data.success, {
-                            type: 'success',
+                        
+                        $.notify({              
+                            message: data.success,
+                        },{
+                            // settings
+                            allow_dismiss: true,
+                            newest_on_top: false,
                             animate: {
                                 enter: 'animated lightSpeedIn',
                                 exit: 'animated lightSpeedOut'
-                            }
+                            },
+                            template: '<div data-notify="container" class="success-msg col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+                                '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+                                '<span data-notify="message">{2}</span>' +
+                            '</div>'
                         });
+
                     }
                 });
             }
