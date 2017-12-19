@@ -101,8 +101,9 @@ class User_channels extends CI_Controller {
         $data['res_channel'] = $this->db->get_where('user_channels',['channel_slug'=>$channel_name])->row_array();
         $data['res_posts'] = $this->db->get_where('user_post',['channel_id' => $data['res_channel']['id']])->row_array();
         $data['channel_post'] = $this->Post_model->get_all_posts_by_channel_id($data['res_channel']['id'],12);
+        $post_id = array_column($data['channel_post'],'id');
         $data['channel_user'] = $this->Post_model->get_user_channel($channel_name);
-        $data['comments'] = $this->Post_model->get_comments_by_post_id();
+        $data['comments'] = $this->Post_model->get_comments_by_post_id($post_id);
         if(empty($data['res_channel'])){ custom_front_show_404(); }
 
         $data['user_loggedin'] = false;
