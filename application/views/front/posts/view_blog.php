@@ -205,13 +205,13 @@
                         
                         <?php if ($related['post_type'] == 'blog') {  ?>
                     <span><a href="<?php echo base_url() . 'blog/' . $related['slug']; ?>"><img src="<?php echo base_url() . $related['main_image'] ?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a></span>    
-                    <h4><a href="<?php echo base_url() . 'blog/' . $related['slug']; ?>"><?php echo $related['post_title'] ?></a></h4>
+                    <h4><a href="<?php echo base_url() . 'blog/' . $related['slug']; ?>"><?php echo character_limiter($related['post_title'],20); ?></a></h4>
                         <?php } else if($related['post_type'] == 'gallery') {  ?>
                     <span><a href="<?php echo base_url() . 'gallery/' . $related['slug']; ?>"><img src="<?php echo base_url() . $related['main_image'] ?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a></span>        
-                    <h4><a href="<?php echo base_url() . 'gallery/' . $related['slug']; ?>"><?php echo $related['post_title'] ?></a></h4>
+                    <h4><a href="<?php echo base_url() . 'gallery/' . $related['slug']; ?>"><?php echo character_limiter($related['post_title'],20); ?></a></h4>
                         <?php } else if($related['post_type'] == 'video') { ?>
                     <span><a href="<?php echo base_url() . 'video/' . $related['slug']; ?>"><img src="<?php echo base_url() . $related['main_image'] ?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a></span>        
-                    <h4><a href="<?php echo base_url() . 'video/' . $related['slug']; ?>"><?php echo $related['post_title'] ?></a></h4>
+                    <h4><a href="<?php echo base_url() . 'video/' . $related['slug']; ?>"><?php echo character_limiter($related['post_title'],20); ?></a></h4>
                         <?php }?>
                         <p><?php echo $related['username'] ?></p>
                         <h6><?php echo $related['total_views'] ?> <i class="fa fa-eye"></i></h6>

@@ -151,7 +151,8 @@ height: 20px;overflow: hidden;white-space: nowrap;}
 .list-ul-box span a{display::block;}
 .list-ul-box span a img{width:94px;height:94px;}
 .list-ul-box h4{margin:0 0 8px;padding:0;}
-.list-ul-box h4 a{font-size:13px;color:#333;line-height:18px;text-transform:uppercase;}
+/*.list-ul-box h4 a{font-size:13px;color:#333;line-height:18px;text-transform:uppercase;}*/
+.list-ul-box h4 a{font-size:13px;color:#333;line-height:18px;}
 .list-ul-box p{margin:0 0 10px;padding:0;font-size:14px;color:#666;display:block;line-height:18px;font-weight:400;}
 .list-ul-box h6{margin:0;padding:0;font-size:12px;color:#999;text-decoration:none;}
 

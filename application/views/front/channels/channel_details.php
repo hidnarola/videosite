@@ -3,7 +3,7 @@
         <div class="chanelle-head-l">
             <?php if(!empty($channel_user)) { ?>
             <span><img src="<?php echo base_url().$channel_user['avatar'];?>" alt=""/></span>
-            <big><?php echo $channel_user['fname'].' '. $channel_user['lname'];?> </big>
+            <big><?php echo $channel_user['username'];?> </big>
             <?php echo $channel_user['channel_name'];?>
             <small><?php echo $channel_user['designation'];?></small>
             <?php } ?>
@@ -49,7 +49,7 @@
                        ?>
                         </div>
                     </li>
-                    <?php } }?>
+                    <?php } } else { echo"<div class='alert alert-success'>No Comments Found.</div>"; }?>
                 </ul>
             </div>
 
