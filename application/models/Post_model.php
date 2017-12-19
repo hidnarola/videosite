@@ -750,36 +750,22 @@ class Post_model extends CI_Model
 
     public function get_most_popular_post($limit = null, $offset = null)
     {
-//        $date = date('Y-m-d', strtotime(date('Y-m-d') . " -1 month"));
-//        $this->db->select('up.id as userpostid,up.channel_id,up.post_type,up.post_title,up.main_image,up.slug,up.created_at,upc.id as upcid,upc.user_id as upcuserid,upc.post_id as upcpostid,u.id as userid,u.username,count(distinct upc.id) as total_views');
-//        $this->db->join('user_post_counts upc', 'up.id = upc.post_id', 'left');
-//        $this->db->join('user_channels uc','uc.id = up.channel_id');
-//        $this->db->join('users u', 'u.id = uc.user_id', 'left');
-//        $this->db->where('up.created_at >=', $date);
-//        $this->db->where('up.is_deleted != 1');
-//        $this->db->where('up.is_blocked != 1');
-//        $this->db->group_by('upc.post_id');
-//        $this->db->order_by('total_views', 'desc');
-//        $this->db->limit($limit, $offset);
-//        $views = $this->db->get('user_post up')->result_array();
-//        return $views;
-        
-//        $likes = $this->get_most_liked_post($limit,$offset);
-//        $views = $this->get_most_viewed_post($limit,$offset);
-//        
-//        $popular = array_merge($likes,$views);
-//        return $popular;
         $this->db->select('up.id,up.channel_id,up.post_type,up.post_title,up.main_image,up.slug,u.username,count(distinct upc.id) as total_views, count(distinct uk.id) as total_likes');
         $this->db->where('up.is_deleted != 1');
         $this->db->where('up.is_blocked != 1');
         $this->db->join('user_likes uk', 'uk.post_id = up.id', 'left');
         $this->db->join('user_channels uc','uc.id = up.channel_id');
         $this->db->join('users u', 'u.id = uc.user_id');
-        $this->db->join('user_post_counts upc', 'up.id = upc.post_id');
-        $this->db->group_by('uk.post_id');
+        $this->db->join('user_post_counts upc', 'up.id = upc.post_id');        
+        
+        $this->db->group_by('upc.post_id');
         $this->db->order_by('total_views', 'desc');
+        $this->db->order_by('total_likes', 'desc');
+
         $this->db->limit($limit, $offset);
+
         $likes = $this->db->get('user_post up')->result_array();
+        // pr($likes,1);
         return $likes;
     }
 
@@ -932,6 +918,21 @@ class Post_model extends CI_Model
     
     public function get_recommended_post($id = null,$limit = null, $offset = null)
     {
+
+        if (is_null($id) )
+        {
+            $popular = $this->get_most_popular_post(10);
+            if (empty($popular))
+            {
+                $recent = $this->get_most_recent_posts(10);
+                return $recent;
+            }
+            else
+            {
+                return $popular;
+            }
+        }
+
         $q = $this->input->get('q');
         //category id
         $this->db->select('c.id');
@@ -951,7 +952,7 @@ class Post_model extends CI_Model
         {
             $this->db->select('up.*,u.username,count(upc.id) as total_views');
             $this->db->join('user_post_counts upc', 'up.id = upc.post_id');
-            $this->db->join('users u', 'u.id = upc.user_id');
+            $this->db->join('users u', 'u.id = upc.user_id','left');
             $this->db->where_in('up.category_id', $cat_id);
             $this->db->group_by('up.id');
             $this->db->order_by('total_views', 'desc');
@@ -961,6 +962,7 @@ class Post_model extends CI_Model
 
             $cat_post_id = array_column($cat_post, 'category_id');
         }
+
         //channel id
         $this->db->select('uc.id');
         $this->db->join('user_post up', 'uc.id = up.channel_id');
@@ -987,22 +989,24 @@ class Post_model extends CI_Model
             {
                 $this->db->where_not_in('up.category_id', $cat_post_id);
             }
-            $this->db->group_by('up.id');
-            $this->db->order_by('total_views', 'desc');
+            
+            $this->db->group_by('upc.post_id');
+            $this->db->order_by('total_views', 'desc');            
+
             $this->db->like('post_title', $q);
             $this->db->limit($limit,$offset);
             $chl_post = $this->db->get('user_post up')->result_array();
         }
-
+                
         $recommended = array_merge($chl_post, $cat_post);
 
 
         if (empty($recommended))
         {
-            $popular = $this->get_most_popular_post();
+            $popular = $this->get_most_popular_post(10);
             if (empty($popular))
             {
-                $recent = $this->get_most_recent_posts();
+                $recent = $this->get_most_recent_posts(10);
                 return $recent;
             }
             else
