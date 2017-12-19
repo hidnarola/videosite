@@ -8,7 +8,19 @@ class Test extends CI_Controller {
 		$this->load->model(['Users_model', 'Post_model']);
 		$this->load->helper('directory');
 	}
-	
+		
+	public function img(){
+		
+		// ffmpeg -i input.jpg -vf scale=320:240 output_320x240.png
+		echo $old_path = $_SERVER['DOCUMENT_ROOT'].'/videosite/uploads/test/6mb1.jpeg';
+		echo "<br/>";
+		echo $new_path = $_SERVER['DOCUMENT_ROOT'].'/videosite/uploads/test/optimize.jpg';
+
+		exec(FFMPEG_PATH . ' -i '.$old_path.' -vf scale=500:-1 '.$new_path);
+
+		// ffmpeg -i input.jpg -vf scale=320:240 output_320x240.png
+	}
+
 	// Step 1
 	public function add_user(){
 		$faker = Faker\Factory::create();

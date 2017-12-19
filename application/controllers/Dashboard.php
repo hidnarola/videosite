@@ -124,8 +124,8 @@ class Dashboard extends CI_Controller {
 	public function file_upload(){
 
     	$config['upload_path'] = './uploads/avatars/';
-    	$config['allowed_types'] = 'gif|jpg|png';
-    	$config['max_size']  = '1000000';    	
+    	$config['allowed_types'] = 'gif|jpg|png|jpeg';
+    	$config['max_size']  = '100000000000';    	
     	$config['encrypt_name'] = true;
 
     	$this->load->library('upload', $config);
@@ -140,7 +140,14 @@ class Dashboard extends CI_Controller {
     		}    		
     	} else {
     		$data = array('upload_data' => $this->upload->data());
-    		$this->img_var = 'uploads/avatars/'.$data['upload_data']['file_name'];
+            
+            $old_path = $data['upload_data']['full_path'];
+            $new_path = $data['upload_data']['file_path'].$file_name;
+            $file_name = random_string('alnum', 16).'.jpg';            
+            exec(FFMPEG_PATH . ' -i '.$old_path.' -vf scale=500:-1 '.$new_path);
+            unlink($data['upload_data']['full_path']);
+
+    		$this->img_var = 'uploads/avatars/'.$file_name;
     		return true;
     	}
     }
