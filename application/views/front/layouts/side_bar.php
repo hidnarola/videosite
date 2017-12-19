@@ -3,7 +3,7 @@
         <ul>
             <li>
                 <a href="<?php echo base_url() ?>home">
-                    <i class="icon-home">
+                    <i class="fa fa-home">
                     </i> 
                     Home
                 </a>

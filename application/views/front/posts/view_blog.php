@@ -197,7 +197,7 @@
     
 
     <div class="listing-r"> 
-        <h3>Related <?php echo $new_var . 's'; ?></h3>
+        <h3>Related Content <?php // echo $new_var . 's'; ?></h3>
         <ul class="list-ul">
             <?php if (isset($related_posts)) { foreach ($related_posts as $key => $related) {   ?>
             <li>
