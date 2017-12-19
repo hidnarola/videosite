@@ -1,5 +1,5 @@
 <div class="white-box">
-    <h3 class="h3-title">Search result for</h3>
+    <h3 class="h3-title">Search result for "<?php echo $this->input->get('q'); ?>"</h3>
 
 <div class="home-listing">
     <ul class="ul-list">

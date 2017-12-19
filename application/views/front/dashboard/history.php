@@ -27,11 +27,11 @@
                     </div>
                     <div class="list-btm">
                         <?php if($his['post_type'] == 'blog') {?>
-                        <a href="<?php echo base_url() . 'blog/' . $his['slug']; ?>"><?php echo $his['post_title'] ?></a>
+                        <a href="<?php echo base_url() . 'blog/' . $his['slug']; ?>"><?php echo character_limiter($his['post_title'],20); ?></a>
                         <?php } else if($his['post_type'] == 'gallery') {?>
-                        <a href="<?php echo base_url() . 'gallery/' . $his['slug']; ?>"><?php echo $his['post_title'] ?></a>
+                        <a href="<?php echo base_url() . 'gallery/' . $his['slug']; ?>"><?php echo character_limiter($his['post_title'],20); ?></a>
                         <?php } else if($his['post_type'] == 'video') {?>
-                        <a href="<?php echo base_url() . 'video/' . $his['slug']; ?>"><?php echo $his['post_title'] ?></a>
+                        <a href="<?php echo base_url() . 'video/' . $his['slug']; ?>"><?php echo character_limiter($his['post_title'],20); ?></a>
                         <?php } ?>
                         <p><small><?php echo $his['username'] ?> </small><span></span></p>
                         <h6><i class="fa fa-eye"></i> <?php echo $his['total_views'] ?></h6>

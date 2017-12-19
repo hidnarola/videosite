@@ -14,12 +14,10 @@ padding: 0;line-height: 38px;}
 .input-file > img,
 .input-file > a > img{position: absolute;left: 6px;top: 6px;width: 42px;height: 42px;}
 
-.drag-ul li{width:49%;float:left;margin-bottom:20px;}
-.drag-ul li:nth-child(2n+2){float:right;}
-.drag-ul li img{max-width:100%;}
+
 .drag-ul .big-img{position:relative;}
-.drag-ul .list-content{padding:25px 15px 15px;}
-.drag-ul .list-content h2 {margin: 0 0 5px;}
+.drag-ul .list-content{padding:10px;}
+.drag-ul .list-content h2 {margin:0;padding:0;}
 .list-content p{margin-bottom:0; }
 
 .option-02{position: absolute;right: 0;bottom: 20px;background: rgba(255,255,255,.6);padding: 5px 5px 5px 10px;border-radius: 50px 0 0 50px;}

@@ -4,8 +4,8 @@
             <?php if(!empty($channel_user)) { ?>
             <span><img src="<?php echo base_url().$channel_user['avatar'];?>" alt=""/></span>
             <big><?php echo $channel_user['username'];?> </big>
-            <?php echo $channel_user['channel_name'];?>
-            <small><?php echo $channel_user['designation'];?></small>
+            <small><?php echo $channel_user['channel_name'];?></small>
+            <p><?php echo $channel_user['designation'];?></p>
             <?php } ?>
         </div>
         <div class="chanelle-head-r">
@@ -73,11 +73,11 @@
                 </div>
                 <div class="list-btm">
                     <?php if($channel['post_type'] == 'blog') {?>
-                    <a href="<?php echo base_url() . 'blog/' . $channel['slug']; ?>"><?php echo $channel['post_title'] ?></a>
+                    <a href="<?php echo base_url() . 'blog/' . $channel['slug']; ?>"><?php echo character_limiter($channel['post_title'],20); ?></a>
                     <?php } else if($channel['post_type'] == 'gallery') {?>
-                    <a href="<?php echo base_url() . 'gallery/' . $channel['slug']; ?>"><?php echo $channel['post_title'] ?></a>
+                    <a href="<?php echo base_url() . 'gallery/' . $channel['slug']; ?>"><?php echo character_limiter($channel['post_title'],20); ?></a>
                     <?php } else if($channel['post_type'] == 'video') {?>
-                    <a href="<?php echo base_url() . 'video/' . $channel['slug']; ?>"><?php echo $channel['post_title'] ?></a>
+                    <a href="<?php echo base_url() . 'video/' . $channel['slug']; ?>"><?php echo character_limiter($channel['post_title'],20); ?></a>
                     <?php } ?>
                     <p> <small><?php echo $channel['username'] ?> </small> <span></span></p>
                     <h6><i class="fa fa-eye"></i> <?php echo $channel['total_views'] ?></h6>

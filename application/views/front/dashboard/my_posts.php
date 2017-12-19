@@ -29,11 +29,11 @@
                     </div>
                     <div class="list-btm">
                         <?php if($post['post_type'] == 'blog') { ?>
-                            <a href="<?php echo base_url() . 'blog/' . $post['slug']; ?>"><?php echo $post['post_title'] ?></a>
+                            <a href="<?php echo base_url() . 'blog/' . $post['slug']; ?>"><?php echo character_limiter($post['post_title'],20); ?></a>
                         <?php } else if($post['post_type'] == 'gallery') { ?>
-                            <a href="<?php echo base_url() . 'gallery/' . $post['slug']; ?>"><?php echo $post['post_title'] ?></a>
+                            <a href="<?php echo base_url() . 'gallery/' . $post['slug']; ?>"><?php echo character_limiter($post['post_title'],20); ?></a>
                         <?php } else if($post['post_type'] == 'video'){?>
-                            <a href="<?php echo base_url() . 'video/' . $post['slug']; ?>"><?php echo $post['post_title'] ?></a>
+                            <a href="<?php echo base_url() . 'video/' . $post['slug']; ?>"><?php echo character_limiter($post['post_title'],20); ?></a>
                         <?php }?>
                         <div class="edit-dlt">
                             <p> <small><?php echo $session_info['username'] ?> </small><span></span></p>

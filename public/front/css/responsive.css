@@ -1,6 +1,12 @@
 .owl-item{width:306px !important; }
 
+@media(min-width:1300px) and (max-width:1450px){
+.developer .big-img > a {display: block;height:220px;}
+.developer .big-img > a > img{min-height:220px;}
+.developer.drag-ul .list-content h2{font-size:16px;}
+.developer.drag-ul li .listing-l-div {padding: 10px 10px 0;}
 
+}
 @media(max-width:1399px){
 .black-bg-video .jw-reset {width:100% !important;}
 }
@@ -17,7 +23,10 @@
 @media(min-width:1025px) and (max-width:1299px){
 .video-type a img,
 .gallery-type a img, .artical-type a img { height:200px;}
-
+.developer .big-img > a {display: block;height:160px;}
+.developer .big-img > a > img{min-height:160px;}
+.developer.drag-ul .list-content h2{font-size:16px;}
+.developer.drag-ul li .listing-l-div {padding: 10px 10px 0;}
 
 }
 
@@ -67,7 +76,10 @@
 .info_div h4{background: #c02a16;padding:18px 24px 16px;color: #fff;line-height:24px;margin: 0;display: block;font-size: 16px;}
 .mobile-nav-ul .open > .dropdown-menu {display: block;width: 100%;border-radius: 0;position: relative;background: #333;}
 .chanelle-body-r .ul-list li {width: 50%;}
-
+.developer .big-img > a {display: block;height:180px;}
+.developer .big-img > a > img{min-height:180px;}
+.developer.drag-ul .list-content h2{font-size:15px;}
+.developer.drag-ul li .listing-l-div {padding: 10px 10px 0;}
 }
 
 @media(max-width:991px){
@@ -146,6 +158,12 @@ input:-webkit-autofill {-webkit-box-shadow:0 0 0px 1000px #e9e9e9 inset;}
 .table-div{overflow-x:scroll;padding-bottom:20px;}
 .table-div table.table{min-width:600px;}
 .right-panel {padding:10px 10px 0;}
+.header{height:auto;}
+body{padding:120px 0 0;}
+.developer.drag-ul li {width:50%;padding: 0 10px;}
+.developer.list-group {margin:0 -10px;}
+.developer.drag-ul .list-content h2{font-size:15px;}
+.developer.drag-ul li .listing-l-div {padding: 10px 10px 0;}
 
 }
 
@@ -157,5 +175,7 @@ input:-webkit-autofill {-webkit-box-shadow:0 0 0px 1000px #e9e9e9 inset;}
 .carousel-type ul li {width: 100%;}
 .list-box {margin:0;}
 .ul-list {margin:20px 0 0;}
+.developer.drag-ul li {width:100%;padding:0;}
+.developer.list-group {margin:0;}
 
 }

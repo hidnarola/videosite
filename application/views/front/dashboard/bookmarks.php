@@ -27,11 +27,11 @@
                     </div>
                     <div class="list-btm">
                         <?php if($books['post_type'] == 'blog') {?>
-                        <a href="<?php echo base_url() . 'blog/' . $books['slug']; ?>"><?php echo $books['post_title'] ?></a>
+                        <a href="<?php echo base_url() . 'blog/' . $books['slug']; ?>"><?php echo character_limiter($books['post_title'],20); ?></a>
                         <?php } else if($books['post_type'] == 'gallery') {?>
-                        <a href="<?php echo base_url() . 'gallery/' . $books['slug']; ?>"><?php echo $books['post_title'] ?></a>
+                        <a href="<?php echo base_url() . 'gallery/' . $books['slug']; ?>"><?php echo character_limiter($books['post_title'],20); ?></a>
                         <?php } else if($books['post_type'] == 'video') {?>
-                        <a href="<?php echo base_url() . 'video/' . $books['slug']; ?>"><?php echo $books['post_title'] ?></a>
+                        <a href="<?php echo base_url() . 'video/' . $books['slug']; ?>"><?php echo character_limiter($books['post_title'],20); ?></a>
                         <?php } ?>
                         <p> <small><?php echo $books['username'] ?> </small> <span></span></p>
                         <h6><i class="fa fa-eye"></i> <?php echo $books['total_views'] ?> </h6>
