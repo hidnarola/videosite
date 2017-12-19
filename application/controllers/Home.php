@@ -19,6 +19,9 @@ class Home extends CI_Controller
         $data['sub_categories'] = $this->Post_model->get_sub_cat();
         
         $data['recommended'] = $this->Post_model->get_recommended_post($sess_data['id'],10,0);        
+
+        // pr($data['recommended'],1);
+
         $data['most_popular'] = $this->Post_model->get_most_popular_post(10,0);
         $data['most_recent'] = $this->Post_model->get_most_recent_posts(10,0);
 

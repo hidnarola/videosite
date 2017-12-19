@@ -764,8 +764,7 @@ class Post_model extends CI_Model
 
         $this->db->limit($limit, $offset);
 
-        $likes = $this->db->get('user_post up')->result_array();
-        // pr($likes,1);
+        $likes = $this->db->get('user_post up')->result_array();        
         return $likes;
     }
 
@@ -916,43 +915,46 @@ class Post_model extends CI_Model
         }
     }
     
-    public function get_recommended_post($id = null,$limit = null, $offset = null)
-    {
+    public function get_recommended_post($id = null,$limit = null, $offset = null) {
 
-        if (is_null($id) )
-        {
+        // Step - 4
+        if (is_null($id) ) {
             $popular = $this->get_most_popular_post(10);
-            if (empty($popular))
-            {
+            if (empty($popular))  {
                 $recent = $this->get_most_recent_posts(10);
                 return $recent;
-            }
-            else
-            {
+            } else {
                 return $popular;
             }
         }
 
         $q = $this->input->get('q');
+
         //category id
         $this->db->select('c.id');
         $this->db->join('user_post up', 'c.id = up.category_id');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id AND upc.user_id = ' . $id);
-        $this->db->where('up.is_deleted != 1');
-        $this->db->where('up.is_blocked != 1');
+        $this->db->where(['up.is_deleted !='=>'1','up.is_blocked !='=>'1']);
         $this->db->like('post_title', $q);
         $this->db->limit($limit,$offset);
         $category = $this->db->get('categories c')->result_array();
 
         $cat_id = array_column($category, 'id');
+
         //category id
         $cat_post = [];
         $cat_post_id = [];
-        if (!empty($cat_id))
-        {
-            $this->db->select('up.*,u.username,count(upc.id) as total_views');
+
+        if (!empty($cat_id)) {
+
+            $this->db->select('up.*,users.username,count(upc.id) as total_views');
             $this->db->join('user_post_counts upc', 'up.id = upc.post_id');
+            
+            $this->db->join('user_channels', 'user_channels.id = up.channel_id','left');
+            $this->db->join('users', 'users.id = user_channels.user_id','left');
+
             $this->db->join('users u', 'u.id = upc.user_id','left');
+
             $this->db->where_in('up.category_id', $cat_id);
             $this->db->group_by('up.id');
             $this->db->order_by('total_views', 'desc');
@@ -967,8 +969,7 @@ class Post_model extends CI_Model
         $this->db->select('uc.id');
         $this->db->join('user_post up', 'uc.id = up.channel_id');
         $this->db->join('user_post_counts upc', 'up.id = upc.post_id AND upc.user_id = ' . $id);
-        $this->db->where('up.is_deleted != 1');
-        $this->db->where('up.is_blocked != 1');
+        $this->db->where(['up.is_deleted !='=>'1','up.is_blocked !='=>'1']);
         $this->db->like('post_title', $q);
         $this->db->limit($limit,$offset);
         $channel = $this->db->get('user_channels uc')->result_array();
@@ -977,16 +978,15 @@ class Post_model extends CI_Model
         //channel id
         $chl_post = [];
 
-        if (!empty($channel_id))
-        {
+        if (!empty($channel_id)) {
+
             $this->db->select('up.*,u.username,count(upc.id) as total_views');
             $this->db->join('user_post_counts upc', 'up.id = upc.post_id');
             $this->db->join('user_channels uc', 'uc.id = up.channel_id');
             $this->db->join('users u', 'u.id = uc.user_id');
             $this->db->where_in('up.channel_id', $channel_id);
 
-            if (!empty($cat_post_id))
-            {
+            if (!empty($cat_post_id)) {
                 $this->db->where_not_in('up.category_id', $cat_post_id);
             }
             
@@ -997,27 +997,22 @@ class Post_model extends CI_Model
             $this->db->limit($limit,$offset);
             $chl_post = $this->db->get('user_post up')->result_array();
         }
-                
+
         $recommended = array_merge($chl_post, $cat_post);
 
-
-        if (empty($recommended))
-        {
+        // Step - 4
+        if (empty($recommended)) {
             $popular = $this->get_most_popular_post(10);
-            if (empty($popular))
-            {
+            if (empty($popular)) {
                 $recent = $this->get_most_recent_posts(10);
                 return $recent;
-            }
-            else
-            {
+            } else {
                 return $popular;
             }
-        }
-        else
-        {
+        } else {
             return $recommended;
         }
+
     }
 
 }
