@@ -4,7 +4,7 @@
     <?php if(!empty($posts)){ ?>
     <div class="listing-l">
         <div class="head-bg-01">
-            <h2>
+                <h2>
                 <?php if($posts['post_type'] == 'blog') {?>
                 <a href="" class="tag artical-tag">A</a>
                 <?php } else if($posts['post_type'] == 'video') {?>
@@ -13,9 +13,18 @@
                 <a href="" class="tag gallery-tag">G</a>
                 <?php } ?>
                     <?php echo $posts['post_title'] ?></h2>
-            <p><span class="user-pic-01"><img src="<?php echo base_url() . $posts['main_image'];?>"></span>Channel : <a href="<?php echo base_url() . 'channel/' . $posts['channel_slug']; ?>" target="_blank"><?php echo $posts['channel_name'] ?></a> <span class="verify-user"></span> Username : <?php echo $posts['username'] ?></p> <p><i class="fa fa-eye"></i> <?php echo $posts['total_views'] ?> Views   </p>
-            <div class="r-links">
-                <?php if ($user_loggedin == true){
+                <div class="head-bg-btm">
+                    <div class="user-pic-01"><img src="<?php echo base_url() . $posts['main_image'];?>"></div>
+                    <div class="head-bg-btm-l">
+                        <h6><strong>Channel : </strong> 
+                            <a href="<?php echo base_url() . 'channel/' . $posts['channel_slug']; ?>" target="_blank"><?php echo $posts['channel_name'] ?></a> <span class="verify-user"></span>
+                        </h6>
+                        <h5> Username : <?php echo $posts['username'] ?></h5>
+                        <p><i class="fa fa-eye"></i> <?php echo $posts['total_views'] ?> Views </p>
+                    </div>
+
+                    <div class="r-links">
+                         <?php if ($user_loggedin == true){
         if ($is_user_bookmark == false){ ?>
       <a href="<?php echo base_url() . 'home/bookmark_post/' . $posts['id']; ?>" class="bookmark-btn"><i class="fa fa-star"></i>Bookmark<small></small></a>
         <?php } else { ?>
@@ -31,10 +40,9 @@
     <?php } } else { ?>
             <a class="like-btn"><i class="fa fa-thumbs-up"></i>likes <small><?php echo $liked;?></small></a>    
     <?php } ?>
-                
-                
+                    </div>
+                </div>
             </div>
-        </div>
         <div class="listing-l-div">
             <?php if (isset($posts)) {?>
               <?php  if ($posts['post_type'] == 'blog') 

@@ -407,3 +407,14 @@ width: 300px; color: #fff; z-index: 1; font-weight: 500;box-shadow: 0 0px 40px 0
 .video-tag{ background:rgb(240, 53, 28);}
 .artical-tag{background:rgb(105, 192, 194);}
 .gallery-tag{ background:rgb(250, 179, 25);}
+
+
+.head-bg-btm{position:relative;display:block;padding:0 0 0 76px;min-height:60px;}
+.user-pic-01{width:60px;height:60px;position:absolute;top:0;left:0;}
+.user-pic-01 img{width:100%;min-height:60px;}
+.head-bg-btm-l{float:left;padding:8px 0 0;}
+.head-bg-btm-l h6{display:block; vertical-align: top; font-size:12px; color: #999; line-height:400; letter-spacing: .02em; margin: 0 15px 0 0; padding: 0; line-height:normal;}
+.head-bg-btm-l h6 strong{font-weight:700;}
+.head-bg-btm-l h6 a{display: inline-block; vertical-align: top; font-size: 12px; color: #999; line-height:normal; letter-spacing: .02em; margin: 0 15px 0 0; padding: 0; line-height:normal;}
+.head-bg-btm-l h5{display: inline-block; vertical-align: top; font-size: 12px; color: #999; line-height: 20px; letter-spacing: .02em; margin: 0 15px 0 0; padding: 0; line-height:38px;}
+.r-links{float:right;margin:11px 0 0 ;}
