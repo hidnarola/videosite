@@ -9,7 +9,7 @@
 
     <div class="home-listing" id="content-1">        
         <ul class="ul-list" id="new_ids">
-            <?php foreach ($posts as $key => $post){?>
+            <?php if(!empty($posts)) { foreach ($posts as $key => $post){?>
             <li>
                 <div class="list-box">
                     <div class="list-top">
@@ -39,7 +39,7 @@
                     </div>
                 </div>
             </li>
-            <?php } ?>
+            <?php } } ?>
         </ul>
         
         <input type="hidden" name="offset_listing" value="12" id="offset_listing">

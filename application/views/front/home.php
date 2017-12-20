@@ -5,7 +5,7 @@
           <div class="video-type">
               <a href="" class="tag">V</a>
               <a href="<?php echo base_url() . 'video/' . $recent_video['slug']; ?>" class="img"><img src="<?php echo $recent_video['main_image']?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>
-              <h4><a href="<?php echo base_url() . 'video/' . $recent_video['slug']; ?>"><?php echo $recent_video['post_title']?></a></h4>
+              <h4><a href="<?php echo base_url() . 'video/' . $recent_video['slug']; ?>"><?php echo character_limiter($recent_video['post_title'],20);?></a></h4>
           </div>
       <?php } } ?>
       </li>
@@ -14,7 +14,7 @@
           <div class="artical-type">
               <a href="" class="tag">A</a>
               <a href="<?php echo base_url() . 'blog/' . $recent_blog['slug']; ?>" class="img"><img src="<?php echo $recent_blog['main_image']?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>
-              <h4><a href="<?php echo base_url() . 'blog/' . $recent_blog['slug']; ?>"><?php echo $recent_blog['post_title']?></a></h4>
+              <h4><a href="<?php echo base_url() . 'blog/' . $recent_blog['slug']; ?>"><?php echo character_limiter($recent_blog['post_title'],20);?></a></h4>
           </div>
       <?php } } ?>
       </li>
@@ -23,7 +23,7 @@
           <div class="gallery-type">
               <a href="" class="tag">G</a>
               <a href="<?php echo base_url() . 'gallery/' . $recent_gallery['slug']; ?>"><img src="<?php echo $recent_gallery['main_image']?>" alt="" onerror="this.src='<?php echo base_url().'public/front/images/imgnotfound.jpg'; ?>'"/></a>
-              <h4><a href="<?php echo base_url() . 'gallery/' . $recent_gallery['slug']; ?>"><?php echo $recent_gallery['post_title']?></a></h4>
+              <h4><a href="<?php echo base_url() . 'gallery/' . $recent_gallery['slug']; ?>"><?php echo character_limiter($recent_gallery['post_title'],20);?></a></h4>
           </div>
       <?php  } } ?>
       </li>
@@ -33,7 +33,7 @@
 <div class="home-listing">
   <h2>Recommended</h2>
   <div class="owl-carousel owl-theme">
-              <?php foreach($recommended as $key => $recommend){?>
+              <?php if(!empty($recommend)) { foreach($recommended as $key => $recommend){?>
       <div class="item">
           <div class="list-box">
               <div class="list-top"> 
@@ -51,11 +51,11 @@
               </div>
               <div class="list-btm">
                  <?php if($recommend['post_type'] == 'blog') {?>
-                    <a href="<?php echo base_url() . 'blog/' . $recommend['slug']; ?>"><?php echo $recommend['post_title'] ?></a>
+                    <a href="<?php echo base_url() . 'blog/' . $recommend['slug']; ?>"><?php echo character_limiter($recommend['post_title'],20); ?></a>
                     <?php } else if($recommend['post_type'] == 'gallery') {?>
-                    <a href="<?php echo base_url() . 'gallery/' . $recommend['slug']; ?>"><?php echo $recommend['post_title'] ?></a>
+                    <a href="<?php echo base_url() . 'gallery/' . $recommend['slug']; ?>"><?php echo character_limiter($recommend['post_title'],20); ?></a>
                     <?php } else if($recommend['post_type'] == 'video') {?>
-                    <a href="<?php echo base_url() . 'video/' . $recommend['slug']; ?>"><?php echo $recommend['post_title'] ?></a>
+                    <a href="<?php echo base_url() . 'video/' . $recommend['slug']; ?>"><?php echo character_limiter($recommend['post_title'],20); ?></a>
                     <?php } ?>
                   <p><?php echo $recommend['username']?> <span></span></p>
                   <h6><i class="fa fa-eye"></i> <?php echo $recommend['total_views']?></h6>
@@ -63,7 +63,7 @@
               </div>
           </div>
       </div>  
-              <?php } ?>
+              <?php } }  ?>
 
   </div>
 
@@ -85,7 +85,7 @@ jwplayer("myDiv").setup({
 <div class="home-listing">
   <h2>Most Popular Posts</h2>
   <div class="owl-carousel owl-theme">
-              <?php foreach($most_popular as $key => $popular){?>
+              <?php if(!empty($most_popular)) { foreach($most_popular as $key => $popular){?>
       <div class="item">
           <div class="list-box">
               <div class="list-top"> 
@@ -103,11 +103,11 @@ jwplayer("myDiv").setup({
               </div>
               <div class="list-btm">
                  <?php if($popular['post_type'] == 'blog') {?>
-                    <a href="<?php echo base_url() . 'blog/' . $popular['slug']; ?>"><?php echo $popular['post_title'] ?></a>
+                    <a href="<?php echo base_url() . 'blog/' . $popular['slug']; ?>"><?php echo character_limiter($popular['post_title'],20); ?></a>
                     <?php } else if($popular['post_type'] == 'gallery') {?>
-                    <a href="<?php echo base_url() . 'gallery/' . $popular['slug']; ?>"><?php echo $popular['post_title'] ?></a>
+                    <a href="<?php echo base_url() . 'gallery/' . $popular['slug']; ?>"><?php echo character_limiter($popular['post_title'],20); ?></a>
                     <?php } else if($popular['post_type'] == 'video') {?>
-                    <a href="<?php echo base_url() . 'video/' . $popular['slug']; ?>"><?php echo $popular['post_title'] ?></a>
+                    <a href="<?php echo base_url() . 'video/' . $popular['slug']; ?>"><?php echo character_limiter($popular['post_title'],20); ?></a>
                     <?php } ?>
                   <p><?php echo $popular['username']?> <span></span></p>
                   <h6><i class="fa fa-eye"></i> <?php echo $popular['total_views']?></h6>
@@ -115,7 +115,7 @@ jwplayer("myDiv").setup({
               </div>
           </div>
       </div>  
-              <?php } ?>
+              <?php } } ?>
 
   </div>
 </div>
@@ -124,7 +124,7 @@ jwplayer("myDiv").setup({
 <div class="home-listing">
   <h2>Most Recent Posts</h2>
   <div class="owl-carousel owl-theme">
-              <?php foreach($most_recent as $key => $recent){?>
+              <?php if(!empty($most_recent)) { foreach($most_recent as $key => $recent){?>
       <div class="item">
           <div class="list-box">
               <div class="list-top"> 
@@ -142,11 +142,11 @@ jwplayer("myDiv").setup({
               </div>
               <div class="list-btm">
                  <?php if($recent['post_type'] == 'blog') {?>
-                    <a href="<?php echo base_url() . 'blog/' . $recent['slug']; ?>"><?php echo $recent['post_title'] ?></a>
+                    <a href="<?php echo base_url() . 'blog/' . $recent['slug']; ?>"><?php echo character_limiter($recent['post_title'],20); ?></a>
                     <?php } else if($recent['post_type'] == 'gallery') {?>
-                    <a href="<?php echo base_url() . 'gallery/' . $recent['slug']; ?>"><?php echo $recent['post_title'] ?></a>
+                    <a href="<?php echo base_url() . 'gallery/' . $recent['slug']; ?>"><?php echo character_limiter($recent['post_title'],20); ?></a>
                     <?php } else if($recent['post_type'] == 'video') {?>
-                    <a href="<?php echo base_url() . 'video/' . $recent['slug']; ?>"><?php echo $recent['post_title'] ?></a>
+                    <a href="<?php echo base_url() . 'video/' . $recent['slug']; ?>"><?php echo character_limiter($recent['post_title'],20); ?></a>
                     <?php } ?>
                   <p><?php echo $recent['username']?> <span></span></p>
                   <h6><i class="fa fa-eye"></i> <?php echo $recent['total_views']?></h6>
@@ -154,7 +154,7 @@ jwplayer("myDiv").setup({
               </div>
           </div>
       </div>  
-              <?php } ?>
+              <?php } } ?>
 
   </div>
 </div>

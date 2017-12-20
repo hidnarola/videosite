@@ -46,9 +46,12 @@
         </ul>
         <div id="pagination">
             <?php
-            foreach ($links as $link)
-            {
-                echo $link;
+            if(!empty($links)) 
+            { 
+                foreach ($links as $link)
+                    {
+                        echo $link;
+                    } 
             }
             ?>
         </div>
