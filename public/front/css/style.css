@@ -425,3 +425,8 @@ width: 300px; color: #fff; z-index: 1; font-weight: 500;box-shadow: 0 0px 40px 0
 .developer.drag-ul li{width:33.33%;float:left;margin-bottom:20px;margin:0 0 20px;border:0;padding:0 15px;}
 .developer.drag-ul li .listing-l-div {border: 1px solid #ddd;width:100%;padding:15px;}
 .developer.drag-ul li img{max-width:100%;}
+.legend{display:block;dith:100%;}
+.legend a{display: inline-block;margin: 0 0 10px;padding: 8px 10px 6px;line-height: normal;color: #fff;font-size: 14px;text-transform: uppercase;text-align: center;}
+.legend a:nth-child(1){ background:#69c0c2;}
+.legend a:nth-child(2){ background: #fab319;}
+.legend a:nth-child(3){background:#f0351c;}

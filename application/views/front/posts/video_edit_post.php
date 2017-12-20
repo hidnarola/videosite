@@ -93,7 +93,7 @@
             </div>
         </div>  
         <div class="input-wrap full-width">
-            <label class="label-css">Comment</label>
+            <label class="label-css">Description</label>
             <?php if($_POST){ $post_comm = set_value('video_desc'); }else{ $post_comm = $post_data['video']['description']; } ?>
             <textarea class="textarea-css" name="video_desc"><?php echo $post_comm; ?></textarea>
         </div>

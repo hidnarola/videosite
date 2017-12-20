@@ -1,4 +1,9 @@
 <div class="left-panel">
+    <div class="legend">
+        <a>Article</a>
+	<a>Gallery</a>
+	<a>Video</a>
+	</div>
     <div class="nav-div">
         <ul>
             <li>

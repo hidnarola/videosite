@@ -84,7 +84,7 @@
         </div>
 
         <div class="input-wrap full-width">
-            <label class="label-css">Comment</label>
+            <label class="label-css">Description</label>
             <textarea class="textarea-css" name="video_desc"></textarea>
         </div>
 
