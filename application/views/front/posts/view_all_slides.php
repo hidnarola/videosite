@@ -12,7 +12,7 @@
     <br>
     <form method="post" action="" id="frmblog" enctype="multipart/form-data">
 
-        <ul class="list-group drag-ul" id="sortable" >
+        <ul class="developer list-group drag-ul" id="sortable" >
             <?php 
                 if(!empty($all_slides)) {  
                     foreach($all_slides as $key=>$slide) {
