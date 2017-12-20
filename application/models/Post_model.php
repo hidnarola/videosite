@@ -558,6 +558,7 @@ class Post_model extends CI_Model
         $this->db->select('user_post.id,user_post.channel_id,user_post.slug,user_post.post_type,user_post.post_title,user_post.main_image,COUNT(distinct upc.id) as total_views');
         $this->db->join('user_post_counts upc', 'user_post.id = upc.post_id', 'left');
         $this->db->group_by('user_post.id');
+        $this->db->order_by('user_post.created_at','desc');
         $this->db->limit($limit, $offset);
         $this->db->like('post_title', $q);
         $this->db->where_in('channel_id', $all_channel_id);
