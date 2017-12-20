@@ -138,14 +138,19 @@ class User_post extends CI_Controller
             
             if ( ! $this->upload->do_upload('vid_path')){
                 
-                $this->session->set_flashdata('error', $this->upload->display_errors());
-                redirect('user_post/edit_video_post/'.$post_id);
+                $error = $this->upload->display_errors();
+
+                if(strip_tags($error) != 'You did not select a file to upload.'){                
+                    $this->session->set_flashdata('error', $this->upload->display_errors());
+                    redirect('user_post/edit_video_post/'.$post_id);
+                }
+
             } else {
                 $data1 = array('upload_data' => $this->upload->data());            
 
-                $video_path = 'uploads/videos/'.$data['upload_data']['file_name'];
+                $video_path = 'uploads/videos/'.$data1['upload_data']['file_name'];
 
-                $file_ext = $data['upload_data']['file_ext'];
+                $file_ext = $data1['upload_data']['file_ext'];
                 $random_name = random_string('alnum', 16);
 
                 $file_name = $random_name.$file_ext;
@@ -154,7 +159,7 @@ class User_post extends CI_Controller
                 exec(FFMPEG_PATH . ' -i ' . $data1['upload_data']['full_path']. ' -vcodec libx264 -crf 20 '.$data1['upload_data']['file_path'].$file_name);
                 exec(FFMPEG_PATH . ' -i ' . $data1['upload_data']['full_path'] . ' -ss 00:00:01.000 -vframes 1 ' . $data1['upload_data']['file_path'].$img_file_name);
 
-                unlink($data1['upload_data']['full_path']);
+                // unlink($data1['upload_data']['full_path']);
             }
             $ins_data = [
                             'channel_id'=>$this->input->post('channel'),
@@ -170,7 +175,7 @@ class User_post extends CI_Controller
                             'title'=>$this->input->post('video_title'),
                             'description'=>$this->input->post('video_desc'),
                             'upload_path'=>'uploads/videos/'.$file_name,
-                        ];
+                        ];            
             $this->Post_model->update_record('video',['id'=>$data['post_data']['video']['id']],$video_data);
             $this->session->set_flashdata('success','Video has been uploaded successfully.');
             redirect('dashboard/view_my_posts');
