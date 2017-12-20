@@ -786,9 +786,10 @@ class Post_model extends CI_Model
 
         public function get_recently_posted_videos($limit, $offset)
     {
-        $this->db->select('post_title,main_image,slug,post_type,u.username,count(distinct upc.id) as total_views');
-        $this->db->join('user_post_counts upc','up.id = upc.post_id');
-        $this->db->join('users u','u.id = upc.user_id');
+//            u.username,count(distinct upc.id) as total_views
+        $this->db->select('post_title,main_image,slug,post_type');
+//        $this->db->join('user_post_counts upc','up.id = upc.post_id');
+//        $this->db->join('users u','u.id = upc.user_id');
         $this->db->where('post_type', 'video');
         $this->db->where('up.is_deleted != 1');
         $this->db->where('up.is_blocked != 1');
@@ -800,9 +801,10 @@ class Post_model extends CI_Model
 
     public function get_recently_posted_blogs($limit, $offset)
     {
-        $this->db->select('post_title,main_image,slug,post_type,u.username,count(distinct upc.id) as total_views');
-        $this->db->join('user_post_counts upc','up.id = upc.post_id');
-        $this->db->join('users u','u.id = upc.user_id');
+//        u.username,count(distinct upc.id) as total_views
+        $this->db->select('post_title,main_image,slug,post_type');
+//        $this->db->join('user_post_counts upc','up.id = upc.post_id');
+//        $this->db->join('users u','u.id = upc.user_id');
         $this->db->where('post_type', 'blog');
         $this->db->where('up.is_deleted != 1');
         $this->db->where('up.is_blocked != 1');
@@ -814,9 +816,10 @@ class Post_model extends CI_Model
 
     public function get_recently_posted_gallery($limit, $offset)
     {
-        $this->db->select('post_title,main_image,slug,post_type,u.username,count(distinct upc.id) as total_views');
-        $this->db->join('user_post_counts upc','up.id = upc.post_id');
-        $this->db->join('users u','u.id = upc.user_id');
+//        u.username,count(distinct upc.id) as total_views
+        $this->db->select('post_title,main_image,slug,post_type');
+//        $this->db->join('user_post_counts upc','up.id = upc.post_id');
+//        $this->db->join('users u','u.id = upc.user_id');
         $this->db->where('post_type', 'gallery');
         $this->db->where('up.is_deleted != 1');
         $this->db->where('up.is_blocked != 1');

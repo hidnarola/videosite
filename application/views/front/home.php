@@ -33,7 +33,7 @@
 <div class="home-listing">
   <h2>Recommended</h2>
   <div class="owl-carousel owl-theme">
-              <?php if(!empty($recommend)) { foreach($recommended as $key => $recommend){?>
+              <?php if(!empty($recommended)) { foreach($recommended as $key => $recommend){?>
       <div class="item">
           <div class="list-box">
               <div class="list-top"> 
