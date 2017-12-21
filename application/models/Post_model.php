@@ -777,7 +777,7 @@ class Post_model extends CI_Model
         $this->db->join('users u', 'u.id = uc.user_id', 'left');
         $this->db->where('up.is_deleted != 1');
         $this->db->where('up.is_blocked != 1');
-        $this->db->group_by('upc.post_id');
+        $this->db->group_by('up.id');
         $this->db->order_by('up.created_at', 'desc');
         $this->db->limit($limit, $offset);
         $recent = $this->db->get('user_post up')->result_array();
