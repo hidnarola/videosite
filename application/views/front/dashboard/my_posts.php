@@ -11,7 +11,12 @@
     <div class="home-listing">
         <ul class="ul-list">
         <?php 
-            if (!empty($posts)){ foreach ($posts as $post) {            
+            if (!empty($posts)){ foreach ($posts as $post) {
+                $user_name = $session_info['username'];
+                if($post['upload_user_id'] != 0){
+                    $u_data = $this->db->select('username')->get_where('users',['id'=>$post['upload_user_id']])->row_array();
+                    $user_name = $u_data['username'];
+                }
         ?>
             <li>
                 <div class="list-box">
@@ -36,7 +41,7 @@
                             <a href="<?php echo base_url() . 'video/' . $post['slug']; ?>"><?php echo character_limiter($post['post_title'],20); ?></a>
                         <?php }?>
                         <div class="edit-dlt">
-                            <p> <small><?php echo $session_info['username'] ?> </small><span></span></p>
+                            <p> <small><?php echo $user_name; ?> </small><span></span></p>
                             <?php if($post['post_type'] == 'video') { ?>
                                 <a href="<?php echo base_url().'user_post/edit_video_post/'.$post['id']; ?>" class="fa fa-edit"></a>
                             <?php } else { ?>
@@ -45,6 +50,16 @@
                             <a onclick="delete_confirm(this)" data-id="<?php echo $post['id']; ?>" class="cursor_pointer fa fa-trash"></a>
                         </div>
                         <h6><i class="fa fa-eye"></i> <?php echo $post['total_views'] ?></h6>
+                        <?php if($post['upload_user_id'] != 0){
+                                if($post['is_approved'] == 0){
+                            ?>
+                        <h6><a class="cursor_pointer fa fa-thumbs-o-up" onclick="approve_confirm(this)" data-id="<?php echo $post['id']; ?>">Approve</a></h6>
+                        <h6><a class="cursor_pointer fa fa-thumbs-o-down" onclick="disapprove_confirm(this)" data-id="<?php echo $post['id']; ?>">Disapprove</a></h6>
+                        <?php } 
+                        else { ?>
+                            <h6><i class="fa fa-thumbs-o-up"></i>Approved</h6>
+                        <?php }
+                                }?>
                         <!--<h6><i class="fa fa-clock-o"></i><?php get_ago_time($post['blog_created_date'], date("Y-m-d H:i:s")) ?></h6>-->
                     </div>
                 </div>
@@ -74,6 +89,30 @@
             function(result){ 
                 if(result){
                     window.location.href="<?php echo base_url().'user_post/delete_user_post/'; ?>"+post_id;
+                }
+            }
+        );
+    }
+    
+    function approve_confirm(obj){
+        var post_id = $(obj).data('id');
+        
+        bootbox.confirm("Are you sure to approve this post ?", 
+            function(result){ 
+                if(result){
+                    window.location.href="<?php echo base_url().'user_post/approve_post/'; ?>"+post_id;
+                }
+            }
+        );
+    }
+    
+    function disapprove_confirm(obj){
+        var post_id = $(obj).data('id');
+        
+        bootbox.confirm("Are you sure to disapprove this post ?", 
+            function(result){ 
+                if(result){
+                    window.location.href="<?php echo base_url().'user_post/disapprove_post/'; ?>"+post_id;
                 }
             }
         );

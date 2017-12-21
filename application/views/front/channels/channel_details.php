@@ -1,12 +1,18 @@
 <div class="chanelle-page">
     <div class="chanelle-head">
         <div class="chanelle-head-l">
-            <?php if(!empty($channel_user)) { ?>
+            <?php if(!empty($channel_user)) { 
+                $id = $channel_user['id']; ?>
             <span><img src="<?php echo base_url().$channel_user['avatar'];?>" alt=""/></span>
             <big><?php echo $channel_user['username'];?> </big>
             <small><?php echo $channel_user['channel_name'];?></small>
             <p><?php echo $channel_user['designation'];?></p>
             <?php } ?>
+            
+            <a href="<?php echo base_url() . 'user_post/add_video_post?channel_id='.$id; ?>" class="btn-black">
+                <i class="fa fa-hand-o-up"></i>
+                Add Post
+            </a>
         </div>
         <div class="chanelle-head-r">
             <?php if($user_loggedin == true && $is_this_users_channel == false) { ?>

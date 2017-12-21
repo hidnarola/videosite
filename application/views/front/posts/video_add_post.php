@@ -6,21 +6,36 @@
     ?>
         <div class="alert alert-danger"><?php echo $all_erros; ?></div>
     <?php } ?>
-    
-    <a href="<?php echo base_url().'user_post/add_post/blog'; ?>" class="btn-black">
+    <?php
+        $data['channel_name'] = $this->db->get_where('user_channels',['id' => $channel_id])->row_array();
+    ?>
+    <a href="<?php echo base_url().'user_post/add_post/blog?channel_id='.$data['channel_name']['id']; ?>" class="btn-black">
         <i class="fa fa-rss"></i>
         Add Blog
     </a>
-    <a href="<?php echo base_url().'user_post/add_post/gallery'; ?>" class="btn-red">
+    <a href="<?php echo base_url().'user_post/add_post/gallery?channel_id='.$data['channel_name']['id'];; ?>" class="btn-red">
         <i class="fa fa-camera"></i>
         Add Gallery
     </a>
-    
     <br>
     <br>
     <br>
     
     <form method="post" action="" id="frmblog" enctype="multipart/form-data">
+        <?php 
+        if(!empty($channel_id))
+        {    
+            
+            ?>
+        <div class="input-wrap">
+            <label class="label-css">Channel Name </label>
+            <input disabled="" type="text" name="channel_name" id="channel_name" placeholder="Channel Name" value="<?php echo $data['channel_name']['channel_name']; ?>" class="form-css" />
+        </div>
+        <?php
+        }        
+        else
+        {
+          ?>
         <div class="input-wrap">
             <label class="label-css">Select Channel </label>
             <select class="form-css selectpicker_blog" data-placeholder="Select a Channel"  name="channel" id="channel" >                
@@ -35,6 +50,10 @@
                 <?php } } ?> 
             </select>
         </div>
+        <?php
+        }
+        ?>
+        
 
         <div class="input-wrap">
             <label class="label-css">Select Category </label>

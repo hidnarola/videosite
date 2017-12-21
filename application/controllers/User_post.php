@@ -16,7 +16,8 @@ class User_post extends CI_Controller
         $sess_data = $this->session->userdata('client');
 
         $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
-        
+        $data['channel_id'] = $this->input->get('channel_id', TRUE);
+        $channnel_id = $data['channel_id'];
         $data['all_category'] = [];
         $data['all_sub_cat'] = [];
         $video_path = $this->input->post('video_path');
@@ -67,7 +68,23 @@ class User_post extends CI_Controller
             }
             // ------------------------------------------------------------------------
 
-            $ins_data = [
+            if(!empty($channnel_id)){
+                $ins_data = [
+                                'channel_id'=>$channnel_id,
+                                'upload_user_id'=>$sess_data['id'],
+                                'category_id'=>$this->input->post('category'),
+                                'sub_category_id'=>$this->input->post('sub_category'),
+                                'post_title'=>$this->input->post('video_title'),
+                                'main_image'=>'uploads/videos/'.$img_file_name,
+                                'slug'=>slugify($this->input->post('video_title')),
+                                'created_at'=>date('Y-m-d H:i:s'),
+                                'is_approved'=>0
+                            ];
+                $last_id = $this->Post_model->insert_record('user_post',$ins_data);
+            }
+            else
+            {
+                $ins_data = [
                             'channel_id'=>$this->input->post('channel'),
                             'category_id'=>$this->input->post('category'),
                             'sub_category_id'=>$this->input->post('sub_category'),
@@ -76,8 +93,8 @@ class User_post extends CI_Controller
                             'slug'=>slugify($this->input->post('video_title')),
                             'created_at'=>date('Y-m-d H:i:s')
                         ];
-            $last_id = $this->Post_model->insert_record('user_post',$ins_data);
-
+                $last_id = $this->Post_model->insert_record('user_post',$ins_data);
+            }
             $video_data = [
                             'post_id'=>$last_id,
                             'title'=>$this->input->post('video_title'),
@@ -193,7 +210,8 @@ class User_post extends CI_Controller
 
         $data['post_type'] = $post_type;
         $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
-        
+        $data['channel_id'] = $this->input->get('channel_id', TRUE);
+        $channnel_id = $data['channel_id'];
         $data['all_category'] = [];
         $data['all_sub_cat'] = [];
 
@@ -243,20 +261,38 @@ class User_post extends CI_Controller
             }
 
             // ------------------------------------------------------------------------
-
-            $ins_data = [
-                            'channel_id'=>$this->input->post('channel'),
-                            'category_id'=>$this->input->post('category'),
-                            'sub_category_id'=>$this->input->post('sub_category'),
-                            'post_type'=>$post_type,
-                            'post_title'=>$this->input->post('title'),
-                            'main_image'=>$file_path,
-                            'slug'=>slugify($this->input->post('title')),
-                            'created_at'=>date('Y-m-d H:i:s')
-                        ];
-            $last_id = $this->Post_model->insert_record('user_post',$ins_data);
-            $this->session->set_flashdata('success','User Post has been added successfully.');
-            redirect('user_post/add_post_slide/'.$last_id);
+            if(!empty($channnel_id)){
+                $ins_data = [
+                                'channel_id'=>$channnel_id,
+                                'upload_user_id'=>$sess_data['id'],
+                                'category_id'=>$this->input->post('category'),
+                                'sub_category_id'=>$this->input->post('sub_category'),
+                                'post_type'=>$post_type,
+                                'post_title'=>$this->input->post('title'),
+                                'main_image'=>$file_path,
+                                'slug'=>slugify($this->input->post('title')),
+                                'created_at'=>date('Y-m-d H:i:s')
+                            ];
+                $last_id = $this->Post_model->insert_record('user_post',$ins_data);
+                $this->session->set_flashdata('success','User Post has been added successfully.');
+                redirect('dashboard/view_my_posts');
+            }
+            else{
+                $ins_data = [
+                                'channel_id'=>$this->input->post('channel'),
+                                'category_id'=>$this->input->post('category'),
+                                'sub_category_id'=>$this->input->post('sub_category'),
+                                'post_type'=>$post_type,
+                                'post_title'=>$this->input->post('title'),
+                                'main_image'=>$file_path,
+                                'slug'=>slugify($this->input->post('title')),
+                                'created_at'=>date('Y-m-d H:i:s')
+                            ];
+                $last_id = $this->Post_model->insert_record('user_post',$ins_data);
+                $this->session->set_flashdata('success','User Post has been added successfully.');
+                redirect('user_post/add_post_slide/'.$last_id);
+            }
+            
         }
     }
 
@@ -598,7 +634,34 @@ class User_post extends CI_Controller
 
         echo json_encode($ret);
     }  
+    
+    public function approve_post($post_id)
+    {
+       $sess_data = $this->session->userdata('client');
+        $all_ids_arr = $this->db->select('id')->get_where('user_channels',['user_id'=>$sess_data['id']])->result_array();
+        $all_channel_ids = array_column($all_ids_arr,'id');
 
+        $post_data = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
+        if(in_array($post_data['channel_id'],$all_channel_ids) == false){ custom_front_show_404(); }
+
+        $this->db->update('user_post',['is_approved'=>'1'],['id'=>$post_id]);
+        $this->session->set_flashdata('success','Post has been approved.');
+        redirect('dashboard/view_my_posts'); 
+    }
+
+    public function disapprove_post($post_id)
+    {
+        $sess_data = $this->session->userdata('client');
+        $all_ids_arr = $this->db->select('id')->get_where('user_channels',['user_id'=>$sess_data['id']])->result_array();
+        $all_channel_ids = array_column($all_ids_arr,'id');
+
+        $post_data = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
+        if(in_array($post_data['channel_id'],$all_channel_ids) == false){ custom_front_show_404(); }
+
+        $this->db->update('user_post',['is_deleted'=>'1'],['id'=>$post_id]);
+        $this->session->set_flashdata('success','Post has been disapproved');
+        redirect('dashboard/view_my_posts');
+    }
 }
 
 /* End of file User_post.php */
