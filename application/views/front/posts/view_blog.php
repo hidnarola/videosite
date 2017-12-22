@@ -118,7 +118,7 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="intro">
                         <ul class="list-ul comment-ul " id="post_comment_id">
-                            <?php if(isset($comments)){ foreach ($comments as $key =>$comm){?>
+                            <?php if(!empty(($comments))){ foreach ($comments as $key =>$comm){?>
                             <li>
                                 <div class="list-ul-box">
                                 <span><a class="cursor_pointer" href="">
@@ -134,7 +134,7 @@
                        ?>
                         </div>
                     </li>
-                    <?php } }?>
+                    <?php } } else { echo "<div class='alert alert-success'>No Comments Found.</div>"; }?>
                         </ul>
                         
                         

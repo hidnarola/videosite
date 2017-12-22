@@ -3,16 +3,16 @@
         <div class="chanelle-head-l">
             <?php if(!empty($channel_user)) { 
                 $id = $channel_user['id']; ?>
-            <span><img src="<?php echo base_url().$channel_user['avatar'];?>" alt=""/></span>
+            <span><img src="<?php echo base_url().$channel_user['avatar'];?>" alt="" onerror="this.src='<?php echo base_url().'uploads/avatars/user-icon-image-download.jpg'; ?>'"/></span>
             <big><?php echo $channel_user['username'];?> </big>
             <small><?php echo $channel_user['channel_name'];?></small>
             <p><?php echo $channel_user['designation'];?></p>
             <?php } ?>
-            
-            <a href="<?php echo base_url() . 'user_post/add_video_post?channel_id='.$id; ?>" class="btn-black">
-                <i class="fa fa-hand-o-up"></i>
-                Add Post
-            </a>
+            <?php if($is_this_users_channel == true) { ?>
+                <a href="<?php echo base_url() . 'user_post/add_video_post?channel_id='.$id; ?>" class="btn-black">
+                    <i class="fa fa-hand-o-up"></i>Add Post
+                </a>
+           <?php } ?>
         </div>
         <div class="chanelle-head-r">
             <?php if($user_loggedin == true && $is_this_users_channel == false) { ?>
@@ -37,7 +37,7 @@
         <div class="chanelle-body">
             <div class="chanelle-body-l">
                 <ul class="list-ul comment-ul ">
-                    <?php if(isset($comments)){ foreach ($comments as $key =>$comm){?>
+                    <?php if(!empty($comments)){ foreach ($comments as $key =>$comm){?>
                     <li>
                         <div class="list-ul-box">
 
@@ -55,7 +55,7 @@
                        ?>
                         </div>
                     </li>
-                    <?php } } else { echo"<div class='alert alert-success'>No Comments Found.</div>"; }?>
+                    <?php } } else { echo "<div class='alert alert-success'>No Comments Found.</div>"; }?>
                 </ul>
             </div>
 

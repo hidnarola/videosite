@@ -7,8 +7,10 @@
         <div class="alert alert-danger"><?php echo $all_erros; ?></div>
     <?php } ?>
     <?php
+        
         $data['channel_name'] = $this->db->get_where('user_channels',['id' => $channel_id])->row_array();
     ?>
+        <?php if(!empty($channel_id)) {?>
     <a href="<?php echo base_url().'user_post/add_post/blog?channel_id='.$data['channel_name']['id']; ?>" class="btn-black">
         <i class="fa fa-rss"></i>
         Add Blog
@@ -17,6 +19,16 @@
         <i class="fa fa-camera"></i>
         Add Gallery
     </a>
+    <?php } else { ?>
+    <a href="<?php echo base_url().'user_post/add_post/blog'; ?>" class="btn-black">
+        <i class="fa fa-rss"></i>
+        Add Blog
+    </a>
+    <a href="<?php echo base_url().'user_post/add_post/gallery';?>" class="btn-red">
+        <i class="fa fa-camera"></i>
+        Add Gallery
+    </a>    
+   <?php  }?>
     <br>
     <br>
     <br>

@@ -271,11 +271,12 @@ class User_post extends CI_Controller
                                 'post_title'=>$this->input->post('title'),
                                 'main_image'=>$file_path,
                                 'slug'=>slugify($this->input->post('title')),
-                                'created_at'=>date('Y-m-d H:i:s')
+                                'created_at'=>date('Y-m-d H:i:s'),
+                                'is_approved'=>0
                             ];
                 $last_id = $this->Post_model->insert_record('user_post',$ins_data);
                 $this->session->set_flashdata('success','User Post has been added successfully.');
-                redirect('dashboard/view_my_posts');
+                redirect('user_post/add_post_slide/'.$last_id);
             }
             else{
                 $ins_data = [
@@ -381,17 +382,22 @@ class User_post extends CI_Controller
     public function view_all_slides($post_id){
         
         $sess_data = $this->session->userdata('client');
-        $all_channels = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
-        $all_channel_id = array_column($all_channels,'id');
+        
+        $data['channel_id'] = $this->db->select('channel_id')->get_where('user_post',['id'=>$post_id])->row_array();
+        $channnel_id = $data['channel_id'];
+        
+            $all_channels = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
+            $all_channel_id = array_column($all_channels,'id');
 
-        $post_data = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
-        $data['post_type'] = $post_data['post_type'];
-        $data['post_id'] = $post_id;
-
-        if(in_array($post_data['channel_id'],$all_channel_id) == false){
-            die('Do not have access');
-        }
-
+            $post_data = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
+            $data['post_type'] = $post_data['post_type'];
+            $data['post_id'] = $post_id;
+            if(empty($channnel_id)){
+                if(in_array($post_data['channel_id'],$all_channel_id) == false){
+                    die('Do not have access');
+                }   
+            }
+       
         $this->db->order_by('order_no');
         if($post_data['post_type'] == 'blog'){
             $data['all_slides'] = $this->db->get_where('blog',['post_id'=>$post_id])->result_array();
@@ -400,21 +406,26 @@ class User_post extends CI_Controller
         }
 
 
-        $data['subview'] = 'front/posts/view_all_slides';
-        $this->load->view('front/layouts/layout_main', $data);        
+            $data['subview'] = 'front/posts/view_all_slides';
+            $this->load->view('front/layouts/layout_main', $data);  
     }
 
     public function add_post_slide($post_id){
-
         $sess_data = $this->session->userdata('client');
-        $all_channels = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
-        $all_channel_id = array_column($all_channels,'id');
-
-        $post_data = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
-        $data['post_type'] = $post_data['post_type'];
         
-        if(in_array($post_data['channel_id'],$all_channel_id) == false){
-            die('Do not have access');
+        $data['channel_id'] = $data['channel_id'] = $this->db->select('channel_id')->get_where('user_post',['id'=>$post_id])->row_array();
+        $channnel_id = $data['channel_id'];
+        
+            $all_channels = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
+            $all_channel_id = array_column($all_channels,'id');
+            $post_data = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
+            $data['post_type'] = $post_data['post_type'];
+        
+        if(empty($channnel_id)){
+            
+            if(in_array($post_data['channel_id'],$all_channel_id) == false){
+                die('Do not have access');
+            }
         }
 
         $this->form_validation->set_rules('title', 'Title', 'required');
@@ -466,7 +477,6 @@ class User_post extends CI_Controller
                     'img_path' => $file_path,
                     'created_at' => date("Y-m-d H:i:s"),
                 ];
-
                 $this->Post_model->insert_record('blog',$insert_array);
             } else {
                 $insert_array = [
@@ -478,7 +488,6 @@ class User_post extends CI_Controller
                 ];
                 $this->Post_model->insert_record('gallery',$insert_array);
             }
-
             $this->session->set_flashdata('success','Slide has been saved successfully.');
             redirect('user_post/view_all_slides/'.$post_id);
         }
@@ -486,6 +495,9 @@ class User_post extends CI_Controller
 
     public function edit_post_slide($slide_id,$post_type){
 
+        $data['channel_id'] = $data['channel_id'] = $this->db->select('channel_id')->get_where('user_post',['id'=>$slide_id])->row_array();
+        $channnel_id = $data['channel_id'];
+        
         if($post_type == 'blog'){
             $data['slide_data'] = $this->Post_model->get_result('blog',['id'=>$slide_id],true);
         }else{
@@ -502,10 +514,11 @@ class User_post extends CI_Controller
 
         $post_data = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
 
-        if(in_array($post_data['channel_id'],$all_channel_id) == false){
-            die('Do not have access');
-        }
-
+         if(empty($channnel_id)){
+            if(in_array($post_data['channel_id'],$all_channel_id) == false){
+                die('Do not have access');
+            }
+         }
 
         $this->form_validation->set_rules('title', 'Title', 'required');
         $this->form_validation->set_rules('description', 'Description', 'required');

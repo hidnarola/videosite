@@ -53,11 +53,11 @@
                         <?php if($post['upload_user_id'] != 0){
                                 if($post['is_approved'] == 0){
                             ?>
-                        <h6><a class="cursor_pointer fa fa-thumbs-o-up" onclick="approve_confirm(this)" data-id="<?php echo $post['id']; ?>">Approve</a></h6>
-                        <h6><a class="cursor_pointer fa fa-thumbs-o-down" onclick="disapprove_confirm(this)" data-id="<?php echo $post['id']; ?>">Disapprove</a></h6>
+                        <h6 class="approve"><a class="cursor_pointer" onclick="approve_confirm(this)" data-id="<?php echo $post['id']; ?>"><i class="fa fa-thumbs-o-up"></i>Approve</a></h6>
+                        <h6 class="disapprove"><a class="cursor_pointer" onclick="disapprove_confirm(this)" data-id="<?php echo $post['id']; ?>"><i class="fa fa-thumbs-o-down"></i>Disapprove</a></h6>
                         <?php } 
                         else { ?>
-                            <h6><i class="fa fa-thumbs-o-up"></i>Approved</h6>
+                            <h6 class="active"><i class="fa fa-thumbs-o-up"></i> Approved</h6>
                         <?php }
                                 }?>
                         <!--<h6><i class="fa fa-clock-o"></i><?php get_ago_time($post['blog_created_date'], date("Y-m-d H:i:s")) ?></h6>-->

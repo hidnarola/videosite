@@ -34,7 +34,7 @@
                     {
                         ?>
                         <tr>
-                            <td><?php echo $channel['channel_name']; ?></td>
+                            <td><a href="<?php echo base_url() . 'channel/' . $channel['channel_slug']; ?>" target="_blank"><?php echo $channel['channel_name']; ?></a></td>
                             <td><?php echo $channel['channel_slug']; ?></td>
                             <td>
                                 <a href="<?php echo base_url() . 'user_channels/edit/' . $channel['id']; ?>" title="" class="btn btn-success">  Edit </a>
