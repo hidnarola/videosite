@@ -73,7 +73,7 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">Avatar:</label>
                             <div class="col-lg-9">
-                                <input type="file" class="file-input" name="avatar">
+                                <input type="file" class="file-input" name="my_img">
                                 <input type="hidden" value="<?= isset($user_data['avatar']) ? $user_data['avatar'] : '' ?>" name="Himg_path" id="Himg_path">
                                 <span class="help-block">Please upload only image file With .jpg, .jpeg, .png, .gif extension (Size : 1140px * 475px)</span>
                             </div>

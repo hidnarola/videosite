@@ -15,7 +15,7 @@ class Admin extends CI_Controller {
 
         $data['user_data'] = $this->session->userdata('admin');
         if (!empty($data['user_data'])) {            
-            redirect('admin/dashboard');
+            redirect('admin/users');
         }
 
         if ($this->input->post()) {
@@ -44,7 +44,7 @@ class Admin extends CI_Controller {
                         $this->session->set_userdata(['admin' => $user_data]); // Start Loggedin User Session
                         $this->session->set_flashdata('message', ['message' => 'Login Successfull', 'class' => 'alert alert-success']);
                         $this->Users_model->update_user_data($user_data['id'], ['last_login' => date('Y-m-d H:i:s')]); // update last login time
-                        redirect('admin/dashboard');
+                        redirect('admin/users');
                     } else {
                         $this->session->set_flashdata('message', ['message' => 'Password is incorrect.', 'class' => 'alert alert-danger']);
                         redirect('admin/login');

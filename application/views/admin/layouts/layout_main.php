@@ -66,12 +66,29 @@ else
                                 <ul class="navigation navigation-main navigation-accordion">
 
                                     <!-- Main -->                                    
-                                    <li class="<?php echo ($controller == 'dashboard') ? 'active' : ''; ?>">
+<!--                                    <li class="<?php echo ($controller == 'dashboard') ? 'active' : ''; ?>">
                                         <a href="<?php echo base_url() . "admin/dashboard" ?>">
                                             <i class="icon-home4"></i> 
                                             <span>Dashboard</span>
                                         </a>
+                                    </li>-->
+                                    <!--Users-->
+                                    <li class="<?php echo ($controller == 'users') ? 'active' : ''; ?>">
+                                        <a href="<?php echo base_url() . 'admin/users'; ?>">
+                                            <i class="icon-users4"></i>
+                                            <span>Users</span></a>
                                     </li>
+                                    <!--Users-->
+                                    
+                                    <!--Users' Post-->
+                                    <li class="<?php echo ($controller == 'userpost') ? 'active' : ''; ?>">
+                                        <a href="<?php echo base_url() . "admin/userpost" ?>">
+                                            <i class="icon-books"></i> 
+                                            <span>Users' Post</span>
+                                        </a>
+                                    </li>
+                                    <!--/Users' Post-->
+
                                     <!-- Categories Menu -->
 
 
@@ -96,11 +113,7 @@ else
 
                                     <!-- USERS Menu -->
 
-                                    <li class="<?php echo ($controller == 'users') ? 'active' : ''; ?>">
-                                        <a href="<?php echo base_url() . 'admin/users'; ?>">
-                                            <i class="icon-users4"></i>
-                                            <span>Users</span></a>
-                                    </li>
+                                    
 <!--                                    <li class="<?php echo (in_array($controller, ['doctor', 'patient', 'users'])) ? 'active' : ''; ?>">
                                         <a href="#" class="has-ul"><i class="icon-users4"></i> <span>Users</span></a>
                                         <ul style="">
@@ -124,15 +137,7 @@ else
                                             </li>                                            
                                         </ul>
                                     </li>-->
-                                    <!--Users' Post-->
-                                    <li class="<?php echo ($controller == 'userpost') ? 'active' : ''; ?>">
-                                        <a href="<?php echo base_url() . "admin/userpost" ?>">
-                                            <i class="icon-books"></i> 
-                                            <span>Users' Post</span>
-                                        </a>
-                                    </li>
-                                    <!--/Users' Post-->
-
+                                    
 
 
 
