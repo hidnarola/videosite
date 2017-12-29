@@ -76,7 +76,7 @@
 .mobile-nav-ul{display:block;}
 .mobile-nav-ul:after{content:'';width:280px;position:fixed;top: 0;right: 0;background: rgba(0,0,0,.8);z-index:-1;height:100%;}
 .mobile-nav-ul:before{content: '';position: fixed;top: 0;left: 0;width: 100%;background: rgba(0,0,0,.8);display: block;height: 100%;z-index:-1;}
-.mobile-nav-ul{width:280px;position:absolute;top:0;right:0;z-index:10;display:none;} 
+.mobile-nav-ul{height: 700px; overflow-y:scroll; width:280px;position:absolute;top:0;right:0;z-index:10;display:none;} 
 .menu-nav .mobile-nav-ul{display:block;}
 .mobile-nav-ul ul{list-style:none;margin:0;padding:0;}
 .mobile-nav-ul ul li{display:block;width:100%;position:relative;}

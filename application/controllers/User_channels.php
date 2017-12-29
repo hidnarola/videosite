@@ -108,7 +108,7 @@ class User_channels extends CI_Controller {
 
         $data['user_loggedin'] = false;
         $data['is_user_subscribe'] = false;
-        $data['is_this_users_channel'] = false;
+        $data['is_this_users_channel'] = true;
         $data['total_subscriber'] = $this->db->get_where('user_subscribers',['channel_id'=>$data['res_channel']['id']])->num_rows();
         if(!empty($sess_data)){
 			
@@ -120,7 +120,7 @@ class User_channels extends CI_Controller {
                 $all_ids = array_column($all_userchannel, 'id');
                 if (in_array($data['res_channel']['id'], $all_ids))
                 {
-                    $data['is_this_users_channel'] = true;
+                    $data['is_this_users_channel'] = false;
                 }
             }
 

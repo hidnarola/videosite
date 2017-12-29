@@ -81,9 +81,7 @@ class User_post extends CI_Controller
                                 'is_approved'=>0
                             ];
                 $last_id = $this->Post_model->insert_record('user_post',$ins_data);
-            }
-            else
-            {
+            } else {
                 $ins_data = [
                             'channel_id'=>$this->input->post('channel'),
                             'category_id'=>$this->input->post('category'),
@@ -102,6 +100,72 @@ class User_post extends CI_Controller
                             'upload_path'=>'uploads/videos/'.$file_name,
                             'created_at'=>date('Y-m-d H:i:s')
                         ];
+            $this->Post_model->insert_record('video',$video_data);
+            $this->session->set_flashdata('success','Video has been uploaded successfully.');
+            redirect('dashboard/view_my_posts');
+        }
+    }
+
+    public function add_embed_video(){
+        $sess_data = $this->session->userdata('client');
+
+        $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
+        $data['channel_id'] = $this->input->get('channel_id', TRUE);
+        $channnel_id = $data['channel_id'];
+        $data['all_category'] = [];
+        $data['all_sub_cat'] = [];
+        $video_path = $this->input->post('video_path');
+
+        if($_POST){
+            $post_cat_id = $this->input->post('category');
+            $data['all_category'] = $this->Post_model->get_result('categories', ['is_deleted' => '0', 'is_blocked' => '0']);
+            $data['all_sub_cat'] = $this->Post_model->get_result('sub_categories', ['main_cat_id'=>$post_cat_id,'is_deleted' => '0', 'is_blocked' => '0']);
+        }else{
+            $data['all_category'] = $this->Post_model->get_result('categories', ['is_deleted' => '0', 'is_blocked' => '0']);            
+        }
+
+        $this->form_validation->set_rules('video_title', 'Video Title', 'required');
+        $this->form_validation->set_rules('category', 'Category', 'required');        
+
+        if ($this->form_validation->run() == FALSE){
+            $data['subview'] = 'front/posts/video_add_embed_post';
+            $this->load->view('front/layouts/layout_main', $data);
+        } else {            
+
+            if(!empty($channnel_id)){
+                $ins_data = [
+                                'channel_id'=>$channnel_id,
+                                'upload_user_id'=>$sess_data['id'],
+                                'category_id'=>$this->input->post('category'),
+                                'sub_category_id'=>$this->input->post('sub_category'),
+                                'post_title'=>$this->input->post('video_title'),
+                                'main_image'=>'',
+                                'slug'=>slugify($this->input->post('video_title')),
+                                'created_at'=>date('Y-m-d H:i:s'),
+                                'is_approved'=>0
+                            ];
+                $last_id = $this->Post_model->insert_record('user_post',$ins_data);
+            } else {
+                $ins_data = [
+                                'channel_id'=>$this->input->post('channel'),
+                                'category_id'=>$this->input->post('category'),
+                                'sub_category_id'=>$this->input->post('sub_category'),
+                                'post_title'=>$this->input->post('video_title'),
+                                'main_image'=>'',
+                                'slug'=>slugify($this->input->post('video_title')),
+                                'created_at'=>date('Y-m-d H:i:s')
+                            ];
+                $last_id = $this->Post_model->insert_record('user_post',$ins_data);
+            }
+
+            $video_data = [
+                'post_id'=>$last_id,
+                'title'=>$this->input->post('video_title'),
+                'description'=>$this->input->post('video_desc'),
+                'embed_link'=>$this->input->post('embed_video'),
+                'upload_path'=>'uploads/videos/'.$file_name,
+                'created_at'=>date('Y-m-d H:i:s')
+            ];
             $this->Post_model->insert_record('video',$video_data);
             $this->session->set_flashdata('success','Video has been uploaded successfully.');
             redirect('dashboard/view_my_posts');
@@ -208,7 +272,8 @@ class User_post extends CI_Controller
 
         if(in_array($post_type,['blog','gallery']) == false){ custom_front_show_404(); }
 
-        $data['post_type'] = $post_type;
+        if($post_type == 'blog'){ $new_post_type ='Blog Article'; }
+        $data['post_type'] = $new_post_type;
         $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
         $data['channel_id'] = $this->input->get('channel_id', TRUE);
         $channnel_id = $data['channel_id'];
@@ -306,7 +371,8 @@ class User_post extends CI_Controller
 
         if(in_array($post_type,['blog','gallery']) == false){ custom_front_show_404(); }
 
-        $data['post_type'] = $post_type;
+        if($post_type == 'blog'){ $new_post_type ='Blog Article'; }
+        $data['post_type'] = $new_post_type;
         $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
         
         $data['all_category'] = [];
@@ -416,10 +482,10 @@ class User_post extends CI_Controller
         $data['channel_id'] = $data['channel_id'] = $this->db->select('channel_id')->get_where('user_post',['id'=>$post_id])->row_array();
         $channnel_id = $data['channel_id'];
         
-            $all_channels = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
-            $all_channel_id = array_column($all_channels,'id');
-            $post_data = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
-            $data['post_type'] = $post_data['post_type'];
+        $all_channels = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
+        $all_channel_id = array_column($all_channels,'id');
+        $post_data = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
+        $data['post_type'] = $post_data['post_type'];        
         
         if(empty($channnel_id)){
             

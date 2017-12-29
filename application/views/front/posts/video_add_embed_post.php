@@ -28,12 +28,13 @@
         <i class="fa fa-camera"></i>
         Add Gallery
     </a>    
-   <?php  }?>
+   <?php  } ?>
 
-   <a href="<?php echo base_url().'user_post/add_embed_video';?>" class="btn-red">
+   <a href="<?php echo base_url().'user_post/add_video_post';?>" class="btn-red">
         <i class="fa fa-camera"></i>
-        Add Embed Video
+        Add Video Post
     </a>    
+    
     <br>
     <br>
     <br>
@@ -105,23 +106,16 @@
         <div class="input-wrap">
             <label class="label-css">Video Title </label>
             <input type="text" name="video_title" id ="video_title" placeholder="Video Title" value="<?php echo set_value('video_title'); ?>" class="form-css" />
-        </div>
-
-        <div class="input-wrap">
-            <label class="label-css">Upload File</label>
-            <div class="input-file">
-                <input type="text" class="form-css" name="video_path" readonly >
-                <label class="input-group-btn">
-                    <span class="">
-                        Browse <input type="file" name="vid_path" style="display: none;">
-                    </span>
-                </label>
-            </div>
+        </div>        
+        
+        <div class="input-wrap full-width">
+            <label class="label-css">Embed Video URL </label>
+            <input type="text" name="embed_video" id ="embed_video" placeholder="Video Url" value="<?php echo set_value('embed_video'); ?>" class="form-css" />
         </div>
 
         <div class="input-wrap full-width">
             <label class="label-css">Description</label>
-            <textarea class="textarea-css" name="video_desc"></textarea>
+            <textarea class="textarea-css" name="video_desc"><?php echo set_value('video_desc'); ?></textarea>
         </div>
 
         <div class="btn-btm">

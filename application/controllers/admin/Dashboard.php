@@ -4,10 +4,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Dashboard extends CI_Controller {
 
+    public $img_var = '';
+
     public function __construct() {
         parent::__construct();
         $this->load->model(['Users_model']);
-        check_admin_login();
+        check_admin_login();        
     }
 
     /**
@@ -32,18 +34,15 @@ class Dashboard extends CI_Controller {
     }
 
     public function edit() {
+
         $session_data = $this->session->userdata('admin');
         $data['user_data'] = $this->Users_model->check_if_user_exist(['id' => $session_data['id']], false, true,['1','2','3']);
 
-        if (empty($data['user_data'])) {
-            redirect('admin/login');
-        }                
         $data['heading'] = 'Edit Profile';
         
         $this->img_var = $data['user_data']['avatar'];
 
-        $this->form_validation->set_rules('username', 'Username', 'trim|required|callback_username_check',
-                                  ['username_check'=>'Username should be unique.']);
+        $this->form_validation->set_rules('username', 'Username', 'trim|required');
         $this->form_validation->set_rules('fname', 'fname', 'trim');
         $this->form_validation->set_rules('lname', 'lname', 'trim');
         $this->form_validation->set_rules('file_upload', 'File Upload', 'callback_file_upload');
@@ -66,15 +65,14 @@ class Dashboard extends CI_Controller {
                                 'username'=>$username,							
                                 'avatar'=>$this->img_var,
                                 'birth_date'=>$birth_date
-                            ];
-                pr($upd_arr);die;
+                            ];                                
                 $this->Users_model->update_user_data($session_data['id'],$upd_arr);
 
                 $user_data = $this->Users_model->get_data(['id'=>$session_data['id']],true);
                 $this->session->set_userdata('admin',$user_data);
 
                 $this->session->set_flashdata('success','Profile has been updated successfully.');
-                redirect('admin/profile_edit');
+                redirect('admin/edit_profile');
             }             
     }
 
@@ -121,9 +119,9 @@ class Dashboard extends CI_Controller {
 
     	$this->load->library('upload', $config);
     	
-    	if ( ! $this->upload->do_upload('my_img')){    		
-    		$error_msg = strip_tags($this->upload->display_errors());
-    		if($error_msg == 'You did not select a file to upload.'){
+    	if ( ! $this->upload->do_upload('my_img')){    	
+            $error_msg = strip_tags($this->upload->display_errors());
+    		if($error_msg == 'You did not select a file to upload.'){                
     			return true;
     		}else{
 	    		$this->form_validation->set_message('file_upload', $this->upload->display_errors());
@@ -132,9 +130,9 @@ class Dashboard extends CI_Controller {
     	} else {
     		$data = array('upload_data' => $this->upload->data());
             
+            $file_name = random_string('alnum', 16).'.jpg';            
             $old_path = $data['upload_data']['full_path'];
             $new_path = $data['upload_data']['file_path'].$file_name;
-            $file_name = random_string('alnum', 16).'.jpg';            
             exec(FFMPEG_PATH . ' -i '.$old_path.' -vf scale=500:-1 '.$new_path);
             unlink($data['upload_data']['full_path']);
 

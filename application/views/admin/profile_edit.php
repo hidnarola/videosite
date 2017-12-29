@@ -1,3 +1,4 @@
+<?php pr( validation_errors() ); ?>
 <script type="text/javascript" src="<?= DEFAULT_ADMIN_JS_PATH ?>pages/form_inputs.js"></script>
 <script type="text/javascript" src="<?= DEFAULT_ADMIN_JS_PATH ?>plugins/forms/selects/select2.min.js"></script>
 <script type="text/javascript" src="<?= DEFAULT_ADMIN_JS_PATH ?>plugins/pickers/anytime.min.js"></script>
@@ -84,7 +85,7 @@
                                 <img id="img-preview" src="<?php
                                 if (isset($user_data['avatar']) && $user_data['avatar'] != '')
                                 {
-                                    echo base_url('uploads/avatars/' . $user_data['avatar']);
+                                    echo base_url($user_data['avatar']);
                                 }
                                 else
                                 {

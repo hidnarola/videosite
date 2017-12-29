@@ -49,7 +49,7 @@ class Dashboard extends CI_Controller {
 							'username'=>$username,							
 							'avatar'=>$this->img_var,
 							'birth_date'=>$birth_date
-						];
+                        ];
 			$this->Users_model->update_user_data($client_data['id'],$upd_arr);
 			
 			$user_data = $this->Users_model->get_data(['id'=>$client_data['id']],true);
@@ -85,8 +85,8 @@ class Dashboard extends CI_Controller {
 		$this->session->unset_userdata('client');
 		$this->session->set_flashdata('success','Logout successful.');
 		redirect('home');
-	}
- 
+	}    
+    
 
 	/*========================================================================
 	=            Form validation callback functions comment block            =
@@ -139,15 +139,15 @@ class Dashboard extends CI_Controller {
     			return false;
     		}    		
     	} else {
-    		$data = array('upload_data' => $this->upload->data());
+            $data = array('upload_data' => $this->upload->data());            
             
+            $file_name = random_string('alnum', 16).'.jpg';            
             $old_path = $data['upload_data']['full_path'];
             $new_path = $data['upload_data']['file_path'].$file_name;
-            $file_name = random_string('alnum', 16).'.jpg';            
             exec(FFMPEG_PATH . ' -i '.$old_path.' -vf scale=500:-1 '.$new_path);
             unlink($data['upload_data']['full_path']);
 
-    		$this->img_var = 'uploads/avatars/'.$file_name;
+            $this->img_var = 'uploads/avatars/'.$file_name;            
     		return true;
     	}
     }

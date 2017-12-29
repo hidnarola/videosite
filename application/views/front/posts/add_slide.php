@@ -6,7 +6,7 @@
     }
 </style>
 <div class="form-element">
-    <h3 class="h3-title">Add Slide</h3>
+    <h3 class="h3-title">Add  <?php  if($post_type == 'blog'){ echo 'Article '; }else{ echo 'Gallery'; } ?> Slide</h3>
 <?php // if($post_type == 'blog'){?>
     <!--<h3 class="h3-title">Add Blog</h3>-->
     <?php // } else if ($post_type == 'gallery'){ ?>

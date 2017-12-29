@@ -81,14 +81,9 @@
                         <?php } } 
 //          ==================================Gallery========================================================
 //          ==================================Video========================================================
-                        elseif ($posts['post_type'] == 'video') { ?>
-                    <!--<div class="big-img">-->
-                        <!--<img src="<?php echo base_url() . $posts['upload_path']; ?>" alt="" />-->
-                        <!--<a href="">-->
-<!--                            <video width="100%" controls>
-                                <source src="<?php echo base_url() . $posts['upload_path']; ?>" type="video/mp4">
-                            </video>-->
-                        <!--</a>-->
+                        elseif ($posts['post_type'] == 'video') { 
+                            if($posts['embed_link'] == '') {
+                    ?>                    
                         <div class="black-bg-video">
                             <div id="myDiv" style="width:100%">This text will be replaced with a player.</div>
                         </div>
@@ -101,6 +96,9 @@
                             "width": 640
                         });
                         </script>
+                    <?php } else { 
+                        echo $posts['embed_link'];
+                    } ?>
                     <!--</div>-->
                     <div class="list-content">
                         <h2><?php echo $posts['vtitle']; ?></h2>
