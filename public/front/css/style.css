@@ -52,14 +52,14 @@ font-family: 'Comfortaa', cursive;
 .nav-div ul li a i{width:35px;vertical-align:top;text-align:left;display: inline-block;font-size:20px;}
 .ad-div{margin:0 0 30px;}
 
-.category-nav{margin}
-.category-nav ul{list-style:none;margin:0;padding:0;}
+/* .category-nav{margin} */
+.category-nav ul{list-style:none; margin:0; padding:0;}
 .category-nav ul li{display:block;margin:0;position:relative;}
-.category-nav ul li a.ct-link{display:block;font-size:14px;color:##666;	padding:3px 15px 3px 43px;position:relative;line-height:42px;}
+.category-nav ul li a.ct-link{display:block;font-size:14px;color:#666;	padding:3px 15px 3px 43px;position:relative; line-height:42px; }
 .category-nav ul li a.ct-link:hover{text-decoration:none;}
 .category-nav ul li a.ct-link > i{position:absolute;top: 50%;left: 5px;fill: #fff;-webkit-transform:translateY(-50%); -moz-transform:translateY(-50%); transform:translateY(-50%);}
 .category-nav ul li a.ct-link > i.icon-gamepad{font-size:24px;}
-.category-nav ul li a.arrow-down{position:absolute;top:50%;right:0;transform:translateY(-50%); font-size:20px;color:##666;}
+.category-nav ul li a.arrow-down{position:absolute;top:50%;right:0;transform:translateY(-50%); font-size:20px;color:#666;}
 .category-nav ul li a:hover{opacity:.6;}
 
 .tag-v{position:absolute;top:15px;left:0;border-radius:0 80px 80px 0;line-height:22px;padding:7px 15px 3px 10px;overflow:hidden;font-size:15px;color:#f4f4f4;white-space:nowrap; background:#f0351c;height:auto !important; }

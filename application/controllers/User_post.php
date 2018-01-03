@@ -201,8 +201,7 @@ class User_post extends CI_Controller
             $data['all_category'] = $this->Post_model->get_result('categories', ['is_deleted' => '0', 'is_blocked' => '0']);
             $data['all_sub_cat'] = $this->Post_model->get_result('sub_categories', ['main_cat_id'=>$post_cat_id,'is_deleted' => '0', 'is_blocked' => '0']);
         }
-
-
+        
         $this->form_validation->set_rules('video_title', 'Video Title', 'required');
         $this->form_validation->set_rules('category', 'Category', 'required');        
 
@@ -254,6 +253,67 @@ class User_post extends CI_Controller
 
             $video_data = [
                             'title'=>$this->input->post('video_title'),
+                            'description'=>$this->input->post('video_desc'),
+                            'upload_path'=>'uploads/videos/'.$file_name,
+                        ];            
+            $this->Post_model->update_record('video',['id'=>$data['post_data']['video']['id']],$video_data);
+            $this->session->set_flashdata('success','Video has been uploaded successfully.');
+            redirect('dashboard/view_my_posts');
+        }
+    }
+
+    public function edit_embed_video($post_id){
+        
+        $data['post_data'] = $this->db->get_where('user_post',['id'=>$post_id])->row_array();
+        if(empty($data['post_data'])){ custom_front_show_404(); }
+
+        $data['post_data']['video'] = $this->db->get_where('video',['post_id'=>$post_id])->row_array();        
+
+        $sess_data = $this->session->userdata('client');
+
+        // ------------------------------------------------------------------------
+        $all_ids_arr = $this->db->select('id')->get_where('user_channels',['user_id'=>$sess_data['id']])->result_array();
+        $all_channel_ids = array_column($all_ids_arr,'id');
+        if(in_array($data['post_data']['channel_id'],$all_channel_ids) == false){ custom_front_show_404(); }
+        // ------------------------------------------------------------------------
+
+        $data['all_channels'] = $this->Post_model->get_result('user_channels', ['user_id' => $sess_data['id'], 'is_deleted' => '0', 'is_blocked' => '0']);
+        
+        $data['all_category'] = [];
+        $data['all_sub_cat'] = [];
+        $video_path = $this->input->post('video_path');
+
+        if($_POST){
+            $post_cat_id = $this->input->post('category');
+            $data['all_category'] = $this->Post_model->get_result('categories', ['is_deleted' => '0', 'is_blocked' => '0']);
+            $data['all_sub_cat'] = $this->Post_model->get_result('sub_categories', ['main_cat_id'=>$post_cat_id,'is_deleted' => '0', 'is_blocked' => '0']);
+        }else{
+            $post_cat_id = $data['post_data']['category_id'];
+            $data['all_category'] = $this->Post_model->get_result('categories', ['is_deleted' => '0', 'is_blocked' => '0']);
+            $data['all_sub_cat'] = $this->Post_model->get_result('sub_categories', ['main_cat_id'=>$post_cat_id,'is_deleted' => '0', 'is_blocked' => '0']);
+        }
+        
+        $this->form_validation->set_rules('video_title', 'Video Title', 'required');
+        $this->form_validation->set_rules('category', 'Category', 'required');        
+
+        if ($this->form_validation->run() == FALSE){
+            $data['subview'] = 'front/posts/video_edit_embed_post';
+            $this->load->view('front/layouts/layout_main', $data);
+        } else {
+
+            $ins_data = [
+                            'channel_id'=>$this->input->post('channel'),
+                            'category_id'=>$this->input->post('category'),
+                            'sub_category_id'=>$this->input->post('sub_category'),
+                            'post_title'=>$this->input->post('video_title'),                        
+                            'main_image'=>'uploads/videos/'.$img_file_name,
+                            'slug'=>slugify($this->input->post('video_title'))
+                        ];
+            $last_id = $this->Post_model->update_record('user_post',['id'=>$post_id],$ins_data);
+
+            $video_data = [
+                            'title'=>$this->input->post('video_title'),
+                            'embed_link'=>$this->input->post('embed_video'),
                             'description'=>$this->input->post('video_desc'),
                             'upload_path'=>'uploads/videos/'.$file_name,
                         ];            

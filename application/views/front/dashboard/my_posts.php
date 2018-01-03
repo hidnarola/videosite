@@ -12,6 +12,7 @@
         <ul class="ul-list">
         <?php 
             if (!empty($posts)){ foreach ($posts as $post) {
+                                
                 $user_name = $session_info['username'];
                 if($post['upload_user_id'] != 0){
                     $u_data = $this->db->select('username')->get_where('users',['id'=>$post['upload_user_id']])->row_array();
@@ -42,8 +43,15 @@
                         <?php }?>
                         <div class="edit-dlt">
                             <p> <small><?php echo $user_name; ?> </small><span></span></p>
-                            <?php if($post['post_type'] == 'video') { ?>
-                                <a href="<?php echo base_url().'user_post/edit_video_post/'.$post['id']; ?>" class="fa fa-edit"></a>
+                            <?php 
+                                if($post['post_type'] == 'video') { 
+                                    $vid_data = $this->db->get_where('video',['post_id'=>$post['id']])->row_array();
+                                    $v_link = 'edit_video_post';
+                                    if(!empty($vid_data['embed_link'])){
+                                        $v_link = 'edit_embed_video';
+                                    }
+                            ?>
+                                <a href="<?php echo base_url().'user_post/'.$v_link.'/'.$post['id']; ?>" class="fa fa-edit"></a>
                             <?php } else { ?>
                                 <a href="<?php echo base_url().'user_post/edit_post/'.$post['id']; ?>" class="fa fa-edit"></a>
                             <?php } ?>
