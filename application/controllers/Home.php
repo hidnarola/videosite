@@ -371,8 +371,15 @@ class Home extends CI_Controller
         echo json_encode($res);
     }
 
-    public function new_test(){
-        $this->load->view('front/categories/new_1');
+    
+    public function test(){
+
+        echo $filepath = $_SERVER["DOCUMENT_ROOT"]."/videosite/uploads/test/6mb1.jpeg";
+        echo "<br/>";
+        echo $filepath_new = $_SERVER["DOCUMENT_ROOT"]."/videosite/uploads/test/new.jpg";
+
+        exec(FFMPEG_PATH . ' -i ' . $filepath . ' -vf "scale=min\'(4032,iw)\':-2" ' . $filepath_new);
+        // ffmpeg -i input.jpg -vf "scale='min(320,iw)':'min(240,ih)'" input_not_upscaled.png
     }
     
     

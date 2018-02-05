@@ -44,7 +44,8 @@ font-family: 'Comfortaa', cursive;
 /***** left-content *****/
 .content-wrap:after{content:'';display:block;clear:both;}
 .content-wrap{display:block;}
-.left-panel{float:left;width:300px;background:#fff;height:700px; overflow-y:scroll; position:fixed; padding:20px;    box-shadow: 0 -20px 40px 0px rgba(0,0,0,.1);}
+.left-panel{float:left;width:300px;background:#fff; /*height:700px;*/ /*overflow-y:scroll;*/ position:fixed; padding:20px;    box-shadow: 0 -20px 40px 0px rgba(0,0,0,.1);}
+.left-panel .demo1{height:700px;}
 .nav-div{width:100%;margin:0 0 30px;}
 .nav-div ul{list-style:none;margin:0;padding:0;}
 .nav-div ul li{display:block;width:100%;border-bottom:1px dotted rgba(0,0,0,.8);}

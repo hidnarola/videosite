@@ -1,10 +1,11 @@
 <div class="left-panel">
+    <div class="demo1" data-simplebar data-simplebar-autohide="false" >
     <div class="legend">
 	<a>Video</a>
 	<a>Gallery</a>
     <a>Article</a>
 	</div>
-    <div class="nav-div">
+    <div class="nav-div" >
         <ul>
             <li>
                 <a href="<?php echo base_url() ?>home">
@@ -62,6 +63,7 @@
                 </li>
             <?php } ?>
         </ul>
+    </div>
     </div>
 </div>
 

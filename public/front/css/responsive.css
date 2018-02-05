@@ -3,7 +3,7 @@
 .list-box{min-height: 290px;}
 }
 @media(min-width:1300px) and (max-width:1600px){
-.ul-list li {width:33.33%;}
+.ul-list li {width:25%;}
 .list-box{min-height: 290px;}
 }
 @media(min-width:1300px) and (max-width:1450px){

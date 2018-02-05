@@ -27,11 +27,13 @@
         <link href="<?php echo DEFAULT_CSS_PATH ?>jquery.loading.min.css" rel="stylesheet" />        
         <link href="<?php echo DEFAULT_CSS_PATH ?>style.css" rel="stylesheet" />
         <link href="<?php echo DEFAULT_CSS_PATH ?>pam_style.css" rel="stylesheet" /> 
+        <link href="<?php echo DEFAULT_CSS_PATH ?>simplebar.css" rel="stylesheet" /> 
         <link href="<?php echo DEFAULT_CSS_PATH ?>responsive.css" rel="stylesheet" />         
 
         <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'jquery.min.js'; ?>"></script>    
         <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'bootstrap.min.js'; ?>"></script>
         <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'bootstrap-datepicker.js'; ?>"></script>    
+        <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'simplebar.js'; ?>"></script>        
         <script type="text/javascript" src="<?php echo DEFAULT_JS_PATH.'jquery.loading.min.js'; ?>"></script>        
         <script src="<?php echo DEFAULT_JS_PATH.'jquery_validation.js'; ?>"></script>
         <script src="<?php echo DEFAULT_JS_PATH.'bootstrap-select.min.js'; ?>"></script>    

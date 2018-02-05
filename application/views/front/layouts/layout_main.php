@@ -88,6 +88,8 @@
 
 		$('.for_height').css('min-height', window_height+header_height-40);
 
+        var demo5 = new SimpleBar(document.getElementById('demo5'));
+
 	</script>		
 
 	</body>
